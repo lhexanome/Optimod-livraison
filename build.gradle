@@ -26,11 +26,17 @@ dependencies {
     testRuntime 'org.junit.jupiter:junit-jupiter-engine:5.0.1'
 }
 
+// Coverage data
+
+jacoco {
+    toolVersion = '0.7.9'
+    applyTo junitPlatformTest
+}
+
 jacocoTestReport {
     reports {
         xml.enabled true
         html.enabled false
+        csv.enabled false
     }
 }
-
-check.dependsOn jacocoTestReport
