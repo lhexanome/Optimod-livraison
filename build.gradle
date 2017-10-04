@@ -7,44 +7,49 @@ buildscript {
     }
 }
 
-repositories {
-    mavenCentral()
+allprojects {
+    apply plugin: 'application'
+    apply plugin: 'org.junit.platform.gradle.plugin'
+    apply plugin: 'jacoco'
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        testCompile 'org.junit.jupiter:junit-jupiter-api:5.0.1'
+        testRuntime 'org.junit.jupiter:junit-jupiter-engine:5.0.1'
+    }
+
+    jacoco {
+        toolVersion = '0.7.9'
+        applyTo junitPlatformTest
+    }
 }
 
 version '1.0-SNAPSHOT'
 
-apply plugin: 'application'
-apply plugin: 'org.junit.platform.gradle.plugin'
-apply plugin: 'jacoco'
-
-sourceCompatibility = 1.8
-
-mainClassName = "lhexanome.HelloWorld"
-
-dependencies {
-    testCompile 'org.junit.jupiter:junit-jupiter-api:5.0.1'
-    testRuntime 'org.junit.jupiter:junit-jupiter-engine:5.0.1'
-}
-
-// Coverage data
-
-jacoco {
-    toolVersion = '0.7.9'
-    applyTo junitPlatformTest
-}
-
 task codeCoverageReport(type: JacocoReport) {
     executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
 
-    sourceSets sourceSets.main
+    subprojects.each {
+        sourceSets it.sourceSets.main
+    }
 
     reports {
         xml.enabled true
-        xml.destination "${buildDir}/reports/jacoco/report.xml"
+        xml.destination file("${buildDir}/reports/jacoco/report.xml")
         html.enabled false
         csv.enabled false
     }
 }
 
-codeCoverageReport.dependsOn junitPlatformTest
+task waitForSubProject {
+    subprojects.each { dependsOn("${it.name}:junitPlatformTest") }
+}
+
+codeCoverageReport.dependsOn waitForSubProject
 check.dependsOn codeCoverageReport

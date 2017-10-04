@@ -1,2 +1,4 @@
-rootProject.name = 'lhexanome.optimod-livraison'
+rootProject.name = 'lhexanome.optimodlivraison'
+include 'platform'
+include 'ui'
 

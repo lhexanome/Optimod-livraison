@@ -1,4 +1,4 @@
-package lhexanome;
+package lhexanome.optimodlivraison.ui;
 
 
 import java.io.PrintStream;
@@ -6,13 +6,13 @@ import java.io.PrintStream;
 /**
  * From: https://www.jetbrains.com/help/idea/getting-started-with-gradle.html
  */
-public class HelloWorld {
+public class HelloMars {
 
     public static void main(String[] args) {
         print(System.out);
     }
 
     public static void print(PrintStream out) {
-        out.print("Hello, World!");
+        out.print("Hello, Mars!");
     }
 }

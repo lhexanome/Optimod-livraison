@@ -4,6 +4,12 @@
     <bytecodeTargetLevel>
       <module name="lhexanome.optimod-livraison_main" target="1.8" />
       <module name="lhexanome.optimod-livraison_test" target="1.8" />
+      <module name="lhexanome.optimodlivraison_main" target="1.8" />
+      <module name="lhexanome.optimodlivraison_test" target="1.8" />
+      <module name="platform_main" target="1.8" />
+      <module name="platform_test" target="1.8" />
+      <module name="ui_main" target="1.8" />
+      <module name="ui_test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
