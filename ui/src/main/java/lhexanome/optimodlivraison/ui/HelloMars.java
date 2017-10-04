@@ -1,6 +1,8 @@
 package lhexanome.optimodlivraison.ui;
 
 
+import lhexanome.optimodlivraison.platform.HelloWorld;
+
 import java.io.PrintStream;
 
 /**
@@ -13,6 +15,7 @@ public class HelloMars {
     }
 
     public static void print(PrintStream out) {
-        out.print("Hello, Mars!");
+        out.print("Hello, Mars! and ");
+        HelloWorld.print(out);
     }
 }
