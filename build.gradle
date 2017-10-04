@@ -1,3 +1,5 @@
+version '1.0-SNAPSHOT'
+
 buildscript {
     repositories {
         mavenCentral()
@@ -8,16 +10,19 @@ buildscript {
 }
 
 allprojects {
-    apply plugin: 'application'
-    apply plugin: 'org.junit.platform.gradle.plugin'
     apply plugin: 'jacoco'
-
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
 
     repositories {
         mavenCentral()
     }
+}
+
+subprojects {
+    apply plugin: 'application'
+    apply plugin: 'org.junit.platform.gradle.plugin'
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
 
     dependencies {
         testCompile 'org.junit.jupiter:junit-jupiter-api:5.0.1'
@@ -28,11 +33,12 @@ allprojects {
         toolVersion = '0.7.9'
         applyTo junitPlatformTest
     }
+
+    junitPlatformTest
 }
 
-version '1.0-SNAPSHOT'
 
-task codeCoverageReport(type: JacocoReport) {
+task codeCoverageReport(type: JacocoReport, dependsOn: 'waitForSubProject') {
     executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
 
     subprojects.each {
@@ -51,5 +57,4 @@ task waitForSubProject {
     subprojects.each { dependsOn("${it.name}:junitPlatformTest") }
 }
 
-codeCoverageReport.dependsOn waitForSubProject
-check.dependsOn codeCoverageReport
+task check(dependsOn: 'codeCoverageReport')

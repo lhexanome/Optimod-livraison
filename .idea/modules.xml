@@ -3,8 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/lhexanome.optimodlivraison.iml" filepath="$PROJECT_DIR$/.idea/modules/lhexanome.optimodlivraison.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/lhexanome.optimodlivraison_main.iml" filepath="$PROJECT_DIR$/.idea/modules/lhexanome.optimodlivraison_main.iml" group="lhexanome.optimodlivraison" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/lhexanome.optimodlivraison_test.iml" filepath="$PROJECT_DIR$/.idea/modules/lhexanome.optimodlivraison_test.iml" group="lhexanome.optimodlivraison" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/platform.iml" filepath="$PROJECT_DIR$/.idea/modules/platform.iml" group="platform" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/platform/platform_main.iml" filepath="$PROJECT_DIR$/.idea/modules/platform/platform_main.iml" group="platform" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/platform/platform_test.iml" filepath="$PROJECT_DIR$/.idea/modules/platform/platform_test.iml" group="platform" />
