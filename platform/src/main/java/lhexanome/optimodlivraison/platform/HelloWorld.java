@@ -13,6 +13,6 @@ public class HelloWorld {
     }
 
     public static void print(PrintStream out) {
-        out.print("Hello, World!");
+        out.print("Hell, World!");
     }
 }

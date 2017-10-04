@@ -15,6 +15,6 @@ class HelloWorldTest {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         HelloWorld.print(new PrintStream(out));
         String s = out.toString();
-        assertEquals("Hello, World!", s);
+        assertEquals("Hell, World!", s);
     }
 }
