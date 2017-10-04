@@ -14,6 +14,6 @@ class HelloMarsTest {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         HelloMars.print(new PrintStream(out));
         String s = out.toString();
-        assertEquals("Hello, Mars! and Hello, World!", s);
+        assertEquals("Hello, Mars! and Hell, World!", s);
     }
 }
