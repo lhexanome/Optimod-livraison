@@ -91,7 +91,6 @@ public class Troncon {
      * @return Origine
      */
     public Intersection getOrigine() {
-
         return origine;
     }
 
