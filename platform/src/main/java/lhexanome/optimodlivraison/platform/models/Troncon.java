@@ -37,6 +37,7 @@ public class Troncon {
     }
 
     public Intersection getOrigine() {
+
         return origine;
     }
 
