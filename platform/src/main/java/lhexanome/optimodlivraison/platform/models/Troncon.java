@@ -9,18 +9,22 @@ public class Troncon {
      * TODO JavaDoc.
      */
     public static final int SPEED = 15;
+
     /**
      * TODO JavaDoc.
      */
     private Intersection origine;
+
     /**
      * TODO JavaDoc.
      */
     private Intersection destination;
+
     /**
      * TODO JavaDoc.
      */
     private String nameStreet;
+
     /**
      * TODO JavaDoc.
      */
@@ -105,7 +109,6 @@ public class Troncon {
      * @return Time To Travel
      */
     public float timeToTravel() {
-        // TODO Compute time
         return length * SPEED;
     }
 }
