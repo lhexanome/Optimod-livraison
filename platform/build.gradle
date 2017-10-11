@@ -1,1 +1,6 @@
 version '1.0-SNAPSHOT'
+
+dependencies {
+    // https://mvnrepository.com/artifact/org.jdom/jdom
+    compile group: 'org.jdom', name: 'jdom', version: '2.0.0'
+}
