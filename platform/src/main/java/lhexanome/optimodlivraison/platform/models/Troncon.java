@@ -37,7 +37,11 @@ public class Troncon {
     }
 
     public Intersection getOrigine() {
-
         return origine;
+    }
+
+    public float timeToTravel() {
+        // TODO Compute time
+        return 0;
     }
 }
