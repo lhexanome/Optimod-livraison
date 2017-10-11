@@ -6,6 +6,7 @@ public class Troncon {
     private Intersection destination;
     private String nameStreet;
     private float lenght;
+    public static final int SPEED = 15;
 
     public void setOrigine(Intersection origine) {
         this.origine = origine;
@@ -42,6 +43,7 @@ public class Troncon {
 
     public float timeToTravel() {
         // TODO Compute time
-        return 0;
+        float time = lenght * SPEED;
+        return time;
     }
 }
