@@ -10,6 +10,7 @@ public class Trajet {
 
     public float getTimeForTravel()
     {
+        //TODO
         time = 0;
        return time;
     }
