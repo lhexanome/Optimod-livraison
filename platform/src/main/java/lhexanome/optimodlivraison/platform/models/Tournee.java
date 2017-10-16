@@ -27,39 +27,72 @@ public class Tournee {
     private Intersection warehouse;
 
     /**
-     * TODO JavaDoc
+     * Temps estimé pour compléter une tournée.
+     * En minutes
      */
     private int time;
 
-    public void setDeliveries(List<Trajet> deliveries) {
-        this.deliveries = deliveries;
-    }
-
-    public void setStart(Date start) {
-        this.start = start;
-    }
-
-    public void setWarehouse(Intersection warehouse) {
-        this.warehouse = warehouse;
-    }
-
-    public void setTime(int time) {
-        this.time = time;
-    }
-
+    /**
+     * TODO JavaDoc.
+     * @return Deliveries
+     */
     public List<Trajet> getDeliveries() {
         return deliveries;
     }
 
+    /**
+     * TODO JavaDoc.
+     * @param deliveries Deliveries
+     */
+    public void setDeliveries(List<Trajet> deliveries) {
+        this.deliveries = deliveries;
+    }
+
+    /**
+     * TODO JavaDoc.
+     * @return Start
+     */
     public Date getStart() {
         return start;
     }
 
+    /**
+     * TODO JavaDoc.
+     * @param start Start
+     */
+    public void setStart(Date start) {
+        this.start = start;
+    }
+
+    /**
+     * TODO JavaDoc.
+     * @return Warehouse
+     */
     public Intersection getWarehouse() {
         return warehouse;
     }
 
+    /**
+     * TODO JavaDoc.
+     * @param warehouse Warehouse
+     */
+    public void setWarehouse(Intersection warehouse) {
+        this.warehouse = warehouse;
+    }
+
+    /**
+     * TODO JavaDoc.
+     * @return Time
+     */
     public int getTime() {
         return time;
+    }
+
+    /**
+     * TODO JavaDoc.
+     * @param time Time
+     */
+    public void setTime(int time) {
+        this.time = time;
     }
 }

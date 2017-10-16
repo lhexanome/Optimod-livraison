@@ -24,12 +24,12 @@ public class TronconTest {
         String s = troncon.getNameStreet();
         assertEquals("Rue de la liberte", s);
 
-        troncon.setLenght(22);
-        float f = troncon.getLenght();
+        troncon.setLength(22);
+        float f = troncon.getLength();
         assertEquals(22,f);
 
         float result = troncon.timeToTravel();
-        float trueResult = troncon.getLenght()*15;
+        float trueResult = troncon.getLength()*15;
         assertEquals(trueResult,result);
 
     }

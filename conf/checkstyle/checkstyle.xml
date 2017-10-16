@@ -77,6 +77,14 @@
     <!--   <property name="fileExtensions" value="java"/> -->
     <!-- </module> -->
 
+    <module name="SuppressWarningsFilter"/>
+
+    <!-- https://stackoverflow.com/questions/1012407/how-to-suppress-all-checks-for-a-file-in-checkstyle -->
+    <module name="SuppressionFilter">
+        <property name="file" value="${config_loc}/suppressions.xml"/>
+    </module>
+
+
     <module name="TreeWalker">
 
         <!-- Checks for Javadoc comments.                     -->
@@ -157,7 +165,7 @@
 
         <!-- Checks for class design                         -->
         <!-- See http://checkstyle.sf.net/config_design.html -->
-        <module name="DesignForExtension"/>
+        <!--<module name="DesignForExtension"/>-->
         <module name="FinalClass"/>
         <module name="HideUtilityClassConstructor"/>
         <module name="InterfaceIsType"/>
@@ -169,6 +177,8 @@
         <!--<module name="FinalParameters"/>-->
         <module name="TodoComment"/>
         <module name="UpperEll"/>
+
+        <module name="SuppressWarningsHolder"/>
 
     </module>
 

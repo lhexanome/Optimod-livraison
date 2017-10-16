@@ -2,43 +2,104 @@ package lhexanome.optimodlivraison.platform.models;
 
 import java.util.List;
 
+/**
+ * Suite de tronçons connectés reliant deux points
+ * de livraison (ou entrepôt).
+ */
 public class Trajet {
-    private List<Troncon> ListOfTroncon;
+
+    /**
+     * Liste des troncons.
+     */
+    private List<Troncon> listOfTroncon;
+
+    /**
+     * TODO JavaDoc.
+     */
     private float time;
+
+    /**
+     * TODO JavaDoc.
+     */
     private Intersection start;
+
+    /**
+     * TODO JavaDoc.
+     */
     private Intersection end;
 
+
+    /**
+     * TODO JavaDoc.
+     *
+     * @return Float
+     */
     public float getTimeForTravel() {
-        for (Troncon t : ListOfTroncon) {
+        for (Troncon t : listOfTroncon) {
             time = time + t.timeToTravel();
         }
         return time;
     }
 
+    /**
+     * TODO JavaDoc.
+     *
+     * @return liste
+     */
     public List<Troncon> getListOfTroncon() {
-        return ListOfTroncon;
+        return listOfTroncon;
     }
 
+    /**
+     * TODO JavaDoc.
+     *
+     * @return time
+     */
     public float getTime() {
         return time;
     }
 
-    public Intersection getStart() {
-        return start;
-    }
-
-    public Intersection getEnd() {
-        return end;
-    }
-
+    /**
+     * TODO JavaDoc.
+     *
+     * @param time Time
+     */
     public void setTime(float time) {
         this.time = time;
     }
 
+    /**
+     * TODO JavaDoc.
+     *
+     * @return Start
+     */
+    public Intersection getStart() {
+        return start;
+    }
+
+    /**
+     * TODO JavaDoc.
+     *
+     * @param start Start
+     */
     public void setStart(Intersection start) {
         this.start = start;
     }
 
+    /**
+     * TODO JavaDoc.
+     *
+     * @return End
+     */
+    public Intersection getEnd() {
+        return end;
+    }
+
+    /**
+     * TODO JavaDoc.
+     *
+     * @param end End
+     */
     public void setEnd(Intersection end) {
         this.end = end;
     }
