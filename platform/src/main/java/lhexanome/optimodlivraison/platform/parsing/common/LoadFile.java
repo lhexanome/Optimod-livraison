@@ -12,6 +12,9 @@ import java.io.InputStream;
 
 public class LoadFile {
 
+    private LoadFile() {
+    }
+
     public static Element loadFromFile(File inputFile) throws JDOMException, IOException {
 
         return load(new FileInputStream(inputFile));
