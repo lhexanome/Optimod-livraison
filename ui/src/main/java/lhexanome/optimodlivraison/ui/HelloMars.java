@@ -1,7 +1,12 @@
 package lhexanome.optimodlivraison.ui;
 
 import lhexanome.optimodlivraison.platform.HelloWorld;
+import lhexanome.optimodlivraison.ui.welcome.WelcomeController;
+import lhexanome.optimodlivraison.ui.welcome.WelcomeView;
+import lhexanome.optimodlivraison.ui.welcome.WelcomeWindow;
 
+import javax.swing.*;
+import java.io.File;
 import java.io.PrintStream;
 
 /**
@@ -21,7 +26,14 @@ public final class HelloMars {
      * @param args System args
      */
     public static void main(String[] args) {
-        print(System.out);
+        WelcomeWindow welcomeWindow = new WelcomeWindow(new WelcomeController(){
+            public void selectMap(File xmlMapFile) {
+                System.out.println("test HelloMars : selectMap("+xmlMapFile.getAbsolutePath()+")");
+            }
+        });
+
+        welcomeWindow.open();
+
     }
 
     /**
