@@ -9,8 +9,16 @@ buildscript {
     }
 }
 
+
 allprojects {
     apply plugin: 'jacoco'
+    apply plugin: 'checkstyle'
+
+
+    checkstyle {
+        configDir = file("$project.rootDir/conf/checkstyle")
+    }
+
 
     repositories {
         mavenCentral()
@@ -46,7 +54,7 @@ task codeCoverageReport(type: JacocoReport, dependsOn: 'waitForSubProject') {
 
     reports {
         xml.enabled true
-        xml.destination file("${buildDir}/reports/jacoco/report.xml")
+        xml.destination file("$buildDir/reports/jacoco/report.xml")
         html.enabled false
         csv.enabled false
     }
