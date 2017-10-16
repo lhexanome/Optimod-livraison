@@ -8,18 +8,38 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class IntersectionTest {
 
     @Test
-    void print (){
+    void shouldSetX() {
+        // With
         Intersection intersection = new Intersection();
-        intersection.setX(10);
-        int x= intersection.getX();
-        assertEquals(10,x);
 
-        intersection.setY(20);
-        int y= intersection.getY();
-        assertEquals(20,y);
+        // When
+        intersection.setX(1234);
 
-        intersection.setId(1524789);
-        long id= intersection.getId();
-        assertEquals(1524789,id);
+        // Then
+        assertEquals(1234, intersection.getX());
+    }
+
+    @Test
+    void shouldSetY() {
+        // With
+        Intersection intersection = new Intersection();
+
+        // When
+        intersection.setY(1234);
+
+        // Then
+        assertEquals(1234, intersection.getY());
+    }
+
+    @Test
+    void shouldSetId() {
+        // With
+        Intersection intersection = new Intersection();
+
+        // When
+        intersection.setId(1234L);
+
+        // Then
+        assertEquals(1234L, intersection.getId());
     }
 }

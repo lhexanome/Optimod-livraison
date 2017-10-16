@@ -1,22 +1,21 @@
 package lhexanome.optimodlivraison.platform.models;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class Trajet {
-    private ArrayList<Troncon> ListOfTroncon;
+    private List<Troncon> ListOfTroncon;
     private float time;
     private Intersection start;
     private Intersection end;
 
-    public float getTimeForTravel()
-    {
-        for (Troncon t:ListOfTroncon) {
+    public float getTimeForTravel() {
+        for (Troncon t : ListOfTroncon) {
             time = time + t.timeToTravel();
         }
-       return time;
+        return time;
     }
 
-    public ArrayList getListOfTroncon() {
+    public List<Troncon> getListOfTroncon() {
         return ListOfTroncon;
     }
 
@@ -30,10 +29,6 @@ public class Trajet {
 
     public Intersection getEnd() {
         return end;
-    }
-
-    public void setListOfTroncon(ArrayList listOfTroncon) {
-        ListOfTroncon = listOfTroncon;
     }
 
     public void setTime(float time) {
