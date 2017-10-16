@@ -32,12 +32,12 @@ public class PlageHoraireTest {
     void shouldConstructCorrectlyEvenWithInvertedDate() throws ParseException {
         // With
         DateFormat dateFormat = new SimpleDateFormat("DD-MM-YY HH:mm");
-        Date start = dateFormat.parse("15-02-17 10:55");
-        Date end = dateFormat.parse("15-02-17 12:55");
+        Date start = dateFormat.parse("15-02-17 12:55");
+        Date end = dateFormat.parse("15-02-17 10:55");
 
         // When
 
-        PlageHoraire slot = new PlageHoraire(end, start);
+        PlageHoraire slot = new PlageHoraire(start, end);
 
         // Then
 
