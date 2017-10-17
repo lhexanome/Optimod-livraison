@@ -5,13 +5,13 @@ import java.io.File;
 
 public class WelcomeWindow {
 
-    JFrame jFrame;
-    WelcomeView welcomeView;
-    WelcomeActions controller;
+    private JFrame jFrame;
+    private WelcomeView welcomeView;
+    private WelcomeActions actions;
 
 
-    public WelcomeWindow(WelcomeActions controller){
-        this.controller = controller;
+    public WelcomeWindow(WelcomeActions actions){
+        this.actions = actions;
         jFrame = new JFrame("testHelloMars");
         welcomeView = new WelcomeView(this);
         jFrame.add(welcomeView.getMainPanel());
@@ -28,11 +28,16 @@ public class WelcomeWindow {
     }
 
     public void clickChoosedFilePlan(){
+        actions.clickChosePlan();
+    }
+
+    public void choosedFilePlan(){
         welcomeView.choosedFilePlan();
     }
 
 
     public void setFilePlan(File f) {
-        controller.selectMap(f);
+
+        actions.selectPlan(f);
     }
 }
