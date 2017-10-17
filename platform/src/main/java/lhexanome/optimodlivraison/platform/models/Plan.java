@@ -1,6 +1,8 @@
 package lhexanome.optimodlivraison.platform.models;
 
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,7 +14,7 @@ public class Plan {
     /**
      * Map contenant les différents tronçons d'une carte.
      */
-    private Map<Intersection, Troncon> map;
+    private Map<Intersection, Collection<Troncon>> map;
 
     /**
      * Constructeur par défaut.
@@ -29,8 +31,19 @@ public class Plan {
      * @param road  Troncon
      */
     public void addTroncon(Intersection start, Troncon road) {
-        // FIXME Ajouter plusieurs tronçons pour une intersection
-        this.map.put(start, road);
+        if (!this.map.containsKey(start)) {
+            this.map.put(start, new ArrayList<>());
+        }
+        this.map.get(start).add(road);
+    }
+
+    /**
+     * Renvoie une collection de troncon partant d'une intersection
+     * @param start intersection
+     * @return Liste de troncon
+     */
+    public Collection<Troncon> getTronconsFromIntersection(Intersection start) {
+        return map.get(start);
     }
 
     /**
