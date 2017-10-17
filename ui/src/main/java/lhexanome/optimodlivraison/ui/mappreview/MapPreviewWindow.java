@@ -1,23 +1,19 @@
 package lhexanome.optimodlivraison.ui.mappreview;
 
 
-import lhexanome.optimodlivraison.platform.models.Intersection;
 import lhexanome.optimodlivraison.platform.models.Plan;
-import lhexanome.optimodlivraison.platform.models.Troncon;
 
 import javax.swing.*;
-import java.util.HashMap;
-import java.util.Map;
 
 public class MapPreviewWindow {
 
     Plan plan;
     JFrame jFrame;
     MapPreviewView welcomeView;
-    MapPreviewController controller;
+    MapPreviewActions controller;
 
 
-    public MapPreviewWindow(Plan plan, MapPreviewController controller){
+    public MapPreviewWindow(Plan plan, MapPreviewActions controller){
         this.controller = controller;
         this.plan = plan;
 

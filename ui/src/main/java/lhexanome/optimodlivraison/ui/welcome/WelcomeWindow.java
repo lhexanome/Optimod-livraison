@@ -7,10 +7,10 @@ public class WelcomeWindow {
 
     JFrame jFrame;
     WelcomeView welcomeView;
-    WelcomeController controller;
+    WelcomeActions controller;
 
 
-    public WelcomeWindow(WelcomeController controller){
+    public WelcomeWindow(WelcomeActions controller){
         this.controller = controller;
         jFrame = new JFrame("testHelloMars");
         welcomeView = new WelcomeView(this);
