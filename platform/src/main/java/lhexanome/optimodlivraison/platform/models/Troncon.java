@@ -6,28 +6,32 @@ package lhexanome.optimodlivraison.platform.models;
 public class Troncon {
 
     /**
-     * TODO JavaDoc.
+     * Vitesse à laquelle va le livreur durant tout la tournée.
      */
     public static final int SPEED = 15;
+
     /**
-     * TODO JavaDoc.
+     * L'une des intersections se situant au bout du tronçon.
      */
     private Intersection origine;
+
     /**
-     * TODO JavaDoc.
+     * L'autre intersection se situant au bout du tronçon.
      */
     private Intersection destination;
+
     /**
-     * TODO JavaDoc.
+     * Nom du troncon d'après le plan fourni.
      */
     private String nameStreet;
+
     /**
-     * TODO JavaDoc.
+     * Longueur du tronçon.
      */
     private float length;
 
     /**
-     * TODO JavaDoc.
+     * Renvoie l'une des intersection du troncon.
      *
      * @return Destination
      */
@@ -37,7 +41,7 @@ public class Troncon {
     }
 
     /**
-     * TODO JavaDoc.
+     * Définie l'une des intersections du tronçon.
      *
      * @param destination Destination
      */
@@ -46,7 +50,7 @@ public class Troncon {
     }
 
     /**
-     * TODO JavaDoc.
+     * Renvoie le nom du tronçon.
      *
      * @return Name street
      */
@@ -55,7 +59,7 @@ public class Troncon {
     }
 
     /**
-     * TODO JavaDoc.
+     * Définie le nom du tronçon.
      *
      * @param nameStreet Name street
      */
@@ -64,7 +68,7 @@ public class Troncon {
     }
 
     /**
-     * TODO JavaDoc.
+     * Renvoie la longueur du tronçon.
      *
      * @return Length
      */
@@ -73,7 +77,7 @@ public class Troncon {
     }
 
     /**
-     * TODO JavaDoc.
+     * Définie la longueur du tronçon.
      *
      * @param length Length
      */
@@ -82,7 +86,7 @@ public class Troncon {
     }
 
     /**
-     * TODO JavaDoc.
+     * Renvoie l'autre intersection du tronçon.
      *
      * @return Origine
      */
@@ -91,7 +95,7 @@ public class Troncon {
     }
 
     /**
-     * TODO JavaDoc.
+     * Définie l'autre intersection du tronçon.
      *
      * @param origine Origine
      */
@@ -100,12 +104,11 @@ public class Troncon {
     }
 
     /**
-     * TODO JavaDoc.
+     * Renvoie le temps nécessaire pour traverser le tronçon.
      *
      * @return Time To Travel
      */
     public float timeToTravel() {
-        // TODO Compute time
         return length * SPEED;
     }
 }
