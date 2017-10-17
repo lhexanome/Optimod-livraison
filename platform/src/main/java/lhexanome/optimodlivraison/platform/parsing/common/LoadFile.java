@@ -24,7 +24,6 @@ public class LoadFile {
     public static Element load(InputStream inputStream) throws JDOMException, IOException {
         SAXBuilder saxBuilder = new SAXBuilder();
         Document document = saxBuilder.build(inputStream);
-
         return document.getRootElement();
     }
 }
