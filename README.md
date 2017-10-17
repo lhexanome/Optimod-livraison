@@ -1,3 +1,1 @@
 # Optimod-livraison
-
-[meta] test
