@@ -32,7 +32,7 @@ public class TrajetTest {
         //When
         journey.setStart(intersection);
 
-        //Then =
+        //Then
         assertEquals(intersection,journey.getStart());
     }
 

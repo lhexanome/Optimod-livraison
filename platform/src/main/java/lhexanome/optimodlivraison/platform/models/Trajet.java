@@ -14,23 +14,23 @@ public class Trajet {
     private List<Troncon> listOfTroncon;
 
     /**
-     * Temps necessaire pour parcourir le trajet
+     * Temps necessaire pour parcourir le trajet.
      */
     private float time;
 
     /**
-     * Intersection de depart du trajet
+     * Intersection de depart du trajet.
      */
     private Intersection start;
 
     /**
-     * Intersection finale du trajet
+     * Intersection finale du trajet.
      */
     private Intersection end;
 
 
     /**
-     *Renvoie le temps nécessaire pour effectuer le trajet.
+     * Renvoie le temps nécessaire pour effectuer le trajet.
      *
      * @return Float
      */
@@ -70,6 +70,7 @@ public class Trajet {
 
     /**
      * Renvoie l'intersection de départ.
+     *
      * @return Start
      */
     public Intersection getStart() {
