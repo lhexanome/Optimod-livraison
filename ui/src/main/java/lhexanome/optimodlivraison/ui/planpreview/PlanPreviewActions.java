@@ -1,8 +1,8 @@
-package lhexanome.optimodlivraison.ui.mappreview;
+package lhexanome.optimodlivraison.ui.planpreview;
 
 import java.io.File;
 
-public interface MapPreviewActions {
+public interface PlanPreviewActions {
     public void clickGoHome();
     public void selectDemand(File xmlDemandFile);
     public void clickChooseDemand();

@@ -1,4 +1,4 @@
-package lhexanome.optimodlivraison.ui.mappreview;
+package lhexanome.optimodlivraison.ui.planpreview;
 
 import lhexanome.optimodlivraison.platform.models.Intersection;
 import lhexanome.optimodlivraison.platform.models.Troncon;

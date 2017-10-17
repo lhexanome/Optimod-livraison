@@ -1,16 +1,16 @@
-package lhexanome.optimodlivraison.ui.mappanel;
+package lhexanome.optimodlivraison.ui.planpanel;
 
 
 import lhexanome.optimodlivraison.platform.models.Intersection;
 import lhexanome.optimodlivraison.platform.models.Plan;
 import lhexanome.optimodlivraison.platform.models.Troncon;
-import lhexanome.optimodlivraison.ui.mappreview.FackUtile;
+import lhexanome.optimodlivraison.ui.planpreview.FackUtile;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.Map;
 
-public class MapViewPanel extends JPanel {
+public class PlanViewPanel extends JPanel {
 
     private Plan plan;
     //private float scalX=0.05f, scalY=0.05f, offsetX=-763, offsetY=-1096;
@@ -19,14 +19,12 @@ public class MapViewPanel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        if(plan != null) {
             // TODO replace planTemp by plan.[getData]()
-            getMap(plan).forEach((intersection, troncon) -> paintComponent(g, troncon));
-        }
+            getPlan(plan).forEach((intersection, troncon) -> paintComponent(g, troncon));
     }
 
     // TODO REMOVE THIS!!!!!!!!
-    private Map<Intersection, Troncon> getMap(Plan plan) {
+    private Map<Intersection, Troncon> getPlan(Plan plan) {
         return FackUtile.fackPlanDataMoyen();
     }
 

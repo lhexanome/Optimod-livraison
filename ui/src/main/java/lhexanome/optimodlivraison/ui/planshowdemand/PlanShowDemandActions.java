@@ -1,6 +1,6 @@
-package lhexanome.optimodlivraison.ui.mapshowdemand;
+package lhexanome.optimodlivraison.ui.planshowdemand;
 
-public interface MapShowDemandActions {
+public interface PlanShowDemandActions {
     public void clickGoHome();
     public void clickGoMapPreview();
     public void clickComputeTour();

@@ -1,10 +1,10 @@
-package lhexanome.optimodlivraison.ui.mapshowdemand;
+package lhexanome.optimodlivraison.ui.planshowdemand;
 import lhexanome.optimodlivraison.ui.Window;
 import lhexanome.optimodlivraison.ui.controller.Controller;
 
-public class MapShowDemandWindow extends Window{
+public class PlanShowDemandWindow extends Window{
 
-    public MapShowDemandWindow(Controller c) {
+    public PlanShowDemandWindow(Controller c) {
         super(c);
     }
 }

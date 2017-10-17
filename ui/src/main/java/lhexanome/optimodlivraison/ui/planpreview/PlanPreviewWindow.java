@@ -1,4 +1,4 @@
-package lhexanome.optimodlivraison.ui.mappreview;
+package lhexanome.optimodlivraison.ui.planpreview;
 
 
 import lhexanome.optimodlivraison.platform.models.Plan;
@@ -7,20 +7,20 @@ import lhexanome.optimodlivraison.ui.controller.Controller;
 
 import javax.swing.*;
 
-public class MapPreviewWindow extends Window{
+public class PlanPreviewWindow extends Window{
 
     JFrame jFrame;
-    MapPreviewView mapPreviewView;
+    PlanPreviewView mapPreviewView;
     Controller controller;
 
 
-    public MapPreviewWindow(Controller controller){
+    public PlanPreviewWindow(Controller controller){
         super(controller);
 
         this.controller = controller;
 
         jFrame = new JFrame("testHelloMars");// TODO Rename frmaeName
-        mapPreviewView = new MapPreviewView();
+        mapPreviewView = new PlanPreviewView();
 
         jFrame.add(mapPreviewView.getMainPanel());
         jFrame.pack();

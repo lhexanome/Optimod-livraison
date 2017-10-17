@@ -1,4 +1,4 @@
-package lhexanome.optimodlivraison.ui.mapshowdemand;
+package lhexanome.optimodlivraison.ui.planshowdemand;
 
-public class MapShowDemandView {
+public class PlanShowDemandView {
 }
