@@ -33,7 +33,7 @@ public class Tournee {
     private int time;
 
     /**
-     * TODO JavaDoc.
+     * Renvoie la liste des livraisons.
      * @return Deliveries
      */
     public List<Trajet> getDeliveries() {
@@ -41,7 +41,7 @@ public class Tournee {
     }
 
     /**
-     * TODO JavaDoc.
+     * Définie la liste des livraisons.
      * @param deliveries Deliveries
      */
     public void setDeliveries(List<Trajet> deliveries) {
@@ -49,7 +49,7 @@ public class Tournee {
     }
 
     /**
-     * TODO JavaDoc.
+     * Renvoie l'intersection de départ.
      * @return Start
      */
     public Date getStart() {
@@ -57,7 +57,7 @@ public class Tournee {
     }
 
     /**
-     * TODO JavaDoc.
+     * Définie l'intersection de départ.
      * @param start Start
      */
     public void setStart(Date start) {
@@ -65,7 +65,7 @@ public class Tournee {
     }
 
     /**
-     * TODO JavaDoc.
+     * Renvoie l'interection correspondant à l'entrepôt.
      * @return Warehouse
      */
     public Intersection getWarehouse() {
@@ -73,7 +73,7 @@ public class Tournee {
     }
 
     /**
-     * TODO JavaDoc.
+     * Définie l'intersection correspondant à l'entrepôt.
      * @param warehouse Warehouse
      */
     public void setWarehouse(Intersection warehouse) {
@@ -81,7 +81,7 @@ public class Tournee {
     }
 
     /**
-     * TODO JavaDoc.
+     * Renvoie le temps nécessaire pour effectuer une tournée
      * @return Time
      */
     public int getTime() {
@@ -89,7 +89,7 @@ public class Tournee {
     }
 
     /**
-     * TODO JavaDoc.
+     * Définie le temps nécessaire pour effectuer une tournée
      * @param time Time
      */
     public void setTime(int time) {

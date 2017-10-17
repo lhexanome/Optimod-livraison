@@ -14,23 +14,23 @@ public class Trajet {
     private List<Troncon> listOfTroncon;
 
     /**
-     * TODO JavaDoc.
+     * Temps necessaire pour parcourir le trajet
      */
     private float time;
 
     /**
-     * TODO JavaDoc.
+     * Intersection de depart du trajet
      */
     private Intersection start;
 
     /**
-     * TODO JavaDoc.
+     * Intersection finale du trajet
      */
     private Intersection end;
 
 
     /**
-     * TODO JavaDoc.
+     *Renvoie le temps nécessaire pour effectuer le trajet.
      *
      * @return Float
      */
@@ -42,7 +42,7 @@ public class Trajet {
     }
 
     /**
-     * TODO JavaDoc.
+     * Renvoie la liste des tronçons.
      *
      * @return liste
      */
@@ -51,7 +51,7 @@ public class Trajet {
     }
 
     /**
-     * TODO JavaDoc.
+     * Renvoie le temps nécessaire pour poarcourir le trajet.
      *
      * @return time
      */
@@ -60,7 +60,7 @@ public class Trajet {
     }
 
     /**
-     * TODO JavaDoc.
+     * Définie le temps nécessaire pour parcourir le trajet.
      *
      * @param time Time
      */
@@ -69,8 +69,7 @@ public class Trajet {
     }
 
     /**
-     * TODO JavaDoc.
-     *
+     * Renvoie l'intersection de départ.
      * @return Start
      */
     public Intersection getStart() {
@@ -78,7 +77,7 @@ public class Trajet {
     }
 
     /**
-     * TODO JavaDoc.
+     * Définie l'intersection de départ.
      *
      * @param start Start
      */
@@ -87,7 +86,7 @@ public class Trajet {
     }
 
     /**
-     * TODO JavaDoc.
+     * Renvoie l'intersection d'arrivée.
      *
      * @return End
      */
@@ -96,7 +95,7 @@ public class Trajet {
     }
 
     /**
-     * TODO JavaDoc.
+     * Définie l'intersection d'arrivée.
      *
      * @param end End
      */
