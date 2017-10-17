@@ -11,8 +11,26 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Parser d'un document XML représentant un plan.
+ */
 public class MapParser {
 
+    /**
+     * Parse un document XML représentant un plan.
+     * Utilise le format suivant :
+     * {@code
+     * <xml>
+     * <noeud id="1" x="0" y="0"/>
+     * <noeud id="2" x="1" y="0"/>
+     * <troncon destination="1" origine="2" nomRue="Rue de la paix" longueur="10.0"/>
+     * </xml>
+     * }
+     *
+     * @param rootElement Element racine
+     * @return Un plan
+     * @throws ParseMapException Si un problème a lieu lors du parsing
+     */
     public Plan parseMap(Element rootElement) throws ParseMapException {
 
         Map<Long, Intersection> map = loadNodes(rootElement.getChildren("noeud"));
@@ -20,6 +38,13 @@ public class MapParser {
         return loadTroncon(rootElement.getChildren("troncon"), map);
     }
 
+    /**
+     * Génère une map pour faciliter la création d'un plan.
+     *
+     * @param listNode Liste d'élément jdom
+     * @return Map <id, intersection>
+     * @throws ParseMapException Si le document contient 2x le même id
+     */
     public Map<Long, Intersection> loadNodes(List<Element> listNode) throws ParseMapException {
         Map<Long, Intersection> nodeMap = new HashMap<>(listNode.size());
 
@@ -41,7 +66,14 @@ public class MapParser {
         return nodeMap;
     }
 
-
+    /**
+     * Génère un plan depuis des tronçons et des intersections.
+     *
+     * @param listTroncon Liste d'éléments jdom
+     * @param nodeMap     Map d'intrersection
+     * @return Un plan
+     * @throws ParseMapException Si un troncon a des intersections inconnues
+     */
     public Plan loadTroncon(List<Element> listTroncon, Map<Long, Intersection> nodeMap) throws ParseMapException {
         Plan plan = new Plan();
 

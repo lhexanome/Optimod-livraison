@@ -38,7 +38,8 @@ public class Plan {
     }
 
     /**
-     * Renvoie une collection de troncon partant d'une intersection
+     * Renvoie une collection de troncon partant d'une intersection.
+     *
      * @param start intersection
      * @return Liste de troncon
      */
