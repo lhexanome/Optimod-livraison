@@ -6,6 +6,7 @@ import lhexanome.optimodlivraison.platform.models.Plan;
 import lhexanome.optimodlivraison.platform.models.Troncon;
 import org.jdom2.Element;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,12 +53,35 @@ public class MapParser {
                 throw new ParseMapException("Troncon has an unknown destination or origin");
             }
 
-            Troncon troncon = new Troncon();
-            troncon.setDestination(nodeMap.get(destination));
-            troncon.setOrigine(nodeMap.get(origin));
-            troncon.setLength(Float.parseFloat(node.getAttributeValue("longueur")));
-            troncon.setNameStreet(node.getAttributeValue("nomRue"));
-            plan.addTroncon(troncon.getOrigine(), troncon);
+            Float length = Float.parseFloat(node.getAttributeValue("longueur"));
+            String streetName = node.getAttributeValue("nomRue");
+
+            Collection<Troncon> sameTroncons = plan.getTronconsFromIntersection(nodeMap.get(origin));
+
+            final boolean[] toAdd = {true};
+
+            if (sameTroncons != null) {
+                sameTroncons
+                        .stream()
+                        .filter(troncon -> troncon.getDestination().getId() == destination)
+                        .findFirst()
+                        .ifPresent(troncon -> {
+                            toAdd[0] = false;
+                            if (troncon.getLength() > length) {
+                                troncon.setLength(length);
+                                troncon.setNameStreet(streetName);
+                            }
+                        });
+            }
+
+            if (toAdd[0]) {
+                Troncon troncon = new Troncon();
+                troncon.setDestination(nodeMap.get(destination));
+                troncon.setOrigine(nodeMap.get(origin));
+                troncon.setLength(length);
+                troncon.setNameStreet(streetName);
+                plan.addTroncon(troncon.getOrigine(), troncon);
+            }
         }
 
         return plan;

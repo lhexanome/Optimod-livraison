@@ -108,7 +108,7 @@ public class MapParserTest {
         Intersection intersection = new Intersection();
         intersection.setId(1L);
         Intersection intersection2 = new Intersection();
-        intersection.setId(2L);
+        intersection2.setId(2L);
 
         map.put(1L, intersection);
         map.put(2L, intersection2);
@@ -125,22 +125,208 @@ public class MapParserTest {
     }
 
     @Test
-    void shouldThrowIfTronconHasAUnknownIntersection() {
+    void shouldNotHaveTwoTronconsWithTheSameIntersections() throws ParseMapException {
+        // With
 
+        Map<Long, Intersection> map = new HashMap<>(2);
+        Intersection intersection = new Intersection();
+        intersection.setId(1L);
+        Intersection intersection2 = new Intersection();
+        intersection2.setId(2L);
+
+        map.put(1L, intersection);
+        map.put(2L, intersection2);
+
+        rootElement.addContent(createTroncon(1L, 2L, (float) 5, "Boulevard de la villette"));
+
+        // When
+
+        Plan plan = mapParser.loadTroncon(rootElement.getChildren("troncon"), map);
+
+        // Then
+
+        assertEquals(1, plan.getIntersectionCount());
+        assertEquals(1, plan.getTronconsFromIntersection(intersection2).size());
+
+        plan.getTronconsFromIntersection(intersection2)
+                .forEach(troncon -> assertNotEquals(troncon.getNameStreet(), "Boulevard de la villette"));
     }
 
     @Test
-    void shouldWorkIfDestinationIsOrigin() {
+    void shouldUpdateTronconWithSameIntersections() throws ParseMapException {
+        // With
 
+        Map<Long, Intersection> map = new HashMap<>(2);
+        Intersection intersection = new Intersection();
+        intersection.setId(1L);
+        Intersection intersection2 = new Intersection();
+        intersection2.setId(2L);
+
+        map.put(1L, intersection);
+        map.put(2L, intersection2);
+
+        rootElement.addContent(createTroncon(1L, 2L, (float) 12, "Boulevard de la villette"));
+
+        // When
+
+        Plan plan = mapParser.loadTroncon(rootElement.getChildren("troncon"), map);
+
+        // Then
+
+        assertEquals(1, plan.getIntersectionCount());
+        assertEquals(1, plan.getTronconsFromIntersection(intersection2).size());
+
+        plan.getTronconsFromIntersection(intersection2)
+                .forEach(troncon -> assertEquals(troncon.getLength(), 5));
     }
 
     @Test
-    void shouldWorkWhenIntersectionHasMoreThanOneTroncon() {
+    void shouldNotAddTheSameTronconTwice() throws ParseMapException {
+        // With
+
+        Map<Long, Intersection> map = new HashMap<>(2);
+        Intersection intersection = new Intersection();
+        intersection.setId(1L);
+        Intersection intersection2 = new Intersection();
+        intersection2.setId(2L);
+
+        map.put(1L, intersection);
+        map.put(2L, intersection2);
+
+        rootElement.addContent(createTroncon(1L, 2L, (float) 5, "Rue de la paix"));
+
+        // When
+
+        Plan plan = mapParser.loadTroncon(rootElement.getChildren("troncon"), map);
+
+        // Then
+
+        assertEquals(1, plan.getIntersectionCount());
+        assertEquals(1, plan.getTronconsFromIntersection(intersection2).size());
 
     }
 
+
     @Test
-    void shouldCreatePlanCorrectly() {
+    void shouldThrowIfTronconHasAUnknownDestination() {
+        // With
+
+        Map<Long, Intersection> map = new HashMap<>(2);
+        Intersection intersection = new Intersection();
+        intersection.setId(1L);
+        Intersection intersection2 = new Intersection();
+        intersection2.setId(2L);
+
+        map.put(1L, intersection);
+        map.put(2L, intersection2);
+
+        rootElement.getChildren("troncon").get(0).setAttribute("destination", "3");
+
+        // When
+        // Then
+
+        Throwable throwable = assertThrows(ParseMapException.class,
+                () -> mapParser.loadTroncon(rootElement.getChildren("troncon"), map)
+        );
+
+        assertEquals("Troncon has an unknown destination or origin", throwable.getMessage());
+    }
+
+    @Test
+    void shouldThrowIfTronconHasAUnknownOrigin() {
+        // With
+
+        Map<Long, Intersection> map = new HashMap<>(2);
+        Intersection intersection = new Intersection();
+        intersection.setId(1L);
+        Intersection intersection2 = new Intersection();
+        intersection2.setId(2L);
+
+        map.put(1L, intersection);
+        map.put(2L, intersection2);
+
+        rootElement.getChildren("troncon").get(0).setAttribute("origine", "3");
+
+        // When
+        // Then
+
+        Throwable throwable = assertThrows(ParseMapException.class,
+                () -> mapParser.loadTroncon(rootElement.getChildren("troncon"), map)
+        );
+
+        assertEquals("Troncon has an unknown destination or origin", throwable.getMessage());
+    }
+
+    @Test
+    void shouldWorkIfDestinationIsOrigin() throws ParseMapException {
+        // With
+
+        Map<Long, Intersection> map = new HashMap<>(2);
+        Intersection intersection = new Intersection();
+        intersection.setId(1L);
+        Intersection intersection2 = new Intersection();
+        intersection2.setId(2L);
+
+        map.put(1L, intersection);
+        map.put(2L, intersection2);
+
+        rootElement.getChildren("troncon").get(0).setAttribute("origine", "1");
+
+        // When
+
+        Plan plan = mapParser.loadTroncon(rootElement.getChildren("troncon"), map);
+
+        // Then
+
+        assertEquals(1, plan.getIntersectionCount());
+        assertEquals(1, plan.getTronconsFromIntersection(intersection).size());
+
+        plan.getTronconsFromIntersection(intersection)
+                .forEach(troncon -> assertEquals(troncon.getDestination(), troncon.getOrigine()));
+    }
+
+    @Test
+    void shouldWorkWhenIntersectionHasMoreThanOneTroncon() throws ParseMapException {
+        // With
+
+        Map<Long, Intersection> map = new HashMap<>(2);
+        Intersection intersection = new Intersection();
+        intersection.setId(1L);
+        Intersection intersection2 = new Intersection();
+        intersection2.setId(2L);
+        Intersection intersection3 = new Intersection();
+        intersection3.setId(3L);
+
+        map.put(1L, intersection);
+        map.put(2L, intersection2);
+        map.put(3L, intersection3);
+
+        rootElement.addContent(createTroncon(3L, 2L, (float) 12, "Boulevard de la villette"));
+
+        // When
+
+        Plan plan = mapParser.loadTroncon(rootElement.getChildren("troncon"), map);
+
+        // Then
+
+        assertEquals(1, plan.getIntersectionCount());
+        assertEquals(2, plan.getTronconsFromIntersection(intersection2).size());
+
+        plan.getTronconsFromIntersection(intersection2)
+                .forEach(troncon -> assertEquals(troncon.getOrigine(), intersection2));
+    }
+
+    @Test
+    void shouldCreatePlanCorrectly() throws ParseMapException {
+
+        // With
+        // When
+
+        Plan plan = mapParser.parseMap(rootElement);
+
+        // Then
+
+        assertEquals(1, plan.getIntersectionCount());
 
     }
 }
