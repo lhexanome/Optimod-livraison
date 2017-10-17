@@ -55,7 +55,7 @@ public class TourneeTest {
         round.setWarehouse(intersection);
 
         //Then
-        assertEquals(intersection,round.getDeliveries());
+        assertEquals(intersection,round.getWarehouse());
     }
 
     @Test
