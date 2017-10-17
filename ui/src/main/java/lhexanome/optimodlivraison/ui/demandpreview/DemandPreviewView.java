@@ -1,5 +1,6 @@
-package lhexanome.optimodlivraison.ui.planpreview;
+package lhexanome.optimodlivraison.ui.demandpreview;
 
+import lhexanome.optimodlivraison.platform.models.DemandeLivraison;
 import lhexanome.optimodlivraison.platform.models.Plan;
 import lhexanome.optimodlivraison.ui.controller.Controller;
 import lhexanome.optimodlivraison.ui.planpanel.PlanViewPanel;
@@ -9,22 +10,19 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class PlanPreviewView {
+public class DemandPreviewView {
+    private final Controller controller;
+    private JButton calculerTourneeButton;
     private JPanel mainPanel;
-    private JButton chargerLivraisonButton;
     private PlanViewPanel planViewPanel;
-    private JButton ouvrirUneDemandeButton;
 
-    private Controller controller;
-
-    public PlanPreviewView(Controller controller) {
-
+    public DemandPreviewView(Controller controller){
         this.controller = controller;
 
-        chargerLivraisonButton.addActionListener(new ActionListener() {
+        calculerTourneeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controller.clickChooseDemand();
+                controller.clickComputeTour();
             }
         });
     }
@@ -33,11 +31,10 @@ public class PlanPreviewView {
         return mainPanel;
     }
 
-    private void createUIComponents() {
-        planViewPanel = new PlanViewPanel();
-    }
-
     public void setPlan(Plan plan) {
         planViewPanel.setPlan(plan);
+    }
+    public void setDemand(DemandeLivraison demand) {
+        planViewPanel.setDemande(demand);
     }
 }

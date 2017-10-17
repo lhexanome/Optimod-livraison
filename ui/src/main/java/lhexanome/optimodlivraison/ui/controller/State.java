@@ -1,6 +1,9 @@
 package lhexanome.optimodlivraison.ui.controller;
 
-import lhexanome.optimodlivraison.ui.planshowdemand.PlanShowDemandWindow;
+import lhexanome.optimodlivraison.platform.models.Plan;
+import lhexanome.optimodlivraison.ui.demandpreview.DemandPreviewWindow;
+import lhexanome.optimodlivraison.ui.orderaction.OrderEditorWindow;
+import lhexanome.optimodlivraison.ui.planpreview.PlanPreviewWindow;
 import lhexanome.optimodlivraison.ui.welcome.WelcomeWindow;
 
 import java.io.File;
@@ -11,12 +14,13 @@ import java.io.File;
  */
 public interface State {
     public void clickGoHome(WelcomeWindow nextWindow);
-    public void selectDemand(PlanShowDemandWindow nextWindow, File xmlLivraisonsFile);
+    public void selectDemand(DemandPreviewWindow nextWindow, File xmlLivraisonsFile);
     public void clickChooseDemand();
     public void clickCancelDemand();
-    public void clickComputeTour();
-    public void selectPlan(PlanShowDemandWindow nextWindow, File xmlPlanFile);
+    public void clickComputeTour(OrderEditorWindow nextWindow);
+    public void selectPlan(PlanPreviewWindow nextWindow, File xmlPlanFile);
     public void clickChoosePlan();
     public void clickCancelPlan();
+    public void closeWindows();
 
 }

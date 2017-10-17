@@ -20,7 +20,6 @@ public class HelloMars {
 
         Controller c = new Controller();
 
-
     }
 
 
