@@ -1,21 +1,28 @@
 package lhexanome.optimodlivraison.ui.controller;
 
-import lhexanome.optimodlivraison.ui.mappreview.MapPreviewActions;
-import lhexanome.optimodlivraison.ui.mappreview.MapPreviewView;
-import lhexanome.optimodlivraison.ui.mappreview.MapPreviewWindow;
+import lhexanome.optimodlivraison.platform.models.Plan;
+import lhexanome.optimodlivraison.platform.parsing.common.LoadFile;
+import lhexanome.optimodlivraison.platform.parsing.map.MapParser;
+import lhexanome.optimodlivraison.ui.planpreview.PlanPreviewActions;
+import lhexanome.optimodlivraison.ui.planpreview.PlanPreviewWindow;
+import lhexanome.optimodlivraison.ui.planshowdemand.PlanShowDemandWindow;
 import lhexanome.optimodlivraison.ui.welcome.WelcomeActions;
-import lhexanome.optimodlivraison.ui.welcome.WelcomeView;
 import lhexanome.optimodlivraison.ui.welcome.WelcomeWindow;
+import org.jdom2.Element;
 
 import java.io.File;
 
 /**
  * Created by nathan on 17/10/17.
  */
-public class Controller implements WelcomeActions, MapPreviewActions{
+public class Controller implements WelcomeActions, PlanPreviewActions {
 
-    WelcomeWindow welcomeWindow;
-    MapPreviewWindow mapPreviewWindow;
+    private WelcomeWindow welcomeWindow;
+    private PlanPreviewWindow planPreviewWindow;
+    private PlanShowDemandWindow planShowDemandWindow;
+    private State currentState;
+
+
 
     public Controller() {
 
@@ -23,18 +30,31 @@ public class Controller implements WelcomeActions, MapPreviewActions{
         welcomeWindow.open();
 
     }
-    public State currentState;
 
+    public void setCurrentState(State s){
+        this.currentState = s;
+    }
     @Override
-    public void selectPlan(File xmlMapFile) {
+    public void selectPlan(File xmlPlanFile) {
+        Element elementPlan = null;
+        Plan plan = null;
+        try {
+            MapParser mapParser = new MapParser();
+            elementPlan = LoadFile.loadFromFile(xmlPlanFile);
+            plan = mapParser.parseMap(elementPlan);
+        } catch (Exception e) {
+            // TODO
+            e.printStackTrace();
+        }
 
-        mapPreviewWindow = new MapPreviewWindow(null, this);
+
+        planPreviewWindow = new PlanPreviewWindow(this);
         welcomeWindow.close();
-        mapPreviewWindow.open();
+        planPreviewWindow.open();
     }
 
     @Override
-    public void clickChosePlan() {
+    public void clickChoosePlan() {
         welcomeWindow.choosedFilePlan();
     }
 
@@ -49,17 +69,17 @@ public class Controller implements WelcomeActions, MapPreviewActions{
     }
 
     @Override
-    public void selectLivraisons(File xmlLivraisonsFile) {
+    public void selectDemand(File xmlDemandFile) {
 
     }
 
     @Override
-    public void clickChoseLivraisons() {
+    public void clickChooseDemand() {
 
     }
 
     @Override
-    public void clickCancelLivraisons() {
+    public void clickCancelDemand() {
 
     }
 }

@@ -1,4 +1,4 @@
-package lhexanome.optimodlivraison.ui.mappreview;
+package lhexanome.optimodlivraison.ui.mapshowdemand;
 
 public interface MapShowDemandActions {
     public void clickGoHome();

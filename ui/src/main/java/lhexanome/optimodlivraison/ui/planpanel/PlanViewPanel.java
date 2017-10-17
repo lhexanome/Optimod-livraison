@@ -4,28 +4,31 @@ package lhexanome.optimodlivraison.ui.mappanel;
 import lhexanome.optimodlivraison.platform.models.Intersection;
 import lhexanome.optimodlivraison.platform.models.Plan;
 import lhexanome.optimodlivraison.platform.models.Troncon;
+import lhexanome.optimodlivraison.ui.mappreview.FackUtile;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.Map;
 
-class MapViewPanel extends JPanel {
+public class MapViewPanel extends JPanel {
 
-    private Plan plan; private Map<Intersection, Troncon> planTemp;// TODO remove planTemp
+    private Plan plan;
     //private float scalX=0.05f, scalY=0.05f, offsetX=-763, offsetY=-1096;
     private float scalX=0.0189f, scalY=0.0189f, offsetX=-757, offsetY=-1079;
-
-    //TODO replace MapViewPanel(Map<Intersection, Troncon> planTemp) by MapViewPanel(Plan plan)
-    public MapViewPanel(Map<Intersection, Troncon> planTemp){
-        this.planTemp = planTemp;
-    }
 
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        // TODO replace planTemp by plan.[getData]()
-        planTemp.forEach((intersection, troncon) -> paintComponent(g,troncon));
-    };
+        if(plan != null) {
+            // TODO replace planTemp by plan.[getData]()
+            getMap(plan).forEach((intersection, troncon) -> paintComponent(g, troncon));
+        }
+    }
+
+    // TODO REMOVE THIS!!!!!!!!
+    private Map<Intersection, Troncon> getMap(Plan plan) {
+        return FackUtile.fackPlanDataMoyen();
+    }
 
     protected void paintComponent(Graphics g, Troncon troncon){
         Intersection origine = troncon.getOrigine();
@@ -82,5 +85,14 @@ class MapViewPanel extends JPanel {
     public void setOffset(float offsetX, float offsetY) {
         this.offsetX = offsetX;
         this.offsetY = offsetY;
+    }
+
+    public void setPlan(Plan plan) {
+        if(plan != null){
+            //TODO remove wacher
+        }
+        this.plan = plan;
+
+        //TODO add wacher
     }
 }

@@ -2,12 +2,7 @@ package lhexanome.optimodlivraison.ui;
 
 import lhexanome.optimodlivraison.platform.HelloWorld;
 import lhexanome.optimodlivraison.ui.controller.Controller;
-import lhexanome.optimodlivraison.ui.mappreview.MapPreviewActions;
-import lhexanome.optimodlivraison.ui.mappreview.MapPreviewWindow;
-import lhexanome.optimodlivraison.ui.welcome.WelcomeActions;
-import lhexanome.optimodlivraison.ui.welcome.WelcomeWindow;
 
-import java.io.File;
 import java.io.PrintStream;
 
 /**

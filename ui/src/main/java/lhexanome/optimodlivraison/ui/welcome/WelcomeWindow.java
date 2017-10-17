@@ -1,34 +1,26 @@
 package lhexanome.optimodlivraison.ui.welcome;
 
-import javax.swing.*;
+import lhexanome.optimodlivraison.ui.Window;
+import lhexanome.optimodlivraison.ui.controller.Controller;
+
 import java.io.File;
 
-public class WelcomeWindow {
+public class WelcomeWindow extends Window {
 
-    private JFrame jFrame;
+
     private WelcomeView welcomeView;
-    private WelcomeActions actions;
 
-
-    public WelcomeWindow(WelcomeActions actions){
-        this.actions = actions;
-        jFrame = new JFrame("testHelloMars");
+    public WelcomeWindow(Controller c){
+        super(c);
         welcomeView = new WelcomeView(this);
         jFrame.add(welcomeView.getMainPanel());
         jFrame.pack();
         jFrame.setLocationRelativeTo(null);
     }
 
-    public void open(){
-        jFrame.setVisible(true);
-    }
-
-    public void close(){
-        jFrame.setVisible(false);
-    }
 
     public void clickChoosedFilePlan(){
-        actions.clickChosePlan();
+        controller.clickChoosePlan();
     }
 
     public void choosedFilePlan(){
@@ -38,6 +30,6 @@ public class WelcomeWindow {
 
     public void setFilePlan(File f) {
 
-        actions.selectPlan(f);
+        controller.selectPlan(f);
     }
 }
