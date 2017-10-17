@@ -1,7 +1,5 @@
 package lhexanome.optimodlivraison.platform.models;
 
-import java.util.HashSet;
-
 /**
  * Représente un point ou noeud sur la carte (identifié).
  */
@@ -24,12 +22,6 @@ public class Intersection {
     private Long id;
 
 
-
-    /**
-     * liste des troncons sortants de cette intersection
-     * (liste d'adjacence).
-     */
-    private HashSet<Troncon> tronconsSortants = null;
     /**
      * Intersection conctructeur
      *
@@ -100,11 +92,4 @@ public class Intersection {
         this.id = id;
     }
 
-    /**
-     * renvoie la liste d'adjacence.
-     * @return la liste d'adjacence.
-     */
-    public HashSet<Troncon> getTronconsSortants() {
-        return tronconsSortants;
-    }
 }

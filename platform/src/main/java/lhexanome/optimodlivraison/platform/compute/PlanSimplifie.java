@@ -36,8 +36,8 @@ public class PlanSimplifie {
      */
     public PlanSimplifie() {
         plan = new Plan();
-        arcs = new HashSet<Trajet>();
-        sommets = new HashSet<Livraison>();
+        arcs = new HashSet<>();
+        sommets = new HashSet<>();
     }
 
     /**
@@ -48,8 +48,8 @@ public class PlanSimplifie {
      */
     public PlanSimplifie(DemandeLivraison demandeLivraison, Plan plan) {
         this.plan = plan;
-        arcs = new HashSet<Trajet>();
-        sommets = new HashSet<Livraison>();
+        arcs = new HashSet<>();
+        sommets = new HashSet<>();
     }
 
     /**
@@ -60,9 +60,41 @@ public class PlanSimplifie {
      * @param end   Intersection d'arrivee
      * @return trajet avec le plus court chemin
      */
-    public Trajet shortestPathBetweenTwoIntersection(
-            Intersection begin, Intersection end) {
+    public Trajet shortestPathBetweenTwoIntersection(Intersection begin, Intersection end) {
+        //using Dijkstra's Algorithm
         Trajet sortie = new Trajet();
+        /*
+         * tableau des temps de trajet entre le point de depart et chaque intersection
+         * le premier element est celui de l'intersection de depart.
+         */
+        float[] tempsDijkstra = new float[plan.getIntersectionCount()];
+
+        /*
+         * tableau qui memorise l'etat des intersection lors d'une recherche de chemin
+         * (visite/ non visite)
+         */
+        boolean[] etatDijkstra = new boolean[plan.getIntersectionCount()];
+
+        /*
+         * tableau listant les intersections du plan
+         */
+        Intersection[] intersections = new Intersection[plan.getIntersectionCount()];
+        //initialisation
+        if (plan.getIntersectionCount() > 0) {
+            tempsDijkstra[0] = 0;
+            etatDijkstra[0] = true;
+            intersections[0] = begin;
+            for (int i = 1; i < plan.getIntersectionCount(); i++) {
+                tempsDijkstra[i] = -1;
+                etatDijkstra[i] = false;
+
+            }
+        }
         return sortie;
+    }
+
+
+    private void recursiveDijkstra(Intersection begin, Intersection end, float[] tempsDijkstra, boolean[] etatDijkstra) {
+
     }
 }
