@@ -10,6 +10,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="platform_main" />
+    <orderEntry type="library" name="Gradle: org.jdom:jdom:2.0.0" level="project" />
     <orderEntry type="library" name="Gradle: org.junit.jupiter:junit-jupiter-api:5.0.1" level="project" />
     <orderEntry type="library" name="Gradle: org.opentest4j:opentest4j:1.0.0" level="project" />
     <orderEntry type="library" name="Gradle: org.junit.platform:junit-platform-commons:1.0.1" level="project" />

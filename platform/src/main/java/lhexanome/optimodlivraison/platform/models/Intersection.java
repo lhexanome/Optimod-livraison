@@ -19,7 +19,7 @@ public class Intersection {
      * Identifiant du point.
      * Récupérer depuis le XML
      */
-    private long id;
+    private Long id;
 
     /**
      * Renvoie X.

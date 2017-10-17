@@ -10,5 +10,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="platform_main" />
+    <orderEntry type="library" name="Gradle: org.jdom:jdom:2.0.0" level="project" />
   </component>
 </module>
