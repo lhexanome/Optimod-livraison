@@ -66,9 +66,8 @@ public class MapFacade {
      * Charge un fichier contenant un plan d'une ville.
      *
      * @param xmlFile Fichier xml
-     * @throws MapException S'il y a un problème lors du chargement
      */
-    public void loadMapFromFile(File xmlFile) throws MapException {
+    public void loadMapFromFile(File xmlFile) {
         try {
             LOGGER.info(MessageFormat.format("Loading map {0}", xmlFile.getName()));
             Element rootElement = LoadFile.loadFromFile(xmlFile);
@@ -78,21 +77,30 @@ public class MapFacade {
 
             LOGGER.warning(MessageFormat.format("Map loaded with {0} intersections", newPlan.getIntersectionCount()));
 
-            listeners.forEach(listener -> listener.onUpdate(newPlan));
+            listeners.forEach(l -> l.onUpdateMap(newPlan));
 
             LOGGER.info("Listeners notified !");
         } catch (JDOMException e) {
             LOGGER.warning(MessageFormat.format("Error while parsing XML", e.getMessage()));
-            throw new MapException(e);
+            failUpdate(e);
         } catch (IOException e) {
             LOGGER.warning(MessageFormat.format("I/O error", e.getMessage()));
-            throw new MapException(e);
+            failUpdate(e);
         } catch (ParseMapException e) {
             LOGGER.warning(MessageFormat.format("Bad map format", e.getMessage()));
-            throw new MapException(e);
+            failUpdate(e);
         } catch (Exception e) {
             LOGGER.warning(MessageFormat.format("Unknown error", e.getMessage()));
-            throw new MapException(e);
+            failUpdate(e);
         }
+    }
+
+    /**
+     * Permet de notifier les listeners d'un problème.
+     *
+     * @param e Exception générant l'erreur
+     */
+    private void failUpdate(Exception e) {
+        listeners.forEach(l -> l.onFailUpdateMap(new MapException(e)));
     }
 }

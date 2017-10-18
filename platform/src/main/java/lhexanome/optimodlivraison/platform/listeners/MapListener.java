@@ -1,5 +1,6 @@
 package lhexanome.optimodlivraison.platform.listeners;
 
+import lhexanome.optimodlivraison.platform.exceptions.MapException;
 import lhexanome.optimodlivraison.platform.models.Plan;
 
 /**
@@ -11,5 +12,12 @@ public interface MapListener {
      *
      * @param plan Plan chargé
      */
-    void onUpdate(Plan plan);
+    void onUpdateMap(Plan plan);
+
+    /**
+     * Fonction appelée quand un plan n'arrive pas à être chargé.
+     *
+     * @param e Exception contenant la cause
+     */
+    void onFailUpdateMap(MapException e);
 }
