@@ -1,0 +1,591 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<reseau>
+<noeud id="1029591870" x="15427" y="27866"/>
+<noeud id="103755060" x="15602" y="27911"/>
+<noeud id="1039285693" x="16034" y="27050"/>
+<noeud id="1259561375" x="23356" y="20091"/>
+<noeud id="1288817934" x="22640" y="19760"/>
+<noeud id="1383027249" x="23627" y="30695"/>
+<noeud id="1383027258" x="26344" y="35130"/>
+<noeud id="1519682880" x="17848" y="22858"/>
+<noeud id="1519682890" x="17927" y="21567"/>
+<noeud id="1603856892" x="25112" y="19844"/>
+<noeud id="1682387539" x="22571" y="21513"/>
+<noeud id="1682387615" x="25295" y="21950"/>
+<noeud id="1682387619" x="25472" y="24716"/>
+<noeud id="18232184" x="13346" y="19842"/>
+<noeud id="1860559399" x="20437" y="23772"/>
+<noeud id="195278" x="18208" y="20767"/>
+<noeud id="195279" x="16700" y="20006"/>
+<noeud id="2018719148" x="15824" y="28015"/>
+<noeud id="2026239409" x="25451" y="19149"/>
+<noeud id="2129259173" x="24171" y="21131"/>
+<noeud id="2129259176" x="24359" y="21348"/>
+<noeud id="2129259178" x="23054" y="23999"/>
+<noeud id="2129259180" x="22863" y="23822"/>
+<noeud id="21604592" x="15890" y="24600"/>
+<noeud id="21604593" x="15674" y="26409"/>
+<noeud id="21604594" x="15387" y="28030"/>
+<noeud id="21604600" x="15560" y="28876"/>
+<noeud id="21604601" x="15298" y="28599"/>
+<noeud id="21696192" x="15947" y="19543"/>
+<noeud id="21702417" x="13959" y="23715"/>
+<noeud id="21702418" x="13790" y="24995"/>
+<noeud id="21702419" x="13675" y="25080"/>
+<noeud id="21702422" x="13499" y="25112"/>
+<noeud id="21702423" x="14987" y="26962"/>
+<noeud id="21702424" x="14909" y="27109"/>
+<noeud id="21702430" x="13324" y="20605"/>
+<noeud id="21702431" x="14338" y="20826"/>
+<noeud id="21702435" x="15321" y="26377"/>
+<noeud id="21702437" x="14692" y="26532"/>
+<noeud id="21702438" x="15478" y="27664"/>
+<noeud id="21704344" x="13514" y="28377"/>
+<noeud id="21704345" x="13881" y="29128"/>
+<noeud id="21704353" x="16136" y="22788"/>
+<noeud id="21704354" x="14219" y="21670"/>
+<noeud id="21715353" x="15111" y="29551"/>
+<noeud id="21715425" x="13972" y="34720"/>
+<noeud id="226202090" x="17094" y="27600"/>
+<noeud id="2320613216" x="14787" y="31777"/>
+<noeud id="2365376404" x="20982" y="29190"/>
+<noeud id="2365376413" x="20781" y="29816"/>
+<noeud id="2365376415" x="21320" y="28130"/>
+<noeud id="245957281" x="16296" y="21924"/>
+<noeud id="24640391" x="16223" y="26506"/>
+<noeud id="251047558" x="25046" y="23008"/>
+<noeud id="251047560" x="23903" y="22277"/>
+<noeud id="251050719" x="24871" y="23534"/>
+<noeud id="251050862" x="23487" y="22192"/>
+<noeud id="251069553" x="25843" y="37445"/>
+<noeud id="251167391" x="20230" y="24824"/>
+<noeud id="251171031" x="25411" y="27985"/>
+<noeud id="251171098" x="24236" y="27446"/>
+<noeud id="2512682805" x="13453" y="36452"/>
+<noeud id="2512682814" x="13880" y="35116"/>
+<noeud id="25303795" x="16837" y="26608"/>
+<noeud id="25303796" x="18412" y="29233"/>
+<noeud id="25303797" x="17310" y="28688"/>
+<noeud id="25303798" x="17806" y="30241"/>
+<noeud id="25303799" x="19192" y="26971"/>
+<noeud id="25303800" x="20233" y="27149"/>
+<noeud id="25303801" x="19393" y="29728"/>
+<noeud id="25303803" x="20348" y="31239"/>
+<noeud id="25303804" x="20116" y="31970"/>
+<noeud id="25303805" x="18039" y="31047"/>
+<noeud id="25303806" x="18123" y="31944"/>
+<noeud id="25303807" x="19933" y="32576"/>
+<noeud id="25303831" x="22438" y="25252"/>
+<noeud id="25303832" x="21992" y="26245"/>
+<noeud id="25303833" x="21541" y="27433"/>
+<noeud id="25303836" x="21956" y="29753"/>
+<noeud id="25303839" x="21397" y="31715"/>
+<noeud id="25303840" x="24849" y="24183"/>
+<noeud id="25303841" x="24489" y="26072"/>
+<noeud id="25321309" x="18626" y="23089"/>
+<noeud id="25321323" x="18492" y="24501"/>
+<noeud id="25321327" x="19709" y="24729"/>
+<noeud id="25321330" x="19952" y="23493"/>
+<noeud id="25321334" x="20277" y="21887"/>
+<noeud id="25321354" x="19511" y="21450"/>
+<noeud id="25321357" x="19903" y="19873"/>
+<noeud id="25321358" x="18723" y="19271"/>
+<noeud id="25321359" x="20445" y="21987"/>
+<noeud id="25321407" x="21161" y="22389"/>
+<noeud id="25321408" x="21547" y="22607"/>
+<noeud id="25321422" x="21676" y="22677"/>
+<noeud id="25321433" x="22338" y="22999"/>
+<noeud id="25321447" x="23314" y="23468"/>
+<noeud id="25321456" x="21862" y="25123"/>
+<noeud id="25321469" x="21055" y="24977"/>
+<noeud id="25321687" x="24190" y="23912"/>
+<noeud id="25321689" x="23768" y="25793"/>
+<noeud id="25334284" x="17463" y="20393"/>
+<noeud id="25336247" x="23037" y="23333"/>
+<noeud id="25336254" x="24604" y="20847"/>
+<noeud id="25451454" x="17945" y="21516"/>
+<noeud id="25451455" x="16515" y="20784"/>
+<noeud id="257682550" x="13371" y="36408"/>
+<noeud id="26125366" x="25750" y="19935"/>
+<noeud id="26155366" x="22489" y="32184"/>
+<noeud id="26155367" x="23276" y="32503"/>
+<noeud id="26155368" x="23009" y="33904"/>
+<noeud id="26155369" x="22221" y="33616"/>
+<noeud id="26155370" x="22011" y="33545"/>
+<noeud id="26155372" x="23196" y="34844"/>
+<noeud id="26155373" x="22571" y="35259"/>
+<noeud id="26155374" x="22845" y="36107"/>
+<noeud id="26155375" x="23188" y="37194"/>
+<noeud id="26155376" x="23829" y="36828"/>
+<noeud id="26155377" x="24395" y="36514"/>
+<noeud id="26155378" x="23761" y="34502"/>
+<noeud id="26155379" x="23685" y="34157"/>
+<noeud id="26155380" x="23948" y="32765"/>
+<noeud id="26155381" x="21938" y="38005"/>
+<noeud id="26155382" x="21970" y="35642"/>
+<noeud id="26155402" x="21235" y="33283"/>
+<noeud id="26155419" x="22249" y="36495"/>
+<noeud id="26155421" x="21322" y="36072"/>
+<noeud id="26155423" x="21519" y="36700"/>
+<noeud id="26155424" x="21726" y="37342"/>
+<noeud id="26155475" x="20577" y="33704"/>
+<noeud id="26155484" x="20772" y="34332"/>
+<noeud id="26155498" x="20990" y="35023"/>
+<noeud id="26155514" x="20157" y="36913"/>
+<noeud id="26155528" x="20346" y="37831"/>
+<noeud id="26155538" x="18488" y="37166"/>
+<noeud id="26155540" x="19332" y="34460"/>
+<noeud id="26155541" x="20795" y="37706"/>
+<noeud id="26286689" x="24393" y="34409"/>
+<noeud id="26286690" x="25176" y="34682"/>
+<noeud id="26286694" x="25463" y="35928"/>
+<noeud id="26286695" x="24829" y="36275"/>
+<noeud id="26286696" x="25206" y="37788"/>
+<noeud id="26286759" x="26539" y="37102"/>
+<noeud id="26286762" x="26289" y="35452"/>
+<noeud id="26317212" x="26407" y="21502"/>
+<noeud id="26317246" x="25547" y="23598"/>
+<noeud id="26317248" x="26233" y="21079"/>
+<noeud id="26317259" x="25862" y="25203"/>
+<noeud id="26317260" x="25828" y="24767"/>
+<noeud id="26317293" x="25463" y="26433"/>
+<noeud id="26317294" x="25514" y="27445"/>
+<noeud id="26317311" x="25818" y="29237"/>
+<noeud id="26317312" x="25646" y="28282"/>
+<noeud id="26317313" x="25924" y="28345"/>
+<noeud id="26317318" x="25603" y="29601"/>
+<noeud id="26317341" x="25734" y="30494"/>
+<noeud id="26317345" x="26034" y="32053"/>
+<noeud id="26317393" x="24739" y="28379"/>
+<noeud id="26317396" x="26208" y="33266"/>
+<noeud id="26464252" x="14394" y="37786"/>
+<noeud id="26464270" x="15762" y="37593"/>
+<noeud id="26464271" x="15102" y="37681"/>
+<noeud id="26464311" x="14174" y="34751"/>
+<noeud id="26464312" x="15088" y="34876"/>
+<noeud id="26464313" x="15960" y="34995"/>
+<noeud id="26464314" x="16669" y="35088"/>
+<noeud id="26464315" x="17135" y="37377"/>
+<noeud id="26464316" x="16454" y="37474"/>
+<noeud id="26464319" x="18077" y="35407"/>
+<noeud id="26464320" x="18063" y="37226"/>
+<noeud id="26464321" x="17868" y="35259"/>
+<noeud id="26464322" x="17390" y="35200"/>
+<noeud id="26464323" x="18080" y="34536"/>
+<noeud id="26570167" x="19685" y="27054"/>
+<noeud id="26570169" x="20461" y="30855"/>
+<noeud id="2865054509" x="21715" y="30599"/>
+<noeud id="2865054511" x="22128" y="30873"/>
+<noeud id="2865089011" x="19324" y="28655"/>
+<noeud id="29003879" x="17367" y="35522"/>
+<noeud id="29003880" x="17851" y="35459"/>
+<noeud id="29006600" x="15627" y="24656"/>
+<noeud id="293585811" x="16990" y="22611"/>
+<noeud id="293585812" x="17176" y="21593"/>
+<noeud id="325213175" x="18099" y="33717"/>
+<noeud id="325213179" x="19536" y="33817"/>
+<noeud id="325213183" x="18754" y="36292"/>
+<noeud id="325213187" x="19919" y="36114"/>
+<noeud id="325772328" x="19639" y="37972"/>
+<noeud id="325772567" x="24545" y="32891"/>
+<noeud id="3405342345" x="21031" y="30502"/>
+<noeud id="365086531" x="22199" y="33608"/>
+<noeud id="365086537" x="22142" y="33945"/>
+<noeud id="365087270" x="24541" y="32935"/>
+<noeud id="365117223" x="14298" y="36283"/>
+<noeud id="365117230" x="13761" y="37870"/>
+<noeud id="365117235" x="14237" y="36361"/>
+<noeud id="365117238" x="13786" y="37746"/>
+<noeud id="3760085988" x="15127" y="29554"/>
+<noeud id="388568803" x="19085" y="35264"/>
+<noeud id="3905948463" x="14244" y="34764"/>
+<noeud id="4034132513" x="22156" y="36546"/>
+<noeud id="434308458" x="20609" y="30361"/>
+<noeud id="459797860" x="24451" y="22665"/>
+<noeud id="459797864" x="26207" y="23299"/>
+<noeud id="459797866" x="26439" y="24157"/>
+<noeud id="564740277" x="14119" y="34390"/>
+<noeud id="564766082" x="13811" y="35079"/>
+<noeud id="565375197" x="26084" y="20716"/>
+<noeud id="624172864" x="20050" y="32206"/>
+<noeud id="640541652" x="24526" y="20754"/>
+<noeud id="644880770" x="15196" y="29578"/>
+<noeud id="649791301" x="18117" y="33073"/>
+<noeud id="649791305" x="19278" y="33200"/>
+<noeud id="7300862" x="17521" y="22754"/>
+<noeud id="7300867" x="16215" y="22381"/>
+<noeud id="7300869" x="15992" y="23783"/>
+<noeud id="7300874" x="17051" y="24097"/>
+<noeud id="868438829" x="22507" y="37639"/>
+<troncon destination="1029591870" longueur="14.0" nomRue="Avenue des Frères Lumière" origine="21702438"/>
+<troncon destination="1029591870" longueur="73.0" nomRue="Boulevard Jean XXIII" origine="21702424"/>
+<troncon destination="103755060" longueur="23.0" nomRue="Place d'Arsonval" origine="2018719148"/>
+<troncon destination="1039285693" longueur="72.0" nomRue="Cours Albert Thomas" origine="2018719148"/>
+<troncon destination="1259561375" longueur="75.0" nomRue="Rue Professeur Louis Roche" origine="1288817934"/>
+<troncon destination="1288817934" longueur="225.0" nomRue="Rue de Montbrillant" origine="25321422"/>
+<troncon destination="1288817934" longueur="75.0" nomRue="Rue Professeur Louis Roche" origine="1259561375"/>
+<troncon destination="1383027249" longueur="131.0" nomRue="Rue Jeanne d'Arc" origine="26155367"/>
+<troncon destination="1383027249" longueur="179.0" nomRue="Rue Amiral Courbet" origine="25303836"/>
+<troncon destination="1383027258" longueur="23.0" nomRue="Rue Charles Richard" origine="26286762"/>
+<troncon destination="1519682880" longueur="100.0" nomRue="Rue Guy" origine="1519682890"/>
+<troncon destination="1519682880" longueur="79.0" nomRue="Rue du Docteur Bonhomme" origine="25321309"/>
+<troncon destination="1519682890" longueur="92.0" nomRue="Cours Albert Thomas" origine="7300862"/>
+<troncon destination="1603856892" longueur="59.0" nomRue="Avenue Lacassagne" origine="2026239409"/>
+<troncon destination="1682387539" longueur="103.0" nomRue="Rue des Prévoyants de l'Avenir" origine="251050862"/>
+<troncon destination="1682387615" longueur="116.0" nomRue="Impasse Belloeuf" origine="565375197"/>
+<troncon destination="1682387619" longueur="78.0" nomRue="Impasse de la Ruche" origine="26317246"/>
+<troncon destination="1860559399" longueur="76.0" nomRue="Impasse Gazagnon" origine="251167391"/>
+<troncon destination="195278" longueur="138.0" nomRue="Rue du Docteur Rebatel" origine="25321354"/>
+<troncon destination="195278" longueur="58.0" nomRue="Cours Albert Thomas" origine="25451454"/>
+<troncon destination="195279" longueur="81.0" nomRue="Place Ambroise Courtois" origine="25334284"/>
+<troncon destination="2018719148" longueur="156.0" nomRue="Rue du Professeur Florence" origine="25303797"/>
+<troncon destination="2018719148" longueur="82.0" nomRue="Place d'Arsonval" origine="21604600"/>
+<troncon destination="2026239409" longueur="62.0" nomRue="Rue du Dauphiné" origine="26125366"/>
+<troncon destination="2129259173" longueur="102.0" nomRue="Rue Bara" origine="251050862"/>
+<troncon destination="2129259173" longueur="24.0" nomRue="" origine="2129259176"/>
+<troncon destination="2129259176" longueur="42.0" nomRue="Avenue Lacassagne" origine="25336254"/>
+<troncon destination="2129259178" longueur="22.0" nomRue="" origine="2129259180"/>
+<troncon destination="2129259178" longueur="45.0" nomRue="Avenue Lacassagne" origine="25321447"/>
+<troncon destination="2129259180" longueur="110.0" nomRue="Rue Bara" origine="25303831"/>
+<troncon destination="2129259180" longueur="22.0" nomRue="" origine="2129259178"/>
+<troncon destination="21604592" longueur="26.0" nomRue="Rue Jean Perréal" origine="29006600"/>
+<troncon destination="21604592" longueur="57.0" nomRue="Avenue des Frères Lumière" origine="7300869"/>
+<troncon destination="21604593" longueur="128.0" nomRue="Avenue des Frères Lumière" origine="21604592"/>
+<troncon destination="21604593" longueur="35.0" nomRue="Rue du Professeur Calmette" origine="21702435"/>
+<troncon destination="21604593" longueur="55.0" nomRue="Rue du Professeur Calmette" origine="24640391"/>
+<troncon destination="21604594" longueur="12.0" nomRue="Avenue des Frères Lumière" origine="1029591870"/>
+<troncon destination="21604594" longueur="23.0" nomRue="Place d'Arsonval" origine="103755060"/>
+<troncon destination="21604600" longueur="34.0" nomRue="Place d'Arsonval" origine="21604601"/>
+<troncon destination="21604600" longueur="62.0" nomRue="Avenue Rockefeller" origine="644880770"/>
+<troncon destination="21604601" longueur="41.0" nomRue="Place d'Arsonval" origine="21604594"/>
+<troncon destination="21696192" longueur="81.0" nomRue="Rue Antoine Lumière" origine="195279"/>
+<troncon destination="21702417" longueur="90.0" nomRue="Rue des Alouettes" origine="21702418"/>
+<troncon destination="21702418" longueur="13.0" nomRue="Rue des Alouettes" origine="21702419"/>
+<troncon destination="21702418" longueur="185.0" nomRue="Rue Jean Perréal" origine="29006600"/>
+<troncon destination="21702419" longueur="13.0" nomRue="Rue des Alouettes" origine="21702418"/>
+<troncon destination="21702419" longueur="143.0" nomRue="Boulevard Jean XXIII" origine="21702437"/>
+<troncon destination="21702419" longueur="17.0" nomRue="Passage des Alouettes" origine="21702422"/>
+<troncon destination="21702422" longueur="17.0" nomRue="Passage des Alouettes" origine="21702419"/>
+<troncon destination="21702423" longueur="12.0" nomRue="Rue Léa et Napoléon Bullukian" origine="21702424"/>
+<troncon destination="21702423" longueur="53.0" nomRue="Promenade Léa et Napoléon Bullukian" origine="21702435"/>
+<troncon destination="21702423" longueur="69.0" nomRue="Boulevard Jean XXIII" origine="21702438"/>
+<troncon destination="21702424" longueur="12.0" nomRue="Rue Léa et Napoléon Bullukian" origine="21702423"/>
+<troncon destination="21702424" longueur="174.0" nomRue="Rue Léa et Napoléon Bullukian" origine="21704345"/>
+<troncon destination="21702424" longueur="198.0" nomRue="Boulevard Jean XXIII" origine="21702422"/>
+<troncon destination="21702430" longueur="103.0" nomRue="Impasse Baraille" origine="21702431"/>
+<troncon destination="21702431" longueur="103.0" nomRue="Impasse Baraille" origine="21702430"/>
+<troncon destination="21702431" longueur="60.0" nomRue="Rue des Alouettes" origine="21704354"/>
+<troncon destination="21702435" longueur="35.0" nomRue="Rue du Professeur Calmette" origine="21604593"/>
+<troncon destination="21702435" longueur="53.0" nomRue="Promenade Léa et Napoléon Bullukian" origine="21702423"/>
+<troncon destination="21702437" longueur="41.0" nomRue="Boulevard Jean XXIII" origine="21702423"/>
+<troncon destination="21702437" longueur="63.0" nomRue="Rue du Professeur Calmette" origine="21702435"/>
+<troncon destination="21702438" longueur="21.0" nomRue="Place d'Arsonval" origine="103755060"/>
+<troncon destination="21702438" longueur="89.0" nomRue="Avenue des Frères Lumière" origine="21604593"/>
+<troncon destination="21704344" longueur="64.0" nomRue="Rue Nungesser et Coli" origine="21704345"/>
+<troncon destination="21704345" longueur="174.0" nomRue="Rue Léa et Napoléon Bullukian" origine="21702424"/>
+<troncon destination="21704345" longueur="64.0" nomRue="Rue Nungesser et Coli" origine="21704344"/>
+<troncon destination="21704353" longueur="207.0" nomRue="Rue Neuve de Monplaisir" origine="21704354"/>
+<troncon destination="21704353" longueur="29.0" nomRue="Avenue des Frères Lumière" origine="7300867"/>
+<troncon destination="21704354" longueur="145.0" nomRue="Rue des Alouettes" origine="21702417"/>
+<troncon destination="21704354" longueur="207.0" nomRue="Rue Neuve de Monplaisir" origine="21704353"/>
+<troncon destination="21715353" longueur="126.0" nomRue="Rue Nungesser et Coli" origine="21704345"/>
+<troncon destination="21715353" longueur="69.0" nomRue="Avenue Rockefeller" origine="21604601"/>
+<troncon destination="21715425" longueur="223.0" nomRue="Avenue Rockefeller" origine="2320613216"/>
+<troncon destination="21715425" longueur="29.0" nomRue="Avenue Rockefeller" origine="2512682814"/>
+<troncon destination="226202090" longueur="112.0" nomRue="Rue René et Marguerite Pellet" origine="1039285693"/>
+<troncon destination="226202090" longueur="73.0" nomRue="Rue Trarieux" origine="25303795"/>
+<troncon destination="2320613216" longueur="158.0" nomRue="Avenue Rockefeller" origine="21715353"/>
+<troncon destination="2365376404" longueur="105.0" nomRue="Rue Amiral Courbet" origine="25303836"/>
+<troncon destination="2365376404" longueur="48.0" nomRue="Avenue Lacassagne" origine="2365376413"/>
+<troncon destination="2365376404" longueur="81.0" nomRue="Avenue Lacassagne" origine="2365376415"/>
+<troncon destination="2365376413" longueur="41.0" nomRue="Avenue Lacassagne" origine="434308458"/>
+<troncon destination="2365376413" longueur="48.0" nomRue="Avenue Lacassagne" origine="2365376404"/>
+<troncon destination="2365376413" longueur="54.0" nomRue="Cours Docteur Long" origine="3405342345"/>
+<troncon destination="2365376415" longueur="180.0" nomRue="Rue Lamartine Rue de Bonnefond" origine="25303836"/>
+<troncon destination="2365376415" longueur="53.0" nomRue="Avenue Lacassagne" origine="25303833"/>
+<troncon destination="245957281" longueur="210.0" nomRue="Rue des Lilas" origine="21702431"/>
+<troncon destination="245957281" longueur="82.0" nomRue="Avenue des Frères Lumière" origine="25451455"/>
+<troncon destination="24640391" longueur="42.0" nomRue="Cours Albert Thomas" origine="1039285693"/>
+<troncon destination="24640391" longueur="55.0" nomRue="Rue du Professeur Calmette" origine="21604593"/>
+<troncon destination="251047558" longueur="65.0" nomRue="Rue de Domrémy" origine="459797860"/>
+<troncon destination="251047560" longueur="61.0" nomRue="Rue de Domrémy" origine="459797860"/>
+<troncon destination="251047560" longueur="79.0" nomRue="Avenue Lacassagne" origine="2129259176"/>
+<troncon destination="251050719" longueur="45.0" nomRue="Impasse Jeanne d'Arc" origine="25303840"/>
+<troncon destination="251050862" longueur="103.0" nomRue="Rue des Prévoyants de l'Avenir" origine="1682387539"/>
+<troncon destination="251050862" longueur="91.0" nomRue="Rue Bara" origine="25336247"/>
+<troncon destination="251069553" longueur="112.0" nomRue="Rue Antoinette" origine="26286694"/>
+<troncon destination="251069553" longueur="73.0" nomRue="Rue Louis" origine="26286759"/>
+<troncon destination="251167391" longueur="52.0" nomRue="Rue Feuillat" origine="25321327"/>
+<troncon destination="251167391" longueur="76.0" nomRue="Impasse Gazagnon" origine="1860559399"/>
+<troncon destination="251171031" longueur="123.0" nomRue="Rue de l'Est" origine="251171098"/>
+<troncon destination="251171098" longueur="123.0" nomRue="Rue de l'Est" origine="251171031"/>
+<troncon destination="251171098" longueur="234.0" nomRue="Rue Jeanne d'Arc" origine="1383027249"/>
+<troncon destination="2512682805" longueur="8.0" nomRue="Rue Victor de Laprade" origine="257682550"/>
+<troncon destination="2512682814" longueur="102.0" nomRue="Avenue Rockefeller" origine="2512682805"/>
+<troncon destination="2512682814" longueur="7.0" nomRue="Rue Montvert" origine="564766082"/>
+<troncon destination="25303795" longueur="61.0" nomRue="Rue du Professeur Rochaix" origine="24640391"/>
+<troncon destination="25303796" longueur="104.0" nomRue="Rue du Professeur Florence" origine="25303801"/>
+<troncon destination="25303797" longueur="116.0" nomRue="Rue du Professeur Florence" origine="25303796"/>
+<troncon destination="25303797" longueur="119.0" nomRue="Rue Trarieux" origine="25303798"/>
+<troncon destination="25303797" longueur="80.0" nomRue="Rue Trarieux" origine="226202090"/>
+<troncon destination="25303798" longueur="60.0" nomRue="Rue Trarieux" origine="25303805"/>
+<troncon destination="25303799" longueur="176.0" nomRue="Rue Balthazar" origine="25303796"/>
+<troncon destination="25303799" longueur="237.0" nomRue="Rue du Professeur Rochaix" origine="25303795"/>
+<troncon destination="25303800" longueur="55.0" nomRue="Rue du Professeur Rochaix" origine="26570167"/>
+<troncon destination="25303801" longueur="129.0" nomRue="Rue du Professeur Florence" origine="434308458"/>
+<troncon destination="25303801" longueur="198.0" nomRue="Rue Germain David" origine="25303800"/>
+<troncon destination="25303803" longueur="272.0" nomRue="Rue Roux-Soignat" origine="25303798"/>
+<troncon destination="25303803" longueur="28.0" nomRue="Avenue Lacassagne" origine="26570169"/>
+<troncon destination="25303804" longueur="55.0" nomRue="Avenue Lacassagne" origine="25303803"/>
+<troncon destination="25303805" longueur="218.0" nomRue="Rue Omer Louis" origine="25303804"/>
+<troncon destination="25303805" longueur="63.0" nomRue="Rue Trarieux" origine="25303806"/>
+<troncon destination="25303806" longueur="78.0" nomRue="Rue Trarieux" origine="649791301"/>
+<troncon destination="25303807" longueur="186.0" nomRue="Rue Jean Bart" origine="25303806"/>
+<troncon destination="25303807" longueur="28.0" nomRue="Avenue Lacassagne" origine="624172864"/>
+<troncon destination="25303831" longueur="106.0" nomRue="Avenue Lacassagne" origine="2129259178"/>
+<troncon destination="25303831" longueur="138.0" nomRue="Rue Feuillat" origine="25321689"/>
+<troncon destination="25303831" longueur="58.0" nomRue="Rue Feuillat" origine="25321456"/>
+<troncon destination="25303832" longueur="239.0" nomRue="Rue Jules Verne" origine="251171098"/>
+<troncon destination="25303832" longueur="82.0" nomRue="Avenue Lacassagne" origine="25303831"/>
+<troncon destination="25303833" longueur="133.0" nomRue="Rue du Professeur Rochaix" origine="25303800"/>
+<troncon destination="25303833" longueur="94.0" nomRue="Avenue Lacassagne" origine="25303832"/>
+<troncon destination="25303836" longueur="105.0" nomRue="Rue Amiral Courbet" origine="2365376404"/>
+<troncon destination="25303836" longueur="179.0" nomRue="Rue Amiral Courbet" origine="1383027249"/>
+<troncon destination="25303836" longueur="180.0" nomRue="Rue Lamartine Rue de Bonnefond" origine="2365376415"/>
+<troncon destination="25303836" longueur="63.0" nomRue="Rue Lamartine" origine="2865054509"/>
+<troncon destination="25303839" longueur="141.0" nomRue="Cours Docteur Long" origine="26155370"/>
+<troncon destination="25303839" longueur="84.0" nomRue="Rue Lamartine" origine="2865054509"/>
+<troncon destination="25303840" longueur="136.0" nomRue="Rue Jeanne d'Arc" origine="25303841"/>
+<troncon destination="25303840" longueur="45.0" nomRue="Impasse Jeanne d'Arc" origine="251050719"/>
+<troncon destination="25303841" longueur="100.0" nomRue="Rue Feuillat" origine="26317293"/>
+<troncon destination="25303841" longueur="74.0" nomRue="Rue Feuillat" origine="25321689"/>
+<troncon destination="25303841" longueur="99.0" nomRue="Rue Jeanne d'Arc" origine="251171098"/>
+<troncon destination="25321309" longueur="135.0" nomRue="Rue du Docteur Bonhomme" origine="25321330"/>
+<troncon destination="25321323" longueur="147.0" nomRue="Rue Feuillat" origine="7300874"/>
+<troncon destination="25321323" longueur="99.0" nomRue="Rue du Palais d'Été" origine="25321309"/>
+<troncon destination="25321327" longueur="122.0" nomRue="Rue Feuillat" origine="25321323"/>
+<troncon destination="25321327" longueur="89.0" nomRue="Rue de l'Harmonie" origine="25321330"/>
+<troncon destination="25321330" longueur="116.0" nomRue="Rue de l'Harmonie" origine="25321334"/>
+<troncon destination="25321330" longueur="89.0" nomRue="Rue de l'Harmonie" origine="25321327"/>
+<troncon destination="25321334" longueur="116.0" nomRue="Rue de l'Harmonie" origine="25321330"/>
+<troncon destination="25321334" longueur="18.0" nomRue="Rue du Docteur Rebatel" origine="25321359"/>
+<troncon destination="25321354" longueur="116.0" nomRue="Rue Guilloud" origine="25321357"/>
+<troncon destination="25321354" longueur="82.0" nomRue="Rue du Docteur Rebatel" origine="25321334"/>
+<troncon destination="25321357" longueur="125.0" nomRue="Rue Jeanne Koehler" origine="25321358"/>
+<troncon destination="25321358" longueur="116.0" nomRue="Cours Albert Thomas" origine="195278"/>
+<troncon destination="25321359" longueur="76.0" nomRue="Rue du Docteur Rebatel" origine="25321407"/>
+<troncon destination="25321407" longueur="41.0" nomRue="Rue du Docteur Rebatel" origine="25321408"/>
+<troncon destination="25321408" longueur="13.0" nomRue="Rue du Docteur Rebatel" origine="25321422"/>
+<troncon destination="25321422" longueur="69.0" nomRue="Rue du Docteur Rebatel" origine="25321433"/>
+<troncon destination="25321433" longueur="157.0" nomRue="Rue Fiol" origine="25321456"/>
+<troncon destination="25321433" longueur="73.0" nomRue="Rue du Docteur Rebatel" origine="25336247"/>
+<troncon destination="25321447" longueur="101.0" nomRue="Avenue Lacassagne" origine="251047560"/>
+<troncon destination="25321447" longueur="92.0" nomRue="Rue du Docteur Paul Diday" origine="25321687"/>
+<troncon destination="25321456" longueur="58.0" nomRue="Rue Feuillat" origine="25303831"/>
+<troncon destination="25321456" longueur="81.0" nomRue="Rue Feuillat" origine="25321469"/>
+<troncon destination="25321469" longueur="172.0" nomRue="Rue Élie Paris" origine="25321408"/>
+<troncon destination="25321469" longueur="83.0" nomRue="Rue Feuillat" origine="251167391"/>
+<troncon destination="25321687" longueur="137.0" nomRue="Passage Feuillat" origine="25321689"/>
+<troncon destination="25321687" longueur="68.0" nomRue="Rue du Docteur Paul Diday" origine="25303840"/>
+<troncon destination="25321687" longueur="90.0" nomRue="Passage Feuillat" origine="459797860"/>
+<troncon destination="25321689" longueur="137.0" nomRue="Passage Feuillat" origine="25321687"/>
+<troncon destination="25321689" longueur="138.0" nomRue="Rue Feuillat" origine="25303831"/>
+<troncon destination="25321689" longueur="74.0" nomRue="Rue Feuillat" origine="25303841"/>
+<troncon destination="25334284" longueur="79.0" nomRue="Place Ambroise Courtois" origine="195278"/>
+<troncon destination="25336247" longueur="29.0" nomRue="Rue du Docteur Rebatel" origine="25321447"/>
+<troncon destination="25336247" longueur="38.0" nomRue="Rue Bara" origine="2129259180"/>
+<troncon destination="25336254" longueur="10.0" nomRue="Rue Bara" origine="640541652"/>
+<troncon destination="25336254" longueur="86.0" nomRue="Avenue Lacassagne" origine="1603856892"/>
+<troncon destination="25451454" longueur="151.0" nomRue="Place Ambroise Courtois" origine="25451455"/>
+<troncon destination="25451454" longueur="3.0" nomRue="Cours Albert Thomas" origine="1519682890"/>
+<troncon destination="25451455" longueur="57.0" nomRue="Avenue des Frères Lumière" origine="195279"/>
+<troncon destination="257682550" longueur="102.0" nomRue="Avenue Rockefeller" origine="564766082"/>
+<troncon destination="257682550" longueur="8.0" nomRue="Rue Victor de Laprade" origine="2512682805"/>
+<troncon destination="26125366" longueur="62.0" nomRue="Rue du Dauphiné" origine="2026239409"/>
+<troncon destination="26125366" longueur="63.0" nomRue="Rue du Dauphiné" origine="565375197"/>
+<troncon destination="26155366" longueur="103.0" nomRue="Rue Jean Cardona" origine="26155369"/>
+<troncon destination="26155366" longueur="113.0" nomRue="Rue Saint-Isidore" origine="25303839"/>
+<troncon destination="26155367" longueur="101.0" nomRue="Rue Jeanne d'Arc" origine="26155368"/>
+<troncon destination="26155367" longueur="81.0" nomRue="Rue Saint-Isidore" origine="26155366"/>
+<troncon destination="26155368" longueur="69.0" nomRue="Rue Bonnand" origine="26155379"/>
+<troncon destination="26155368" longueur="70.0" nomRue="Rue du Capitaine" origine="26155372"/>
+<troncon destination="26155369" longueur="103.0" nomRue="Rue Jean Cardona" origine="26155366"/>
+<troncon destination="26155369" longueur="81.0" nomRue="Rue Bonnand" origine="26155368"/>
+<troncon destination="26155370" longueur="19.0" nomRue="Rue Bonnand" origine="365086531"/>
+<troncon destination="26155370" longueur="30.0" nomRue="Cours Docteur Long" origine="365086537"/>
+<troncon destination="26155372" longueur="152.0" nomRue="Rue du Capitaine" origine="26155376"/>
+<troncon destination="26155372" longueur="68.0" nomRue="Rue Louise" origine="26155373"/>
+<troncon destination="26155373" longueur="65.0" nomRue="Cours Docteur Long" origine="26155374"/>
+<troncon destination="26155373" longueur="65.0" nomRue="Rue Louise" origine="26155382"/>
+<troncon destination="26155374" longueur="83.0" nomRue="Cours Docteur Long" origine="26155375"/>
+<troncon destination="26155375" longueur="74.0" nomRue="Rue Charles Richard" origine="868438829"/>
+<troncon destination="26155376" longueur="68.0" nomRue="Rue Charles Richard" origine="26155375"/>
+<troncon destination="26155377" longueur="154.0" nomRue="Rue Julie" origine="26155378"/>
+<troncon destination="26155377" longueur="60.0" nomRue="Rue Charles Richard" origine="26155376"/>
+<troncon destination="26155378" longueur="154.0" nomRue="Rue Julie" origine="26155377"/>
+<troncon destination="26155378" longueur="25.0" nomRue="Rue Julie" origine="26155379"/>
+<troncon destination="26155378" longueur="61.0" nomRue="Rue Louise" origine="26155372"/>
+<troncon destination="26155379" longueur="100.0" nomRue="Rue du Général Brulard" origine="26155380"/>
+<troncon destination="26155379" longueur="25.0" nomRue="Rue Julie" origine="26155378"/>
+<troncon destination="26155379" longueur="72.0" nomRue="Rue Bonnand" origine="26286689"/>
+<troncon destination="26155380" longueur="100.0" nomRue="Rue du Général Brulard" origine="26155379"/>
+<troncon destination="26155380" longueur="316.0" nomRue="Avenue des Acacias" origine="26317393"/>
+<troncon destination="26155380" longueur="69.0" nomRue="Rue Saint-Isidore" origine="26155367"/>
+<troncon destination="26155381" longueur="50.0" nomRue="Rue Ferdinand Buisson" origine="26155424"/>
+<troncon destination="26155382" longueur="180.0" nomRue="Avenue du Château" origine="26155402"/>
+<troncon destination="26155382" longueur="71.0" nomRue="Rue Louise" origine="26155421"/>
+<troncon destination="26155402" longueur="186.0" nomRue="Avenue du Château" origine="26570169"/>
+<troncon destination="26155402" longueur="79.0" nomRue="Rue Bonnand" origine="26155370"/>
+<troncon destination="26155419" longueur="65.0" nomRue="Avenue du Château" origine="26155382"/>
+<troncon destination="26155419" longueur="65.0" nomRue="Cours Eugénie" origine="26155374"/>
+<troncon destination="26155421" longueur="80.0" nomRue="Rue Ferdinand Buisson" origine="26155498"/>
+<troncon destination="26155423" longueur="137.0" nomRue="Cours Eugénie" origine="26155514"/>
+<troncon destination="26155423" longueur="48.0" nomRue="Rue Ferdinand Buisson" origine="26155421"/>
+<troncon destination="26155423" longueur="64.0" nomRue="Cours Eugénie" origine="4034132513"/>
+<troncon destination="26155424" longueur="49.0" nomRue="Rue Ferdinand Buisson" origine="26155423"/>
+<troncon destination="26155424" longueur="96.0" nomRue="Rue Constant" origine="26155541"/>
+<troncon destination="26155475" longueur="118.0" nomRue="Rue Ferdinand Buisson" origine="624172864"/>
+<troncon destination="26155475" longueur="72.0" nomRue="Rue Bonnand" origine="26155402"/>
+<troncon destination="26155484" longueur="48.0" nomRue="Rue Ferdinand Buisson" origine="26155475"/>
+<troncon destination="26155498" longueur="191.0" nomRue="Rue Viala" origine="388568803"/>
+<troncon destination="26155498" longueur="52.0" nomRue="Rue Ferdinand Buisson" origine="26155484"/>
+<troncon destination="26155514" longueur="137.0" nomRue="Cours Eugénie" origine="26155423"/>
+<troncon destination="26155514" longueur="167.0" nomRue="Cours Eugénie" origine="26155538"/>
+<troncon destination="26155514" longueur="66.0" nomRue="Rue Pierre Bonnaud" origine="26155528"/>
+<troncon destination="26155528" longueur="66.0" nomRue="Rue Pierre Bonnaud" origine="26155514"/>
+<troncon destination="26155528" longueur="71.0" nomRue="Rue Constant" origine="325772328"/>
+<troncon destination="26155538" longueur="167.0" nomRue="Cours Eugénie" origine="26155514"/>
+<troncon destination="26155538" longueur="42.0" nomRue="Cours Eugénie" origine="26464320"/>
+<troncon destination="26155538" longueur="66.0" nomRue="Avenue Lacassagne" origine="325213183"/>
+<troncon destination="26155540" longueur="144.0" nomRue="Rue Jean-Marc Bernard" origine="26155484"/>
+<troncon destination="26155540" longueur="49.0" nomRue="Avenue Lacassagne" origine="325213179"/>
+<troncon destination="26155541" longueur="45.0" nomRue="Rue Constant" origine="26155528"/>
+<troncon destination="26286689" longueur="137.0" nomRue="Rue Julien" origine="26286695"/>
+<troncon destination="26286689" longueur="80.0" nomRue="Rue Bonnand" origine="26286690"/>
+<troncon destination="26286690" longueur="120.0" nomRue="Rue Bonnand" origine="1383027258"/>
+<troncon destination="26286694" longueur="112.0" nomRue="Rue Antoinette" origine="251069553"/>
+<troncon destination="26286694" longueur="67.0" nomRue="Rue Charles Richard" origine="26286695"/>
+<troncon destination="26286694" longueur="91.0" nomRue="Rue Antoinette" origine="26286690"/>
+<troncon destination="26286695" longueur="112.0" nomRue="Rue Julien" origine="26286696"/>
+<troncon destination="26286695" longueur="46.0" nomRue="Rue Charles Richard" origine="26155377"/>
+<troncon destination="26286696" longueur="68.0" nomRue="Rue Louis" origine="251069553"/>
+<troncon destination="26286762" longueur="89.0" nomRue="Rue Charles Richard" origine="26286694"/>
+<troncon destination="26317212" longueur="34.0" nomRue="Rue du Dauphiné" origine="26317248"/>
+<troncon destination="26317246" longueur="72.0" nomRue="Rue Villebois-Mareuil" origine="459797864"/>
+<troncon destination="26317246" longueur="78.0" nomRue="Impasse de la Ruche" origine="1682387619"/>
+<troncon destination="26317248" longueur="193.0" nomRue="Rue de la Ruche" origine="26317246"/>
+<troncon destination="26317248" longueur="29.0" nomRue="Rue du Dauphiné" origine="565375197"/>
+<troncon destination="26317248" longueur="34.0" nomRue="Rue du Dauphiné" origine="26317212"/>
+<troncon destination="26317293" longueur="100.0" nomRue="Rue Feuillat" origine="25303841"/>
+<troncon destination="26317293" longueur="70.0" nomRue="Rue Félix" origine="26317294"/>
+<troncon destination="26317311" longueur="63.0" nomRue="Impasse Morel" origine="26317313"/>
+<troncon destination="26317312" longueur="28.0" nomRue="Rue Claudius Penet" origine="26317313"/>
+<troncon destination="26317313" longueur="28.0" nomRue="Rue Claudius Penet" origine="26317312"/>
+<troncon destination="26317313" longueur="63.0" nomRue="Impasse Morel" origine="26317311"/>
+<troncon destination="26317393" longueur="316.0" nomRue="Avenue des Acacias" origine="26155380"/>
+<troncon destination="26317396" longueur="168.0" nomRue="Rue Saint-Isidore" origine="325772567"/>
+<troncon destination="26464252" longueur="63.0" nomRue="Cours Eugénie" origine="365117230"/>
+<troncon destination="26464252" longueur="71.0" nomRue="Cours Eugénie" origine="26464271"/>
+<troncon destination="26464270" longueur="66.0" nomRue="Cours Eugénie" origine="26464271"/>
+<troncon destination="26464270" longueur="69.0" nomRue="Cours Eugénie" origine="26464316"/>
+<troncon destination="26464271" longueur="195.0" nomRue="Rue Piperoux" origine="26464312"/>
+<troncon destination="26464271" longueur="66.0" nomRue="Cours Eugénie" origine="26464270"/>
+<troncon destination="26464271" longueur="71.0" nomRue="Cours Eugénie" origine="26464252"/>
+<troncon destination="26464311" longueur="107.0" nomRue="Avenue Esquirol" origine="365117223"/>
+<troncon destination="26464311" longueur="20.0" nomRue="Rue Viala" origine="21715425"/>
+<troncon destination="26464312" longueur="195.0" nomRue="Rue Piperoux" origine="26464271"/>
+<troncon destination="26464312" longueur="84.0" nomRue="Rue Viala" origine="3905948463"/>
+<troncon destination="26464313" longueur="182.0" nomRue="Rue Claude Farrère" origine="26464270"/>
+<troncon destination="26464313" longueur="87.0" nomRue="Rue Viala" origine="26464312"/>
+<troncon destination="26464314" longueur="71.0" nomRue="Rue Viala" origine="26464313"/>
+<troncon destination="26464315" longueur="68.0" nomRue="Cours Eugénie" origine="26464316"/>
+<troncon destination="26464315" longueur="93.0" nomRue="Cours Eugénie" origine="26464320"/>
+<troncon destination="26464316" longueur="168.0" nomRue="Rue Martin" origine="26464314"/>
+<troncon destination="26464316" longueur="68.0" nomRue="Cours Eugénie" origine="26464315"/>
+<troncon destination="26464316" longueur="69.0" nomRue="Cours Eugénie" origine="26464270"/>
+<troncon destination="26464319" longueur="127.0" nomRue="Rue Trarieux" origine="26464320"/>
+<troncon destination="26464319" longueur="23.0" nomRue="Rue Viala" origine="26464321"/>
+<troncon destination="26464320" longueur="42.0" nomRue="Cours Eugénie" origine="26155538"/>
+<troncon destination="26464320" longueur="93.0" nomRue="Cours Eugénie" origine="26464315"/>
+<troncon destination="26464321" longueur="47.0" nomRue="Rue Viala" origine="26464322"/>
+<troncon destination="26464322" longueur="22.0" nomRue="Rue Coignet" origine="29003879"/>
+<troncon destination="26464322" longueur="72.0" nomRue="Rue Viala" origine="26464314"/>
+<troncon destination="26464323" longueur="125.0" nomRue="Rue Jean-Marc Bernard" origine="26155540"/>
+<troncon destination="26464323" longueur="60.0" nomRue="Rue Trarieux" origine="26464319"/>
+<troncon destination="26570167" longueur="132.0" nomRue="Impasse Alexandre Aujas" origine="2865089011"/>
+<troncon destination="26570167" longueur="49.0" nomRue="Rue du Professeur Rochaix" origine="25303799"/>
+<troncon destination="26570169" longueur="37.0" nomRue="Avenue Lacassagne" origine="434308458"/>
+<troncon destination="2865054509" longueur="45.0" nomRue="Impasse Lamartine" origine="2865054511"/>
+<troncon destination="2865054509" longueur="63.0" nomRue="Rue Lamartine" origine="25303836"/>
+<troncon destination="2865054509" longueur="84.0" nomRue="Rue Lamartine" origine="25303839"/>
+<troncon destination="2865054511" longueur="45.0" nomRue="Impasse Lamartine" origine="2865054509"/>
+<troncon destination="2865089011" longueur="132.0" nomRue="Impasse Alexandre Aujas" origine="26570167"/>
+<troncon destination="29003879" longueur="131.0" nomRue="Rue Coignet" origine="26464315"/>
+<troncon destination="29003879" longueur="48.0" nomRue="Rue Viala" origine="29003880"/>
+<troncon destination="29003880" longueur="14.0" nomRue="Rue Viala" origine="26464321"/>
+<troncon destination="29003880" longueur="23.0" nomRue="Rue Viala" origine="26464319"/>
+<troncon destination="29006600" longueur="126.0" nomRue="Promenade Léa et Napoléon Bullukian" origine="21702435"/>
+<troncon destination="29006600" longueur="26.0" nomRue="Rue Jean Perréal" origine="21604592"/>
+<troncon destination="293585811" longueur="54.0" nomRue="Rue du Docteur Bonhomme" origine="7300862"/>
+<troncon destination="293585811" longueur="73.0" nomRue="Impasse des Platanes" origine="293585812"/>
+<troncon destination="293585812" longueur="73.0" nomRue="Impasse des Platanes" origine="293585811"/>
+<troncon destination="325213175" longueur="57.0" nomRue="Rue Trarieux" origine="26464323"/>
+<troncon destination="325213179" longueur="144.0" nomRue="Rue Jean Quitout" origine="325213175"/>
+<troncon destination="325213179" longueur="95.0" nomRue="Avenue Lacassagne" origine="25303807"/>
+<troncon destination="325213183" longueur="117.0" nomRue="Impasse Charles Lindbergh" origine="325213187"/>
+<troncon destination="325213183" longueur="79.0" nomRue="Avenue Lacassagne" origine="388568803"/>
+<troncon destination="325213187" longueur="117.0" nomRue="Impasse Charles Lindbergh" origine="325213183"/>
+<troncon destination="325772567" longueur="3.0" nomRue="" origine="365087270"/>
+<troncon destination="325772567" longueur="60.0" nomRue="Rue Saint-Isidore" origine="26155380"/>
+<troncon destination="3405342345" longueur="92.0" nomRue="Cours Docteur Long" origine="25303839"/>
+<troncon destination="365086531" longueur="2.0" nomRue="Rue Bonnand" origine="26155369"/>
+<troncon destination="365086531" longueur="24.0" nomRue="Rue Bonnand" origine="365086537"/>
+<troncon destination="365086537" longueur="101.0" nomRue="Cours Docteur Long" origine="26155373"/>
+<troncon destination="365086537" longueur="24.0" nomRue="Rue Bonnand" origine="365086531"/>
+<troncon destination="365087270" longueur="3.0" nomRue="" origine="325772567"/>
+<troncon destination="365117223" longueur="105.0" nomRue="Avenue Esquirol" origine="26464252"/>
+<troncon destination="365117223" longueur="8.0" nomRue="" origine="365117235"/>
+<troncon destination="365117230" longueur="63.0" nomRue="Cours Eugénie" origine="26464252"/>
+<troncon destination="365117230" longueur="9.0" nomRue="" origine="365117238"/>
+<troncon destination="365117235" longueur="8.0" nomRue="" origine="365117223"/>
+<troncon destination="365117238" longueur="9.0" nomRue="" origine="365117230"/>
+<troncon destination="3760085988" longueur="1.0" nomRue="Rue Nungesser et Coli" origine="21715353"/>
+<troncon destination="3760085988" longueur="7.0" nomRue="Rue Nungesser et Coli" origine="644880770"/>
+<troncon destination="388568803" longueur="101.0" nomRue="Rue Viala" origine="26464319"/>
+<troncon destination="388568803" longueur="61.0" nomRue="Avenue Lacassagne" origine="26155540"/>
+<troncon destination="3905948463" longueur="7.0" nomRue="Rue Viala" origine="26464311"/>
+<troncon destination="4034132513" longueur="9.0" nomRue="Cours Eugénie" origine="26155419"/>
+<troncon destination="434308458" longueur="41.0" nomRue="Avenue Lacassagne" origine="2365376413"/>
+<troncon destination="434308458" longueur="44.0" nomRue="Place Henri" origine="3405342345"/>
+<troncon destination="459797860" longueur="61.0" nomRue="Rue de Domrémy" origine="251047560"/>
+<troncon destination="459797860" longueur="65.0" nomRue="Rue de Domrémy" origine="251047558"/>
+<troncon destination="459797860" longueur="90.0" nomRue="Passage Feuillat" origine="25321687"/>
+<troncon destination="459797864" longueur="64.0" nomRue="Impasse Lacombe" origine="459797866"/>
+<troncon destination="459797866" longueur="64.0" nomRue="Impasse Lacombe" origine="459797864"/>
+<troncon destination="564740277" longueur="27.0" nomRue="Avenue Rockefeller" origine="21715425"/>
+<troncon destination="564740277" longueur="30.0" nomRue="Rue Viala" origine="3905948463"/>
+<troncon destination="564766082" longueur="30.0" nomRue="Avenue Rockefeller" origine="21715425"/>
+<troncon destination="564766082" longueur="7.0" nomRue="Rue Montvert" origine="2512682814"/>
+<troncon destination="565375197" longueur="116.0" nomRue="Impasse Belloeuf" origine="1682387615"/>
+<troncon destination="565375197" longueur="29.0" nomRue="Rue du Dauphiné" origine="26317248"/>
+<troncon destination="565375197" longueur="63.0" nomRue="Rue du Dauphiné" origine="26125366"/>
+<troncon destination="624172864" longueur="17.0" nomRue="Avenue Lacassagne" origine="25303804"/>
+<troncon destination="640541652" longueur="44.0" nomRue="Rue Bara" origine="2129259173"/>
+<troncon destination="640541652" longueur="86.0" nomRue="" origine="1603856892"/>
+<troncon destination="644880770" longueur="354.0" nomRue="Avenue Rockefeller" origine="564740277"/>
+<troncon destination="644880770" longueur="7.0" nomRue="Rue Nungesser et Coli" origine="3760085988"/>
+<troncon destination="649791301" longueur="116.0" nomRue="" origine="649791305"/>
+<troncon destination="649791301" longueur="45.0" nomRue="Rue Trarieux" origine="325213175"/>
+<troncon destination="649791305" longueur="116.0" nomRue="" origine="649791301"/>
+<troncon destination="7300862" longueur="104.0" nomRue="Cours Albert Thomas" origine="7300874"/>
+<troncon destination="7300862" longueur="33.0" nomRue="Rue du Docteur Bonhomme" origine="1519682880"/>
+<troncon destination="7300867" longueur="32.0" nomRue="Avenue des Frères Lumière" origine="245957281"/>
+<troncon destination="7300867" longueur="79.0" nomRue="Rue du Docteur Bonhomme" origine="293585811"/>
+<troncon destination="7300869" longueur="203.0" nomRue="Rue Maryse Bastié" origine="21702417"/>
+<troncon destination="7300869" longueur="70.0" nomRue="Avenue des Frères Lumière" origine="21704353"/>
+<troncon destination="7300874" longueur="108.0" nomRue="Rue Maryse Bastié" origine="7300869"/>
+<troncon destination="7300874" longueur="187.0" nomRue="Cours Albert Thomas" origine="24640391"/>
+<troncon destination="868438829" longueur="62.0" nomRue="Rue Charles Richard" origine="26155381"/>
+<troncon destination="868438829" longueur="84.0" nomRue="Place du Château" origine="4034132513"/>
+</reseau>
+
