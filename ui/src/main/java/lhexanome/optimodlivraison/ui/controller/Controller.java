@@ -1,10 +1,9 @@
 package lhexanome.optimodlivraison.ui.controller;
 
-import lhexanome.optimodlivraison.platform.models.DemandeLivraison;
-import lhexanome.optimodlivraison.platform.models.Plan;
-import lhexanome.optimodlivraison.platform.models.Tournee;
+import lhexanome.optimodlivraison.platform.models.*;
 import lhexanome.optimodlivraison.ui.controller.states.*;
 import lhexanome.optimodlivraison.ui.orderaction.OrderEditorWindow;
+import lhexanome.optimodlivraison.ui.planpreview.FackUtile;
 import lhexanome.optimodlivraison.ui.planpreview.PlanPreviewActions;
 import lhexanome.optimodlivraison.ui.planpreview.PlanPreviewWindow;
 import lhexanome.optimodlivraison.ui.demandpreview.DemandPreviewActions;
@@ -43,6 +42,16 @@ public class Controller implements WelcomeActions, PlanPreviewActions, DemandPre
 
 
     public Controller() {
+
+        //TODO REMOVE IT
+        plan = FackUtile.fackPlanDataMoyen();
+        demand = new DemandeLivraison();
+        demand.addDelivery(new Livraison(){{setIntersection(new Intersection(){{setX(42940);setY(62174);}});}});
+        demand.addDelivery(new Livraison(){{setIntersection(new Intersection(){{setX(61081);setY(61329);}});}});
+        demand.addDelivery(new Livraison(){{setIntersection(new Intersection(){{setX(78631);setY(62502);}});}});
+        demand.addDelivery(new Livraison(){{setIntersection(new Intersection(){{setX(65737);setY(70280);}});}});
+        demand.setBeginning(new Intersection(){{setX(64752);setY(62097);}});
+        tournee = FackUtile.fackTournee();
 
         welcomeWindow = new WelcomeWindow(this);
         planPreviewWindow = new PlanPreviewWindow(this);

@@ -23,7 +23,7 @@ public class ChoosePlanState extends DefaultState {
 
     @Override
     public void selectPlan(PlanPreviewWindow nextWindow, File xmlPlanFile) {
-        Element elementPlan = null;
+        /*Element elementPlan = null;
         try {
             MapParser mapParser = new MapParser();
             elementPlan = LoadFile.loadFromFile(xmlPlanFile);
@@ -32,7 +32,7 @@ public class ChoosePlanState extends DefaultState {
             // TODO
             e.printStackTrace();
         }
-
+*/
         this.window.close();
 
         nextWindow.setPlan(controller.plan);

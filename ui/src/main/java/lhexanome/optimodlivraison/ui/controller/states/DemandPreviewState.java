@@ -15,6 +15,9 @@ public class DemandPreviewState extends DefaultState {
     public void clickComputeTour(OrderEditorWindow nextWindow) {//TODO
 
         nextWindow.open();
+        nextWindow.setPlan(controller.plan);
+        nextWindow.setDemand(controller.demand);
+        nextWindow.setTournee(controller.tournee);
         this.window.close();
         controller.setCurrentState(controller.orderEditorState);
     }
