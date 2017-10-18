@@ -303,6 +303,7 @@ public class MapParserTest {
     void shouldCreatePlanCorrectly() throws ParseMapException {
 
         // With
+
         // When
 
         Plan plan = mapParser.parseMap(rootElement);

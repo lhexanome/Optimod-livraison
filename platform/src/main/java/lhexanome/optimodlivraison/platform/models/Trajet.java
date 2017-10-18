@@ -36,7 +36,7 @@ public class Trajet {
      */
     public float getTimeForTravel() {
         for (Troncon t : listOfTroncon) {
-            time = time + t.timeToTravel();
+            time = time + t.getTimeToTravel();
         }
         return time;
     }

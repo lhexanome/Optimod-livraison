@@ -108,11 +108,12 @@ public class MapParser {
             }
 
             if (toAdd[0]) {
-                Troncon troncon = new Troncon();
-                troncon.setDestination(nodeMap.get(destination));
-                troncon.setOrigine(nodeMap.get(origin));
-                troncon.setLength(length);
-                troncon.setNameStreet(streetName);
+                Troncon troncon = new Troncon(
+                        nodeMap.get(origin),
+                        nodeMap.get(destination),
+                        streetName,
+                        length
+                );
                 plan.addTroncon(troncon.getOrigine(), troncon);
             }
         }
