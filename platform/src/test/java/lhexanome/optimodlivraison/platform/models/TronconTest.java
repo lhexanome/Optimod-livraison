@@ -13,7 +13,6 @@ public class TronconTest {
         Intersection intersection1 = new Intersection(124L, 115,120);
 
         //When
-        intersection.setId(1256);
         troncon.setDestination(intersection);
 
         //Then
@@ -29,7 +28,6 @@ public class TronconTest {
         Intersection intersection1 = new Intersection(126L , 135,140);
 
         //When
-        intersection.setId(5687);
         troncon.setOrigine(intersection);
 
         //Then

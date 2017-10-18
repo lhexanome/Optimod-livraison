@@ -31,7 +31,6 @@ public class LivraisonTest {
         Intersection intersection = new Intersection(320L,195,1995);
 
         //When
-        intersection.setId(1234);
         deliveries.setIntersection(intersection);
 
         //Then

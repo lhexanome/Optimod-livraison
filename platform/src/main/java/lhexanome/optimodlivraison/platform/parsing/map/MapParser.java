@@ -55,10 +55,11 @@ public class MapParser {
                 throw new ParseMapException("Node id already exists!");
             }
 
-            Intersection intersection = new Intersection(123L,10,15);
-            intersection.setId(id);
-            intersection.setX(Integer.parseInt(node.getAttributeValue("x")));
-            intersection.setY(Integer.parseInt(node.getAttributeValue("y")));
+            Intersection intersection = new Intersection(
+                    id,
+                    Integer.parseInt(node.getAttributeValue("x")),
+                    Integer.parseInt(node.getAttributeValue("y"))
+            );
 
             nodeMap.put(id, intersection);
         }

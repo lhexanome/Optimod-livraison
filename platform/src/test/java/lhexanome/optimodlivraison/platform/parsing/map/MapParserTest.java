@@ -105,10 +105,8 @@ public class MapParserTest {
         // With
 
         Map<Long, Intersection> map = new HashMap<>(2);
-        Intersection intersection = new Intersection(987L,654,321);
-        intersection.setId(1L);
-        Intersection intersection2 = new Intersection(963L,852,741);
-        intersection2.setId(2L);
+        Intersection intersection = new Intersection(1L,654,321);
+        Intersection intersection2 = new Intersection(2L,852,741);
 
         map.put(1L, intersection);
         map.put(2L, intersection2);
@@ -129,10 +127,8 @@ public class MapParserTest {
         // With
 
         Map<Long, Intersection> map = new HashMap<>(2);
-        Intersection intersection = new Intersection(987L,654,321);
-        intersection.setId(1L);
-        Intersection intersection2 = new Intersection(963L,852,741);
-        intersection2.setId(2L);
+        Intersection intersection = new Intersection(1L,654,321);
+        Intersection intersection2 = new Intersection(2L,852,741);
 
         map.put(1L, intersection);
         map.put(2L, intersection2);
@@ -157,10 +153,8 @@ public class MapParserTest {
         // With
 
         Map<Long, Intersection> map = new HashMap<>(2);
-        Intersection intersection = new Intersection(987L,654,321);
-        intersection.setId(1L);
-        Intersection intersection2 = new Intersection(963L,852,741);
-        intersection2.setId(2L);
+        Intersection intersection = new Intersection(1L,654,321);
+        Intersection intersection2 = new Intersection(2L,852,741);
 
         map.put(1L, intersection);
         map.put(2L, intersection2);
@@ -185,10 +179,8 @@ public class MapParserTest {
         // With
 
         Map<Long, Intersection> map = new HashMap<>(2);
-        Intersection intersection = new Intersection(987L,654,321);
-        intersection.setId(1L);
-        Intersection intersection2 = new Intersection(963L,852,741);
-        intersection2.setId(2L);
+        Intersection intersection = new Intersection(1L,654,321);
+        Intersection intersection2 = new Intersection(2L,852,741);
 
         map.put(1L, intersection);
         map.put(2L, intersection2);
@@ -212,10 +204,8 @@ public class MapParserTest {
         // With
 
         Map<Long, Intersection> map = new HashMap<>(2);
-        Intersection intersection = new Intersection(987L,654,321);
-        intersection.setId(1L);
-        Intersection intersection2 = new Intersection(963L,852,741);
-        intersection2.setId(2L);
+        Intersection intersection = new Intersection(1L,654,321);
+        Intersection intersection2 = new Intersection(2L,852,741);
 
         map.put(1L, intersection);
         map.put(2L, intersection2);
@@ -237,10 +227,8 @@ public class MapParserTest {
         // With
 
         Map<Long, Intersection> map = new HashMap<>(2);
-        Intersection intersection = new Intersection(987L,654,321);
-        intersection.setId(1L);
-        Intersection intersection2 = new Intersection(963L,852,741);
-        intersection2.setId(2L);
+        Intersection intersection = new Intersection(1L,654,321);
+        Intersection intersection2 = new Intersection(2L,852,741);
 
         map.put(1L, intersection);
         map.put(2L, intersection2);
@@ -262,10 +250,8 @@ public class MapParserTest {
         // With
 
         Map<Long, Intersection> map = new HashMap<>(2);
-        Intersection intersection = new Intersection(987L,654,321);
-        intersection.setId(1L);
-        Intersection intersection2 = new Intersection(963L,852,741);
-        intersection2.setId(2L);
+        Intersection intersection = new Intersection(1L,654,321);
+        Intersection intersection2 = new Intersection(2L,852,741);
 
         map.put(1L, intersection);
         map.put(2L, intersection2);
@@ -290,12 +276,9 @@ public class MapParserTest {
         // With
 
         Map<Long, Intersection> map = new HashMap<>(2);
-        Intersection intersection = new Intersection(987L,654,321);
-        intersection.setId(1L);
-        Intersection intersection2 = new Intersection(963L,852,741);
-        intersection2.setId(2L);
-        Intersection intersection3 = new Intersection(951L,843,762);
-        intersection3.setId(3L);
+        Intersection intersection = new Intersection(1L,654,321);
+        Intersection intersection2 = new Intersection(2L,852,741);
+        Intersection intersection3 = new Intersection(3L,843,762);
 
         map.put(1L, intersection);
         map.put(2L, intersection2);
