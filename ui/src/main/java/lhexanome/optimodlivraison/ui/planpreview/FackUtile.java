@@ -481,7 +481,8 @@ public class FackUtile {
         for(int i=0;i<5;i++){
 
             Trajet t = new Trajet();
-            List<Troncon> troncons = t.getListOfTroncon();
+            List<Troncon> troncons = new ArrayList<>();
+            t.setListOfTroncon(troncons);
 
             int[][] data_ = data[(int) (Math.random() * data.length)];
             int index = (int) (Math.random() * data_.length-10);
@@ -495,6 +496,6 @@ public class FackUtile {
         }
 
         res.setDeliveries(trajets);
-        return  res;
+        return res;
     }
 }

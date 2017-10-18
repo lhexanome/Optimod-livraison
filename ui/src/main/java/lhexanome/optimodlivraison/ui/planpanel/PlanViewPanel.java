@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.Map;
+import java.util.function.Consumer;
 
 public class PlanViewPanel extends JPanel {
 
@@ -118,8 +119,30 @@ public class PlanViewPanel extends JPanel {
         if(plan != null){
             //TODO remove wacher
         }
+
         this.plan = plan;
 
+        if(plan.getIntersectionCount()>0) {
+            Point min = new Point(Integer.MAX_VALUE, Integer.MAX_VALUE);
+            Point max = new Point(Integer.MIN_VALUE, Integer.MIN_VALUE);
+            plan.getIntersections().forEach(intersection -> {
+                if (min.x > intersection.getX()) min.x = intersection.getX();
+                if (min.y > intersection.getY()) min.y = intersection.getY();
+                if (max.x < intersection.getX()) max.x = intersection.getX();
+                if (max.y < intersection.getY()) max.y = intersection.getY();
+            });
+            float scal = Math.min(
+                    1080f / (max.x-min.x),
+                    720f / (max.y-min.y)
+            );
+
+            scalX = scal;
+            scalY = scal;
+            offsetX = ((min.x-max.x)/2 - min.x) * scal;
+            offsetY = ((min.y-max.y)/2 - min.y) * scal;
+
+
+        }
         //TODO add wacher
     }
 

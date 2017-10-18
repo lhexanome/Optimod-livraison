@@ -1,5 +1,9 @@
 package lhexanome.optimodlivraison.ui.controller.states;
 
+import lhexanome.optimodlivraison.platform.exceptions.MapException;
+import lhexanome.optimodlivraison.platform.facade.MapFacade;
+import lhexanome.optimodlivraison.platform.listeners.MapListener;
+import lhexanome.optimodlivraison.platform.models.Plan;
 import lhexanome.optimodlivraison.platform.parsing.common.LoadFile;
 import lhexanome.optimodlivraison.platform.parsing.map.MapParser;
 import lhexanome.optimodlivraison.ui.controller.Controller;
@@ -23,20 +27,37 @@ public class ChoosePlanState extends DefaultState {
 
     @Override
     public void selectPlan(PlanPreviewWindow nextWindow, File xmlPlanFile) {
-        /*Element elementPlan = null;
-        try {
-            MapParser mapParser = new MapParser();
-            elementPlan = LoadFile.loadFromFile(xmlPlanFile);
-            controller.plan = mapParser.parseMap(elementPlan);
-        } catch (Exception e) {
-            // TODO
-            e.printStackTrace();
-        }
-*/
-        this.window.close();
 
-        nextWindow.setPlan(controller.plan);
-        nextWindow.open();
-        controller.setCurrentState(controller.planPreviewState);
+        MapFacade mapFacade = new MapFacade();
+        mapFacade.addOnUpdateMapListener(new MapListener() {
+            @Override
+            public void onUpdateMap(Plan plan) {
+
+                controller.plan = plan;
+                nextWindow.setPlan(plan);
+
+                window.close();
+                //TODO window.setLoad(false);
+                nextWindow.open();
+                controller.setCurrentState(controller.planPreviewState);
+            }
+
+            @Override
+            public void onFailUpdateMap(MapException e) {
+
+                //TODO window.setLoad(false);
+                //TODO window.sendError(e.getMessage());
+
+                //TODO Log
+                System.err.println(e.getMessage());
+
+                controller.setCurrentState(controller.planPreviewState);
+
+            }
+        });
+
+        // TODO window.setLoad(true);
+        mapFacade.loadMapFromFile(xmlPlanFile);
+
     }
 }
