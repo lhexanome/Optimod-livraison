@@ -1,9 +1,10 @@
 package lhexanome.optimodlivraison.ui.planpreview;
 
-import lhexanome.optimodlivraison.platform.models.Intersection;
-import lhexanome.optimodlivraison.platform.models.Troncon;
+import lhexanome.optimodlivraison.platform.models.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class FackUtile {
@@ -460,13 +461,40 @@ public class FackUtile {
         return planTemp;
     }
 
-    public static Map<Intersection, Troncon> fackPlanDataMoyen(){
+    public static Plan fackPlanDataMoyen(){
 
-        Map<Intersection, Troncon> planTemp = new HashMap<>();
+        Plan planTemp = new Plan();
         for(int[] t:getTmp1())
-            planTemp.put(fackIntersection(t[0],t[1]),fackTroncon(t[0],t[1],t[2],t[3]));
+            planTemp.addTroncon(fackIntersection(t[0],t[1]),fackTroncon(t[0],t[1],t[2],t[3]));
         for(int[] t:getTmp2())
-            planTemp.put(fackIntersection(t[0],t[1]),fackTroncon(t[0],t[1],t[2],t[3]));
+            planTemp.addTroncon(fackIntersection(t[0],t[1]),fackTroncon(t[0],t[1],t[2],t[3]));
         return planTemp;
+    }
+
+    public static Tournee fackTournee() {
+        Tournee res = new Tournee();
+        int[][][] data = {getTmp1(),getTmp2()};
+
+
+        List<Trajet> trajets = new ArrayList<>();
+
+        for(int i=0;i<5;i++){
+
+            Trajet t = new Trajet();
+            List<Troncon> troncons = t.getListOfTroncon();
+
+            int[][] data_ = data[(int) (Math.random() * data.length)];
+            int index = (int) (Math.random() * data_.length-10);
+
+            for(int j=0;j<10;j++){
+                int[] data__ = data_[index+j];
+                troncons.add(fackTroncon(data__[0],data__[1],data__[2],data__[3]));
+            }
+
+            trajets.add(t);
+        }
+
+        res.setDeliveries(trajets);
+        return  res;
     }
 }

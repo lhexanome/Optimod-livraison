@@ -23,18 +23,39 @@ public class PlanViewPanel extends JPanel {
     private boolean moove = false;
 
     protected void paintComponent(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g;
         super.paintComponent(g);
 
             // TODO replace planTemp by plan.[getData]()
-            getPlan(plan).forEach((intersection, troncon) -> paintComponent(g, troncon));
+            if(plan != null) {
+                g.setColor(Color.BLACK);
+                g2.setStroke(new BasicStroke(1));
+                plan.getTroncons().forEach((troncon) -> paintComponent(g, troncon));
+            }
+            if(tournee != null){
+                g.setColor(Color.GREEN);
+                g2.setStroke(new BasicStroke(2));
+                tournee.getDeliveries().forEach(trajet -> trajet.getListOfTroncon().forEach(troncon -> paintComponent(g, troncon)));
+            }
+            if(demande != null){
+                g.setColor(Color.BLUE);
+                g2.setStroke(new BasicStroke(3));
+                demande.getDeliveries().forEach(livraison -> paintComponent(g, livraison.getIntersection()));
+                g.setColor(Color.RED);
+                paintComponent(g, demande.getBeginning());
+            }
     }
 
-    // TODO REMOVE THIS!!!!!!!!
-    private Map<Intersection, Troncon> getPlan(Plan plan) {
-        return FackUtile.fackPlanDataMoyen();
-    }
+    protected void paintComponent(Graphics g, Intersection intersection){
 
+        float x = this.offsetX + getSize().width / 2 + intersection.getX() * scalX;
+        float y = this.offsetY + getSize().height / 2 + intersection.getY() * scalY;
+
+        g.drawOval((int)x-2,(int)y-2,4,4);
+
+    }
     protected void paintComponent(Graphics g, Troncon troncon){
+
         Intersection origine = troncon.getOrigine();
         Intersection destination = troncon.getDestination();
         float offsetX = this.offsetX + getSize().width / 2;
