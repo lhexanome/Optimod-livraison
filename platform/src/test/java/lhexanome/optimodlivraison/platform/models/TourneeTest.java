@@ -23,7 +23,7 @@ public class TourneeTest {
     static void createTourneeObjects(){
         Intersection intersection = new Intersection();
         Calendar c = Calendar.getInstance();
-        c.set(2017,01,01,8,30,00);
+        c.set(2017,Calendar.OCTOBER,1,8,30,0);
         Date strat = c.getTime();
         tourneeTested = new Tournee(intersection,strat,5);
     }
@@ -32,7 +32,7 @@ public class TourneeTest {
     void shouldSetdeliveries(){
         //With
 
-        List<Trajet> roundList = new ArrayList<Trajet>();
+        List<Trajet> roundList = new ArrayList<>();
 
         //When
         tourneeTested.setDeliveries(roundList);
