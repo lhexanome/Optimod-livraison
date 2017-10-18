@@ -31,8 +31,7 @@ public class DemandeLivraisonTest {
     void shouldSetBeginning(){
         //With
         DemandeLivraison deliveriesRequest = new DemandeLivraison();
-        Intersection intersection = new Intersection();
-        intersection.setId(85697);
+        Intersection intersection = new Intersection(10101L,1254,1265);
 
         //When
         deliveriesRequest.setBeginning(intersection);

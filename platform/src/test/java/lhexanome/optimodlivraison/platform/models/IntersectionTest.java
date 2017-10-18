@@ -1,45 +1,65 @@
 package lhexanome.optimodlivraison.platform.models;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import java.util.Calendar;
+import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class IntersectionTest {
+    static Intersection intersectionTested;
+
+    @BeforeAll
+    static void createTourneeObjects(){
+        intersectionTested = new Intersection(20368L,1024,1025);
+    }
+
+    @Test
+    void shouldConstructCorrectly() {
+        // With
+
+        // When
+        Intersection intersection = new Intersection(20299L,147,258);
+
+        // Then
+        assertEquals(20299L, intersection.getId());
+        assertEquals(147, intersection.getX());
+        assertEquals(258, intersection.getY());
+    }
 
     @Test
     void shouldSetX() {
         // With
-        Intersection intersection = new Intersection();
 
         // When
-        intersection.setX(1234);
+        intersectionTested.setX(1234);
 
         // Then
-        assertEquals(1234, intersection.getX());
+        assertEquals(1234, intersectionTested.getX());
     }
 
     @Test
     void shouldSetY() {
         // With
-        Intersection intersection = new Intersection();
 
         // When
-        intersection.setY(1234);
+        intersectionTested.setY(1234);
 
         // Then
-        assertEquals(1234, intersection.getY());
+        assertEquals(1234, intersectionTested.getY());
     }
 
     @Test
     void shouldSetId() {
         // With
-        Intersection intersection = new Intersection();
 
         // When
-        intersection.setId(1234L);
+        intersectionTested.setId(1234L);
 
         // Then
-        assertEquals(1234L, intersection.getId());
+        assertEquals(1234L, intersectionTested.getId());
     }
 }

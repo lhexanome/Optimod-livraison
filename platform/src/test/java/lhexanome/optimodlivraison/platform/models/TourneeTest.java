@@ -21,7 +21,7 @@ public class TourneeTest {
 
     @BeforeAll
     static void createTourneeObjects(){
-        Intersection intersection = new Intersection();
+        Intersection intersection = new Intersection(523L,1024,1025);
         Calendar c = Calendar.getInstance();
         c.set(2017,Calendar.OCTOBER,1,8,30,0);
         Date strat = c.getTime();
@@ -57,7 +57,7 @@ public class TourneeTest {
     @Test
     void shouldSetWarehouse(){
         //With
-        Intersection intersection = new Intersection();
+        Intersection intersection = new Intersection(599L,102,103);
 
         //When
         tourneeTested.setWarehouse(intersection);

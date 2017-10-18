@@ -9,8 +9,8 @@ public class TronconTest {
     void shouldSetDestination() {
         //With
         Troncon troncon = new Troncon();
-        Intersection intersection = new Intersection();
-        Intersection intersection1 = new Intersection();
+        Intersection intersection = new Intersection(123L , 105,110);
+        Intersection intersection1 = new Intersection(124L, 115,120);
 
         //When
         intersection.setId(1256);
@@ -25,8 +25,8 @@ public class TronconTest {
 
         //With
         Troncon troncon = new Troncon();
-        Intersection intersection = new Intersection();
-        Intersection intersection1 = new Intersection();
+        Intersection intersection = new Intersection(125L , 125,130);
+        Intersection intersection1 = new Intersection(126L , 135,140);
 
         //When
         intersection.setId(5687);
@@ -41,8 +41,8 @@ public class TronconTest {
 
         //With
         Troncon troncon = new Troncon();
-        Intersection intersection = new Intersection();
-        Intersection intersection1 = new Intersection();
+        Intersection intersection = new Intersection(127L , 145,150);
+        Intersection intersection1 = new Intersection(128L , 155,160);
 
         //When
         troncon.setNameStreet("Rue de la liberte");
@@ -56,8 +56,8 @@ public class TronconTest {
 
         //With
         Troncon troncon = new Troncon();
-        Intersection intersection = new Intersection();
-        Intersection intersection1 = new Intersection();
+        Intersection intersection = new Intersection(129L , 165,1570);
+        Intersection intersection1 = new Intersection(130L , 175,180);
 
         //When
         troncon.setLength(22);
@@ -70,8 +70,8 @@ public class TronconTest {
 
         //With
         Troncon troncon = new Troncon();
-        Intersection intersection = new Intersection();
-        Intersection intersection1 = new Intersection();
+        Intersection intersection = new Intersection(131L , 185,1590);
+        Intersection intersection1 = new Intersection(132L , 195,200);
 
         //When
         troncon.setLength(22);

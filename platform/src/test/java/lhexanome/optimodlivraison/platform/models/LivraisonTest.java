@@ -28,7 +28,7 @@ public class LivraisonTest {
     void shouldSetIntersection(){
         //With
         Livraison deliveries = new Livraison();
-        Intersection intersection = new Intersection();
+        Intersection intersection = new Intersection(320L,195,1995);
 
         //When
         intersection.setId(1234);

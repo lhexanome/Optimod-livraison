@@ -26,8 +26,7 @@ public class TrajetTest {
     void shouldSetStart(){
         //With
         Trajet journey = new Trajet();
-        Intersection intersection = new Intersection();
-        intersection.setId(5249);
+        Intersection intersection = new Intersection(601L,123,456);
 
         //When
         journey.setStart(intersection);
@@ -40,8 +39,7 @@ public class TrajetTest {
     void shouldSetEnd(){
         //With
         Trajet journey = new Trajet();
-        Intersection intersection = new Intersection();
-        intersection.setId(7319);
+        Intersection intersection = new Intersection(602L,789,456);
 
         //When
         journey.setEnd(intersection);
