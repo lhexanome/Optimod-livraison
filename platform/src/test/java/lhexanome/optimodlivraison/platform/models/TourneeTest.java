@@ -1,11 +1,14 @@
 package lhexanome.optimodlivraison.platform.models;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.DateTimeException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -14,59 +17,65 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TourneeTest {
 
+    static Tournee  tourneeTested;
+
+    @BeforeAll
+    static void createTourneeObjects(){
+        Intersection intersection = new Intersection();
+        Calendar c = Calendar.getInstance();
+        c.set(2017,01,01,8,30,00);
+        Date strat = c.getTime();
+        tourneeTested = new Tournee(intersection,strat,5);
+    }
+
     @Test
     void shouldSetdeliveries(){
         //With
-        Tournee round = new Tournee();
+
         List<Trajet> roundList = new ArrayList<Trajet>();
-        Trajet journey = new Trajet();
-        journey.setTime(123);
-        roundList.add(journey);
 
         //When
-        round.setDeliveries(roundList);
+        tourneeTested.setDeliveries(roundList);
 
         //Then
-        assertEquals(roundList,round.getDeliveries());
+        assertEquals(roundList,tourneeTested.getDeliveries());
     }
 
     @Test
     void shouldSetStart() throws ParseException {
         //With
-        Tournee round = new Tournee();
         DateFormat dateFormat = new SimpleDateFormat("DD-MM-YY HH:mm");
         Date start = dateFormat.parse("15-02-17 12:55");
 
         //When
-        round.setStart(start);
+        tourneeTested.setStart(start);
 
         //Then
-        assertEquals(start,round.getStart());
+        assertEquals(start,tourneeTested.getStart());
     }
 
     @Test
     void shouldSetWarehouse(){
         //With
-        Tournee round = new Tournee();
         Intersection intersection = new Intersection();
-        intersection.setId(5L);
 
         //When
-        round.setWarehouse(intersection);
+        tourneeTested.setWarehouse(intersection);
 
         //Then
-        assertEquals(intersection,round.getWarehouse());
+        assertEquals(intersection,tourneeTested.getWarehouse());
     }
 
     @Test
     void shouldSetTime(){
         //With
-        Tournee round = new Tournee();
 
         //When
-        round.setTime(52);
+        tourneeTested.setTime(52);
 
         //Then
-        assertEquals(52, round.getTime());
+        assertEquals(52, tourneeTested.getTime());
     }
+
+
 }
