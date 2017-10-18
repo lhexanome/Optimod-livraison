@@ -1,6 +1,7 @@
 package lhexanome.optimodlivraison.platform.models;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.text.DateFormat;
@@ -17,10 +18,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TourneeTest {
 
-    static Tournee  tourneeTested;
+    Tournee  tourneeTested;
 
-    @BeforeAll
-    static void createTourneeObjects(){
+    @BeforeEach
+    void createTourneeObjects(){
         Intersection intersection = new Intersection(523L,1024,1025);
         Calendar c = Calendar.getInstance();
         c.set(2017,Calendar.OCTOBER,1,8,30,0);

@@ -1,16 +1,17 @@
 package lhexanome.optimodlivraison.platform.models;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TronconTest {
 
-    static Troncon tronconTested;
+    Troncon tronconTested;
 
-    @BeforeAll
-    static void createTourneeObjects(){
+    @BeforeEach
+    void createTourneeObjects(){
         tronconTested = new Troncon(
                 new Intersection(1L,101,102),
                 new Intersection(2L,201,202),

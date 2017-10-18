@@ -1,6 +1,7 @@
 package lhexanome.optimodlivraison.platform.models;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Calendar;
@@ -10,10 +11,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class IntersectionTest {
-    static Intersection intersectionTested;
+    Intersection intersectionTested;
 
-    @BeforeAll
-    static void createTourneeObjects(){
+    @BeforeEach
+    void createTourneeObjects(){
         intersectionTested = new Intersection(20368L,1024,1025);
     }
 
