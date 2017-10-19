@@ -36,11 +36,7 @@ public class PlanSimplifie {
      * reference a la demande de livraison chargee.
      */
     private DemandeLivraison demandeLivraison;
-    /**
-     * map stockant le graphe sous la forme d'une association de livraisons
-     * et de trajets partant de ces livraisons.
-     */
-    private Map<Arret, Trajet> graphe;
+    private Map<Arret, ArrayList<Trajet>> graphe;
 
     /***
      * constructeur par defaut.
@@ -75,9 +71,10 @@ public class PlanSimplifie {
         for (Arret s : ptsArret) {
             ArrayList<Trajet> listeTrajets =
                     shortestPathList(s, demandeLivraison.getDeliveries());
-            for (Trajet t : listeTrajets) {
-                graphe.put(s, t);
-            }
+//            for (Trajet t : listeTrajets) {
+//                graphe.put(s, t);
+//            }
+            graphe.put(s, listeTrajets);
         }
     }
 
@@ -298,4 +295,11 @@ public class PlanSimplifie {
         }
     }
 
+    /**
+     * map stockant le graphe sous la forme d'une association de livraisons
+     * et de trajets partant de ces livraisons.
+     */
+    public Map<Arret, ArrayList<Trajet>> getGraphe() {
+        return graphe;
+    }
 }

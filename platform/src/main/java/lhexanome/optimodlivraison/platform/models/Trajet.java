@@ -25,7 +25,11 @@ public class Trajet {
      */
     public Trajet() {
         troncons = new LinkedList<>();
-        timeToTravel = 0;
+        float sum = 0;
+        for (Troncon t : troncons) {
+            sum += t.getTimeToTravel();
+        }
+        this.timeToTravel = sum;
     }
 
     /**
