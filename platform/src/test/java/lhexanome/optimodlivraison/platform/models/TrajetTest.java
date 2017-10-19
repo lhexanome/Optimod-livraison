@@ -103,6 +103,62 @@ public class TrajetTest {
         assertEquals(i3,trajetTested.getEnd());
     }
     @Test
+    void souldAddTronconBefore(){
+        //With
+        Intersection i1 = new Intersection(1L,564,968451);
+        Intersection i2 = new Intersection(2L,25,968451);
+        Intersection i3 = new Intersection(3L,24,968451);
+
+        Troncon troncon12 = new Troncon(i1,i2,"i1 i2");
+        Troncon troncon23 = new Troncon(i2,i3,"i2 i3");
+
+
+        //When
+        trajetTested.addTronconBefore(troncon23);
+
+        //Then
+        assertEquals(1, trajetTested.getTroncons().size());
+        assertEquals(troncon23, trajetTested.getTroncons().get(0));
+        assertEquals(troncon23.getTimeToTravel(), trajetTested.getTimeToTravel());
+
+        //When
+        trajetTested.addTronconBefore(troncon12);
+
+        //Then
+        assertEquals(2, trajetTested.getTroncons().size());
+        assertEquals(troncon12, trajetTested.getTroncons().get(0));
+        assertEquals(troncon23, trajetTested.getTroncons().get(1));
+        assertEquals(troncon12.getTimeToTravel()+troncon23.getTimeToTravel(), trajetTested.getTimeToTravel());
+    }
+
+    @Test
+    void souldNotAddTronconBeforeIfNotPresseding(){
+        //With
+        Intersection i1 = new Intersection(1L,564,968451);
+        Intersection i2 = new Intersection(2L,25,968451);
+        Intersection i3 = new Intersection(3L,24,968451);
+        Intersection i4 = new Intersection(4L,3008,968451);
+
+        Troncon troncon12 = new Troncon(i1,i2,"i1 i2");
+        Troncon troncon34 = new Troncon(i3,i4,"i3 i4");
+
+        trajetTested.addTroncon(troncon12);
+
+        //When
+        try{
+
+            trajetTested.addTronconBefore(troncon34);
+
+            //Then
+            assertTrue(false);
+
+        }catch (RuntimeException e){
+            //Then
+            assertTrue(true);
+        }
+
+    }
+    @Test
     void souldAddTroncon(){
         //With
         Intersection i1 = new Intersection(1L,564,968451);
@@ -131,6 +187,7 @@ public class TrajetTest {
         assertEquals(troncon12.getTimeToTravel()+troncon23.getTimeToTravel(), trajetTested.getTimeToTravel());
     }
 
+    @Test
     void souldNotAddTronconIfNotPresseding(){
         //With
         Intersection i1 = new Intersection(1L,564,968451);

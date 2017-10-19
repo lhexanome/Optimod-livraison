@@ -103,7 +103,7 @@ public class Trajet {
      */
     public void addTronconBefore(Troncon troncon){
         if(troncons.size() == 0 || getStart() == troncon.getDestination()){
-            troncons.set(0, troncon);
+            troncons.add(0,troncon);
             timeToTravel += troncon.getTimeToTravel();
         }else {
             throw new RuntimeException("The troncon is not at the end of the trajet");
