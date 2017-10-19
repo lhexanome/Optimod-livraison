@@ -21,6 +21,7 @@ public class Intersection {
      */
     private Long id;
 
+
     /**
      * Intersection conctructeur.
      *
@@ -90,4 +91,5 @@ public class Intersection {
     public void setId(long id) {
         this.id = id;
     }
+
 }

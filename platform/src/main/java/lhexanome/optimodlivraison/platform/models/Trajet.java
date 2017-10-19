@@ -14,6 +14,7 @@ public class Trajet {
      */
     private List<Troncon> troncons;
 
+
     /**
      * Temps necessaire pour parcourir le trajet.
      */
@@ -25,6 +26,36 @@ public class Trajet {
     public Trajet() {
         troncons = new LinkedList<>();
         timeToTravel = 0;
+    }
+
+    /**
+     * fonction equals.
+     *
+     * @param o objet a comparer
+     * @return resultat de la comparaison
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Trajet trajet = (Trajet) o;
+
+        if (Float.compare(trajet.timeToTravel, timeToTravel) != 0) return false;
+        return troncons != null ? troncons.equals(trajet.troncons) : trajet.troncons == null;
+    }
+
+    /**
+     * fonction hashCode.
+     *
+     * @return hashcode de l'objet
+     */
+    @SuppressWarnings("checkstyle:magicnumber")
+    @Override
+    public int hashCode() {
+        int result = troncons != null ? troncons.hashCode() : 0;
+        result = 31 * result + (timeToTravel != +0.0f ? Float.floatToIntBits(timeToTravel) : 0);
+        return result;
     }
 
     /**
