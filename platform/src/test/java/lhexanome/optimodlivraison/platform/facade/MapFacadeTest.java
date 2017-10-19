@@ -8,7 +8,8 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 class MapFacadeTest {
 
@@ -27,14 +28,16 @@ class MapFacadeTest {
         mapFacade.addOnUpdateMapListener(new MapListener() {
             @Override
             public void onUpdateMap(Plan plan) {
-                assertEquals(209, plan.getIntersectionCount());
+                // 217 intersections dans le xml donc il doit y avoir 217 intersections dans le Plan!
+                assertThat(plan.getIntersectionCount()).isEqualTo(217);
             }
 
             @Override
             public void onFailUpdateMap(MapException e) {
-                fail("Call on fail method");
+                fail("Call on fail method", e);
             }
         });
+
 
         mapFacade.loadMapFromFile(littleMap);
     }

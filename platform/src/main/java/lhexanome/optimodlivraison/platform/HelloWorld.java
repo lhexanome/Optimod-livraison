@@ -17,6 +17,7 @@ public final class HelloWorld {
 
     /**
      * Main method.
+     *
      * @param args System args
      */
     public static void main(String[] args) {
@@ -25,6 +26,7 @@ public final class HelloWorld {
 
     /**
      * Test case.
+     *
      * @param out Stream
      */
     public static void print(PrintStream out) {

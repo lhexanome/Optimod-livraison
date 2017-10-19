@@ -22,6 +22,22 @@ public class Intersection {
     private Long id;
 
     /**
+     * Intersection conctructeur.
+     *
+     * @param id Identifiant du point.
+     * @param x  Coordonnée X
+     * @param y  Coordonnée Y
+     * @see Intersection#id
+     * @see Intersection#x
+     * @see Intersection#y
+     */
+    public Intersection(Long id, int x, int y) {
+        this.id = id;
+        this.x = x;
+        this.y = y;
+    }
+
+    /**
      * Renvoie X.
      *
      * @return X

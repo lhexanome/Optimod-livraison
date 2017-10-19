@@ -6,15 +6,18 @@ import lhexanome.optimodlivraison.platform.models.Plan;
 import lhexanome.optimodlivraison.platform.models.Troncon;
 import org.jdom2.Element;
 
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.logging.Logger;
 
 /**
  * Parser d'un document XML représentant un plan.
  */
 public class MapParser {
+
+    /**
+     * Logger.
+     */
+    private static final Logger LOGGER = Logger.getLogger(MapParser.class.getName());
 
     /**
      * Parse un document XML représentant un plan.
@@ -32,90 +35,96 @@ public class MapParser {
      * @throws ParseMapException Si un problème a lieu lors du parsing
      */
     public Plan parseMap(Element rootElement) throws ParseMapException {
+        Plan plan = new Plan();
 
-        Map<Long, Intersection> map = loadNodes(rootElement.getChildren("noeud"));
+        LOGGER.info("Start parsing");
 
-        return loadTroncon(rootElement.getChildren("troncon"), map);
+        if (!"reseau".equals(rootElement.getName())) {
+            throw new ParseMapException("XML root element name must be `reseau`");
+        }
+        List<Element> nodes = rootElement.getChildren("noeud");
+        List<Element> troncons = rootElement.getChildren("troncon");
+
+        if (nodes.size() + troncons.size() != rootElement.getChildren().size()) {
+            throw new ParseMapException("XML contains unknown elements");
+        }
+
+        loadNodes(nodes, plan);
+
+        LOGGER.info("Nodes loaded");
+
+        loadTroncon(troncons, plan);
+
+        LOGGER.info("End parsing");
+        return plan;
     }
 
     /**
      * Génère une map pour faciliter la création d'un plan.
      *
      * @param listNode Liste d'élément jdom
-     * @return Map <id, intersection>
+     * @param plan     Plan
      * @throws ParseMapException Si le document contient 2x le même id
      */
-    public Map<Long, Intersection> loadNodes(List<Element> listNode) throws ParseMapException {
-        Map<Long, Intersection> nodeMap = new HashMap<>(listNode.size());
-
+    public void loadNodes(List<Element> listNode, Plan plan) throws ParseMapException {
         for (Element node : listNode) {
             Long id = Long.parseLong(node.getAttributeValue("id"));
 
-            if (nodeMap.containsKey(id)) {
+            if (plan.findIntersectionById(id) != null) {
                 throw new ParseMapException("Node id already exists!");
             }
 
-            Intersection intersection = new Intersection();
-            intersection.setId(id);
-            intersection.setX(Integer.parseInt(node.getAttributeValue("x")));
-            intersection.setY(Integer.parseInt(node.getAttributeValue("y")));
+            Intersection intersection = new Intersection(
+                    id,
+                    Integer.parseInt(node.getAttributeValue("x")),
+                    Integer.parseInt(node.getAttributeValue("y"))
+            );
 
-            nodeMap.put(id, intersection);
+            plan.addIntersection(intersection);
         }
-
-        return nodeMap;
     }
 
     /**
      * Génère un plan depuis des tronçons et des intersections.
      *
      * @param listTroncon Liste d'éléments jdom
-     * @param nodeMap     Map d'intrersection
-     * @return Un plan
+     * @param plan        Plan
      * @throws ParseMapException Si un troncon a des intersections inconnues
      */
-    public Plan loadTroncon(List<Element> listTroncon, Map<Long, Intersection> nodeMap) throws ParseMapException {
-        Plan plan = new Plan();
-
+    public void loadTroncon(List<Element> listTroncon, Plan plan) throws ParseMapException {
         for (Element node : listTroncon) {
-            Long origin = Long.parseLong(node.getAttributeValue("origine"));
-            Long destination = Long.parseLong(node.getAttributeValue("destination"));
+            Intersection origin = plan.findIntersectionById(
+                    Long.parseLong(node.getAttributeValue("origine")));
 
-            if (!nodeMap.containsKey(origin) || !nodeMap.containsKey(destination)) {
+            Intersection destination = plan.findIntersectionById(
+                    Long.parseLong(node.getAttributeValue("destination")));
+
+
+            if (origin == null || destination == null) {
                 throw new ParseMapException("Troncon has an unknown destination or origin");
             }
 
             Float length = Float.parseFloat(node.getAttributeValue("longueur"));
             String streetName = node.getAttributeValue("nomRue");
 
-            Collection<Troncon> sameTroncons = plan.getTronconsFromIntersection(nodeMap.get(origin));
+            Troncon similar = plan.getTronconsFromIntersection(origin)
+                    .stream()
+                    .filter(troncon -> troncon.getDestination() == destination)
+                    .findAny()
+                    .orElse(null);
 
-            final boolean[] toAdd = {true};
 
-            if (sameTroncons != null) {
-                sameTroncons
-                        .stream()
-                        .filter(troncon -> troncon.getDestination().getId() == destination)
-                        .findFirst()
-                        .ifPresent(troncon -> {
-                            toAdd[0] = false;
-                            if (troncon.getLength() > length) {
-                                troncon.setLength(length);
-                                troncon.setNameStreet(streetName);
-                            }
-                        });
-            }
-
-            if (toAdd[0]) {
-                Troncon troncon = new Troncon();
-                troncon.setDestination(nodeMap.get(destination));
-                troncon.setOrigine(nodeMap.get(origin));
-                troncon.setLength(length);
-                troncon.setNameStreet(streetName);
-                plan.addTroncon(troncon.getOrigine(), troncon);
+            if (similar == null) {
+                plan.addTroncon(new Troncon(
+                        origin,
+                        destination,
+                        streetName,
+                        length
+                ));
+            } else if (similar.getLength() > length) {
+                similar.setLength(length);
+                similar.setNameStreet(streetName);
             }
         }
-
-        return plan;
     }
 }

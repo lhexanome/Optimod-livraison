@@ -1,85 +1,83 @@
 package lhexanome.optimodlivraison.platform.models;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TronconTest {
+
+    Troncon tronconTested;
+
+    @BeforeEach
+    void createTourneeObjects() {
+        tronconTested = new Troncon(
+                new Intersection(1L, 101, 102),
+                new Intersection(2L, 201, 202),
+                "Street test"
+        );
+    }
+
     @Test
     void shouldSetDestination() {
         //With
-        Troncon troncon = new Troncon();
-        Intersection intersection = new Intersection();
-        Intersection intersection1 = new Intersection();
+        Intersection intersection = new Intersection(123L, 105, 110);
 
         //When
-        intersection.setId(1256);
-        troncon.setDestination(intersection);
+        tronconTested.setDestination(intersection);
 
         //Then
-        assertEquals(intersection, troncon.getDestination());
+        assertEquals(intersection, tronconTested.getDestination());
     }
 
     @Test
     void shouldSetOrigine() {
 
         //With
-        Troncon troncon = new Troncon();
-        Intersection intersection = new Intersection();
-        Intersection intersection1 = new Intersection();
+        Intersection intersection = new Intersection(125L, 125, 130);
 
         //When
-        intersection.setId(5687);
-        troncon.setOrigine(intersection);
+        tronconTested.setOrigine(intersection);
 
         //Then
-        assertEquals(intersection, troncon.getOrigine());
+        assertEquals(intersection, tronconTested.getOrigine());
     }
 
     @Test
     void shouldSetNameStreet() {
 
         //With
-        Troncon troncon = new Troncon();
-        Intersection intersection = new Intersection();
-        Intersection intersection1 = new Intersection();
 
         //When
-        troncon.setNameStreet("Rue de la liberte");
+        tronconTested.setNameStreet("Rue de la liberte");
 
         //Then
-        assertEquals("Rue de la liberte", troncon.getNameStreet());
+        assertEquals("Rue de la liberte", tronconTested.getNameStreet());
 
     }
 
     void shouldSetLenght() {
 
         //With
-        Troncon troncon = new Troncon();
-        Intersection intersection = new Intersection();
-        Intersection intersection1 = new Intersection();
 
         //When
-        troncon.setLength(22);
+        tronconTested.setLength(22);
 
         //Then
-        assertEquals(22, troncon.getLength());
+        assertEquals(22, tronconTested.getLength());
     }
 
-    void shouldSetTimeToTravel(){
+    void shouldGetTimeToTravel() {
 
         //With
-        Troncon troncon = new Troncon();
-        Intersection intersection = new Intersection();
-        Intersection intersection1 = new Intersection();
 
         //When
-        troncon.setLength(22);
-        float result = troncon.timeToTravel();
-        float trueResult = troncon.getLength()*15;
+        tronconTested.setLength(22);
+        float result = tronconTested.getTimeToTravel();
+        float trueResult = tronconTested.getLength() * 15;
 
         //Then
-        assertEquals(trueResult,result);
+        assertEquals(trueResult, result);
 
     }
 }

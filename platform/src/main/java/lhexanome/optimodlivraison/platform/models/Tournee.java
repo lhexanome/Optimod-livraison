@@ -1,5 +1,6 @@
 package lhexanome.optimodlivraison.platform.models;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -31,6 +32,37 @@ public class Tournee {
      * En minutes
      */
     private int time;
+
+    /**
+     * Constructor.
+     *
+     * @param warehouse Intersection représentant l'entrepôt
+     * @param start     Moment de départ de la tournée
+     * @param time      Temps estimé pour compléter une tournée. En minutes
+     */
+    public Tournee(Intersection warehouse, Date start, int time) {
+        this(warehouse, start, time, new ArrayList<>());
+    }
+
+    /**
+     * Constructor.
+     *
+     * @param warehouse  Intersection représentant l'entrepôt
+     * @param start      Moment de départ de la tournée
+     * @param time       Temps estimé pour compléter une tournée.
+     *                   En minutes
+     * @param deliveries Liste ordonnée de trajets.
+     * @see #warehouse
+     * @see #start
+     * @see #time
+     * @see #deliveries
+     */
+    public Tournee(Intersection warehouse, Date start, int time, List<Trajet> deliveries) {
+        this.start = start;
+        this.warehouse = warehouse;
+        this.time = time;
+        this.deliveries = deliveries;
+    }
 
     /**
      * Renvoie la liste des livraisons.
