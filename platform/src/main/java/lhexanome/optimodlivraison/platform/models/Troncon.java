@@ -51,6 +51,37 @@ public class Troncon {
     }
 
     /**
+     * fonction equals.
+     * @param o objet a comparer
+     * @return resultat de la comparaison
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Troncon troncon = (Troncon) o;
+
+        if (Float.compare(troncon.length, length) != 0) return false;
+        if (!origine.equals(troncon.origine)) return false;
+        if (!destination.equals(troncon.destination)) return false;
+        return nameStreet.equals(troncon.nameStreet);
+    }
+
+    /**
+     * fonction hashCode.
+     * @return hashcode de l'objet
+     */
+    @Override
+    public int hashCode() {
+        int result = origine.hashCode();
+        result = 31 * result + destination.hashCode();
+        result = 31 * result + nameStreet.hashCode();
+        result = 31 * result + (length != +0.0f ? Float.floatToIntBits(length) : 0);
+        return result;
+    }
+
+    /**
      * Troncon Constructor
      *
      * @param origine intersections se situant au debut du tronçon

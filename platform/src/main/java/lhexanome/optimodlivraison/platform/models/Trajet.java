@@ -14,8 +14,11 @@ public class Trajet {
      */
     private List<Troncon> troncons;
 
+
+
     /**
      * Temps necessaire pour parcourir le trajet.
+
      *
      */
     private float timeToTravel;
@@ -24,7 +27,32 @@ public class Trajet {
         troncons = new ArrayList<>();
         timeToTravel = 0;
     }
+    /**
+     * fonction equals.
+     * @param o objet a comparer
+     * @return resultat de la comparaison
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
+        Trajet trajet = (Trajet) o;
+
+        if (Float.compare(trajet.timeToTravel, timeToTravel) != 0) return false;
+        return troncons != null ? troncons.equals(trajet.troncons) : trajet.troncons == null;
+    }
+
+    /**
+     * fonction hashCode.
+     * @return hashcode de l'objet
+     */
+    @Override
+    public int hashCode() {
+        int result = troncons != null ? troncons.hashCode() : 0;
+        result = 31 * result + (timeToTravel != +0.0f ? Float.floatToIntBits(timeToTravel) : 0);
+        return result;
+    }
     /**
      * Renvoie le temps nécessaire pour effectuer le trajet.
      *
@@ -35,21 +63,21 @@ public class Trajet {
     }
 
     /**
-     * Renvoie la liste des tronçons.
-     *
-     * @return liste
-     */
-    public List<Troncon> getTroncons() {
-        return troncons;
-    }
-
-    /**
      * Définie le temps nécessaire pour parcourir le trajet.
      *
      * @param timeToTravel Time
      */
     public void setTimeToTravel(float timeToTravel) {
         this.timeToTravel = timeToTravel;
+    }
+
+    /**
+     * Renvoie la liste des tronçons.
+     *
+     * @return liste
+     */
+    public List<Troncon> getTroncons() {
+        return troncons;
     }
 
     /**
