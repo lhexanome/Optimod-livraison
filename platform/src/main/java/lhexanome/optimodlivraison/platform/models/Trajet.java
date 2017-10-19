@@ -50,6 +50,7 @@ public class Trajet {
      *
      * @return hashcode de l'objet
      */
+    @SuppressWarnings("checkstyle:magicnumber")
     @Override
     public int hashCode() {
         int result = troncons != null ? troncons.hashCode() : 0;

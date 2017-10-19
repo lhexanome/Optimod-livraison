@@ -75,6 +75,7 @@ public class Troncon {
      *
      * @return hashcode de l'objet
      */
+    @SuppressWarnings("checkstyle:magicnumber")
     @Override
     public int hashCode() {
         int result = origine.hashCode();
