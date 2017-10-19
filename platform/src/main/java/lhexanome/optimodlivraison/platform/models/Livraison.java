@@ -5,7 +5,7 @@ package lhexanome.optimodlivraison.platform.models;
  * Contient une durée de livraison, une intersection et une plage horaire.
  * Si la plage horaire est null alors la livraison peut s'efectuer a n'importe quelle heur
  */
-public class Livraison {
+public class Livraison extends Arret {
 
     /**
      * Durée prise pour la livraison.
@@ -13,10 +13,6 @@ public class Livraison {
      */
     private int duration;
 
-    /**
-     * Intersection représentant le lieu de la livraison.
-     */
-    private Intersection intersection;
 
     /**
      * Plage horaire durant laquelle la livraison peut s'effectuer.
@@ -51,7 +47,7 @@ public class Livraison {
      * @see #Livraison(Intersection, int)
      */
     public Livraison(Intersection intersection, int duration, PlageHoraire slot) {
-        this.intersection = intersection;
+        super(intersection);
         this.duration = duration;
         this.slot = slot;
     }
@@ -74,23 +70,7 @@ public class Livraison {
         this.duration = duration;
     }
 
-    /**
-     * Renvoie la position de la livraison.
-     *
-     * @return Intersection
-     */
-    public Intersection getIntersection() {
-        return intersection;
-    }
 
-    /**
-     * Définie l'intersection de la livraison.
-     *
-     * @param intersection Intersection
-     */
-    public void setIntersection(Intersection intersection) {
-        this.intersection = intersection;
-    }
 
     /**
      * Renvoie la plage horaire actuelle de la livraison.

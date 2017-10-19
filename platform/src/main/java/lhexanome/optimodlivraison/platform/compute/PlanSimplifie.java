@@ -1,9 +1,9 @@
 package lhexanome.optimodlivraison.platform.compute;
 
 
+import lhexanome.optimodlivraison.platform.models.Arret;
 import lhexanome.optimodlivraison.platform.models.DemandeLivraison;
 import lhexanome.optimodlivraison.platform.models.Intersection;
-import lhexanome.optimodlivraison.platform.models.Livraison;
 import lhexanome.optimodlivraison.platform.models.Plan;
 import lhexanome.optimodlivraison.platform.models.Trajet;
 import lhexanome.optimodlivraison.platform.models.Troncon;
@@ -12,6 +12,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -39,7 +40,7 @@ public class PlanSimplifie {
      * map stockant le graphe sous la forme d'une association de livraisons
      * et de trajets partant de ces livraisons.
      */
-    private Map<Livraison, Trajet> graphe;
+    private Map<Arret, Trajet> graphe;
 
     /***
      * constructeur par defaut.
@@ -68,10 +69,12 @@ public class PlanSimplifie {
      */
     public void computeGraph() {
         LOGGER.info(MessageFormat.format("compute simplified graph", ""));
-
-        for (Livraison s : graphe.keySet()) {
+        HashSet<Arret> ptsArret = new HashSet<>();
+        ptsArret.addAll(demandeLivraison.getDeliveries());
+        ptsArret.add(demandeLivraison.getBeginning());
+        for (Arret s : ptsArret) {
             ArrayList<Trajet> listeTrajets =
-                    shortestPathList(s, graphe.keySet());
+                    shortestPathList(s, demandeLivraison.getDeliveries());
             for (Trajet t : listeTrajets) {
                 graphe.put(s, t);
             }
@@ -83,12 +86,12 @@ public class PlanSimplifie {
      * la liste des chemins les plus courts partant de start
      * et allant à chaque Livraison de ends.
      *
-     * @param start Livraison de départ
+     * @param start intersection de depart
      * @param ends  Liste des arrives
      * @return liste des plus courts chemins
      */
     public ArrayList<Trajet> shortestPathList(
-            Livraison start, Set<Livraison> ends) {
+            Arret start, Set<? extends Arret> ends) {
         ArrayList<Trajet> sortie = new ArrayList<>();
         LOGGER.info(MessageFormat.format("start compute shortest path for:", start.toString()));
 
@@ -135,20 +138,26 @@ public class PlanSimplifie {
                     tempsDijkstra, etatDijkstra);
 
             //pour chaque livraison, on construit le trajet
-            for (Livraison end : ends) {
+            for (Arret end : ends) {
                 if (!end.equals(start)) {
                     Trajet t = new Trajet();
 
                     //on recupere la liste de troncons
-                    int indexStart = intersections.indexOf(start.getIntersection());
+                    int indexStart = intersections.indexOf(start);
                     int indexEnd = intersections.indexOf(end.getIntersection());
-                    //on remonte par la fin la liste des chemins
-                    while (indexStart != indexEnd) {
-                        //TODO inverser l'ordre des troncons
-                        t.addTroncon(chemins.get(indexEnd));
-                        indexEnd = intersections.indexOf(predecesseurs.get(indexEnd));
+                    if (indexEnd != -1) {
+
+                        //on remonte par la fin la liste des chemins
+                        while (indexStart != indexEnd) {
+                            //TODO inverser l'ordre des troncons
+
+                            t.addTroncon(chemins.get(indexEnd));
+                            indexEnd = intersections.indexOf(predecesseurs.get(indexEnd));
+                        }
+                        sortie.add(t);
                     }
-                    sortie.add(t);
+                    LOGGER.warning(MessageFormat.format("no path found for:",
+                            start.toString() + " and " + end.toString()));
                 }
             }
         }

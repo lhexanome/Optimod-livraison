@@ -20,10 +20,10 @@ public class DemandeLivraison {
      */
     private Date start;
     /**
-     * Intersection où se trouve l'entrepôt.
+     * entrepot de depart de la demande de livraison.
      * Point de départ et d'arriver de la livraison
      */
-    private Intersection beginning;
+    private Entrepot beginning;
 
     /**
      * Constructeur par défaut.
@@ -70,20 +70,20 @@ public class DemandeLivraison {
     }
 
     /**
-     * Renvoie l'intersection de départ du livreur.
+     * Renvoie l'entrepot de départ du livreur.
      *
-     * @return Position de départ
+     * @return entrepot de départ
      */
-    public Intersection getBeginning() {
+    public Entrepot getBeginning() {
         return beginning;
     }
 
     /**
      * Règle la position de départ du livreur.
      *
-     * @param beginning Intersection de départ
+     * @param beginning entrepot de départ
      */
-    public void setBeginning(Intersection beginning) {
+    public void setBeginning(Entrepot beginning) {
         this.beginning = beginning;
     }
 }
