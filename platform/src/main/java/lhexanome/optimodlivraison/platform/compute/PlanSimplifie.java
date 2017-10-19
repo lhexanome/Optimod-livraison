@@ -143,15 +143,15 @@ public class PlanSimplifie {
                     Trajet t = new Trajet();
 
                     //on recupere la liste de troncons
-                    int indexStart = intersections.indexOf(start);
+                    int indexStart = intersections.indexOf(start.getIntersection());
                     int indexEnd = intersections.indexOf(end.getIntersection());
                     if (indexEnd != -1) {
 
                         //on remonte par la fin la liste des chemins
                         while (indexStart != indexEnd) {
                             //TODO inverser l'ordre des troncons
-
-                            t.addTroncon(chemins.get(indexEnd));
+                            Troncon tr = chemins.get(indexEnd);
+                            t.addTroncon(tr);
                             indexEnd = intersections.indexOf(predecesseurs.get(indexEnd));
                         }
                         sortie.add(t);
