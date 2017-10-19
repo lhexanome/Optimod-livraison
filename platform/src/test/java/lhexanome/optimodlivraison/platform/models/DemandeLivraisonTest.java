@@ -35,12 +35,12 @@ public class DemandeLivraisonTest {
         //With
         DemandeLivraison deliveriesRequest = new DemandeLivraison();
         Intersection intersection = new Intersection(10101L,1254,1265);
-
+        Entrepot entrepot = new Entrepot(intersection);
         //When
-        deliveriesRequest.setBeginning(intersection);
+        deliveriesRequest.setBeginning(entrepot);
 
         //Then
-        assertEquals(intersection,deliveriesRequest.getBeginning());
+        assertEquals(entrepot,deliveriesRequest.getBeginning());
     }
 
     @Test
