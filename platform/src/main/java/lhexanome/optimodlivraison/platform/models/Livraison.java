@@ -27,8 +27,8 @@ public class Livraison {
      * Constructeur de livraison.
      *
      * @param intersection intersection de livraison
-     * @param duration Durée prise pour la livraison
-     * En minutes
+     * @param duration     Durée prise pour la livraison
+     *                     En minutes
      * @see #duration
      * @see #intersection
      * @see #slot
@@ -42,9 +42,9 @@ public class Livraison {
      * Constructeur de livraison.
      *
      * @param intersection intersection de livraison
-     * @param duration Durée prise pour la livraison
-     * En minutes
-     * @param slot Plage horaire durant laquelle la livraison peut s'effectuer.
+     * @param duration     Durée prise pour la livraison
+     *                     En minutes
+     * @param slot         Plage horaire durant laquelle la livraison peut s'effectuer.
      * @see #duration
      * @see #intersection
      * @see #slot

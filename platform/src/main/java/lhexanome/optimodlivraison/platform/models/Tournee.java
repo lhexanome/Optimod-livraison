@@ -34,25 +34,30 @@ public class Tournee {
     private int time;
 
     /**
-     * {@link #Tournee(Intersection,Date,int,List)}
+     * Constructor.
+     *
+     * @param warehouse Intersection représentant l'entrepôt
+     * @param start     Moment de départ de la tournée
+     * @param time      Temps estimé pour compléter une tournée. En minutes
      */
-    public Tournee(Intersection warehouse, Date start, int time){
-        this(warehouse,start, time,new ArrayList<>());
+    public Tournee(Intersection warehouse, Date start, int time) {
+        this(warehouse, start, time, new ArrayList<>());
     }
 
     /**
+     * Constructor.
      *
-     * @param warehouse Intersection représentant l'entrepôt
-     * @param start Moment de départ de la tournée
-     * @param time Temps estimé pour compléter une tournée.
-     * En minutes
+     * @param warehouse  Intersection représentant l'entrepôt
+     * @param start      Moment de départ de la tournée
+     * @param time       Temps estimé pour compléter une tournée.
+     *                   En minutes
      * @param deliveries Liste ordonnée de trajets.
      * @see #warehouse
      * @see #start
      * @see #time
      * @see #deliveries
      */
-    public Tournee(Intersection warehouse, Date start, int time, List<Trajet> deliveries){
+    public Tournee(Intersection warehouse, Date start, int time, List<Trajet> deliveries) {
         this.start = start;
         this.warehouse = warehouse;
         this.time = time;

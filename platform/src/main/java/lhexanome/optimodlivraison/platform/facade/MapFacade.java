@@ -81,16 +81,16 @@ public class MapFacade {
 
             LOGGER.info("Listeners notified !");
         } catch (JDOMException e) {
-            LOGGER.warning(MessageFormat.format("Error while parsing XML", e.getMessage()));
+            LOGGER.warning(MessageFormat.format("Error while parsing XML", e.getCause()));
             failUpdate(e);
         } catch (IOException e) {
-            LOGGER.warning(MessageFormat.format("I/O error", e.getMessage()));
+            LOGGER.warning(MessageFormat.format("I/O error", e.getCause()));
             failUpdate(e);
         } catch (ParseMapException e) {
-            LOGGER.warning(MessageFormat.format("Bad map format", e.getMessage()));
+            LOGGER.warning(MessageFormat.format("Bad map format", e.getCause()));
             failUpdate(e);
         } catch (Exception e) {
-            LOGGER.warning(MessageFormat.format("Unknown error", e.getMessage()));
+            LOGGER.warning(MessageFormat.format("Unknown error", e.getCause()));
             failUpdate(e);
         }
     }

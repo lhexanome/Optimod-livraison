@@ -1,6 +1,5 @@
 package lhexanome.optimodlivraison.platform.models;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,10 +10,10 @@ public class TronconTest {
     Troncon tronconTested;
 
     @BeforeEach
-    void createTourneeObjects(){
+    void createTourneeObjects() {
         tronconTested = new Troncon(
-                new Intersection(1L,101,102),
-                new Intersection(2L,201,202),
+                new Intersection(1L, 101, 102),
+                new Intersection(2L, 201, 202),
                 "Street test"
         );
     }
@@ -22,7 +21,7 @@ public class TronconTest {
     @Test
     void shouldSetDestination() {
         //With
-        Intersection intersection = new Intersection(123L , 105,110);
+        Intersection intersection = new Intersection(123L, 105, 110);
 
         //When
         tronconTested.setDestination(intersection);
@@ -35,7 +34,7 @@ public class TronconTest {
     void shouldSetOrigine() {
 
         //With
-        Intersection intersection = new Intersection(125L , 125,130);
+        Intersection intersection = new Intersection(125L, 125, 130);
 
         //When
         tronconTested.setOrigine(intersection);
@@ -68,17 +67,17 @@ public class TronconTest {
         assertEquals(22, tronconTested.getLength());
     }
 
-    void shouldGetTimeToTravel(){
+    void shouldGetTimeToTravel() {
 
         //With
 
         //When
         tronconTested.setLength(22);
         float result = tronconTested.getTimeToTravel();
-        float trueResult = tronconTested.getLength()*15;
+        float trueResult = tronconTested.getLength() * 15;
 
         //Then
-        assertEquals(trueResult,result);
+        assertEquals(trueResult, result);
 
     }
 }

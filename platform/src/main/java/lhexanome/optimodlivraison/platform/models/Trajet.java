@@ -1,6 +1,5 @@
 package lhexanome.optimodlivraison.platform.models;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -17,11 +16,13 @@ public class Trajet {
 
     /**
      * Temps necessaire pour parcourir le trajet.
-     *
      */
     private float timeToTravel;
 
-    public Trajet(){
+    /**
+     * Constructor.
+     */
+    public Trajet() {
         troncons = new LinkedList<>();
         timeToTravel = 0;
     }
@@ -36,15 +37,6 @@ public class Trajet {
     }
 
     /**
-     * Renvoie la liste des tronçons.
-     *
-     * @return liste
-     */
-    public List<Troncon> getTroncons() {
-        return troncons;
-    }
-
-    /**
      * Définie le temps nécessaire pour parcourir le trajet.
      *
      * @param timeToTravel Time
@@ -54,12 +46,21 @@ public class Trajet {
     }
 
     /**
+     * Renvoie la liste des tronçons.
+     *
+     * @return liste
+     */
+    public List<Troncon> getTroncons() {
+        return troncons;
+    }
+
+    /**
      * Renvoie l'intersection de départ.
      *
      * @return Start
      */
     public Intersection getStart() {
-        return (troncons.size()==0 ? null : troncons.get(0).getOrigine());
+        return (troncons.size() == 0 ? null : troncons.get(0).getOrigine());
     }
 
     /**
@@ -70,7 +71,7 @@ public class Trajet {
     public Intersection getEnd() {
         int size = troncons.size();
         if (size == 0) return null;
-        return troncons.get(size-1).getDestination();
+        return troncons.get(size - 1).getDestination();
     }
 
     /**
@@ -78,15 +79,15 @@ public class Trajet {
      * Cette operation met a jour le temp de parcour en lui ajoutent le temp de parcour du troncon passer en paramétre.
      *
      * @param troncon troncon a ajouter au trajet
-     * L'intersection origine du troncon doit étre identique a l'intersection d'arrivée du trajet
-     *
-     * @throws RuntimeException si l'intersection origine du troncon n'est pas identique a l'intersection d'arrivée du trajet
+     *                L'intersection origine du troncon doit étre identique a l'intersection d'arrivée du trajet
+     * @throws RuntimeException si l'intersection origine du troncon
+     *                          n'est pas identique a l'intersection d'arrivée du trajet
      */
-    public void addTroncon(Troncon troncon){
-        if(troncons.size() == 0 || getEnd() == troncon.getOrigine()){
+    public void addTroncon(Troncon troncon) {
+        if (troncons.size() == 0 || getEnd() == troncon.getOrigine()) {
             troncons.add(troncon);
             timeToTravel += troncon.getTimeToTravel();
-        }else {
+        } else {
             throw new RuntimeException("The troncon is not at the end of the trajet");
         }
 
@@ -97,15 +98,15 @@ public class Trajet {
      * Cette operation met a jour le temp de parcour en lui ajoutent le temp de parcour du troncon passer en paramétre.
      *
      * @param troncon troncon a ajouter au debut du trajet
-     * L'intersection de destination du troncon doit étre identique a l'intersection d'origine du trajet
-     *
-     * @throws RuntimeException si l'intersection origine du troncon n'est pas identique a l'intersection d'arrivée du trajet
+     *                L'intersection de destination du troncon doit étre identique a l'intersection d'origine du trajet
+     * @throws RuntimeException si l'intersection origine du troncon
+     *                          n'est pas identique a l'intersection d'arrivée du trajet
      */
-    public void addTronconBefore(Troncon troncon){
-        if(troncons.size() == 0 || getStart() == troncon.getDestination()){
-            troncons.add(0,troncon);
+    public void addTronconBefore(Troncon troncon) {
+        if (troncons.size() == 0 || getStart() == troncon.getDestination()) {
+            troncons.add(0, troncon);
             timeToTravel += troncon.getTimeToTravel();
-        }else {
+        } else {
             throw new RuntimeException("The troncon is not at the end of the trajet");
         }
 
@@ -116,16 +117,16 @@ public class Trajet {
      * Cette operation met a jour le temp de parcour en lui ajoutent le temp de parcour du trajet passer en paramétre.
      *
      * @param trajet trajet a ajouter au trajet courant
-     * Le depart du trajet doit étre identique a l'arrivée du trajet courant
-     *
-     * @throws RuntimeException si le depart du trajet passé en paramétre n'est pas identique a l'arrivée du trajet courant
+     *               Le depart du trajet doit étre identique a l'arrivée du trajet courant
+     * @throws RuntimeException si le depart du trajet passé en paramétre
+     *                          n'est pas identique a l'arrivée du trajet courant
      */
-    public void addTrajet(Trajet trajet){
-        if(troncons.size() == 0 || getEnd() == trajet.getStart()){
+    public void addTrajet(Trajet trajet) {
+        if (troncons.size() == 0 || getEnd() == trajet.getStart()) {
 
             troncons.addAll(trajet.troncons);
             timeToTravel += trajet.getTimeToTravel();
-        }else {
+        } else {
             throw new RuntimeException("The troncon is not at the end of the trajet");
         }
 

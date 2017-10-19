@@ -7,17 +7,16 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DemandeLivraisonTest {
 
     @Test
-    void shouldAddDeliverie(){
+    void shouldAddDeliverie() {
         //With
         DemandeLivraison deliveriesRequest = new DemandeLivraison();
         Livraison deliveries = new Livraison(
-                new Intersection(587L,689,754),
+                new Intersection(587L, 689, 754),
                 30
         );
         deliveries.setDuration(123);
@@ -26,21 +25,21 @@ public class DemandeLivraisonTest {
         deliveriesRequest.addDelivery(deliveries);
 
         //Then
-        assert(deliveriesRequest.getDeliveries().contains(deliveries));
+        assert (deliveriesRequest.getDeliveries().contains(deliveries));
 
     }
 
     @Test
-    void shouldSetBeginning(){
+    void shouldSetBeginning() {
         //With
         DemandeLivraison deliveriesRequest = new DemandeLivraison();
-        Intersection intersection = new Intersection(10101L,1254,1265);
+        Intersection intersection = new Intersection(10101L, 1254, 1265);
 
         //When
         deliveriesRequest.setBeginning(intersection);
 
         //Then
-        assertEquals(intersection,deliveriesRequest.getBeginning());
+        assertEquals(intersection, deliveriesRequest.getBeginning());
     }
 
     @Test
@@ -54,6 +53,6 @@ public class DemandeLivraisonTest {
         deliveriesrequest.setStart(start);
 
         //Then
-        assertEquals(start,deliveriesrequest.getStart());
+        assertEquals(start, deliveriesrequest.getStart());
     }
 }

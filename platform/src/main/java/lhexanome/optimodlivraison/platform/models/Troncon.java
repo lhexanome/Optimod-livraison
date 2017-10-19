@@ -31,11 +31,11 @@ public class Troncon {
     private float length;
 
     /**
-     * Troncon Constructor
+     * Troncon Constructor.
      *
-     * @param origine intersections se situant au debut du tronçon
+     * @param origine     intersections se situant au debut du tronçon
      * @param destination intersections se situant à la fin du tronçon
-     * @param nameStreet Nom du troncon
+     * @param nameStreet  Nom du troncon
      * @see #Troncon(Intersection, Intersection, String, float)
      */
     public Troncon(Intersection origine, Intersection destination, String nameStreet) {
@@ -44,19 +44,19 @@ public class Troncon {
                 destination,
                 nameStreet,
                 (float) Math.sqrt(
-                        Math.pow(origine.getX()-destination.getX(),2)
-                        + Math.pow(origine.getY()-destination.getY(),2)
+                        Math.pow(origine.getX() - destination.getX(), 2)
+                                + Math.pow(origine.getY() - destination.getY(), 2)
                 )
         );
     }
 
     /**
-     * Troncon Constructor
+     * Troncon Constructor.
      *
-     * @param origine intersections se situant au debut du tronçon
+     * @param origine     intersections se situant au debut du tronçon
      * @param destination intersections se situant à la fin du tronçon
-     * @param nameStreet Nom du troncon
-     * @param length Longueur du tronçon
+     * @param nameStreet  Nom du troncon
+     * @param length      Longueur du tronçon
      * @see #origine
      * @see #destination
      * @see #nameStreet

@@ -1,7 +1,12 @@
 package lhexanome.optimodlivraison.platform.models;
 
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Ensemble d'intersection reliés par des tronçons.
@@ -14,18 +19,24 @@ public class Plan {
     private Map<Intersection, Collection<Troncon>> map;
 
     /**
+     * Map contenant les intersections indexées par leur id.
+     */
+    private Map<Long, Intersection> intersectionMap;
+
+    /**
      * Constructeur par défaut.
      * Initialise une Map
      */
     public Plan() {
         map = new HashMap<>();
+        intersectionMap = new HashMap<>();
     }
 
     /**
      * Ajoute un tronçon à une intersection.
      * Ajoute les intersections d'origine et de destination au plan si il n'y sont pas
      *
-     * @param troncon  Troncon
+     * @param troncon Troncon
      */
     public void addTroncon(Troncon troncon) {
         Intersection origine = troncon.getOrigine();
@@ -43,6 +54,7 @@ public class Plan {
     public void addIntersection(Intersection intersection) {
         if (!this.map.containsKey(intersection)) {
             this.map.put(intersection, new ArrayList<>());
+            this.intersectionMap.put(intersection.getId(), intersection);
         }
     }
 
@@ -54,7 +66,7 @@ public class Plan {
      */
     public Collection<Troncon> getTronconsFromIntersection(Intersection start) {
         Collection<Troncon> res = map.get(start);
-        return  res == null ? Collections.emptyList() : res;
+        return res == null ? Collections.emptyList() : res;
     }
 
     /**
@@ -64,8 +76,8 @@ public class Plan {
      *
      * @return Collection de tous les troncons du plan
      */
-    public Collection<Troncon> getTroncons(){
-        List<Troncon> res = new ArrayList<Troncon>();
+    public Collection<Troncon> getTroncons() {
+        List<Troncon> res = new ArrayList<>();
         map.forEach((intersection, troncons) -> res.addAll(troncons));
         return res;
     }
@@ -76,11 +88,11 @@ public class Plan {
      * @return Nombre d'intersection
      */
     public int getIntersectionCount() {
-        return map.size();
+        return intersectionMap.size();
     }
 
     /**
-     * Permet de recuperer tous les intersections du plan
+     * Permet de recuperer tous les intersections du plan.
      *
      * @return Collection de tous les intersections
      */
@@ -90,17 +102,11 @@ public class Plan {
 
     /**
      * Permet de recuperer une intersections du plan depuis sont id.
-     * Cette recherche consiste a parcourir toutes les intersections pour trouver la bonne.
-     * Elle peut donc donc vite devenir trés couteuse.
      *
-     * @param id
-     *
-     * @return L'intersection corespondant a la recherche ou null si l'intersection chercher n'existe pas dasn le plan
+     * @param id ID de l'intersection
+     * @return L'intersection corespondant a la recherche ou null si l'intersection chercher n'existe pas dans le plan
      */
-    public Intersection findIntersectionById(Long id){
-        for(Intersection i : map.keySet()){
-            if(i.getId() == id) return  i;
-        }
-        return null;
+    public Intersection findIntersectionById(Long id) {
+        return intersectionMap.get(id);
     }
 }
