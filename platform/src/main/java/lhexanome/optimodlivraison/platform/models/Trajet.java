@@ -1,5 +1,6 @@
 package lhexanome.optimodlivraison.platform.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,34 +12,26 @@ public class Trajet {
     /**
      * Liste des troncons.
      */
-    private List<Troncon> listOfTroncon;
+    private List<Troncon> troncons;
 
     /**
      * Temps necessaire pour parcourir le trajet.
+     *
      */
-    private float time;
+    private float timeToTravel;
 
-    /**
-     * Intersection de depart du trajet.
-     */
-    private Intersection start;
-
-    /**
-     * Intersection finale du trajet.
-     */
-    private Intersection end;
-
+    public Trajet(){
+        troncons = new ArrayList<>();
+        timeToTravel = 0;
+    }
 
     /**
      * Renvoie le temps nécessaire pour effectuer le trajet.
      *
      * @return Float
      */
-    public float getTimeForTravel() {
-        for (Troncon t : listOfTroncon) {
-            time = time + t.getTimeToTravel();
-        }
-        return time;
+    public float getTimeToTravel() {
+        return timeToTravel;
     }
 
     /**
@@ -46,26 +39,17 @@ public class Trajet {
      *
      * @return liste
      */
-    public List<Troncon> getListOfTroncon() {
-        return listOfTroncon;
-    }
-
-    /**
-     * Renvoie le temps nécessaire pour poarcourir le trajet.
-     *
-     * @return time
-     */
-    public float getTime() {
-        return time;
+    public List<Troncon> getTroncons() {
+        return troncons;
     }
 
     /**
      * Définie le temps nécessaire pour parcourir le trajet.
      *
-     * @param time Time
+     * @param timeToTravel Time
      */
-    public void setTime(float time) {
-        this.time = time;
+    public void setTimeToTravel(float timeToTravel) {
+        this.timeToTravel = timeToTravel;
     }
 
     /**
@@ -74,16 +58,7 @@ public class Trajet {
      * @return Start
      */
     public Intersection getStart() {
-        return start;
-    }
-
-    /**
-     * Définie l'intersection de départ.
-     *
-     * @param start Start
-     */
-    public void setStart(Intersection start) {
-        this.start = start;
+        return (troncons.size()==0 ? null : troncons.get(0).getOrigine());
     }
 
     /**
@@ -92,15 +67,45 @@ public class Trajet {
      * @return End
      */
     public Intersection getEnd() {
-        return end;
+        int size = troncons.size();
+        if (size == 0) return null;
+        return troncons.get(size-1).getDestination();
     }
 
     /**
-     * Définie l'intersection d'arrivée.
+     * Ajout un troncon a la fin du trajet.
      *
-     * @param end End
+     * @param troncon troncon a ajouter au trajet
+     * L'intersection origine du troncon doit étre identique a l'intersection d'arrivée du trajet
+     *
+     * @throws RuntimeException si l'intersection origine du troncon n'est pas identique a l'intersection d'arrivée du trajet
      */
-    public void setEnd(Intersection end) {
-        this.end = end;
+    public void addTroncon(Troncon troncon){
+        if(troncons.size() == 0 || getEnd() == troncon.getOrigine()){
+            troncons.add(troncon);
+            timeToTravel += troncon.getTimeToTravel();
+        }else {
+            throw new RuntimeException("The troncon is not at the end of the trajet");
+        }
+
     }
+
+    /**
+     * Ajout un trajet a la suit du trajet.
+     *
+     * @param trajet trajet a ajouter au trajet courant
+     * Le depart du trajet doit étre identique a l'arrivée du trajet courant
+     *
+     * @throws RuntimeException si le depart du trajet passé en paramétre n'est pas identique a l'arrivée du trajet courant
+     */
+    public void addTrajet(Trajet trajet){
+        if(troncons.size() == 0 || getEnd() == trajet.getStart()){
+            troncons.addAll(trajet.troncons);
+            timeToTravel += trajet.getTimeToTravel();
+        }else {
+            throw new RuntimeException("The troncon is not at the end of the trajet");
+        }
+
+    }
+
 }
