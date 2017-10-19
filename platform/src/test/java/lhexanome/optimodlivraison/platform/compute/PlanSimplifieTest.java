@@ -27,17 +27,17 @@ class PlanSimplifieTest {
         Plan plan = new Plan();
         DemandeLivraison demande = new DemandeLivraison();
         PlanSimplifie planSimplifie = new PlanSimplifie(demande, plan);
-        Intersection start = new Intersection();
-        Intersection end = new Intersection();
+        Intersection start = new Intersection(0l,0,0);
+        Intersection end = new Intersection(1l,0,0);
         ArrayList<Intersection> intersections = new ArrayList<>();
-        //TODO ajouter les intersections au plan
+       
+         plan.addIntersection(start);
+        plan.addIntersection(end);
         intersections.add(start);
         intersections.add(end);
-        Troncon t = new Troncon();
-        t.setDestination(end);
-        t.setOrigine(start);
-        t.setLength(10);
-        plan.addTroncon(start, t);
+        Troncon t = new Troncon(start,end,"t",10);
+       
+        plan.addTroncon(t);
         ArrayList<Intersection> predecesseurs = new ArrayList<>();
         ArrayList<Troncon> chemins = new ArrayList<>();
         ArrayList<Troncon> cheminsExpected = new ArrayList<>();
@@ -51,14 +51,14 @@ class PlanSimplifieTest {
         cheminsExpected.add(t);
         predecesseursExpected.add(null);
         predecesseursExpected.add(start);
-        float []tempsDijkstra={0,-1};
-        boolean []etatDijkstra={true,false};
+        float []tempsDijkstra=new float[plan.getIntersectionCount()];
+        boolean []etatDijkstra=new boolean[plan.getIntersectionCount()];
         //When
         //TODO test avec une methode private
         planSimplifie.dijkstra(intersections, predecesseurs,chemins,tempsDijkstra,etatDijkstra);
         //Then
-        assertEquals(predecesseurs, predecesseursExpected);
-        assertEquals(chemins, cheminsExpected);
+        assertIterableEquals(predecesseursExpected, predecesseurs);
+        assertIterableEquals(cheminsExpected, chemins);
     }
 
     /**
@@ -70,10 +70,11 @@ class PlanSimplifieTest {
         Plan plan = new Plan();
         DemandeLivraison demande = new DemandeLivraison();
         PlanSimplifie planSimplifie = new PlanSimplifie(demande, plan);
-        Intersection start = new Intersection();
-        Intersection end = new Intersection();
+        Intersection start = new Intersection(0l,0,0);
+        Intersection end = new Intersection(1l,0,0);
         ArrayList<Intersection> intersections = new ArrayList<>();
-        //TODO ajouter les intersections au plan
+         plan.addIntersection(start);
+        plan.addIntersection(end);
         intersections.add(start);
         intersections.add(end);
 
@@ -98,36 +99,10 @@ class PlanSimplifieTest {
         //TODO test avec une methode private
         planSimplifie.dijkstra(intersections, predecesseurs,chemins,tempsDijkstra,etatDijkstra);
         //Then
-        assertEquals(predecesseurs, predecesseursExpected);
-        assertEquals(chemins, cheminsExpected);
+        assertIterableEquals(predecesseursExpected, predecesseurs);
+        assertIterableEquals(cheminsExpected, chemins);
     }
 
-    /**
-     * cas vide
-     */
-    @Test
-    void shouldDijkstraCasVide() {
-        //With
-        Plan plan = new Plan();
-        DemandeLivraison demande = new DemandeLivraison();
-        PlanSimplifie planSimplifie = new PlanSimplifie(demande, plan);
-
-        ArrayList<Intersection> intersections = new ArrayList<>();
-
-        ArrayList<Intersection> predecesseurs = new ArrayList<>();
-        ArrayList<Intersection> predecesseursExpected = new ArrayList<>();
-        ArrayList<Troncon> chemins = new ArrayList<>();
-        ArrayList<Troncon> cheminsExpected = new ArrayList<>();
-
-        float []tempsDijkstra=new float[plan.getIntersectionCount()];
-        boolean []etatDijkstra=new boolean[plan.getIntersectionCount()];
-        //When
-        //TODO test avec une methode private
-        planSimplifie.dijkstra(intersections, predecesseurs,chemins,tempsDijkstra,etatDijkstra);
-        //Then
-        assertEquals(predecesseurs, predecesseursExpected);
-        assertEquals(chemins, cheminsExpected);
-    }
 
     /**
      * cas avec plan xml
@@ -139,6 +114,7 @@ class PlanSimplifieTest {
         DemandeLivraison demande = new DemandeLivraison();
         PlanSimplifie planSimplifie = new PlanSimplifie(demande, plan);
         //TODO charger un plan xml
+        //TODO charger demande xml
         ArrayList<Intersection> intersections = new ArrayList<>();
         ArrayList<Intersection> predecesseurs = new ArrayList<>();
         ArrayList<Intersection> predecesseursExpected = new ArrayList<>();
@@ -146,15 +122,15 @@ class PlanSimplifieTest {
         ArrayList<Troncon> chemins = new ArrayList<>();
         ArrayList<Troncon> cheminsExpected = new ArrayList<>();
         //TODO remplir les chemins attendus
-        planSimplifie.initIntersectionList(intersections,predecesseurs,chemins);
+        planSimplifie.initIntersectionList(demande.getBeginning(),intersections,predecesseurs,chemins);
         float []tempsDijkstra=new float[plan.getIntersectionCount()];
         boolean []etatDijkstra=new boolean[plan.getIntersectionCount()];
         //When
         //TODO test avec une methode private
         planSimplifie.dijkstra(intersections, predecesseurs,chemins,tempsDijkstra,etatDijkstra);
         //Then
-        assertEquals(predecesseurs, predecesseursExpected);
-        assertEquals(chemins, cheminsExpected);
+        assertIterableEquals(predecesseursExpected, predecesseurs);
+        assertIterableEquals(cheminsExpected, chemins);
     }
 
 
@@ -183,11 +159,11 @@ class PlanSimplifieTest {
 
         //When
         //TODO test avec une methode private
-        planSimplifie.initIntersectionList(intersections, predecesseurs,chemins);
+        planSimplifie.initIntersectionList(null,intersections, predecesseurs,chemins);
         //Then
-        assertEquals(predecesseurs, predecesseursExpected);
-        assertEquals(intersections, intersectionsExpected);
-        assertEquals(chemins, cheminsExpected);
+        assertIterableEquals(predecesseursExpected, predecesseurs);
+        assertIterableEquals(intersectionsExpected, intersections);
+        assertIterableEquals(cheminsExpected, chemins);
 
 
     }
@@ -201,14 +177,12 @@ class PlanSimplifieTest {
         Plan plan = new Plan();
         DemandeLivraison demande = new DemandeLivraison();
         PlanSimplifie planSimplifie = new PlanSimplifie(demande, plan);
-        Intersection start = new Intersection();
-        Intersection end = new Intersection();
-        //TODO ajouter les intersections au plan
-        Troncon t = new Troncon();
-        t.setDestination(end);
-        t.setOrigine(start);
-        t.setLength(10);
-        plan.addTroncon(start, t);
+        Intersection start = new Intersection(0l,0,0);
+        Intersection end = new Intersection(1l,0,0);
+         plan.addIntersection(start);
+        plan.addIntersection(end);
+        Troncon t = new Troncon(start,end,"t",10);
+        plan.addTroncon(t);
         ArrayList<Intersection> intersections = new ArrayList<>();
         ArrayList<Intersection> intersectionsExpected = new ArrayList<>();
         intersectionsExpected.add(start);
@@ -224,11 +198,11 @@ class PlanSimplifieTest {
 
         //When
         //TODO test avec une methode private
-        planSimplifie.initIntersectionList(intersections, predecesseurs,chemins);
+        planSimplifie.initIntersectionList(start,intersections, predecesseurs,chemins);
         //Then
-        assertEquals(predecesseurs, predecesseursExpected);
-        assertEquals(intersections, intersectionsExpected);
-        assertEquals(chemins, cheminsExpected);
+        assertIterableEquals(predecesseursExpected, predecesseurs);
+        assertIterableEquals(intersectionsExpected, intersections);
+        assertIterableEquals(cheminsExpected, chemins);
 
     }
 
@@ -255,11 +229,11 @@ class PlanSimplifieTest {
         //TODO remplir les chemins attendus
         //When
         //TODO test avec une methode private
-        planSimplifie.initIntersectionList(intersections, predecesseurs,chemins);
+        planSimplifie.initIntersectionList(demande.getBeginning(),intersections, predecesseurs,chemins);
         //Then
-        assertEquals(predecesseurs, predecesseursExpected);
-        assertEquals(intersections, intersectionsExpected);
-        assertEquals(chemins, cheminsExpected);
+        assertIterableEquals(predecesseursExpected, predecesseurs);
+        assertIterableEquals(intersectionsExpected, intersections);
+        assertIterableEquals(cheminsExpected, chemins);
 
     }
 
@@ -275,41 +249,40 @@ class PlanSimplifieTest {
         Plan plan = new Plan();
         DemandeLivraison demande = new DemandeLivraison();
         PlanSimplifie planSimplifie = new PlanSimplifie(demande, plan);
-        Intersection start = new Intersection();
-        Intersection end = new Intersection();
-        Intersection end2 = new Intersection();
+        Intersection start = new Intersection(0l,0,0);
+        Intersection end = new Intersection(1l,0,0);
+        Intersection end2 = new Intersection(2l,0,0);
 
-        //TODO ajouter les intersections au plan
-        Troncon t = new Troncon();
-        t.setDestination(end);
-        t.setOrigine(start);
-        t.setLength(10);
-        plan.addTroncon(start, t);
-        Troncon t2 = new Troncon();
-        t2.setDestination(end2);
-        t2.setOrigine(start);
-        t2.setLength(20);
-        plan.addTroncon(start, t2);
+         plan.addIntersection(start);
+        plan.addIntersection(end);
+        Troncon t = new Troncon(start,end,"t",10);
+        plan.addTroncon(t);
+        Troncon t2 = new Troncon(start,end2,"t2",20);
+        plan.addTroncon(t2);
         ArrayList<Trajet> sortie = new ArrayList<>();
         ArrayList<Trajet> sortieExpected = new ArrayList<>();
-        Livraison startLivraison = new Livraison();
-        startLivraison.setIntersection(start);
-        Livraison l1 = new Livraison();
-        l1.setIntersection(end);
-        Livraison l2 = new Livraison();
-        l2.setIntersection(end2);
+        Livraison startLivraison = new Livraison(start,1);
+        Livraison l1 = new Livraison(end,1);
+        Livraison l2 = new Livraison(end2,1);
         HashSet<Livraison> ends= new HashSet<>();
         ends.add(l2);
         ends.add(l1);
+        Trajet tr= new Trajet();
+        tr.addTroncon(t);
+        sortieExpected.add(tr);
+        Trajet tr2= new Trajet();
+        tr2.addTroncon(t2);
+        sortieExpected.add(tr2);
         //When
         //TODO test avec une methode private
-        planSimplifie.shortestPathList(startLivraison, ends);
+        sortie=planSimplifie.shortestPathList(startLivraison, ends);
         //Then
-        assertEquals(sortie, sortieExpected);
+
+        assertIterableEquals(sortieExpected, sortie);
     }
 
     /**
-     * cas avec deux intersections non connectees
+     * cas avec 3 intersections non connectees
      */
     @Test
     void shortestPathListCasBaseNonCo() {
@@ -317,24 +290,26 @@ class PlanSimplifieTest {
         Plan plan = new Plan();
         DemandeLivraison demande = new DemandeLivraison();
         PlanSimplifie planSimplifie = new PlanSimplifie(demande, plan);
-        Intersection start = new Intersection();
-        Intersection end = new Intersection();
-        ArrayList<Intersection> intersections = new ArrayList<>();
-        //TODO ajouter les intersections au plan
-        intersections.add(start);
-        intersections.add(end);
+        Intersection start = new Intersection(0l,0,0);
+        Intersection end = new Intersection(1l,0,0);
+        Intersection end2 = new Intersection(2l,0,0);
 
-        ArrayList<Intersection> predecesseurs = new ArrayList<>();
-        ArrayList<Intersection> predecesseursExpected = new ArrayList<>();
-        predecesseurs.add(null);
-        predecesseursExpected.add(null);
-        predecesseursExpected.add(null);
+        plan.addIntersection(start);
+        plan.addIntersection(end);
+
+        ArrayList<Trajet> sortie = new ArrayList<>();
+        ArrayList<Trajet> sortieExpected = new ArrayList<>();
+        Livraison startLivraison = new Livraison(start,1);
+        Livraison l1 = new Livraison(end,1);
+        Livraison l2 = new Livraison(end2,1);
+        HashSet<Livraison> ends= new HashSet<>();
+        ends.add(l2);
+        ends.add(l1);
         //When
         //TODO test avec une methode private
-        //planSimplifie.dijkstra(intersection, predecesseurs)
-        //planSimplifie
+        sortie=planSimplifie.shortestPathList(startLivraison, ends);
         //Then
-        assertEquals(predecesseurs, predecesseursExpected);
+        assertIterableEquals(sortieExpected, sortie);
     }
 
     /**
@@ -346,18 +321,29 @@ class PlanSimplifieTest {
         Plan plan = new Plan();
         DemandeLivraison demande = new DemandeLivraison();
         PlanSimplifie planSimplifie = new PlanSimplifie(demande, plan);
+        Intersection start = new Intersection(0l,0,0);
+        Intersection end = new Intersection(1l,0,0);
+        Intersection end2 = new Intersection(2l,0,0);
 
-        ArrayList<Intersection> intersections = new ArrayList<>();
-
-        ArrayList<Intersection> predecesseurs = new ArrayList<>();
-        ArrayList<Intersection> predecesseursExpected = new ArrayList<>();
-
+        plan.addIntersection(start);
+        plan.addIntersection(end);
+        Troncon t = new Troncon(start,end,"t",10);
+        plan.addTroncon(t);
+        Troncon t2 = new Troncon(start,end2,"t2",20);
+        plan.addTroncon(t2);
+        ArrayList<Trajet> sortie = new ArrayList<>();
+        ArrayList<Trajet> sortieExpected = new ArrayList<>();
+        Livraison startLivraison = new Livraison(start,1);
+        Livraison l1 = new Livraison(end,1);
+        Livraison l2 = new Livraison(end2,1);
+        HashSet<Livraison> ends= new HashSet<>();
+        ends.add(l2);
+        ends.add(l1);
         //When
         //TODO test avec une methode private
-        //planSimplifie.dijkstra(intersection, predecesseurs)
-        //planSimplifie
+        sortie=planSimplifie.shortestPathList(startLivraison, ends);
         //Then
-        assertEquals(predecesseurs, predecesseursExpected);
+        assertIterableEquals(sortieExpected, sortie);
     }
 
     /**
@@ -369,16 +355,29 @@ class PlanSimplifieTest {
         Plan plan = new Plan();
         DemandeLivraison demande = new DemandeLivraison();
         PlanSimplifie planSimplifie = new PlanSimplifie(demande, plan);
-        //TODO charger un plan xml
-        ArrayList<Intersection> predecesseurs = new ArrayList<>();
-        ArrayList<Intersection> predecesseursExpected = new ArrayList<>();
-        //TODO remplir les predecesseurs
-        //planSimplifie.initIntersectionList(intersections,predecesseurs);
+        Intersection start = new Intersection(0l,0,0);
+        Intersection end = new Intersection(1l,0,0);
+        Intersection end2 = new Intersection(2l,0,0);
+
+        plan.addIntersection(start);
+        plan.addIntersection(end);
+        Troncon t = new Troncon(start,end,"t",10);
+        plan.addTroncon(t);
+        Troncon t2 = new Troncon(start,end2,"t2",20);
+        plan.addTroncon(t2);
+        ArrayList<Trajet> sortie = new ArrayList<>();
+        ArrayList<Trajet> sortieExpected = new ArrayList<>();
+        Livraison startLivraison = new Livraison(start,1);
+        Livraison l1 = new Livraison(end,1);
+        Livraison l2 = new Livraison(end2,1);
+        HashSet<Livraison> ends= new HashSet<>();
+        ends.add(l2);
+        ends.add(l1);
         //When
         //TODO test avec une methode private
-        //planSimplifie.dijkstra(intersection, predecesseurs)
+        sortie=planSimplifie.shortestPathList(startLivraison, ends);
         //Then
-        assertEquals(predecesseurs, predecesseursExpected);
+        assertIterableEquals(sortieExpected, sortie);
     }
 }
 

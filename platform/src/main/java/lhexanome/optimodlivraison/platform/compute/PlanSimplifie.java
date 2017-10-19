@@ -8,12 +8,13 @@ import lhexanome.optimodlivraison.platform.models.Plan;
 import lhexanome.optimodlivraison.platform.models.Trajet;
 import lhexanome.optimodlivraison.platform.models.Troncon;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Logger;
 
 
 /**
@@ -22,6 +23,10 @@ import java.util.Set;
  * et pour arc des trajets formant les plus courts chemins entre ces livraisons.
  */
 public class PlanSimplifie {
+    /**
+     * Logger.
+     */
+    private static final Logger LOGGER = Logger.getLogger(PlanSimplifie.class.getName());
     /**
      * reference au plan charge.
      */
@@ -62,6 +67,8 @@ public class PlanSimplifie {
      * fonction qui calcule le graphe simplifié à partir du plan.
      */
     public void computeGraph() {
+        LOGGER.info(MessageFormat.format("compute simplified graph", ""));
+
         for (Livraison s : graphe.keySet()) {
             ArrayList<Trajet> listeTrajets =
                     shortestPathList(s, graphe.keySet());
@@ -83,6 +90,8 @@ public class PlanSimplifie {
     public ArrayList<Trajet> shortestPathList(
             Livraison start, Set<Livraison> ends) {
         ArrayList<Trajet> sortie = new ArrayList<>();
+        LOGGER.info(MessageFormat.format("start compute shortest path for:", start.toString()));
+
         /*
          * tableau des temps de trajet entre
          * le point de depart et chaque intersection
@@ -116,11 +125,10 @@ public class PlanSimplifie {
         if (plan.getIntersectionCount() > 0) {
             tempsDijkstra[0] = 0;
             etatDijkstra[0] = true;
-            intersections.add(start.getIntersection());
 
 
             //initialisation de la liste d'intersections
-            initIntersectionList(intersections, predecesseurs, chemins);
+            initIntersectionList(start.getIntersection(), intersections, predecesseurs, chemins);
             //calcul
             dijkstra(intersections, predecesseurs,
                     chemins,
@@ -130,17 +138,14 @@ public class PlanSimplifie {
             for (Livraison end : ends) {
                 if (!end.equals(start)) {
                     Trajet t = new Trajet();
-                    t.setStart(start.getIntersection());
-                    t.setEnd(end.getIntersection());
+
                     //on recupere la liste de troncons
                     int indexStart = intersections.indexOf(start.getIntersection());
                     int indexEnd = intersections.indexOf(end.getIntersection());
-                    List<Troncon> listOfTroncon = t.getListOfTroncon();
                     //on remonte par la fin la liste des chemins
                     while (indexStart != indexEnd) {
-                        //on ajoute les troncons en debut de liste
-                        //pour les avoir dans l'ordre
-                        listOfTroncon.add(0, chemins.get(indexEnd));
+                        //TODO inverser l'ordre des troncons
+                        t.addTroncon(chemins.get(indexEnd));
                         indexEnd = intersections.indexOf(predecesseurs.get(indexEnd));
                     }
                     sortie.add(t);
@@ -154,23 +159,29 @@ public class PlanSimplifie {
      * fonction qui initialise la liste des intersections
      * en parcourant les troncons connectes dans le plan.
      *
+     * @param start         intersection de depart
      * @param intersections liste des intersections
      * @param predecesseurs liste des predecesseurs
      * @param chemins       liste des plus courts troncons
      *                      partant des predecesseurs
      *                      vers les intersections
      */
-    public void initIntersectionList(ArrayList<Intersection> intersections,
+    public void initIntersectionList(Intersection start, ArrayList<Intersection> intersections,
                                      ArrayList<Intersection> predecesseurs,
                                      ArrayList<Troncon> chemins) {
-        for (int i = 0; i < intersections.size(); i++) {
-            Collection<Troncon> cheminsPartants =
-                    plan.getTronconsFromIntersection(intersections.get(i));
-            for (Troncon t : cheminsPartants) {
-                if (!intersections.contains(t.getDestination())) {
-                    intersections.add(t.getDestination());
-                    predecesseurs.add(null);
-                    chemins.add(null);
+        if (start != null) {
+            intersections.add(start);
+            predecesseurs.add(null);
+            chemins.add(null);
+            for (int i = 0; i < intersections.size(); i++) {
+                Collection<Troncon> cheminsPartants =
+                        plan.getTronconsFromIntersection(intersections.get(i));
+                for (Troncon t : cheminsPartants) {
+                    if (!intersections.contains(t.getDestination())) {
+                        intersections.add(t.getDestination());
+                        predecesseurs.add(null);
+                        chemins.add(null);
+                    }
                 }
             }
         }
@@ -199,9 +210,11 @@ public class PlanSimplifie {
                          ArrayList<Intersection> predecesseurs,
                          ArrayList<Troncon> chemins,
                          float[] tempsDijkstra, boolean[] etatDijkstra) {
+        LOGGER.info(MessageFormat.format("start Dijkstra algorithm", ""));
+
         //reset
         tempsDijkstra[0] = 0;
-        etatDijkstra[0] = true;
+        etatDijkstra[0] = false;
         for (int i = 1; i < plan.getIntersectionCount(); i++) {
             //je represente l'infini par -1
             tempsDijkstra[i] = -1;
@@ -246,7 +259,7 @@ public class PlanSimplifie {
                             //on stocke le plus court troncon
                             if (tempsDijkstra[indexDestination]
                                     >= tempsDijkstra[indexNouvelleVisite]
-                                    + t.timeToTravel()) {
+                                    + t.getTimeToTravel()) {
                                 //on stocke le predecesseur
                                 predecesseurs.set(indexDestination, courant);
                                 //et le troncon qui les separe
@@ -254,7 +267,7 @@ public class PlanSimplifie {
                                 //on relache l'arc
                                 tempsDijkstra[indexDestination] =
                                         tempsDijkstra[indexNouvelleVisite]
-                                                + t.timeToTravel();
+                                                + t.getTimeToTravel();
                             }
                             //on ne change pas le temps
 
@@ -266,7 +279,7 @@ public class PlanSimplifie {
                             //on relache l'arc
                             tempsDijkstra[indexDestination] =
                                     tempsDijkstra[indexNouvelleVisite]
-                                            + t.timeToTravel();
+                                            + t.getTimeToTravel();
                         }
                     }
                 }
