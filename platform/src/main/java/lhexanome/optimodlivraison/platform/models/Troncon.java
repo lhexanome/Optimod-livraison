@@ -50,8 +50,10 @@ public class Troncon {
         );
     }
 
+
     /**
      * fonction equals.
+     *
      * @param o objet a comparer
      * @return resultat de la comparaison
      */
@@ -70,6 +72,7 @@ public class Troncon {
 
     /**
      * fonction hashCode.
+     *
      * @return hashcode de l'objet
      */
     @Override
