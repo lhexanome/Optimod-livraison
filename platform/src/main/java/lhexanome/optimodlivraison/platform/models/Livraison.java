@@ -3,6 +3,7 @@ package lhexanome.optimodlivraison.platform.models;
 /**
  * Représente une livraison.
  * Contient une durée de livraison, une intersection et une plage horaire.
+ * Si la plage horaire est null alors la livraison peut s'efectuer a n'importe quelle heur
  */
 public class Livraison {
 
@@ -21,6 +22,39 @@ public class Livraison {
      * Plage horaire durant laquelle la livraison peut s'effectuer.
      */
     private PlageHoraire slot;
+
+    /**
+     * Constructeur de livraison.
+     *
+     * @param intersection intersection de livraison
+     * @param duration Durée prise pour la livraison
+     * En minutes
+     * @see #duration
+     * @see #intersection
+     * @see #slot
+     * @see #Livraison(Intersection, int, PlageHoraire)
+     */
+    public Livraison(Intersection intersection, int duration) {
+        this(intersection, duration, null);
+    }
+
+    /**
+     * Constructeur de livraison.
+     *
+     * @param intersection intersection de livraison
+     * @param duration Durée prise pour la livraison
+     * En minutes
+     * @param slot Plage horaire durant laquelle la livraison peut s'effectuer.
+     * @see #duration
+     * @see #intersection
+     * @see #slot
+     * @see #Livraison(Intersection, int)
+     */
+    public Livraison(Intersection intersection, int duration, PlageHoraire slot) {
+        this.intersection = intersection;
+        this.duration = duration;
+        this.slot = slot;
+    }
 
     /**
      * Renvoie le temps de livraison en minutes.

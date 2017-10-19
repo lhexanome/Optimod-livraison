@@ -16,7 +16,10 @@ public class DemandeLivraisonTest {
     void shouldAddDeliverie(){
         //With
         DemandeLivraison deliveriesRequest = new DemandeLivraison();
-        Livraison deliveries = new Livraison();
+        Livraison deliveries = new Livraison(
+                new Intersection(587L,689,754),
+                30
+        );
         deliveries.setDuration(123);
 
         //When
