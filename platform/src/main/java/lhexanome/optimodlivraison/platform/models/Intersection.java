@@ -39,6 +39,15 @@ public class Intersection {
     }
 
     /**
+     * Constructeur.
+     *
+     * @param id Identifiant du point
+     */
+    public Intersection(Long id) {
+        this.id = id;
+    }
+
+    /**
      * Renvoie X.
      *
      * @return X
@@ -92,4 +101,29 @@ public class Intersection {
         this.id = id;
     }
 
+    /**
+     * Equals.
+     *
+     * @param o Object
+     * @return true if equal
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Intersection that = (Intersection) o;
+
+        return id.equals(that.id);
+    }
+
+    /**
+     * Hash code.
+     *
+     * @return hash
+     */
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
 }

@@ -1,11 +1,11 @@
 package lhexanome.optimodlivraison.platform.facade;
 
-import lhexanome.optimodlivraison.platform.exceptions.MapException;
-import lhexanome.optimodlivraison.platform.exceptions.ParseMapException;
-import lhexanome.optimodlivraison.platform.listeners.MapListener;
-import lhexanome.optimodlivraison.platform.models.Plan;
+import lhexanome.optimodlivraison.platform.exceptions.DeliveryException;
+import lhexanome.optimodlivraison.platform.exceptions.ParseDeliveryOrderException;
+import lhexanome.optimodlivraison.platform.listeners.DeliveryListener;
+import lhexanome.optimodlivraison.platform.models.DemandeLivraison;
+import lhexanome.optimodlivraison.platform.parsing.DeliveryOrderParser;
 import lhexanome.optimodlivraison.platform.parsing.common.LoadFile;
-import lhexanome.optimodlivraison.platform.parsing.MapParser;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 
@@ -17,30 +17,30 @@ import java.util.Collection;
 import java.util.logging.Logger;
 
 /**
- * Facade de la partie Plan.
+ * Facade de la partie livraisons.
  */
-public class MapFacade {
+public class DeliveryFacade {
 
     /**
      * Logger.
      */
-    private static final Logger LOGGER = Logger.getLogger(MapFacade.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(DeliveryFacade.class.getName());
 
     /**
-     * Map parser.
+     * Delivery parser.
      */
-    private MapParser mapParser;
+    private DeliveryOrderParser deliveryOrderParser;
 
     /**
      * Liste de listeners.
      */
-    private Collection<MapListener> listeners;
+    private Collection<DeliveryListener> listeners;
 
     /**
      * Constructeur par défaut.
      */
-    public MapFacade() {
-        mapParser = new MapParser();
+    public DeliveryFacade() {
+        deliveryOrderParser = new DeliveryOrderParser();
         listeners = new ArrayList<>();
     }
 
@@ -49,7 +49,7 @@ public class MapFacade {
      *
      * @param listener Listener
      */
-    public void addOnUpdateMapListener(MapListener listener) {
+    public void addOnUpdateDeliveryListener(DeliveryListener listener) {
         listeners.add(listener);
     }
 
@@ -58,26 +58,27 @@ public class MapFacade {
      *
      * @param listener Listener
      */
-    public void removeOnUpdateMapListner(MapListener listener) {
+    public void removeOnUpdateDeliveryListner(DeliveryListener listener) {
         listeners.remove(listener);
     }
 
     /**
-     * Charge un fichier contenant un plan d'une ville.
+     * Charge un fichier contenant une demande de livraison.
      *
      * @param xmlFile Fichier xml
      */
-    public void loadMapFromFile(File xmlFile) {
+    public void loadDeliveryOrderFromFile(File xmlFile) {
         try {
-            LOGGER.info(MessageFormat.format("Loading map {0}", xmlFile.getName()));
+            LOGGER.info(MessageFormat.format("Loading delivery order {0}", xmlFile.getName()));
             Element rootElement = LoadFile.loadFromFile(xmlFile);
             LOGGER.info("XML File loaded");
 
-            Plan newPlan = mapParser.parseMap(rootElement);
+            DemandeLivraison demandeLivraison = deliveryOrderParser.parseDeliveryOrder(rootElement);
 
-            LOGGER.warning(MessageFormat.format("Map loaded with {0} intersections", newPlan.getIntersectionCount()));
+            LOGGER.warning(MessageFormat.format("Delivery order loaded with {0} deliveries",
+                    demandeLivraison.getDeliveries().size()));
 
-            listeners.forEach(l -> l.onUpdateMap(newPlan));
+            listeners.forEach(l -> l.onUpdateDeliveryOrder(demandeLivraison));
 
             LOGGER.info("Listeners notified !");
         } catch (JDOMException e) {
@@ -86,8 +87,8 @@ public class MapFacade {
         } catch (IOException e) {
             LOGGER.warning(MessageFormat.format("I/O error", e.getCause()));
             failUpdate(e);
-        } catch (ParseMapException e) {
-            LOGGER.warning(MessageFormat.format("Bad map format", e.getCause()));
+        } catch (ParseDeliveryOrderException e) {
+            LOGGER.warning(MessageFormat.format("Bad delivery order format", e.getCause()));
             failUpdate(e);
         } catch (Exception e) {
             LOGGER.warning(MessageFormat.format("Unknown error", e.getCause()));
@@ -101,6 +102,6 @@ public class MapFacade {
      * @param e Exception générant l'erreur
      */
     private void failUpdate(Exception e) {
-        listeners.forEach(l -> l.onFailUpdateMap(new MapException(e)));
+        listeners.forEach(l -> l.onFailUpdateDeliveryOrder(new DeliveryException(e)));
     }
 }

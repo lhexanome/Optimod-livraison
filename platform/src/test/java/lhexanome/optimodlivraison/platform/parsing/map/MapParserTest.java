@@ -4,6 +4,7 @@ import lhexanome.optimodlivraison.platform.exceptions.ParseMapException;
 import lhexanome.optimodlivraison.platform.models.Intersection;
 import lhexanome.optimodlivraison.platform.models.Plan;
 import lhexanome.optimodlivraison.platform.models.Troncon;
+import lhexanome.optimodlivraison.platform.parsing.MapParser;
 import org.jdom2.Element;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,7 +36,7 @@ public class MapParserTest {
     }
 
     private Element createInter(Long id, Integer x, Integer y) {
-        Element element = new Element("noeud");
+        Element element = new Element(MapParser.XML_NODE_ELEMENT);
 
         element.setAttribute("id", id.toString());
         element.setAttribute("x", x.toString());
@@ -62,7 +63,7 @@ public class MapParserTest {
         Plan plan = new Plan();
         // When
 
-        mapParser.loadNodes(rootElement.getChildren("noeud"), plan);
+        mapParser.loadNodes(rootElement.getChildren(MapParser.XML_NODE_ELEMENT), plan);
 
         // Then
 
@@ -95,7 +96,7 @@ public class MapParserTest {
         // When
         // Then
 
-        assertThatThrownBy(() -> mapParser.loadNodes(rootElement.getChildren("noeud"), plan))
+        assertThatThrownBy(() -> mapParser.loadNodes(rootElement.getChildren(MapParser.XML_NODE_ELEMENT), plan))
                 .isInstanceOf(ParseMapException.class)
                 .hasMessage("Node id already exists!");
     }
