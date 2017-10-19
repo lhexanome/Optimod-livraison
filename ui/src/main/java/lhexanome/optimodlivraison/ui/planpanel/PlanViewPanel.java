@@ -36,7 +36,7 @@ public class PlanViewPanel extends JPanel {
             if(tournee != null){
                 g.setColor(Color.GREEN);
                 g2.setStroke(new BasicStroke(2));
-                tournee.getDeliveries().forEach(trajet -> trajet.getListOfTroncon().forEach(troncon -> paintComponent(g, troncon)));
+                tournee.getDeliveries().forEach(trajet -> trajet.getTroncons().forEach(troncon -> paintComponent(g, troncon)));
             }
             if(demande != null){
                 g.setColor(Color.BLUE);

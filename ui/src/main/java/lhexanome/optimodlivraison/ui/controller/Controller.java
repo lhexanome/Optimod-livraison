@@ -46,11 +46,11 @@ public class Controller implements WelcomeActions, PlanPreviewActions, DemandPre
         //TODO REMOVE IT
         plan = FackUtile.fackPlanDataMoyen();
         demand = new DemandeLivraison();
-        demand.addDelivery(new Livraison(){{setIntersection(new Intersection(){{setX(42940);setY(62174);}});}});
-        demand.addDelivery(new Livraison(){{setIntersection(new Intersection(){{setX(61081);setY(61329);}});}});
-        demand.addDelivery(new Livraison(){{setIntersection(new Intersection(){{setX(78631);setY(62502);}});}});
-        demand.addDelivery(new Livraison(){{setIntersection(new Intersection(){{setX(65737);setY(70280);}});}});
-        demand.setBeginning(new Intersection(){{setX(64752);setY(62097);}});
+        demand.addDelivery(new Livraison(new Intersection(598L,42940,62174), 10));
+        demand.addDelivery(new Livraison(new Intersection(598L,61081,61329), 10));
+        demand.addDelivery(new Livraison(new Intersection(598L,78631,62502), 10));
+        demand.addDelivery(new Livraison(new Intersection(598L,65737,70280), 10));
+        demand.setBeginning(new Intersection(598L,64752,62097));
         tournee = FackUtile.fackTournee();
 
         welcomeWindow = new WelcomeWindow(this);

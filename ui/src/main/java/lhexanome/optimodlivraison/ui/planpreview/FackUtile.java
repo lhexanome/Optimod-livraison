@@ -2,10 +2,10 @@ package lhexanome.optimodlivraison.ui.planpreview;
 
 import lhexanome.optimodlivraison.platform.models.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class FackUtile {
     private static int[][] getTmp1() {
@@ -79,10 +79,14 @@ public class FackUtile {
     }
     // TODO Remove fack methode
     public static Troncon fackTroncon(int x1, int y1, int x2, int y2){
-        return new Troncon(){{this.setOrigine(fackIntersection(x1,y1));this.setDestination(fackIntersection(x2,y2));}};
+        return new Troncon(
+                new Intersection(1L+100000*y1+x1,x1,y1),
+                new Intersection(1L+100000*y2+x2,x2,y2),
+                "none"
+        );
     }
     public static Intersection fackIntersection(int x, int y){
-        return new Intersection(){{setX(x);setY(y);}};
+        return new Intersection(1L+100000*y+x,x,y);
     }
     public static Map<Intersection, Troncon> fackPlanDataPetit(){
         Map<Intersection, Troncon> planTemp = new HashMap<>();
@@ -465,15 +469,24 @@ public class FackUtile {
 
         Plan planTemp = new Plan();
         for(int[] t:getTmp1())
-            planTemp.addTroncon(fackIntersection(t[0],t[1]),fackTroncon(t[0],t[1],t[2],t[3]));
+            planTemp.addTroncon(fackTroncon(t[0],t[1],t[2],t[3]));
         for(int[] t:getTmp2())
-            planTemp.addTroncon(fackIntersection(t[0],t[1]),fackTroncon(t[0],t[1],t[2],t[3]));
+            planTemp.addTroncon(fackTroncon(t[0],t[1],t[2],t[3]));
         return planTemp;
     }
 
     public static Tournee fackTournee() {
-        Tournee res = new Tournee();
         int[][][] data = {getTmp1(),getTmp2()};
+        int[][] data_ = data[(int) (Math.random() * data.length)];
+        int[] data__ = data_[(int)(Math.random() * data_.length)];
+        DateFormat dateFormat = new SimpleDateFormat("DD-MM-YY HH:mm");
+        Date start = null;
+        try {
+            start = dateFormat.parse("16-08-17 21:25");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Tournee res = new Tournee(fackIntersection(data__[0],data__[1]),start,102);
 
 
         List<Trajet> trajets = new ArrayList<>();
@@ -481,14 +494,13 @@ public class FackUtile {
         for(int i=0;i<5;i++){
 
             Trajet t = new Trajet();
-            List<Troncon> troncons = new ArrayList<>();
-            t.setListOfTroncon(troncons);
+            List<Troncon> troncons = t.getTroncons();
 
-            int[][] data_ = data[(int) (Math.random() * data.length)];
+            data_ = data[(int) (Math.random() * data.length)];
             int index = (int) (Math.random() * data_.length-10);
 
             for(int j=0;j<10;j++){
-                int[] data__ = data_[index+j];
+                data__ = data_[index+j];
                 troncons.add(fackTroncon(data__[0],data__[1],data__[2],data__[3]));
             }
 
