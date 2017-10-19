@@ -5,7 +5,7 @@ import lhexanome.optimodlivraison.platform.exceptions.ParseMapException;
 import lhexanome.optimodlivraison.platform.listeners.MapListener;
 import lhexanome.optimodlivraison.platform.models.Plan;
 import lhexanome.optimodlivraison.platform.parsing.common.LoadFile;
-import lhexanome.optimodlivraison.platform.parsing.map.MapParser;
+import lhexanome.optimodlivraison.platform.parsing.MapParser;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 

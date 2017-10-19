@@ -1,4 +1,4 @@
-package lhexanome.optimodlivraison.platform.parsing.map;
+package lhexanome.optimodlivraison.platform.parsing;
 
 import lhexanome.optimodlivraison.platform.exceptions.ParseMapException;
 import lhexanome.optimodlivraison.platform.models.Intersection;
@@ -20,14 +20,19 @@ public class MapParser {
     private static final Logger LOGGER = Logger.getLogger(MapParser.class.getName());
 
     /**
+     * XML Tag name for a node.
+     */
+    public static final String XML_NODE_ELEMENT = "noeud";
+
+    /**
      * Parse un document XML représentant un plan.
      * Utilise le format suivant :
      * {@code
-     * <xml>
+     * <reseau>
      * <noeud id="1" x="0" y="0"/>
      * <noeud id="2" x="1" y="0"/>
      * <troncon destination="1" origine="2" nomRue="Rue de la paix" longueur="10.0"/>
-     * </xml>
+     * </reseau>
      * }
      *
      * @param rootElement Element racine
@@ -42,7 +47,7 @@ public class MapParser {
         if (!"reseau".equals(rootElement.getName())) {
             throw new ParseMapException("XML root element name must be `reseau`");
         }
-        List<Element> nodes = rootElement.getChildren("noeud");
+        List<Element> nodes = rootElement.getChildren(XML_NODE_ELEMENT);
         List<Element> troncons = rootElement.getChildren("troncon");
 
         if (nodes.size() + troncons.size() != rootElement.getChildren().size()) {
