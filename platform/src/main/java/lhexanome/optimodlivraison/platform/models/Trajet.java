@@ -1,6 +1,7 @@
 package lhexanome.optimodlivraison.platform.models;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -21,7 +22,7 @@ public class Trajet {
     private float timeToTravel;
 
     public Trajet(){
-        troncons = new ArrayList<>();
+        troncons = new LinkedList<>();
         timeToTravel = 0;
     }
 
@@ -92,6 +93,25 @@ public class Trajet {
     }
 
     /**
+     * Ajout un troncon a du debut du trajet.
+     * Cette operation met a jour le temp de parcour en lui ajoutent le temp de parcour du troncon passer en paramétre.
+     *
+     * @param troncon troncon a ajouter au debut du trajet
+     * L'intersection de destination du troncon doit étre identique a l'intersection d'origine du trajet
+     *
+     * @throws RuntimeException si l'intersection origine du troncon n'est pas identique a l'intersection d'arrivée du trajet
+     */
+    public void addTronconBefore(Troncon troncon){
+        if(troncons.size() == 0 || getStart() == troncon.getDestination()){
+            troncons.set(0, troncon);
+            timeToTravel += troncon.getTimeToTravel();
+        }else {
+            throw new RuntimeException("The troncon is not at the end of the trajet");
+        }
+
+    }
+
+    /**
      * Ajout un trajet a la suit du trajet.
      * Cette operation met a jour le temp de parcour en lui ajoutent le temp de parcour du trajet passer en paramétre.
      *
@@ -102,6 +122,7 @@ public class Trajet {
      */
     public void addTrajet(Trajet trajet){
         if(troncons.size() == 0 || getEnd() == trajet.getStart()){
+
             troncons.addAll(trajet.troncons);
             timeToTravel += trajet.getTimeToTravel();
         }else {
