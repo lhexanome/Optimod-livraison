@@ -125,7 +125,7 @@ class PlanSimplifieTest {
         ArrayList<Troncon> chemins = new ArrayList<>();
         ArrayList<Troncon> cheminsExpected = new ArrayList<>();
         //TODO remplir les chemins attendus
-        planSimplifie.initIntersectionList(demande.getBeginning().getIntersection(), intersections, predecesseurs, chemins);
+        //planSimplifie.initIntersectionList(demande.getBeginning().getIntersection(), intersections, predecesseurs, chemins);
         float[] tempsDijkstra = new float[plan.getIntersectionCount()];
         boolean[] etatDijkstra = new boolean[plan.getIntersectionCount()];
         //When
