@@ -117,7 +117,7 @@ public class MapParserTest {
 
         // Then
 
-        assertEquals(1, plan.getIntersectionCount());
+        assertEquals(2, plan.getIntersectionCount());
         assertEquals(1, plan.getTronconsFromIntersection(intersection2).size());
 
     }
@@ -141,7 +141,7 @@ public class MapParserTest {
 
         // Then
 
-        assertEquals(1, plan.getIntersectionCount());
+        assertEquals(2, plan.getIntersectionCount());
         assertEquals(1, plan.getTronconsFromIntersection(intersection2).size());
 
         plan.getTronconsFromIntersection(intersection2)
@@ -167,7 +167,7 @@ public class MapParserTest {
 
         // Then
 
-        assertEquals(1, plan.getIntersectionCount());
+        assertEquals(2, plan.getIntersectionCount());
         assertEquals(1, plan.getTronconsFromIntersection(intersection2).size());
 
         plan.getTronconsFromIntersection(intersection2)
@@ -193,7 +193,7 @@ public class MapParserTest {
 
         // Then
 
-        assertEquals(1, plan.getIntersectionCount());
+        assertEquals(2, plan.getIntersectionCount());
         assertEquals(1, plan.getTronconsFromIntersection(intersection2).size());
 
     }
@@ -292,7 +292,7 @@ public class MapParserTest {
 
         // Then
 
-        assertEquals(1, plan.getIntersectionCount());
+        assertEquals(3, plan.getIntersectionCount());
         assertEquals(2, plan.getTronconsFromIntersection(intersection2).size());
 
         plan.getTronconsFromIntersection(intersection2)
@@ -310,7 +310,7 @@ public class MapParserTest {
 
         // Then
 
-        assertEquals(1, plan.getIntersectionCount());
+        assertEquals(2, plan.getIntersectionCount());
 
     }
 }

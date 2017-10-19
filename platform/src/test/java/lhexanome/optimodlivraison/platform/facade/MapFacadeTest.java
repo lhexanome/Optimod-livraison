@@ -27,7 +27,8 @@ class MapFacadeTest {
         mapFacade.addOnUpdateMapListener(new MapListener() {
             @Override
             public void onUpdateMap(Plan plan) {
-                assertEquals(209, plan.getIntersectionCount());
+                // 216 intersections dans le xml donc il doit y avoir 216 intersections dans le Plan!
+                assertEquals(216, plan.getIntersectionCount());
             }
 
             @Override

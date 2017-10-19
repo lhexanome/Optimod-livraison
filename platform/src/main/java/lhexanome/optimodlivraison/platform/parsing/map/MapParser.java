@@ -114,7 +114,7 @@ public class MapParser {
                         streetName,
                         length
                 );
-                plan.addTroncon(troncon.getOrigine(), troncon);
+                plan.addTroncon(troncon);
             }
         }
 
