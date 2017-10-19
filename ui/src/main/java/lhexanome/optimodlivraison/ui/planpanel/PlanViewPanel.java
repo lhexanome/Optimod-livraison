@@ -51,8 +51,8 @@ public class PlanViewPanel extends JPanel {
                 plan.getTroncons().forEach((troncon) -> paintComponent(g2, troncon));
             }
             if(tournee != null){
-                g2.setColor(Color.GREEN);
-                g2.setStroke(new BasicStroke(1));
+                g2.setColor(new Color(245,124,0));
+                g2.setStroke(new BasicStroke(2));
                 tournee.getDeliveries().forEach(trajet -> trajet.getTroncons().forEach(troncon -> paintComponent(g2, troncon)));
             }
             if(demande != null){
@@ -64,15 +64,11 @@ public class PlanViewPanel extends JPanel {
 
         Intersection intersection = demande.getBeginning();
 
-        g2.setColor(Color.BLUE);
-        g2.setStroke(new BasicStroke(3));
-        
         int x = (int) (this.offsetX + getSize().width / 2 + intersection.getX() * scalX);
         int y = (int) (this.offsetY + getSize().height / 2 + intersection.getY() * scalY);
 
         g2.drawImage(markerRed, x + MARKER_RED_OFFSET_X,y + MARKER_RED_OFFSET_Y, null);
 
-        g2.drawOval(x-2,y-2,4,4);
 
         demande.getDeliveries().forEach((livraison) ->paintComponent(g2,livraison));
 
@@ -82,15 +78,11 @@ public class PlanViewPanel extends JPanel {
 
         Intersection intersection = livraison.getIntersection();
 
-        g2.setColor(Color.WHITE);
-        g2.setStroke(new BasicStroke(3));
-
         int x = (int) (this.offsetX + getSize().width / 2 + intersection.getX() * scalX);
         int y = (int) (this.offsetY + getSize().height / 2 + intersection.getY() * scalY);
 
         g2.drawImage(markerOrange, x + MARKER_ORANGE_OFFSET_X,y + MARKER_ORANGE_OFFSET_Y, null);
 
-        g2.drawOval(x-2,y-2,4,4);
 
     }
 
@@ -106,10 +98,6 @@ public class PlanViewPanel extends JPanel {
                 (int) (destination.getX() * scalX + offsetX),
                 (int) (destination.getY() * scalY + offsetY)
             );
-        System.out.println(""+(int) (origine.getX() * scalX + offsetX)+" : "+
-                (int) (origine.getY() * scalY + offsetY)+"      "+
-                (int) (destination.getX() * scalX + offsetX)+" : "+
-                (int) (destination.getY() * scalY + offsetY));
     }
 
     public float getScalX() {

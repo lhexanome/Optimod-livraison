@@ -1,5 +1,7 @@
 package lhexanome.optimodlivraison.ui.controller.states;
 
+import lhexanome.optimodlivraison.platform.models.DemandeLivraison;
+import lhexanome.optimodlivraison.ui.FackUtile;
 import lhexanome.optimodlivraison.ui.Window;
 import lhexanome.optimodlivraison.ui.controller.Controller;
 import lhexanome.optimodlivraison.ui.controller.DefaultState;
@@ -23,23 +25,17 @@ public class ChooseDemandeState extends DefaultState{
 
     @Override
     public void selectDemand (DemandPreviewWindow nextWindow, File xmlDemandFile) {
-        Element elementDemand = null;
-        try {
-            /* TODO
-            DemandParser demandParser = new DemandParser();
-            elementDemand = LoadFile.loadFromFile(xmlDemandFile);
-            controller.demandPreviewState = demandParser.parseDemand(elementDemand);
-            */
-        } catch (Exception e) {
-            // TODO
-            e.printStackTrace();
-        }
 
-        this.window.close();
+        //TODO replace nextLine
+        controller.demand = FackUtile.fackDemandeLivraison(controller.plan, 10);
 
         nextWindow.setPlan(controller.plan);
         nextWindow.setDemand(controller.demand);
+
+        window.close();
+        //TODO window.setLoad(false);
         nextWindow.open();
         controller.setCurrentState(controller.demandPreviewState);
+
     }
 }

@@ -3,7 +3,7 @@ package lhexanome.optimodlivraison.ui.controller;
 import lhexanome.optimodlivraison.platform.models.*;
 import lhexanome.optimodlivraison.ui.controller.states.*;
 import lhexanome.optimodlivraison.ui.orderaction.OrderEditorWindow;
-import lhexanome.optimodlivraison.ui.planpreview.FackUtile;
+import lhexanome.optimodlivraison.ui.FackUtile;
 import lhexanome.optimodlivraison.ui.planpreview.PlanPreviewActions;
 import lhexanome.optimodlivraison.ui.planpreview.PlanPreviewWindow;
 import lhexanome.optimodlivraison.ui.demandpreview.DemandPreviewActions;
@@ -42,16 +42,6 @@ public class Controller implements WelcomeActions, PlanPreviewActions, DemandPre
 
 
     public Controller() {
-
-        //TODO REMOVE IT
-        plan = FackUtile.fackPlanDataMoyen();
-        demand = new DemandeLivraison();
-        demand.addDelivery(new Livraison(new Intersection(598L,42940,62174), 10));
-        demand.addDelivery(new Livraison(new Intersection(598L,61081,61329), 10));
-        demand.addDelivery(new Livraison(new Intersection(598L,78631,62502), 10));
-        demand.addDelivery(new Livraison(new Intersection(598L,65737,70280), 10));
-        demand.setBeginning(new Intersection(598L,64752,62097));
-        tournee = FackUtile.fackTournee();
 
         welcomeWindow = new WelcomeWindow(this);
         planPreviewWindow = new PlanPreviewWindow(this);

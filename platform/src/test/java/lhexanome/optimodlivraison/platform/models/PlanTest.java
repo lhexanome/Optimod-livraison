@@ -206,6 +206,8 @@ public class PlanTest {
 
         Collection<Troncon> toncons = plan.getTroncons();
 
+
+
         //Then
         assertNotNull(toncons);
         assertEquals(0, toncons.size());
