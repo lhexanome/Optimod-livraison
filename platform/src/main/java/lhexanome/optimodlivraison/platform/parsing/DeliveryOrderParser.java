@@ -40,17 +40,17 @@ public class DeliveryOrderParser {
     public static final String XML_DELIVERY_ELEMENT = "livraison";
 
     /**
-     * XML address attribute
+     * XML address attribute.
      */
     public static final String XML_ADDRESS_ATRTRIBUTE = "adresse";
 
     /**
-     * XML duration attribute
+     * XML duration attribute.
      */
     public static final String XML_DURATION_ATTRIBUTE = "duree";
 
     /**
-     * XML start time attribute
+     * XML start time attribute.
      */
     public static final String XML_START_TIME_ATTRIBUTE = "heureDepart";
 
@@ -76,7 +76,8 @@ public class DeliveryOrderParser {
         LOGGER.info("Start parsing delivery order");
 
         if (!XML_ROOT_ELEMENT.equals(rootElement.getName())) {
-            throw new ParseDeliveryOrderException(String.format("XML root element name must be `%s`", XML_ROOT_ELEMENT));
+            throw new ParseDeliveryOrderException(
+                    String.format("XML root element name must be `%s`", XML_ROOT_ELEMENT));
         }
         rootElement.getChildren(XML_ROOT_ELEMENT);
 
