@@ -8,7 +8,13 @@ import lhexanome.optimodlivraison.platform.models.Plan;
 import lhexanome.optimodlivraison.platform.models.Trajet;
 import lhexanome.optimodlivraison.platform.models.Troncon;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 
 /**
  * classe qui stocke une version simplifiée du plan,
@@ -17,11 +23,11 @@ import java.util.*;
  */
 public class PlanSimplifie {
     /**
-     * reference au plan charge
+     * reference au plan charge.
      */
     private Plan plan;
     /**
-     * reference a la demande de livraison chargee
+     * reference a la demande de livraison chargee.
      */
     private DemandeLivraison demandeLivraison;
     /**
@@ -127,15 +133,15 @@ public class PlanSimplifie {
                     t.setStart(start.getIntersection());
                     t.setEnd(end.getIntersection());
                     //on recupere la liste de troncons
-                    int indexStart= intersections.indexOf(start.getIntersection());
-                    int indexEnd= intersections.indexOf(end.getIntersection());
-                    List<Troncon> listOfTroncon= t.getListOfTroncon();
+                    int indexStart = intersections.indexOf(start.getIntersection());
+                    int indexEnd = intersections.indexOf(end.getIntersection());
+                    List<Troncon> listOfTroncon = t.getListOfTroncon();
                     //on remonte par la fin la liste des chemins
-                    while(indexStart!=indexEnd){
+                    while (indexStart != indexEnd) {
                         //on ajoute les troncons en debut de liste
                         //pour les avoir dans l'ordre
-                        listOfTroncon.add(0,chemins.get(indexEnd));
-                        indexEnd=intersections.indexOf(predecesseurs.get(indexEnd));
+                        listOfTroncon.add(0, chemins.get(indexEnd));
+                        indexEnd = intersections.indexOf(predecesseurs.get(indexEnd));
                     }
                     sortie.add(t);
                 }
@@ -196,7 +202,8 @@ public class PlanSimplifie {
         //reset
         tempsDijkstra[0] = 0;
         etatDijkstra[0] = true;
-        for (int i = 1; i < plan.getIntersectionCount(); i++) {//je represente l'infini par -1
+        for (int i = 1; i < plan.getIntersectionCount(); i++) {
+            //je represente l'infini par -1
             tempsDijkstra[i] = -1;
             etatDijkstra[i] = false;
         }
@@ -237,9 +244,9 @@ public class PlanSimplifie {
                     if (!etatDijkstra[indexDestination]) {
                         if (tempsDijkstra[indexDestination] != -1) {
                             //on stocke le plus court troncon
-                            if (tempsDijkstra[indexDestination] >=
-                                    tempsDijkstra[indexNouvelleVisite]
-                                            + t.timeToTravel()) {
+                            if (tempsDijkstra[indexDestination]
+                                    >= tempsDijkstra[indexNouvelleVisite]
+                                    + t.timeToTravel()) {
                                 //on stocke le predecesseur
                                 predecesseurs.set(indexDestination, courant);
                                 //et le troncon qui les separe
@@ -248,9 +255,8 @@ public class PlanSimplifie {
                                 tempsDijkstra[indexDestination] =
                                         tempsDijkstra[indexNouvelleVisite]
                                                 + t.timeToTravel();
-                            } else {
-                               //on ne change pas le temps
                             }
+                            //on ne change pas le temps
 
                         } else {
                             //on stocke le predecesseur
