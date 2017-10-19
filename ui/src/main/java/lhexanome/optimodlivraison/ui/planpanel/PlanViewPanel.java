@@ -62,10 +62,10 @@ public class PlanViewPanel extends JPanel {
 
     protected void paintComponent(Graphics2D g2, DemandeLivraison demande){
 
-        Intersection intersection = demande.getBeginning();
+        Entrepot entrepot = demande.getBeginning();
 
-        int x = (int) (this.offsetX + getSize().width / 2 + intersection.getX() * scalX);
-        int y = (int) (this.offsetY + getSize().height / 2 + intersection.getY() * scalY);
+        int x = (int) (this.offsetX + getSize().width / 2 + entrepot.getIntersection().getX() * scalX);
+        int y = (int) (this.offsetY + getSize().height / 2 + entrepot.getIntersection().getY() * scalY);
 
         g2.drawImage(markerRed, x + MARKER_RED_OFFSET_X,y + MARKER_RED_OFFSET_Y, null);
 
