@@ -13,8 +13,8 @@
     <orderEntry type="library" name="Gradle: org.jdom:jdom:2.0.0" level="project" />
     <orderEntry type="library" name="Gradle: org.junit.jupiter:junit-jupiter-api:5.0.1" level="project" />
     <orderEntry type="library" name="Gradle: org.opentest4j:opentest4j:1.0.0" level="project" />
-    <orderEntry type="library" name="Gradle: org.junit.platform:junit-platform-commons:1.0.1" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.junit.jupiter:junit-jupiter-engine:5.0.1" level="project" />
+    <orderEntry type="library" name="Gradle: org.junit.platform:junit-platform-commons:1.0.1" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.junit.platform:junit-platform-engine:1.0.1" level="project" />
   </component>
   <component name="TestModuleProperties" production-module="platform_main" />
