@@ -74,6 +74,7 @@ public class Trajet {
 
     /**
      * Ajout un troncon a la fin du trajet.
+     * Cette operation met a jour le temp de parcour en lui ajoutent le temp de parcour du troncon passer en paramétre.
      *
      * @param troncon troncon a ajouter au trajet
      * L'intersection origine du troncon doit étre identique a l'intersection d'arrivée du trajet
@@ -92,6 +93,7 @@ public class Trajet {
 
     /**
      * Ajout un trajet a la suit du trajet.
+     * Cette operation met a jour le temp de parcour en lui ajoutent le temp de parcour du trajet passer en paramétre.
      *
      * @param trajet trajet a ajouter au trajet courant
      * Le depart du trajet doit étre identique a l'arrivée du trajet courant
