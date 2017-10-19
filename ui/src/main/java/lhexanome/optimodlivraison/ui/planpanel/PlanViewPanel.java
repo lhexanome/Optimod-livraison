@@ -2,26 +2,43 @@ package lhexanome.optimodlivraison.ui.planpanel;
 
 
 import lhexanome.optimodlivraison.platform.models.*;
-import lhexanome.optimodlivraison.ui.planpreview.FackUtile;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-import java.util.Map;
-import java.util.function.Consumer;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 public class PlanViewPanel extends JPanel {
+
+    public static final String RESOURCENAME_PLAN_MARKER_RED = "/plan/marker/planMarkerRed.png";
+    public static final String RESOURCENAME_PLAN_MARKER_ORANGE = "/plan/marker/planMarkerOrange.png";
+
+    public static final int MARKER_RED_OFFSET_X = -32;
+    public static final int MARKER_RED_OFFSET_Y = -64;
+    public static final int MARKER_ORANGE_OFFSET_X = -32;
+    public static final int MARKER_ORANGE_OFFSET_Y = -64;
 
     private Plan plan;
     private DemandeLivraison demande;
     private Tournee tournee;
 
-    //private float scalX=0.05f, scalY=0.05f, offsetX=-763, offsetY=-1096;
-    private float scalX=0.0189f, scalY=0.0189f, offsetX=-1100, offsetY=-1620;
+    private BufferedImage markerRed;
+    private BufferedImage markerOrange;
+
+    private float scalX = 1f, scalY = 1f, offsetX = 0, offsetY = 0;
 
     private boolean moove = false;
+
+    public PlanViewPanel(){
+        try {
+            markerRed = ImageIO.read(getClass().getResource(RESOURCENAME_PLAN_MARKER_RED));
+            markerOrange = ImageIO.read(getClass().getResource(RESOURCENAME_PLAN_MARKER_ORANGE));
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
+    }
 
     protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
@@ -29,39 +46,61 @@ public class PlanViewPanel extends JPanel {
 
             // TODO replace planTemp by plan.[getData]()
             if(plan != null) {
-                g.setColor(Color.BLACK);
+                g2.setColor(Color.BLACK);
                 g2.setStroke(new BasicStroke(1));
-                plan.getTroncons().forEach((troncon) -> paintComponent(g, troncon));
+                plan.getTroncons().forEach((troncon) -> paintComponent(g2, troncon));
             }
             if(tournee != null){
-                g.setColor(Color.GREEN);
-                g2.setStroke(new BasicStroke(2));
-                tournee.getDeliveries().forEach(trajet -> trajet.getTroncons().forEach(troncon -> paintComponent(g, troncon)));
+                g2.setColor(Color.GREEN);
+                g2.setStroke(new BasicStroke(1));
+                tournee.getDeliveries().forEach(trajet -> trajet.getTroncons().forEach(troncon -> paintComponent(g2, troncon)));
             }
             if(demande != null){
-                g.setColor(Color.BLUE);
-                g2.setStroke(new BasicStroke(3));
-                demande.getDeliveries().forEach(livraison -> paintComponent(g, livraison.getIntersection()));
-                g.setColor(Color.RED);
-                paintComponent(g, demande.getBeginning());
+                paintComponent(g2, demande);
             }
     }
 
-    protected void paintComponent(Graphics g, Intersection intersection){
+    protected void paintComponent(Graphics2D g2, DemandeLivraison demande){
 
-        float x = this.offsetX + getSize().width / 2 + intersection.getX() * scalX;
-        float y = this.offsetY + getSize().height / 2 + intersection.getY() * scalY;
+        Intersection intersection = demande.getBeginning();
 
-        g.drawOval((int)x-2,(int)y-2,4,4);
+        g2.setColor(Color.BLUE);
+        g2.setStroke(new BasicStroke(3));
+        
+        int x = (int) (this.offsetX + getSize().width / 2 + intersection.getX() * scalX);
+        int y = (int) (this.offsetY + getSize().height / 2 + intersection.getY() * scalY);
+
+        g2.drawImage(markerRed, x + MARKER_RED_OFFSET_X,y + MARKER_RED_OFFSET_Y, null);
+
+        g2.drawOval(x-2,y-2,4,4);
+
+        demande.getDeliveries().forEach((livraison) ->paintComponent(g2,livraison));
 
     }
-    protected void paintComponent(Graphics g, Troncon troncon){
+    
+    protected void paintComponent(Graphics2D g2, Livraison livraison){
+
+        Intersection intersection = livraison.getIntersection();
+
+        g2.setColor(Color.WHITE);
+        g2.setStroke(new BasicStroke(3));
+
+        int x = (int) (this.offsetX + getSize().width / 2 + intersection.getX() * scalX);
+        int y = (int) (this.offsetY + getSize().height / 2 + intersection.getY() * scalY);
+
+        g2.drawImage(markerOrange, x + MARKER_ORANGE_OFFSET_X,y + MARKER_ORANGE_OFFSET_Y, null);
+
+        g2.drawOval(x-2,y-2,4,4);
+
+    }
+
+    protected void paintComponent(Graphics2D g2, Troncon troncon){
 
         Intersection origine = troncon.getOrigine();
         Intersection destination = troncon.getDestination();
         float offsetX = this.offsetX + getSize().width / 2;
         float offsetY = this.offsetY + getSize().height / 2;
-        g.drawLine(
+        g2.drawLine(
                 (int) (origine.getX() * scalX + offsetX),
                 (int) (origine.getY() * scalY + offsetY),
                 (int) (destination.getX() * scalX + offsetX),
