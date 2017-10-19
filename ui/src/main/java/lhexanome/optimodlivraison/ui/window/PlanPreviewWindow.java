@@ -1,23 +1,27 @@
-package lhexanome.optimodlivraison.ui.welcome;
+package lhexanome.optimodlivraison.ui.window;
 
+
+import lhexanome.optimodlivraison.platform.models.Plan;
 import lhexanome.optimodlivraison.ui.FileTypeFilter;
 import lhexanome.optimodlivraison.ui.Window;
 import lhexanome.optimodlivraison.ui.controller.Controller;
+import lhexanome.optimodlivraison.ui.view.PlanPreviewView;
 
 import javax.swing.*;
-import java.awt.event.WindowEvent;
 
-public class WelcomeWindow extends Window {
+public class PlanPreviewWindow extends Window{
+
+    PlanPreviewView mapPreviewView;
 
 
-    private WelcomeView welcomeView;
+    public PlanPreviewWindow(Controller controller){
+        super(controller, "testHelloMars");// TODO Rename frmaeName
 
-    public WelcomeWindow(Controller controller){
-        super(controller, "testHelloMars");
+        mapPreviewView = new PlanPreviewView(controller);
 
-        welcomeView = new WelcomeView(controller);
-        jFrame.add(welcomeView.getMainPanel());
-        jFrame.pack();
+        jFrame.add(mapPreviewView.getMainPanel());
+        //jFrame.pack();
+        jFrame.setSize(1080,720);
         jFrame.setLocationRelativeTo(null);
     }
 
@@ -25,7 +29,7 @@ public class WelcomeWindow extends Window {
 
         JFileChooser chooser = new JFileChooser();
         chooser.setCurrentDirectory(new java.io.File("."));
-        chooser.setDialogTitle("Ouvrir un plan");
+        chooser.setDialogTitle("Ouvrir une demand");
         chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         chooser.setAcceptAllFileFilterUsed(false);
         chooser.setFileFilter(new FileTypeFilter("xml"));
@@ -35,13 +39,16 @@ public class WelcomeWindow extends Window {
             System.out.println("getCurrentDirectory(): " + chooser.getCurrentDirectory());
             System.out.println("getSelectedFile() : " + chooser.getSelectedFile());
 
-            controller.selectPlan(chooser.getSelectedFile());
+            controller.selectDemand(chooser.getSelectedFile());
 
         } else {
             System.out.println("No Selection ");
-            controller.clickCancelPlan();
+            controller.clickCancelDemand();
         }
     }
 
+    public void setPlan(Plan plan) {
+        mapPreviewView.setPlan(plan);
+    }
 
 }

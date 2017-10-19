@@ -1,10 +1,9 @@
 package lhexanome.optimodlivraison.ui.controller;
 
-import lhexanome.optimodlivraison.platform.models.Plan;
-import lhexanome.optimodlivraison.ui.demandpreview.DemandPreviewWindow;
-import lhexanome.optimodlivraison.ui.orderaction.OrderEditorWindow;
-import lhexanome.optimodlivraison.ui.planpreview.PlanPreviewWindow;
-import lhexanome.optimodlivraison.ui.welcome.WelcomeWindow;
+import lhexanome.optimodlivraison.ui.window.DemandPreviewWindow;
+import lhexanome.optimodlivraison.ui.window.OrderEditorWindow;
+import lhexanome.optimodlivraison.ui.window.PlanPreviewWindow;
+import lhexanome.optimodlivraison.ui.window.WelcomeWindow;
 
 import java.io.File;
 //import lhexanome.optimodlivraison.ui.welcome.WelcomeController;

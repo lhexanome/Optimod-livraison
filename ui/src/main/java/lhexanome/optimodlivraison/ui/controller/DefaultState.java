@@ -1,11 +1,10 @@
 package lhexanome.optimodlivraison.ui.controller;
 
 import lhexanome.optimodlivraison.ui.Window;
-import lhexanome.optimodlivraison.ui.demandpreview.DemandPreviewWindow;
-import lhexanome.optimodlivraison.ui.orderaction.OrderEditorWindow;
-import lhexanome.optimodlivraison.ui.planpreview.PlanPreviewWindow;
-import lhexanome.optimodlivraison.ui.welcome.WelcomeWindow;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import lhexanome.optimodlivraison.ui.window.DemandPreviewWindow;
+import lhexanome.optimodlivraison.ui.window.OrderEditorWindow;
+import lhexanome.optimodlivraison.ui.window.PlanPreviewWindow;
+import lhexanome.optimodlivraison.ui.window.WelcomeWindow;
 
 import java.io.File;
 

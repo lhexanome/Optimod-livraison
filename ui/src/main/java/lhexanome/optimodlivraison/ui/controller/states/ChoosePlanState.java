@@ -4,14 +4,10 @@ import lhexanome.optimodlivraison.platform.exceptions.MapException;
 import lhexanome.optimodlivraison.platform.facade.MapFacade;
 import lhexanome.optimodlivraison.platform.listeners.MapListener;
 import lhexanome.optimodlivraison.platform.models.Plan;
-import lhexanome.optimodlivraison.platform.parsing.common.LoadFile;
-import lhexanome.optimodlivraison.platform.parsing.map.MapParser;
 import lhexanome.optimodlivraison.ui.controller.Controller;
 import lhexanome.optimodlivraison.ui.controller.DefaultState;
-import lhexanome.optimodlivraison.ui.demandpreview.DemandPreviewWindow;
-import lhexanome.optimodlivraison.ui.planpreview.PlanPreviewWindow;
-import lhexanome.optimodlivraison.ui.welcome.WelcomeWindow;
-import org.jdom2.Element;
+import lhexanome.optimodlivraison.ui.window.PlanPreviewWindow;
+import lhexanome.optimodlivraison.ui.window.WelcomeWindow;
 
 import java.io.File;
 

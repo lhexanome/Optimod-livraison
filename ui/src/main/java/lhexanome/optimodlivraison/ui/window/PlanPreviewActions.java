@@ -1,4 +1,4 @@
-package lhexanome.optimodlivraison.ui.planpreview;
+package lhexanome.optimodlivraison.ui.window;
 
 import java.io.File;
 

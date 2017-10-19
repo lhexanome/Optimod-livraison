@@ -1,4 +1,4 @@
-package lhexanome.optimodlivraison.ui.welcome;
+package lhexanome.optimodlivraison.ui.view;
 
 import lhexanome.optimodlivraison.ui.FileTypeFilter;
 import lhexanome.optimodlivraison.ui.controller.Controller;

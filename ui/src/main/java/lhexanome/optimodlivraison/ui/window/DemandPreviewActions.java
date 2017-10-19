@@ -1,4 +1,4 @@
-package lhexanome.optimodlivraison.ui.demandpreview;
+package lhexanome.optimodlivraison.ui.window;
 
 public interface DemandPreviewActions {
     public void clickGoHome();

@@ -1,4 +1,4 @@
-package lhexanome.optimodlivraison.ui.orderaction;
+package lhexanome.optimodlivraison.ui.window;
 
 public interface OrderEditorAction {
     public void clickGoHome();

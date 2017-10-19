@@ -1,8 +1,9 @@
-package lhexanome.optimodlivraison.ui.demandpreview;
+package lhexanome.optimodlivraison.ui.window;
 import lhexanome.optimodlivraison.platform.models.DemandeLivraison;
 import lhexanome.optimodlivraison.platform.models.Plan;
 import lhexanome.optimodlivraison.ui.Window;
 import lhexanome.optimodlivraison.ui.controller.Controller;
+import lhexanome.optimodlivraison.ui.view.DemandPreviewView;
 
 public class DemandPreviewWindow extends Window{
 

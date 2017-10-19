@@ -1,10 +1,11 @@
-package lhexanome.optimodlivraison.ui.orderaction;
+package lhexanome.optimodlivraison.ui.window;
 
 import lhexanome.optimodlivraison.platform.models.DemandeLivraison;
 import lhexanome.optimodlivraison.platform.models.Plan;
 import lhexanome.optimodlivraison.platform.models.Tournee;
 import lhexanome.optimodlivraison.ui.Window;
 import lhexanome.optimodlivraison.ui.controller.Controller;
+import lhexanome.optimodlivraison.ui.view.OrderEditorView;
 
 public class OrderEditorWindow extends Window{
 

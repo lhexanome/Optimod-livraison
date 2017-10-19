@@ -2,7 +2,7 @@ package lhexanome.optimodlivraison.ui.controller.states;
 
 import lhexanome.optimodlivraison.ui.controller.Controller;
 import lhexanome.optimodlivraison.ui.controller.DefaultState;
-import lhexanome.optimodlivraison.ui.planpreview.PlanPreviewWindow;
+import lhexanome.optimodlivraison.ui.window.PlanPreviewWindow;
 
 public class PlanPreviewState extends DefaultState{
 

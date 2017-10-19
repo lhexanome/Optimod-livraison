@@ -1,40 +1,34 @@
-package lhexanome.optimodlivraison.ui.demandpreview;
+package lhexanome.optimodlivraison.ui.view;
 
 import lhexanome.optimodlivraison.platform.models.DemandeLivraison;
 import lhexanome.optimodlivraison.platform.models.Plan;
+import lhexanome.optimodlivraison.platform.models.Tournee;
 import lhexanome.optimodlivraison.ui.controller.Controller;
 import lhexanome.optimodlivraison.ui.planpanel.PlanViewPanel;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class DemandPreviewView {
-    private final Controller controller;
-    private JButton calculerTourneeButton;
+public class OrderEditorView {
+    private Controller controller;
     private JPanel mainPanel;
     private PlanViewPanel planViewPanel;
 
-    public DemandPreviewView(Controller controller){
+    public OrderEditorView(Controller controller) {
         this.controller = controller;
-
-        calculerTourneeButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                controller.clickComputeTour();
-            }
-        });
     }
 
-    public Component getMainPanel() {
+    public JPanel getMainPanel() {
         return mainPanel;
     }
+
 
     public void setPlan(Plan plan) {
         planViewPanel.setPlan(plan);
     }
     public void setDemand(DemandeLivraison demand) {
         planViewPanel.setDemande(demand);
+    }
+    public void setTournee(Tournee tournee) {
+        planViewPanel.setTournee(tournee);
     }
 }

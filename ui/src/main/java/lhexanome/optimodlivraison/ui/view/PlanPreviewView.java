@@ -1,4 +1,4 @@
-package lhexanome.optimodlivraison.ui.planpreview;
+package lhexanome.optimodlivraison.ui.view;
 
 import lhexanome.optimodlivraison.platform.models.Plan;
 import lhexanome.optimodlivraison.ui.controller.Controller;

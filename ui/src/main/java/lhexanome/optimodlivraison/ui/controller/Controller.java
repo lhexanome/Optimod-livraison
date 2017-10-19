@@ -2,14 +2,13 @@ package lhexanome.optimodlivraison.ui.controller;
 
 import lhexanome.optimodlivraison.platform.models.*;
 import lhexanome.optimodlivraison.ui.controller.states.*;
-import lhexanome.optimodlivraison.ui.orderaction.OrderEditorWindow;
-import lhexanome.optimodlivraison.ui.FackUtile;
-import lhexanome.optimodlivraison.ui.planpreview.PlanPreviewActions;
-import lhexanome.optimodlivraison.ui.planpreview.PlanPreviewWindow;
-import lhexanome.optimodlivraison.ui.demandpreview.DemandPreviewActions;
-import lhexanome.optimodlivraison.ui.demandpreview.DemandPreviewWindow;
-import lhexanome.optimodlivraison.ui.welcome.WelcomeActions;
-import lhexanome.optimodlivraison.ui.welcome.WelcomeWindow;
+import lhexanome.optimodlivraison.ui.window.OrderEditorWindow;
+import lhexanome.optimodlivraison.ui.window.PlanPreviewActions;
+import lhexanome.optimodlivraison.ui.window.PlanPreviewWindow;
+import lhexanome.optimodlivraison.ui.window.DemandPreviewActions;
+import lhexanome.optimodlivraison.ui.window.DemandPreviewWindow;
+import lhexanome.optimodlivraison.ui.window.WelcomeActions;
+import lhexanome.optimodlivraison.ui.window.WelcomeWindow;
 
 import java.io.File;
 
