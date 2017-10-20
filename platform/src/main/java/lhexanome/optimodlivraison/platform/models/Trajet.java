@@ -18,14 +18,14 @@ public class Trajet {
     /**
      * Temps necessaire pour parcourir le trajet.
      */
-    private float timeToTravel;
+    private int timeToTravel;
 
     /**
      * Constructor.
      */
     public Trajet() {
         troncons = new LinkedList<>();
-        float sum = 0;
+        int sum = 0;
         for (Troncon t : troncons) {
             sum += t.getTimeToTravel();
         }
@@ -45,7 +45,7 @@ public class Trajet {
 
         Trajet trajet = (Trajet) o;
 
-        if (Float.compare(trajet.timeToTravel, timeToTravel) != 0) return false;
+        if (Integer.compare(trajet.timeToTravel, timeToTravel) != 0) return false;
         return troncons != null ? troncons.equals(trajet.troncons) : trajet.troncons == null;
     }
 
@@ -67,7 +67,7 @@ public class Trajet {
      *
      * @return Float
      */
-    public float getTimeToTravel() {
+    public int getTimeToTravel() {
         return timeToTravel;
     }
 
@@ -76,7 +76,7 @@ public class Trajet {
      *
      * @param timeToTravel Time
      */
-    public void setTimeToTravel(float timeToTravel) {
+    public void setTimeToTravel(int timeToTravel) {
         this.timeToTravel = timeToTravel;
     }
 
