@@ -57,7 +57,7 @@ public class PlanSimplifie {
         this.plan = plan;
         this.demandeLivraison = demandeLivraison;
         graphe = new HashMap<>();
-
+        //TODO Appeler computeGraph dans le constructeur ?
     }
 
     /**
