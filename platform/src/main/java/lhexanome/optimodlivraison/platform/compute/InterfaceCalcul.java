@@ -41,8 +41,7 @@ public class InterfaceCalcul {
      * Génère le graphe des plus courts chemins entre les livraisons.
      * Met à jour les attributs plan, demande et PlanSimplifie.
      */
-    public PlanSimplifie calculerPlanSimplifie(Plan plan, DemandeLivraison demande)
-    {
+    public PlanSimplifie calculerPlanSimplifie(Plan plan, DemandeLivraison demande) {
         this.plan = plan;
         this.demande = demande;
         this.planSimplifie = new PlanSimplifie(demande, plan);
@@ -54,8 +53,7 @@ public class InterfaceCalcul {
      * Calcule la tournée optimale en fonction du plan simplifié et de la demande de livraison.
      * Met à jour l'attribut sortie.
      */
-    public Tournee calculerTournee(PlanSimplifie planSimplifie, DemandeLivraison demande)
-    {
+    public Tournee calculerTournee(PlanSimplifie planSimplifie, DemandeLivraison demande) {
         Intersection warehouse;
         Date start;
         int time;
@@ -82,8 +80,7 @@ public class InterfaceCalcul {
         time = tsp.getCoutMeilleureSolution();
 
         ArrayList<Trajet> deliveries = new ArrayList<>(nbSommets);
-        for (int i = 0 ; i < nbSommets - 1 ; i++)
-        {
+        for (int i = 0; i < nbSommets - 1; i++) {
             int indexSommet = tsp.getMeilleureSolution(i);
             Trajet trajet = matriceTrajets[indexSommet][indexSommet + 1];
             deliveries.set(i, trajet);
@@ -93,16 +90,14 @@ public class InterfaceCalcul {
         return sortie;
     }
 
-    private MatriceAdjacence grapheToMatrix(Map<Arret, ArrayList<Trajet>> graphe, int nbSommets, ArrayList<Arret> listeSommets)
-    {
+    private MatriceAdjacence grapheToMatrix(Map<Arret, ArrayList<Trajet>> graphe, int nbSommets, ArrayList<Arret> listeSommets) {
         int[][] matriceCouts = new int[nbSommets][nbSommets];
         Trajet[][] matriceTrajets = new Trajet[nbSommets][nbSommets];
 
         //entrepot
         Arret entrepot = demande.getBeginning();
         int inter1 = 0;
-        for (Trajet trajet : graphe.get(entrepot))
-        {
+        for (Trajet trajet : graphe.get(entrepot)) {
             int inter2 = listeSommets.indexOf(trajet.getEnd());
             int cout = trajet.getTimeToTravel();
             matriceCouts[inter1][inter2] = cout;
@@ -110,11 +105,9 @@ public class InterfaceCalcul {
         }
 
         //le reste
-        for (Arret arret : graphe.keySet())
-        {
+        for (Arret arret : graphe.keySet()) {
             inter1 = listeSommets.indexOf(arret.getIntersection());
-            for (Trajet trajet : graphe.get(arret))
-            {
+            for (Trajet trajet : graphe.get(arret)) {
                 int inter2 = listeSommets.indexOf(trajet.getEnd());
                 int cout = trajet.getTimeToTravel();
                 matriceCouts[inter1][inter2] = cout;
@@ -132,8 +125,7 @@ public class InterfaceCalcul {
         sortie[0] = 0;
 
         //le reste
-        for (Arret arret : demande.getDeliveries())
-        {
+        for (Arret arret : demande.getDeliveries()) {
             int index = listeSommets.indexOf(arret);
             sortie[index] = ((Livraison) arret).getDuration();
         }
