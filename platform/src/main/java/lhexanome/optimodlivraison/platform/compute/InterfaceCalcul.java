@@ -88,9 +88,9 @@ public class InterfaceCalcul {
         time = tsp.getCoutMeilleureSolution();
 
         ArrayList<Trajet> deliveries = new ArrayList<>();
-        for (int i = 0; i < nbSommets - 1; i++) {
+        for (int i = 0; i < nbSommets; i++) {
             int indexSommet = tsp.getMeilleureSolution(i);
-            Trajet trajet = matriceTrajets[indexSommet][indexSommet + 1];
+            Trajet trajet = matriceTrajets[indexSommet][(indexSommet + 1)%nbSommets];
             deliveries.add( trajet);
         }
 
