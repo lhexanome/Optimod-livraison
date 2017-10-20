@@ -38,4 +38,3 @@ public class IteratorSeq implements Iterator<Integer> {
     }
 
 }
-//CHECKSTYLE:ON

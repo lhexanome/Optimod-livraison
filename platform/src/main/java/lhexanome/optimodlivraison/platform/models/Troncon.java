@@ -183,6 +183,6 @@ public class Troncon {
      * @return Time To Travel
      */
     public int getTimeToTravel() {
-        return (int)(length * SPEED); //TODO temps en float
+        return (int) (length * SPEED); //TODO temps en float
     }
 }
