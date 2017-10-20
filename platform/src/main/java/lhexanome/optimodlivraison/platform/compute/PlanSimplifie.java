@@ -23,6 +23,7 @@ import java.util.logging.Logger;
  * soit un graph orienté et complet avec comme sommets les livraisons,
  * et pour arc des trajets formant les plus courts chemins entre ces livraisons.
  */
+//CHECKSTYLE:OFF
 public class PlanSimplifie {
     /**
      * Logger.
@@ -36,11 +37,7 @@ public class PlanSimplifie {
      * reference a la demande de livraison chargee.
      */
     private DemandeLivraison demandeLivraison;
-    /**
-     * map stockant le graphe sous la forme d'une association de livraisons
-     * et de trajets partant de ces livraisons.
-     */
-    private Map<Arret, Trajet> graphe;
+    private Map<Arret, ArrayList<Trajet>> graphe;
 
     /***
      * constructeur par defaut.
@@ -61,7 +58,7 @@ public class PlanSimplifie {
         this.plan = plan;
         this.demandeLivraison = demandeLivraison;
         graphe = new HashMap<>();
-
+        //TODO Appeler computeGraph dans le constructeur ?
     }
 
     /**
@@ -75,9 +72,10 @@ public class PlanSimplifie {
         for (Arret s : ptsArret) {
             ArrayList<Trajet> listeTrajets =
                     shortestPathList(s, demandeLivraison.getDeliveries());
-            for (Trajet t : listeTrajets) {
-                graphe.put(s, t);
-            }
+//            for (Trajet t : listeTrajets) {
+//                graphe.put(s, t);
+//            }
+            graphe.put(s, listeTrajets);
         }
     }
 
@@ -298,4 +296,11 @@ public class PlanSimplifie {
         }
     }
 
+    /**
+     * map stockant le graphe sous la forme d'une association de livraisons
+     * et de trajets partant de ces livraisons.
+     */
+    public Map<Arret, ArrayList<Trajet>> getGraphe() {
+        return graphe;
+    }
 }
