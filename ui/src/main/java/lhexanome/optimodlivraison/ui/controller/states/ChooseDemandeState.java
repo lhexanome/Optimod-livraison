@@ -33,8 +33,14 @@ public class ChooseDemandeState extends DefaultState {
             @Override
             public void onUpdateDeliveryOrder(DemandeLivraison demandeLivraison) {
 
+                demandeLivraison.getDeliveries().forEach(livraison -> {
+                        livraison.setIntersection(controller.plan.findIntersectionById(livraison.getIntersection().getId()));
+                });
+                demandeLivraison.getBeginning().setIntersection(controller.plan.findIntersectionById(demandeLivraison.getBeginning().getIntersection().getId()));
+
                 controller.demand = demandeLivraison;
                 nextWindow.setDemand(demandeLivraison);
+                nextWindow.setPlan(controller.plan);
 
                 window.close();
                 //TODO window.setLoad(false);
@@ -50,7 +56,7 @@ public class ChooseDemandeState extends DefaultState {
                 //TODO Log
                 System.err.println(e.getMessage());
 
-                controller.setCurrentState(controller.demandPreviewState);
+                controller.setCurrentState(controller.planPreviewState);
             }
         });
 

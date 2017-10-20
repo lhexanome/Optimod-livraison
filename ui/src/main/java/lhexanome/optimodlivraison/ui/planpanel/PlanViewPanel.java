@@ -41,6 +41,9 @@ public class PlanViewPanel extends JPanel {
     }
 
     protected void paintComponent(Graphics g) {
+
+        reSacle();
+
         Graphics2D g2 = (Graphics2D) g;
         super.paintComponent(g);
 
@@ -64,8 +67,8 @@ public class PlanViewPanel extends JPanel {
 
         Entrepot entrepot = demande.getBeginning();
 
-        int x = (int) (this.offsetX + getSize().width / 2 + entrepot.getIntersection().getX() * scalX);
-        int y = (int) (this.offsetY + getSize().height / 2 + entrepot.getIntersection().getY() * scalY);
+        int x = (int) (this.offsetY + getSize().width / 2 + entrepot.getIntersection().getY() * scalY);
+        int y = (int) (-this.offsetX + getSize().height / 2 - entrepot.getIntersection().getX() * scalX);
 
         g2.drawImage(markerRed, x + MARKER_RED_OFFSET_X,y + MARKER_RED_OFFSET_Y, null);
 
@@ -78,8 +81,8 @@ public class PlanViewPanel extends JPanel {
 
         Intersection intersection = livraison.getIntersection();
 
-        int x = (int) (this.offsetX + getSize().width / 2 + intersection.getX() * scalX);
-        int y = (int) (this.offsetY + getSize().height / 2 + intersection.getY() * scalY);
+        int x = (int) (this.offsetY + getSize().width / 2 + intersection.getY() * scalY);
+        int y = (int) (-this.offsetX + getSize().height / 2 + - intersection.getX() * scalX);
 
         g2.drawImage(markerOrange, x + MARKER_ORANGE_OFFSET_X,y + MARKER_ORANGE_OFFSET_Y, null);
 
@@ -91,12 +94,12 @@ public class PlanViewPanel extends JPanel {
         Intersection origine = troncon.getOrigine();
         Intersection destination = troncon.getDestination();
         float offsetX = this.offsetX + getSize().width / 2;
-        float offsetY = this.offsetY + getSize().height / 2;
+        float offsetY = -this.offsetY + getSize().height / 2;
         g2.drawLine(
-                (int) (origine.getX() * scalX + offsetX),
-                (int) (origine.getY() * scalY + offsetY),
-                (int) (destination.getX() * scalX + offsetX),
-                (int) (destination.getY() * scalY + offsetY)
+                (int) (origine.getY() * scalY + offsetX),
+                (int) (-origine.getX() * scalX + offsetY),
+                (int) (destination.getY() * scalY + offsetX),
+                (int) (-destination.getX() * scalX + offsetY)
             );
     }
 
@@ -142,34 +145,37 @@ public class PlanViewPanel extends JPanel {
         this.offsetY = offsetY;
     }
 
+    private Rectangle getPlanSize(Plan p){
+
+        Point min = new Point(Integer.MAX_VALUE, Integer.MAX_VALUE);
+        Point max = new Point(Integer.MIN_VALUE, Integer.MIN_VALUE);
+        plan.getIntersections().forEach(intersection -> {
+            if (min.x > intersection.getX()) min.x = intersection.getX();
+            if (min.y > intersection.getY()) min.y = intersection.getY();
+            if (max.x < intersection.getX()) max.x = intersection.getX();
+            if (max.y < intersection.getY()) max.y = intersection.getY();
+        });
+        return new Rectangle(min.x,min.y,max.x-min.x,max.y-min.y);
+    }
+
+    private void reSacle(){
+        Rectangle recPlan = getPlanSize(this.plan);
+
+        float windowsSize = Math.min(getWidth(),getHeight());
+
+        scalX = windowsSize / (recPlan.width);
+        scalY = windowsSize / (recPlan.height);
+        offsetX = (recPlan.width/2 - recPlan.x - recPlan.width) * scalX;
+        offsetY = (recPlan.height/2 - recPlan.y - recPlan.height) * scalY;
+    }
+
+
     public void setPlan(Plan plan) {
         if(plan != null){
             //TODO remove wacher
         }
 
         this.plan = plan;
-
-        if(plan.getIntersectionCount()>0) {
-            Point min = new Point(Integer.MAX_VALUE, Integer.MAX_VALUE);
-            Point max = new Point(Integer.MIN_VALUE, Integer.MIN_VALUE);
-            plan.getIntersections().forEach(intersection -> {
-                if (min.x > intersection.getX()) min.x = intersection.getX();
-                if (min.y > intersection.getY()) min.y = intersection.getY();
-                if (max.x < intersection.getX()) max.x = intersection.getX();
-                if (max.y < intersection.getY()) max.y = intersection.getY();
-            });
-            float scal = Math.min(
-                    1080f / (max.x-min.x),
-                    720f / (max.y-min.y)
-            );
-
-            scalX = scal;
-            scalY = scal;
-            offsetX = ((min.x-max.x)/2 - min.x) * scal;
-            offsetY = ((min.y-max.y)/2 - min.y) * scal;
-
-
-        }
         //TODO add wacher
     }
 
