@@ -13,11 +13,14 @@ public class PlanViewPanel extends JPanel {
 
     public static final String RESOURCENAME_PLAN_MARKER_RED = "/plan/marker/planMarkerRed.png";
     public static final String RESOURCENAME_PLAN_MARKER_ORANGE = "/plan/marker/planMarkerOrange.png";
+    public static final String RESOURCENAME_PLAN_COMPASS = "/plan/compass/compass.png";
 
     public static final int MARKER_RED_OFFSET_X = -32;
     public static final int MARKER_RED_OFFSET_Y = -64;
     public static final int MARKER_ORANGE_OFFSET_X = -32;
     public static final int MARKER_ORANGE_OFFSET_Y = -64;
+    public static final int COMPASS_OFFSET_X = 20;
+    public static final int COMPASS_OFFSET_Y = 20;
 
     private Plan plan;
     private DemandeLivraison demande;
@@ -25,6 +28,7 @@ public class PlanViewPanel extends JPanel {
 
     private BufferedImage markerRed;
     private BufferedImage markerOrange;
+    private BufferedImage compass;
 
     private float scalX = 1f, scalY = 1f, offsetX = 0, offsetY = 0;
 
@@ -34,6 +38,7 @@ public class PlanViewPanel extends JPanel {
         try {
             markerRed = ImageIO.read(getClass().getResource(RESOURCENAME_PLAN_MARKER_RED));
             markerOrange = ImageIO.read(getClass().getResource(RESOURCENAME_PLAN_MARKER_ORANGE));
+            compass = ImageIO.read(getClass().getResource(RESOURCENAME_PLAN_COMPASS));
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(1);
@@ -47,20 +52,22 @@ public class PlanViewPanel extends JPanel {
         Graphics2D g2 = (Graphics2D) g;
         super.paintComponent(g);
 
-            // TODO replace planTemp by plan.[getData]()
-            if(plan != null) {
-                g2.setColor(Color.BLACK);
-                g2.setStroke(new BasicStroke(1));
-                plan.getTroncons().forEach((troncon) -> paintComponent(g2, troncon));
-            }
-            if(tournee != null){
-                g2.setColor(new Color(245,124,0));
-                g2.setStroke(new BasicStroke(2));
-                tournee.getDeliveries().forEach(trajet -> trajet.getTroncons().forEach(troncon -> paintComponent(g2, troncon)));
-            }
-            if(demande != null){
-                paintComponent(g2, demande);
-            }
+        g2.drawImage(compass, COMPASS_OFFSET_X ,COMPASS_OFFSET_Y, null);
+
+
+        if(plan != null) {
+            g2.setColor(Color.BLACK);
+            g2.setStroke(new BasicStroke(1));
+            plan.getTroncons().forEach((troncon) -> paintComponent(g2, troncon));
+        }
+        if(tournee != null){
+            g2.setColor(new Color(245,124,0));
+            g2.setStroke(new BasicStroke(2));
+            tournee.getDeliveries().forEach(trajet -> trajet.getTroncons().forEach(troncon -> paintComponent(g2, troncon)));
+        }
+        if(demande != null){
+            paintComponent(g2, demande);
+        }
     }
 
     protected void paintComponent(Graphics2D g2, DemandeLivraison demande){
