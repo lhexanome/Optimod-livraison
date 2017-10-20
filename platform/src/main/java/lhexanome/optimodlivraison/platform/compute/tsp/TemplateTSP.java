@@ -3,6 +3,7 @@ package lhexanome.optimodlivraison.platform.compute.tsp;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+//CHECKSTYLE:OFF
 public abstract class TemplateTSP implements TSP {
 
     private Integer[] meilleureSolution;

@@ -5,6 +5,7 @@ import lhexanome.optimodlivraison.platform.models.Trajet;
 
 import java.util.ArrayList;
 
+//CHECKSTYLE:OFF
 public class MatriceAdjacence {
     private ArrayList<Arret> listeSommets;
     private Trajet[][] matriceTrajets;

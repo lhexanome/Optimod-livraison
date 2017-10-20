@@ -1,19 +1,23 @@
 package lhexanome.optimodlivraison.platform.compute;
 
-import jdk.internal.util.xml.impl.Pair;
 import lhexanome.optimodlivraison.platform.compute.tsp.TSP;
 import lhexanome.optimodlivraison.platform.compute.tsp.TSP1;
-import lhexanome.optimodlivraison.platform.models.*;
+import lhexanome.optimodlivraison.platform.models.Arret;
+import lhexanome.optimodlivraison.platform.models.DemandeLivraison;
+import lhexanome.optimodlivraison.platform.models.Intersection;
+import lhexanome.optimodlivraison.platform.models.Livraison;
+import lhexanome.optimodlivraison.platform.models.Plan;
+import lhexanome.optimodlivraison.platform.models.Tournee;
+import lhexanome.optimodlivraison.platform.models.Trajet;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Map;
 
 /**
  * classe qui permet d'interagir avec le module compute.
  */
+//CHECKSTYLE:OFF
 public class InterfaceCalcul {
 
     /**

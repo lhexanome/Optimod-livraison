@@ -23,6 +23,7 @@ import java.util.logging.Logger;
  * soit un graph orienté et complet avec comme sommets les livraisons,
  * et pour arc des trajets formant les plus courts chemins entre ces livraisons.
  */
+//CHECKSTYLE:OFF
 public class PlanSimplifie {
     /**
      * Logger.

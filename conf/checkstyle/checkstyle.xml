@@ -86,8 +86,9 @@
         <property name="file" value="${config_loc}/suppressions.xml"/>
     </module>
 
-
     <module name="TreeWalker">
+
+        <module name="SuppressionCommentFilter"/>
 
         <!-- Checks for Javadoc comments.                     -->
         <!-- See http://checkstyle.sf.net/config_javadoc.html -->
