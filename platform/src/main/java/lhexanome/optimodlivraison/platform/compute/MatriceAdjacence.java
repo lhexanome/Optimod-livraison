@@ -10,8 +10,7 @@ public class MatriceAdjacence {
     private Trajet[][] matriceTrajets;
     private int[][] matriceCouts;
 
-    public MatriceAdjacence(ArrayList<Arret> listeSommets, Trajet[][] matriceTrajets, int[][] matriceCouts)
-    {
+    public MatriceAdjacence(ArrayList<Arret> listeSommets, Trajet[][] matriceTrajets, int[][] matriceCouts) {
         this.listeSommets = listeSommets;
         this.matriceTrajets = matriceTrajets;
         this.matriceCouts = matriceCouts;
