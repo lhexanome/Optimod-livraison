@@ -71,7 +71,7 @@ public class PlanSimplifie {
         ptsArret.add(demandeLivraison.getBeginning());
         for (Arret s : ptsArret) {
             ArrayList<Trajet> listeTrajets =
-                    shortestPathList(s, demandeLivraison.getDeliveries());
+                    shortestPathList(s, ptsArret);
 //            for (Trajet t : listeTrajets) {
 //                graphe.put(s, t);
 //            }
