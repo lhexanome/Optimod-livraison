@@ -1,5 +1,6 @@
 package lhexanome.optimodlivraison.platform.facade;
 
+import lhexanome.optimodlivraison.platform.compute.InterfaceCalcul;
 import lhexanome.optimodlivraison.platform.compute.PlanSimplifie;
 import lhexanome.optimodlivraison.platform.exceptions.ComputeException;
 import lhexanome.optimodlivraison.platform.listeners.ComputeListener;
@@ -22,6 +23,10 @@ public class ComputeFacade {
      */
     private static final Logger LOGGER = Logger.getLogger(ComputeFacade.class.getName());
 
+    /**
+     * Interface de calcul.
+     */
+    private InterfaceCalcul interfaceCalcul;
 
     /**
      * Liste de listeners.
@@ -32,6 +37,7 @@ public class ComputeFacade {
      * Constructeur par défaut.
      */
     public ComputeFacade() {
+        interfaceCalcul = new InterfaceCalcul();
         listeners = new ArrayList<>();
     }
 
@@ -63,15 +69,16 @@ public class ComputeFacade {
         try {
             LOGGER.info("Compute tour");
 
-            PlanSimplifie planSimplifie = null; // ... .computeSimplifiedMap(plan, demandeLivraison);
+            PlanSimplifie planSimplifie = interfaceCalcul.calculerPlanSimplifie(plan, demandeLivraison);
 
             LOGGER.info("Simplified map computed");
 
-            Tournee tournee = null; // ... .computeTour(planSimplifie);
+            // FIXME Remove demandeLivraison
+            Tournee tournee = interfaceCalcul.calculerTournee(planSimplifie, demandeLivraison);
 
             LOGGER.warning("Tour computed");
 
-            listeners.forEach(l -> l.onComputingTour(null));
+            listeners.forEach(l -> l.onComputingTour(tournee));
 
             LOGGER.info("Listeners notified !");
         } catch (Exception e) {
