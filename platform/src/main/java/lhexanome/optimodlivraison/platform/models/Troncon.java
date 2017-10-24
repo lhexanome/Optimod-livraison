@@ -7,6 +7,7 @@ public class Troncon {
 
     /**
      * Vitesse à laquelle va le livreur durant tout la tournée.
+     * En km/h
      */
     public static final int SPEED = 15;
 
@@ -27,6 +28,7 @@ public class Troncon {
 
     /**
      * Longueur du tronçon.
+     * En décimètre
      */
     private float length;
 
@@ -183,6 +185,6 @@ public class Troncon {
      * @return Time To Travel
      */
     public int getTimeToTravel() {
-        return (int) (length * SPEED); //TODO temps en float
+        return (int) (3600 * ((length / 10.0) / (SPEED * 1000))); //TODO temps en float
     }
 }

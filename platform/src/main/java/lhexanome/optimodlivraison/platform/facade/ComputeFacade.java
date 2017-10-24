@@ -76,7 +76,7 @@ public class ComputeFacade {
             // FIXME Remove demandeLivraison
             Tournee tournee = interfaceCalcul.calculerTournee();
 
-            LOGGER.warning("Tour computed");
+            LOGGER.warning("Tour computed, duration =" + tournee.getTime() / 60 + "min");
 
             listeners.forEach(l -> l.onComputingTour(tournee));
 
