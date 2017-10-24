@@ -1,5 +1,7 @@
 package lhexanome.optimodlivraison.platform.models;
 
+import java.util.ArrayList;
+
 /**
  * Représente un point ou noeud sur la carte (identifié).
  */
@@ -21,7 +23,7 @@ public class Intersection {
      */
     private Long id;
 
-
+    private ArrayList<Intersection> successeurs = new ArrayList<>();
     /**
      * Intersection conctructeur.
      *
@@ -101,6 +103,9 @@ public class Intersection {
         this.id = id;
     }
 
+    public void addTronconSortant(Troncon troncon){
+        successeurs.add(troncon.getDestination());
+    }
     /**
      * Equals.
      *
