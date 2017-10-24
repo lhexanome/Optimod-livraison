@@ -47,7 +47,7 @@ public class ChoosePlanState extends DefaultState {
                 //TODO Log
                 System.err.println(e.getMessage());
 
-                controller.setCurrentState(controller.planPreviewState);
+                controller.setCurrentState(controller.welcomeState);
 
             }
         });

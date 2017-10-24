@@ -17,7 +17,7 @@ public class FackUtile {
 
     public static Tournee fackTournee(Plan p, DemandeLivraison demandeLivraison, int nbTroncon) {
         Tournee tournee = new Tournee(
-                demandeLivraison.getBeginning().getIntersection(),
+                demandeLivraison.getBeginning(),
                 demandeLivraison.getStart(),
                 500
         );
