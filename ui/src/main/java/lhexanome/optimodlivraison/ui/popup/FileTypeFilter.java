@@ -1,4 +1,4 @@
-package lhexanome.optimodlivraison.ui;
+package lhexanome.optimodlivraison.ui.popup;
 
 import javax.swing.filechooser.FileFilter;
 import java.io.File;

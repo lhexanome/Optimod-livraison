@@ -1,9 +1,12 @@
 package lhexanome.optimodlivraison.ui;
 
 import lhexanome.optimodlivraison.platform.HelloWorld;
-import lhexanome.optimodlivraison.ui.controller.Controller;
+import lhexanome.optimodlivraison.ui.controller.MainController;
+import lhexanome.optimodlivraison.ui.controller.WelcomeController;
 
+import javax.swing.*;
 import java.io.PrintStream;
+import java.util.logging.Logger;
 
 /**
  * IHM Entry point.
@@ -11,20 +14,36 @@ import java.io.PrintStream;
  */
 public class HelloMars {
 
+    /**
+     * Logger.
+     */
+    private static final Logger LOGGER = Logger.getLogger(HelloMars.class.getName());
 
     /**
      * Main method.
+     *
      * @param args System args
      */
     public static void main(String[] args) {
+        try {
+            // Set System L&F
+            UIManager.setLookAndFeel(
+                    UIManager.getSystemLookAndFeelClassName());
 
-        Controller c = new Controller();
+        } catch (UnsupportedLookAndFeelException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+            LOGGER.severe("Unable to set UI Look & Feels :" + e.getMessage());
+        }
 
+        MainController mainController = new MainController();
+        WelcomeController welcomeController = new WelcomeController(mainController);
+
+        welcomeController.start();
     }
 
 
     /**
      * Test case.
+     *
      * @param out Stream
      */
     public static void print(PrintStream out) {

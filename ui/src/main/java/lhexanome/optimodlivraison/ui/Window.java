@@ -1,6 +1,6 @@
 package lhexanome.optimodlivraison.ui;
 
-import lhexanome.optimodlivraison.ui.controller.Controller;
+import lhexanome.optimodlivraison.ui.controller.actions.ControllerInterface;
 
 import javax.swing.*;
 import java.awt.event.WindowEvent;
@@ -8,24 +8,24 @@ import java.awt.event.WindowListener;
 
 public abstract class Window implements WindowListener {
 
-    protected Controller controller;
+    protected ControllerInterface controller;
     protected JFrame jFrame;
 
-    public Controller getController(){
+    public ControllerInterface getController() {
         return controller;
     }
 
-    public Window(Controller c, String title){
+    public Window(ControllerInterface c, String title) {
         controller = c;
         jFrame = new JFrame(title);
-
+        jFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
-    public void open(){
+    public void open() {
         jFrame.setVisible(true);
     }
 
-    public void close(){
+    public void close() {
         jFrame.setVisible(false);
     }
 
@@ -33,6 +33,7 @@ public abstract class Window implements WindowListener {
     public void windowClosing(WindowEvent e) {
         controller.closeWindow();
     }
+
     @Override
     public void windowOpened(WindowEvent e) {
 
@@ -61,5 +62,9 @@ public abstract class Window implements WindowListener {
     @Override
     public void windowDeactivated(WindowEvent e) {
 
+    }
+
+    public JFrame getFrame() {
+        return jFrame;
     }
 }
