@@ -102,19 +102,11 @@ public class InterfaceCalcul {
         int[][] matriceCouts = new int[nbSommets][nbSommets];
         Trajet[][] matriceTrajets = new Trajet[nbSommets][nbSommets];
 
-        //entrepot
-        Arret entrepot = demande.getBeginning();
-        int inter1 = 0;
-        for (Trajet trajet : graphe.get(entrepot)) {
-            int inter2 = listeSommets.indexOf(trajet.getEnd());
-            int cout = trajet.getTimeToTravel();
-            matriceCouts[inter1][inter2] = cout;
-            matriceTrajets[inter1][inter2] = trajet;
-        }
+
 
         //le reste
         for (Arret arret : graphe.keySet()) {
-            inter1 = listeSommets.indexOf(arret.getIntersection());
+            int inter1 = listeSommets.indexOf(arret.getIntersection());
             for (Trajet trajet : graphe.get(arret)) {
                 int inter2 = listeSommets.indexOf(trajet.getEnd());
                 int cout = trajet.getTimeToTravel();

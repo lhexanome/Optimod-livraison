@@ -74,7 +74,7 @@ public class ComputeFacade {
             LOGGER.info("Simplified map computed");
 
             // FIXME Remove demandeLivraison
-            Tournee tournee = interfaceCalcul.calculerTournee(planSimplifie, demandeLivraison);
+            Tournee tournee = interfaceCalcul.calculerTournee();
 
             LOGGER.warning("Tour computed");
 
@@ -83,6 +83,7 @@ public class ComputeFacade {
             LOGGER.info("Listeners notified !");
         } catch (Exception e) {
             LOGGER.warning(MessageFormat.format("Unknown error", e.getCause()));
+            e.printStackTrace();
             failUpdate(e);
         }
     }
