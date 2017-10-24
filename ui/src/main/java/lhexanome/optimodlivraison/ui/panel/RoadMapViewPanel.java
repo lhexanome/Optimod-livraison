@@ -1,7 +1,12 @@
-package lhexanome.optimodlivraison.ui.planpanel;
+package lhexanome.optimodlivraison.ui.panel;
 
-
-import lhexanome.optimodlivraison.platform.models.*;
+import lhexanome.optimodlivraison.platform.models.Delivery;
+import lhexanome.optimodlivraison.platform.models.DeliveryOrder;
+import lhexanome.optimodlivraison.platform.models.Intersection;
+import lhexanome.optimodlivraison.platform.models.RoadMap;
+import lhexanome.optimodlivraison.platform.models.Tour;
+import lhexanome.optimodlivraison.platform.models.Vector;
+import lhexanome.optimodlivraison.platform.models.Warehouse;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -9,7 +14,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-public class PlanViewPanel extends JPanel {
+public class RoadMapViewPanel extends JPanel {
 
     public static final String RESOURCENAME_PLAN_MARKER_RED = "/plan/marker/planMarkerRed.png";
     public static final String RESOURCENAME_PLAN_MARKER_ORANGE = "/plan/marker/planMarkerOrange.png";
@@ -22,9 +27,9 @@ public class PlanViewPanel extends JPanel {
     public static final int COMPASS_OFFSET_X = 20;
     public static final int COMPASS_OFFSET_Y = 20;
 
-    private Plan plan;
-    private DemandeLivraison demande;
-    private Tournee tournee;
+    private RoadMap roadMap;
+    private DeliveryOrder deliveryOrder;
+    private Tour tour;
 
     private BufferedImage markerRed;
     private BufferedImage markerOrange;
@@ -34,7 +39,8 @@ public class PlanViewPanel extends JPanel {
 
     private boolean moove = false;
 
-    public PlanViewPanel(){
+    public RoadMapViewPanel() {
+        super();
         try {
             markerRed = ImageIO.read(getClass().getResource(RESOURCENAME_PLAN_MARKER_RED));
             markerOrange = ImageIO.read(getClass().getResource(RESOURCENAME_PLAN_MARKER_ORANGE));
@@ -47,67 +53,67 @@ public class PlanViewPanel extends JPanel {
 
     protected void paintComponent(Graphics g) {
 
-        reSacle();
+        reScale();
 
         Graphics2D g2 = (Graphics2D) g;
         super.paintComponent(g);
 
-        g2.drawImage(compass, COMPASS_OFFSET_X ,COMPASS_OFFSET_Y, null);
+        g2.drawImage(compass, COMPASS_OFFSET_X, COMPASS_OFFSET_Y, null);
 
 
-        if(plan != null) {
+        if (roadMap != null) {
             g2.setColor(Color.BLACK);
             g2.setStroke(new BasicStroke(1));
-            plan.getTroncons().forEach((troncon) -> paintComponent(g2, troncon));
+            roadMap.getVectors().forEach(vector -> paintComponent(g2, vector));
         }
-        if(tournee != null){
-            g2.setColor(new Color(245,124,0));
+        if (tour != null) {
+            g2.setColor(new Color(245, 124, 0));
             g2.setStroke(new BasicStroke(2));
-            tournee.getDeliveries().forEach(trajet -> trajet.getTroncons().forEach(troncon -> paintComponent(g2, troncon)));
+            tour.getDeliveries().forEach(path -> path.getVectors().forEach(vector -> paintComponent(g2, vector)));
         }
-        if(demande != null){
-            paintComponent(g2, demande);
+        if (deliveryOrder != null) {
+            paintComponent(g2, deliveryOrder);
         }
     }
 
-    protected void paintComponent(Graphics2D g2, DemandeLivraison demande){
+    protected void paintComponent(Graphics2D g2, DeliveryOrder order) {
 
-        Entrepot entrepot = demande.getBeginning();
+        Warehouse warehouse = order.getBeginning();
 
-        int x = (int) (this.offsetY + getSize().width / 2 + entrepot.getIntersection().getY() * scalY);
-        int y = (int) (-this.offsetX + getSize().height / 2 - entrepot.getIntersection().getX() * scalX);
+        int x = (int) (this.offsetY + getSize().width / 2 + warehouse.getIntersection().getY() * scalY);
+        int y = (int) (-this.offsetX + getSize().height / 2 - warehouse.getIntersection().getX() * scalX);
 
-        g2.drawImage(markerRed, x + MARKER_RED_OFFSET_X,y + MARKER_RED_OFFSET_Y, null);
+        g2.drawImage(markerRed, x + MARKER_RED_OFFSET_X, y + MARKER_RED_OFFSET_Y, null);
 
 
-        demande.getDeliveries().forEach((livraison) ->paintComponent(g2,livraison));
+        order.getDeliveries().forEach(delivery -> paintComponent(g2, delivery));
 
     }
-    
-    protected void paintComponent(Graphics2D g2, Livraison livraison){
 
-        Intersection intersection = livraison.getIntersection();
+    protected void paintComponent(Graphics2D g2, Delivery delivery) {
+
+        Intersection intersection = delivery.getIntersection();
 
         int x = (int) (this.offsetY + getSize().width / 2 + intersection.getY() * scalY);
-        int y = (int) (-this.offsetX + getSize().height / 2 + - intersection.getX() * scalX);
+        int y = (int) (-this.offsetX + getSize().height / 2 + -intersection.getX() * scalX);
 
-        g2.drawImage(markerOrange, x + MARKER_ORANGE_OFFSET_X,y + MARKER_ORANGE_OFFSET_Y, null);
+        g2.drawImage(markerOrange, x + MARKER_ORANGE_OFFSET_X, y + MARKER_ORANGE_OFFSET_Y, null);
 
 
     }
 
-    protected void paintComponent(Graphics2D g2, Troncon troncon){
+    protected void paintComponent(Graphics2D g2, Vector vector) {
 
-        Intersection origine = troncon.getOrigine();
-        Intersection destination = troncon.getDestination();
+        Intersection origin = vector.getOrigin();
+        Intersection destination = vector.getDestination();
         float offsetX = this.offsetX + getSize().width / 2;
         float offsetY = -this.offsetY + getSize().height / 2;
         g2.drawLine(
-                (int) (origine.getY() * scalY + offsetX),
-                (int) (-origine.getX() * scalX + offsetY),
+                (int) (origin.getY() * scalY + offsetX),
+                (int) (-origin.getX() * scalX + offsetY),
                 (int) (destination.getY() * scalY + offsetX),
                 (int) (-destination.getX() * scalX + offsetY)
-            );
+        );
     }
 
     public float getScalX() {
@@ -152,56 +158,56 @@ public class PlanViewPanel extends JPanel {
         this.offsetY = offsetY;
     }
 
-    private Rectangle getPlanSize(Plan p){
+    private Rectangle getPlanSize(RoadMap map) {
 
         Point min = new Point(Integer.MAX_VALUE, Integer.MAX_VALUE);
         Point max = new Point(Integer.MIN_VALUE, Integer.MIN_VALUE);
-        plan.getIntersections().forEach(intersection -> {
+        map.getIntersections().forEach(intersection -> {
             if (min.x > intersection.getX()) min.x = intersection.getX();
             if (min.y > intersection.getY()) min.y = intersection.getY();
             if (max.x < intersection.getX()) max.x = intersection.getX();
             if (max.y < intersection.getY()) max.y = intersection.getY();
         });
-        return new Rectangle(min.x,min.y,max.x-min.x,max.y-min.y);
+        return new Rectangle(min.x, min.y, max.x - min.x, max.y - min.y);
     }
 
-    private void reSacle(){
-        Rectangle recPlan = getPlanSize(this.plan);
+    private void reScale() {
+        Rectangle recPlan = getPlanSize(this.roadMap);
 
-        float windowsSize = Math.min(getWidth(),getHeight());
+        float windowsSize = Math.min(getWidth(), getHeight());
 
         scalX = windowsSize / (recPlan.width);
         scalY = windowsSize / (recPlan.height);
-        offsetX = (recPlan.width/2 - recPlan.x - recPlan.width) * scalX;
-        offsetY = (recPlan.height/2 - recPlan.y - recPlan.height) * scalY;
+        offsetX = (recPlan.width / 2 - recPlan.x - recPlan.width) * scalX;
+        offsetY = (recPlan.height / 2 - recPlan.y - recPlan.height) * scalY;
     }
 
 
-    public void setPlan(Plan plan) {
-        if(plan != null){
+    public void setRoadMap(RoadMap map) {
+        if (map != null) {
             //TODO remove wacher
         }
 
-        this.plan = plan;
+        this.roadMap = map;
         //TODO add wacher
     }
 
-    public void setDemande(DemandeLivraison demande) {
-        if(demande != null){
+    public void setDeliveryOrder(DeliveryOrder deliveryOrder) {
+        if (deliveryOrder != null) {
             //TODO remove wacher
         }
 
-        this.demande = demande;
+        this.deliveryOrder = deliveryOrder;
 
         //TODO add wacher
     }
 
-    public void setTournee(Tournee tournee) {
-        if(tournee != null){
+    public void setTour(Tour tour) {
+        if (tour != null) {
             //TODO remove wacher
         }
 
-        this.tournee = tournee;
+        this.tour = tour;
 
         //TODO add wacher
     }

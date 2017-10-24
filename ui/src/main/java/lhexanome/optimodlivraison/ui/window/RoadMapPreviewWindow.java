@@ -1,23 +1,23 @@
 package lhexanome.optimodlivraison.ui.window;
 
 
-import lhexanome.optimodlivraison.platform.models.Plan;
+import lhexanome.optimodlivraison.platform.models.RoadMap;
 import lhexanome.optimodlivraison.ui.FileTypeFilter;
 import lhexanome.optimodlivraison.ui.Window;
 import lhexanome.optimodlivraison.ui.controller.Controller;
-import lhexanome.optimodlivraison.ui.view.PlanPreviewView;
+import lhexanome.optimodlivraison.ui.view.RoadMapPreviewView;
 
 import javax.swing.*;
 
-public class PlanPreviewWindow extends Window{
+public class RoadMapPreviewWindow extends Window{
 
-    PlanPreviewView mapPreviewView;
+    RoadMapPreviewView mapPreviewView;
 
 
-    public PlanPreviewWindow(Controller controller){
+    public RoadMapPreviewWindow(Controller controller){
         super(controller, "Map preview");// TODO Rename frmaeName
 
-        mapPreviewView = new PlanPreviewView(controller);
+        mapPreviewView = new RoadMapPreviewView(controller);
 
         jFrame.add(mapPreviewView.getMainPanel());
         //jFrame.pack();
@@ -25,11 +25,11 @@ public class PlanPreviewWindow extends Window{
         jFrame.setLocationRelativeTo(null);
     }
 
-    public void choosedFilePlan(){
+    public void chooseRoadMapFile(){
 
         JFileChooser chooser = new JFileChooser();
         chooser.setCurrentDirectory(new java.io.File("."));
-        chooser.setDialogTitle("Ouvrir une demand");
+        chooser.setDialogTitle("Ouvrir une deliveryOrder");
         chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         chooser.setAcceptAllFileFilterUsed(false);
         chooser.setFileFilter(new FileTypeFilter("xml"));
@@ -39,16 +39,16 @@ public class PlanPreviewWindow extends Window{
             System.out.println("getCurrentDirectory(): " + chooser.getCurrentDirectory());
             System.out.println("getSelectedFile() : " + chooser.getSelectedFile());
 
-            controller.selectDemand(chooser.getSelectedFile());
+            controller.selectDeliveryOrder(chooser.getSelectedFile());
 
         } else {
             System.out.println("No Selection ");
-            controller.clickCancelDemand();
+            controller.clickCancelDeliveryOrder();
         }
     }
 
-    public void setPlan(Plan plan) {
-        mapPreviewView.setPlan(plan);
+    public void setRoadMap(RoadMap roadMap) {
+        mapPreviewView.setRoadMap(roadMap);
     }
 
 }

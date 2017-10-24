@@ -69,12 +69,12 @@ public class ComputeFacade {
         try {
             LOGGER.info("Compute tour");
 
-            SimplifiedMap simplifiedMap = interfaceCalcul.calculerPlanSimplifie(roadMap, deliveryOrder);
+            SimplifiedMap simplifiedMap = interfaceCalcul.computeSimplifiedRoadMap(roadMap, deliveryOrder);
 
             LOGGER.info("Simplified roadMap computed");
 
             // FIXME Remove deliveryOrder
-            Tour tour = interfaceCalcul.calculerTournee(simplifiedMap, deliveryOrder);
+            Tour tour = interfaceCalcul.computeTour();
 
             LOGGER.warning("Tour computed");
 

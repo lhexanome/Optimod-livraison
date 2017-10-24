@@ -21,11 +21,11 @@ public class WelcomeWindow extends Window {
         jFrame.setLocationRelativeTo(null);
     }
 
-    public void choosedFilePlan(){
+    public void chooseFileRoadMap(){
 
         JFileChooser chooser = new JFileChooser();
         chooser.setCurrentDirectory(new java.io.File("."));
-        chooser.setDialogTitle("Ouvrir un plan");
+        chooser.setDialogTitle("Ouvrir un roadMap");
         chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         chooser.setAcceptAllFileFilterUsed(false);
         chooser.setFileFilter(new FileTypeFilter("xml"));
@@ -35,11 +35,11 @@ public class WelcomeWindow extends Window {
             System.out.println("getCurrentDirectory(): " + chooser.getCurrentDirectory());
             System.out.println("getSelectedFile() : " + chooser.getSelectedFile());
 
-            controller.selectPlan(chooser.getSelectedFile());
+            controller.selectRoadMap(chooser.getSelectedFile());
 
         } else {
             System.out.println("No Selection ");
-            controller.clickCancelPlan();
+            controller.clickCancelRoadMap();
         }
     }
 

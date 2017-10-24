@@ -31,7 +31,7 @@ public abstract class Window implements WindowListener {
 
     @Override
     public void windowClosing(WindowEvent e) {
-        controller.closeWondow();
+        controller.closeWindow();
     }
     @Override
     public void windowOpened(WindowEvent e) {

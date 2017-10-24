@@ -1,12 +1,14 @@
 package lhexanome.optimodlivraison.ui.controller;
 
-import lhexanome.optimodlivraison.platform.models.*;
+import lhexanome.optimodlivraison.platform.models.DeliveryOrder;
+import lhexanome.optimodlivraison.platform.models.RoadMap;
+import lhexanome.optimodlivraison.platform.models.Tour;
 import lhexanome.optimodlivraison.ui.controller.states.*;
 import lhexanome.optimodlivraison.ui.window.OrderEditorWindow;
-import lhexanome.optimodlivraison.ui.window.PlanPreviewActions;
-import lhexanome.optimodlivraison.ui.window.PlanPreviewWindow;
-import lhexanome.optimodlivraison.ui.window.DemandPreviewActions;
-import lhexanome.optimodlivraison.ui.window.DemandPreviewWindow;
+import lhexanome.optimodlivraison.ui.window.RoadMapPreviewActions;
+import lhexanome.optimodlivraison.ui.window.RoadMapPreviewWindow;
+import lhexanome.optimodlivraison.ui.window.DeliveryOrderPreviewActions;
+import lhexanome.optimodlivraison.ui.window.DeliveryOrderPreviewWindow;
 import lhexanome.optimodlivraison.ui.window.WelcomeActions;
 import lhexanome.optimodlivraison.ui.window.WelcomeWindow;
 
@@ -15,48 +17,48 @@ import java.io.File;
 /**
  * Created by nathan on 17/10/17.
  */
-public class Controller implements WelcomeActions, PlanPreviewActions, DemandPreviewActions {
+public class Controller implements WelcomeActions, RoadMapPreviewActions, DeliveryOrderPreviewActions {
 
     private WelcomeWindow welcomeWindow;
-    private PlanPreviewWindow planPreviewWindow;
-    private DemandPreviewWindow demandPreviewWindow;
+    private RoadMapPreviewWindow roadMapPreviewWindow;
+    private DeliveryOrderPreviewWindow deliveryOrderPreviewWindow;
     private OrderEditorWindow orderEditorWindow;
     
     private State currentState;
 
 
     public WelcomeState welcomeState;
-    public ChoosePlanState choosePlanState;
+    public ChooseRoadMapState chooseRoadMapState;
 
-    public PlanPreviewState planPreviewState;
-    public ChooseDemandeState chooseDemandeState;
+    public RoadMapPreviewState roadMapPreviewState;
+    public ChooseDeliveryOrderState chooseDeliveryOrderState;
 
-    public DemandPreviewState demandPreviewState;
+    public DeliveryOrderPreviewState deliveryOrderPreviewState;
 
     public OrderEditorState orderEditorState;
 
-    public Plan plan;
-    public DemandeLivraison demand;
-    public Tournee tournee;
+    public RoadMap roadMap;
+    public DeliveryOrder deliveryOrder;
+    public Tour tour;
 
 
     public Controller() {
 
         welcomeWindow = new WelcomeWindow(this);
-        planPreviewWindow = new PlanPreviewWindow(this);
-        demandPreviewWindow = new DemandPreviewWindow(this);
+        roadMapPreviewWindow = new RoadMapPreviewWindow(this);
+        deliveryOrderPreviewWindow = new DeliveryOrderPreviewWindow(this);
         orderEditorWindow = new OrderEditorWindow(this);
 
         // WELCOME WINDOWS STATES
         welcomeState = new WelcomeState(this, welcomeWindow);
-        choosePlanState = new ChoosePlanState(this, welcomeWindow);
+        chooseRoadMapState = new ChooseRoadMapState(this, welcomeWindow);
 
         // PLAN_PREVIEW WINDOWS STATES
-        planPreviewState = new PlanPreviewState(this, planPreviewWindow);
-        chooseDemandeState = new ChooseDemandeState(this, planPreviewWindow);
+        roadMapPreviewState = new RoadMapPreviewState(this, roadMapPreviewWindow);
+        chooseDeliveryOrderState = new ChooseDeliveryOrderState(this, roadMapPreviewWindow);
 
         // DEMAND_PREVIEW WINDOWS STATES
-        demandPreviewState = new DemandPreviewState(this, demandPreviewWindow);
+        deliveryOrderPreviewState = new DeliveryOrderPreviewState(this, deliveryOrderPreviewWindow);
 
         // ORDER_EDITOR WINDOWS STATES
         orderEditorState = new OrderEditorState(this, orderEditorWindow);
@@ -72,18 +74,18 @@ public class Controller implements WelcomeActions, PlanPreviewActions, DemandPre
 
 
     @Override
-    public void selectPlan(File xmlPlanFile) {
-        currentState.selectPlan(planPreviewWindow, xmlPlanFile);
+    public void selectRoadMap(File xmlRoadMapFile) {
+        currentState.selectRoadMap(roadMapPreviewWindow, xmlRoadMapFile);
     }
 
     @Override
-    public void clickChoosePlan() {
-        currentState.clickChoosePlan();
+    public void clickChooseRoadMap() {
+        currentState.clickChooseRoadMap();
     }
 
     @Override
-    public void clickCancelPlan() {
-        currentState.clickCancelPlan();
+    public void clickCancelRoadMap() {
+        currentState.clickCancelRoadMap();
     }
 
     @Override
@@ -97,21 +99,21 @@ public class Controller implements WelcomeActions, PlanPreviewActions, DemandPre
     }
 
     @Override
-    public void selectDemand(File xmlDemandFile) {
-        currentState.selectDemand(demandPreviewWindow, xmlDemandFile);
+    public void selectDeliveryOrder(File xmlDeliveryOrderFile) {
+        currentState.selectDeliveryOrder(deliveryOrderPreviewWindow, xmlDeliveryOrderFile);
     }
 
     @Override
-    public void clickChooseDemand() {
-        currentState.clickChooseDemand();
+    public void clickChooseDeliveryOrder() {
+        currentState.clickChooseDeliveryOrder();
     }
 
     @Override
-    public void clickCancelDemand() {
-        currentState.clickChooseDemand();
+    public void clickCancelDeliveryOrder() {
+        currentState.clickChooseDeliveryOrder();
     }
 
-    public void closeWondow() {
+    public void closeWindow() {
         currentState.closeWindows();
     }
 }

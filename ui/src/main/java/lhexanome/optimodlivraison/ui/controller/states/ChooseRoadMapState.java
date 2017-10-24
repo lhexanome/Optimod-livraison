@@ -1,41 +1,41 @@
 package lhexanome.optimodlivraison.ui.controller.states;
 
 import lhexanome.optimodlivraison.platform.exceptions.MapException;
-import lhexanome.optimodlivraison.platform.facade.MapFacade;
+import lhexanome.optimodlivraison.platform.facade.RoadMapFacade;
 import lhexanome.optimodlivraison.platform.listeners.MapListener;
-import lhexanome.optimodlivraison.platform.models.Plan;
+import lhexanome.optimodlivraison.platform.models.RoadMap;
 import lhexanome.optimodlivraison.ui.controller.Controller;
 import lhexanome.optimodlivraison.ui.controller.DefaultState;
-import lhexanome.optimodlivraison.ui.window.PlanPreviewWindow;
+import lhexanome.optimodlivraison.ui.window.RoadMapPreviewWindow;
 import lhexanome.optimodlivraison.ui.window.WelcomeWindow;
 
 import java.io.File;
 
-public class ChoosePlanState extends DefaultState {
-    public ChoosePlanState(Controller controller, WelcomeWindow window) {
-        super("ChoosePlanState", controller, window);
+public class ChooseRoadMapState extends DefaultState {
+    public ChooseRoadMapState(Controller controller, WelcomeWindow window) {
+        super("ChooseRoadMapState", controller, window);
     }
 
     @Override
-    public void clickCancelPlan() {
+    public void clickCancelRoadMap() {
         controller.setCurrentState(controller.welcomeState);
     }
 
     @Override
-    public void selectPlan(PlanPreviewWindow nextWindow, File xmlPlanFile) {
+    public void selectRoadMap(RoadMapPreviewWindow nextWindow, File xmlRoadMapFile) {
 
-        MapFacade mapFacade = new MapFacade();
+        RoadMapFacade mapFacade = new RoadMapFacade();
         mapFacade.addOnUpdateMapListener(new MapListener() {
             @Override
-            public void onUpdateMap(Plan plan) {
+            public void onUpdateMap(RoadMap roadMap) {
 
-                controller.plan = plan;
-                nextWindow.setPlan(plan);
+                controller.roadMap = roadMap;
+                nextWindow.setRoadMap(roadMap);
 
                 window.close();
                 //TODO window.setLoad(false);
                 nextWindow.open();
-                controller.setCurrentState(controller.planPreviewState);
+                controller.setCurrentState(controller.roadMapPreviewState);
             }
 
             @Override
@@ -53,7 +53,7 @@ public class ChoosePlanState extends DefaultState {
         });
 
         // TODO window.setLoad(true);
-        mapFacade.loadMapFromFile(xmlPlanFile);
+        mapFacade.loadMapFromFile(xmlRoadMapFile);
 
     }
 }

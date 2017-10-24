@@ -1,9 +1,9 @@
 package lhexanome.optimodlivraison.ui.controller;
 
 import lhexanome.optimodlivraison.ui.Window;
-import lhexanome.optimodlivraison.ui.window.DemandPreviewWindow;
+import lhexanome.optimodlivraison.ui.window.DeliveryOrderPreviewWindow;
 import lhexanome.optimodlivraison.ui.window.OrderEditorWindow;
-import lhexanome.optimodlivraison.ui.window.PlanPreviewWindow;
+import lhexanome.optimodlivraison.ui.window.RoadMapPreviewWindow;
 import lhexanome.optimodlivraison.ui.window.WelcomeWindow;
 
 import java.io.File;
@@ -19,44 +19,45 @@ public class DefaultState implements State {
         this.window = window;
         this.controller = controller;
     }
+
     @Override
     public void clickGoHome(WelcomeWindow nextWindow) {
-        throw new RuntimeException("INVALID EVENT FOR STATE : "+stateName);
+        throw new RuntimeException("INVALID EVENT FOR STATE : " + stateName);
     }
 
     @Override
-    public void selectDemand(DemandPreviewWindow nextWindow, File xmlLivraisonsFile) {
-        throw new RuntimeException("INVALID EVENT FOR STATE : "+stateName);
+    public void selectDeliveryOrder(DeliveryOrderPreviewWindow nextWindow, File xmlDeliveryOrderFile) {
+        throw new RuntimeException("INVALID EVENT FOR STATE : " + stateName);
     }
 
     @Override
-    public void clickChooseDemand() {
-        throw new RuntimeException("INVALID EVENT FOR STATE : "+stateName);
+    public void clickChooseDeliveryOrder() {
+        throw new RuntimeException("INVALID EVENT FOR STATE : " + stateName);
     }
 
     @Override
-    public void clickCancelDemand() {
-        throw new RuntimeException("INVALID EVENT FOR STATE : "+stateName);
+    public void clickCancelDeliveryOrder() {
+        throw new RuntimeException("INVALID EVENT FOR STATE : " + stateName);
     }
 
     @Override
     public void clickComputeTour(OrderEditorWindow nextWindow) {
-        throw new RuntimeException("INVALID EVENT FOR STATE : "+stateName);
+        throw new RuntimeException("INVALID EVENT FOR STATE : " + stateName);
     }
 
     @Override
-    public void selectPlan(PlanPreviewWindow nextWindow, File xmlPlanFile) {
-        throw new RuntimeException("INVALID EVENT FOR STATE : "+stateName);
+    public void selectRoadMap(RoadMapPreviewWindow nextWindow, File xmlRoadMapFile) {
+        throw new RuntimeException("INVALID EVENT FOR STATE : " + stateName);
     }
 
     @Override
-    public void clickChoosePlan() {
-        throw new RuntimeException("INVALID EVENT FOR STATE : "+stateName);
+    public void clickChooseRoadMap() {
+        throw new RuntimeException("INVALID EVENT FOR STATE : " + stateName);
     }
 
     @Override
-    public void clickCancelPlan() {
-        throw new RuntimeException("INVALID EVENT FOR STATE : "+stateName);
+    public void clickCancelRoadMap() {
+        throw new RuntimeException("INVALID EVENT FOR STATE : " + stateName);
     }
 
     @Override

@@ -25,7 +25,7 @@ public class Tour {
     /**
      * Intersection représentant l'entrepôt.
      */
-    private Entrepot warehouse;
+    private Warehouse warehouse;
 
     /**
      * Temps estimé pour compléter une tournée.
@@ -40,7 +40,7 @@ public class Tour {
      * @param start     Moment de départ de la tournée
      * @param time      Temps estimé pour compléter une tournée. En minutes
      */
-    public Tour(Entrepot warehouse, Date start, int time) {
+    public Tour(Warehouse warehouse, Date start, int time) {
         this(warehouse, start, time, new ArrayList<>());
     }
 
@@ -57,7 +57,7 @@ public class Tour {
      * @see #time
      * @see #deliveries
      */
-    public Tour(Entrepot warehouse, Date start, int time, List<Path> deliveries) {
+    public Tour(Warehouse warehouse, Date start, int time, List<Path> deliveries) {
         this.start = start;
         this.warehouse = warehouse;
         this.time = time;
@@ -105,7 +105,7 @@ public class Tour {
      *
      * @return Warehouse
      */
-    public Entrepot getWarehouse() {
+    public Warehouse getWarehouse() {
         return warehouse;
     }
 
@@ -114,7 +114,7 @@ public class Tour {
      *
      * @param warehouse Warehouse
      */
-    public void setWarehouse(Entrepot warehouse) {
+    public void setWarehouse(Warehouse warehouse) {
         this.warehouse = warehouse;
     }
 

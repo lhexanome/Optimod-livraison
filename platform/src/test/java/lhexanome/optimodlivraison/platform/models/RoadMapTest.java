@@ -43,37 +43,37 @@ public class RoadMapTest {
         allI = new Intersection[]{i1, i2, i3, i4, i5, i6, i7, i8};
 
         t12 = new Vector(i1, i2, "avenue double sans");
-        roadMapTested.addTroncon(t12);
+        roadMapTested.addVector(t12);
         t13 = new Vector(i1, i3, "rue sans unique de l'avenue vers l'avenue");
-        roadMapTested.addTroncon(t13);
+        roadMapTested.addVector(t13);
         t14 = new Vector(i1, i4, "rue go i6");
-        roadMapTested.addTroncon(t14);
+        roadMapTested.addVector(t14);
         t18 = new Vector(i1, i8, "rue 1-8-2");
-        roadMapTested.addTroncon(t18);
+        roadMapTested.addVector(t18);
         t21 = new Vector(i2, i1, "avenue double sans");
-        roadMapTested.addTroncon(t21);
+        roadMapTested.addVector(t21);
         t24 = new Vector(i2, i4, "rue go rue go i6 (1)");
-        roadMapTested.addTroncon(t24);
+        roadMapTested.addVector(t24);
         t25 = new Vector(i2, i5, "rue go rue go i6 (2)");
-        roadMapTested.addTroncon(t25);
+        roadMapTested.addVector(t25);
         t27 = new Vector(i2, i7, "avenue double sans");
-        roadMapTested.addTroncon(t27);
+        roadMapTested.addVector(t27);
         t28 = new Vector(i2, i8, "rue 1-8-2");
-        roadMapTested.addTroncon(t28);
+        roadMapTested.addVector(t28);
         t32 = new Vector(i3, i2, "rue sans unique de l'avenue vers l'avenue");
-        roadMapTested.addTroncon(t32);
+        roadMapTested.addVector(t32);
         t45 = new Vector(i4, i5, "rue go i6");
-        roadMapTested.addTroncon(t45);
+        roadMapTested.addVector(t45);
         t54 = new Vector(i5, i4, "rue go i6");
-        roadMapTested.addTroncon(t54);
+        roadMapTested.addVector(t54);
         t56 = new Vector(i5, i6, "rue go i6");
-        roadMapTested.addTroncon(t56);
+        roadMapTested.addVector(t56);
         t72 = new Vector(i7, i2, "avenue double sans");
-        roadMapTested.addTroncon(t72);
+        roadMapTested.addVector(t72);
         t81 = new Vector(i8, i1, "rue 1-8-2");
-        roadMapTested.addTroncon(t81);
+        roadMapTested.addVector(t81);
         t82 = new Vector(i8, i2, "rue 1-8-2");
-        roadMapTested.addTroncon(t82);
+        roadMapTested.addVector(t82);
         allT = new Vector[]{t12, t13, t14, t18, t21, t24, t25, t27, t28, t32, t45, t54, t56, t72, t81, t82};
     }
 
@@ -88,7 +88,7 @@ public class RoadMapTest {
 
         //fist Vector
         //When
-        roadMap.addTroncon(t12);
+        roadMap.addVector(t12);
 
         Collection<Vector> toncons = roadMap.getVectors();
         Collection<Intersection> intersections = roadMap.getIntersections();
@@ -101,7 +101,7 @@ public class RoadMapTest {
 
         //Vector with know origin
         //When
-        roadMap.addTroncon(t13);
+        roadMap.addVector(t13);
 
         toncons = roadMap.getVectors();
         intersections = roadMap.getIntersections();
@@ -115,7 +115,7 @@ public class RoadMapTest {
 
         //Vector with know destination
         //When
-        roadMap.addTroncon(t82);
+        roadMap.addVector(t82);
 
         toncons = roadMap.getVectors();
         intersections = roadMap.getIntersections();
@@ -129,7 +129,7 @@ public class RoadMapTest {
 
         //Vector alredy added
         //When
-        roadMap.addTroncon(t12);
+        roadMap.addVector(t12);
 
         toncons = roadMap.getVectors();
         intersections = roadMap.getIntersections();

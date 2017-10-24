@@ -10,8 +10,8 @@ public class WelcomeState extends DefaultState {
     }
 
     @Override
-    public void clickChoosePlan() {
-        controller.setCurrentState(controller.choosePlanState);
-        ((WelcomeWindow)window).choosedFilePlan();
+    public void clickChooseRoadMap() {
+        controller.setCurrentState(controller.chooseRoadMapState);
+        ((WelcomeWindow)window).chooseFileRoadMap();
     }
 }

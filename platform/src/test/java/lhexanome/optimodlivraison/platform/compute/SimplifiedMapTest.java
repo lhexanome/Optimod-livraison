@@ -37,7 +37,7 @@ class SimplifiedMapTest {
         intersections.add(end);
         Vector t = new Vector(start, end, "t", 10);
 
-        roadMap.addTroncon(t);
+        roadMap.addVector(t);
         ArrayList<Intersection> predecesseurs = new ArrayList<>();
         ArrayList<Vector> chemins = new ArrayList<>();
         ArrayList<Vector> cheminsExpected = new ArrayList<>();
@@ -184,7 +184,7 @@ class SimplifiedMapTest {
         roadMap.addIntersection(start);
         roadMap.addIntersection(end);
         Vector t = new Vector(start, end, "t", 10);
-        roadMap.addTroncon(t);
+        roadMap.addVector(t);
         ArrayList<Intersection> intersections = new ArrayList<>();
         ArrayList<Intersection> intersectionsExpected = new ArrayList<>();
         intersectionsExpected.add(start);
@@ -259,9 +259,9 @@ class SimplifiedMapTest {
         roadMap.addIntersection(start);
         roadMap.addIntersection(end);
         Vector t = new Vector(start, end, "t", 10);
-        roadMap.addTroncon(t);
+        roadMap.addVector(t);
         Vector t2 = new Vector(start, end2, "t2", 20);
-        roadMap.addTroncon(t2);
+        roadMap.addVector(t2);
         ArrayList<Path> sortie = new ArrayList<>();
         ArrayList<Path> sortieExpected = new ArrayList<>();
         Delivery startDelivery = new Delivery(start, 1);

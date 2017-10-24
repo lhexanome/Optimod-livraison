@@ -1,8 +1,8 @@
 package lhexanome.optimodlivraison.ui.window;
 
-import lhexanome.optimodlivraison.platform.models.DemandeLivraison;
-import lhexanome.optimodlivraison.platform.models.Plan;
-import lhexanome.optimodlivraison.platform.models.Tournee;
+import lhexanome.optimodlivraison.platform.models.DeliveryOrder;
+import lhexanome.optimodlivraison.platform.models.RoadMap;
+import lhexanome.optimodlivraison.platform.models.Tour;
 import lhexanome.optimodlivraison.ui.Window;
 import lhexanome.optimodlivraison.ui.controller.Controller;
 import lhexanome.optimodlivraison.ui.view.OrderEditorView;
@@ -23,13 +23,13 @@ public class OrderEditorWindow extends Window{
         jFrame.setLocationRelativeTo(null);
     }
 
-    public void setPlan(Plan plan) {
-        this.orderEditorView.setPlan(plan);
+    public void setRoadMap(RoadMap plan) {
+        this.orderEditorView.setRoadMap(plan);
     }
-    public void setDemand(DemandeLivraison demand) {
-        this.orderEditorView.setDemand(demand);
+    public void setDeliveryOrder(DeliveryOrder demand) {
+        this.orderEditorView.setDeliveryOrder(demand);
     }
-    public void setTournee(Tournee tournee) {
-        this.orderEditorView.setTournee(tournee);
+    public void setTour(Tour tournee) {
+        this.orderEditorView.setTour(tournee);
     }
 }

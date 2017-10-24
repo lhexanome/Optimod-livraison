@@ -165,7 +165,7 @@ public class RoadMapParser {
 
 
             if (similar == null) {
-                roadMap.addTroncon(new Vector(
+                roadMap.addVector(new Vector(
                         origin,
                         destination,
                         streetName,
