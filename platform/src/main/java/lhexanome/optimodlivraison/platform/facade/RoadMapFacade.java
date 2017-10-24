@@ -4,8 +4,8 @@ import lhexanome.optimodlivraison.platform.exceptions.MapException;
 import lhexanome.optimodlivraison.platform.exceptions.ParseMapException;
 import lhexanome.optimodlivraison.platform.listeners.MapListener;
 import lhexanome.optimodlivraison.platform.models.RoadMap;
+import lhexanome.optimodlivraison.platform.parsing.RoadMapParser;
 import lhexanome.optimodlivraison.platform.parsing.common.LoadFile;
-import lhexanome.optimodlivraison.platform.parsing.MapParser;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 
@@ -19,17 +19,17 @@ import java.util.logging.Logger;
 /**
  * Facade de la partie RoadMap.
  */
-public class MapFacade {
+public class RoadMapFacade {
 
     /**
      * Logger.
      */
-    private static final Logger LOGGER = Logger.getLogger(MapFacade.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(RoadMapFacade.class.getName());
 
     /**
      * RoadMap parser.
      */
-    private MapParser mapParser;
+    private RoadMapParser roadMapParser;
 
     /**
      * Liste de listeners.
@@ -39,8 +39,8 @@ public class MapFacade {
     /**
      * Constructeur par défaut.
      */
-    public MapFacade() {
-        mapParser = new MapParser();
+    public RoadMapFacade() {
+        roadMapParser = new RoadMapParser();
         listeners = new ArrayList<>();
     }
 
@@ -73,9 +73,10 @@ public class MapFacade {
             Element rootElement = LoadFile.loadFromFile(xmlFile);
             LOGGER.info("XML File loaded");
 
-            RoadMap newRoadMap = mapParser.parseMap(rootElement);
+            RoadMap newRoadMap = roadMapParser.parseMap(rootElement);
 
-            LOGGER.warning(MessageFormat.format("RoadMap loaded with {0} intersections", newRoadMap.getIntersectionCount()));
+            LOGGER.warning(MessageFormat.format("RoadMap loaded with {0} intersections",
+                    newRoadMap.getIntersectionCount()));
 
             listeners.forEach(l -> l.onUpdateMap(newRoadMap));
 

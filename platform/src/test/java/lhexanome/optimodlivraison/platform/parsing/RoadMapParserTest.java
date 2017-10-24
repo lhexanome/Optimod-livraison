@@ -1,10 +1,9 @@
-package lhexanome.optimodlivraison.platform.parsing.map;
+package lhexanome.optimodlivraison.platform.parsing;
 
 import lhexanome.optimodlivraison.platform.exceptions.ParseMapException;
 import lhexanome.optimodlivraison.platform.models.Intersection;
 import lhexanome.optimodlivraison.platform.models.RoadMap;
 import lhexanome.optimodlivraison.platform.models.Vector;
-import lhexanome.optimodlivraison.platform.parsing.MapParser;
 import org.jdom2.Element;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,16 +17,16 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 public class RoadMapParserTest {
 
     private Element rootElement;
-    private MapParser mapParser;
+    private RoadMapParser roadMapParser;
     private RoadMap roadMap;
 
     @BeforeEach
     void setup() {
-        mapParser = new MapParser();
+        roadMapParser = new RoadMapParser();
 
         roadMap = new RoadMap();
 
-        rootElement = new Element("reseau");
+        rootElement = new Element(RoadMapParser.XML_ROOT_ELEMENT);
 
         rootElement.addContent(createInter(1L, 1, 1));
         rootElement.addContent(createInter(2L, 1, 2));
@@ -36,11 +35,11 @@ public class RoadMapParserTest {
     }
 
     private Element createInter(Long id, Integer x, Integer y) {
-        Element element = new Element(MapParser.XML_NODE_ELEMENT);
+        Element element = new Element(RoadMapParser.XML_INTERSECTION_ELEMENT);
 
-        element.setAttribute("id", id.toString());
-        element.setAttribute("x", x.toString());
-        element.setAttribute("y", y.toString());
+        element.setAttribute(RoadMapParser.XML_ID_ATTRIBUTE, id.toString());
+        element.setAttribute(RoadMapParser.XML_X_ATTRIBUTE, x.toString());
+        element.setAttribute(RoadMapParser.XML_Y_ATTRIBUTE, y.toString());
 
         return element;
     }
@@ -48,10 +47,10 @@ public class RoadMapParserTest {
     private Element createTroncon(Long destination, Long origin, Float length, String streetName) {
         Element element = new Element("troncon");
 
-        element.setAttribute("destination", destination.toString());
-        element.setAttribute("origine", origin.toString());
-        element.setAttribute("longueur", length.toString());
-        element.setAttribute("nomRue", streetName);
+        element.setAttribute(RoadMapParser.XML_DESTINATION_ATTRIBUTE, destination.toString());
+        element.setAttribute(RoadMapParser.XML_ORIGIN_ATTRIBUTE, origin.toString());
+        element.setAttribute(RoadMapParser.XML_LENGTH_ATTRIBUTE, length.toString());
+        element.setAttribute(RoadMapParser.XML_STREET_NAME_ATTRIBUTE, streetName);
 
         return element;
     }
@@ -63,7 +62,7 @@ public class RoadMapParserTest {
         RoadMap roadMap = new RoadMap();
         // When
 
-        mapParser.loadNodes(rootElement.getChildren(MapParser.XML_NODE_ELEMENT), roadMap);
+        roadMapParser.loadNodes(rootElement.getChildren(RoadMapParser.XML_INTERSECTION_ELEMENT), roadMap);
 
         // Then
 
@@ -81,7 +80,7 @@ public class RoadMapParserTest {
         // Given
         // When
 
-        mapParser.loadNodes(new ArrayList<>(), roadMap);
+        roadMapParser.loadNodes(new ArrayList<>(), roadMap);
 
         // Then
 
@@ -96,7 +95,7 @@ public class RoadMapParserTest {
         // When
         // Then
 
-        assertThatThrownBy(() -> mapParser.loadNodes(rootElement.getChildren(MapParser.XML_NODE_ELEMENT), roadMap))
+        assertThatThrownBy(() -> roadMapParser.loadNodes(rootElement.getChildren(RoadMapParser.XML_INTERSECTION_ELEMENT), roadMap))
                 .isInstanceOf(ParseMapException.class)
                 .hasMessage("Node id already exists!");
     }
@@ -105,7 +104,7 @@ public class RoadMapParserTest {
     // TODO Add test for xml structure
 
     @Test
-    void shouldCreatePlanCorrectlyFromListAndHashMap() throws ParseMapException {
+    void shouldCreateRoadMapCorrectlyFromListAndHashMap() throws ParseMapException {
         // Given
 
         Intersection intersection = new Intersection(1L, 654, 321);
@@ -116,7 +115,7 @@ public class RoadMapParserTest {
 
         // When
 
-        mapParser.loadTroncon(rootElement.getChildren("troncon"), roadMap);
+        roadMapParser.loadTroncon(rootElement.getChildren(RoadMapParser.XML_VECTOR_ELEMENT), roadMap);
 
         // Then
 
@@ -140,7 +139,7 @@ public class RoadMapParserTest {
 
         // When
 
-        mapParser.loadTroncon(rootElement.getChildren("troncon"), roadMap);
+        roadMapParser.loadTroncon(rootElement.getChildren(RoadMapParser.XML_VECTOR_ELEMENT), roadMap);
 
         // Then
 
@@ -166,7 +165,7 @@ public class RoadMapParserTest {
 
         // When
 
-        mapParser.loadTroncon(rootElement.getChildren("troncon"), roadMap);
+        roadMapParser.loadTroncon(rootElement.getChildren(RoadMapParser.XML_VECTOR_ELEMENT), roadMap);
 
         // Then
 
@@ -192,7 +191,7 @@ public class RoadMapParserTest {
 
         // When
 
-        mapParser.loadTroncon(rootElement.getChildren("troncon"), roadMap);
+        roadMapParser.loadTroncon(rootElement.getChildren(RoadMapParser.XML_VECTOR_ELEMENT), roadMap);
 
         // Then
 
@@ -212,11 +211,12 @@ public class RoadMapParserTest {
         roadMap.addIntersection(intersection);
         roadMap.addIntersection(intersection2);
 
-        rootElement.getChildren("troncon").get(0).setAttribute("destination", "3");
+        rootElement.getChildren(RoadMapParser.XML_VECTOR_ELEMENT).get(0)
+                .setAttribute(RoadMapParser.XML_DESTINATION_ATTRIBUTE, "3");
 
         // When
         // Then
-        assertThatThrownBy(() -> mapParser.loadTroncon(rootElement.getChildren("troncon"), roadMap))
+        assertThatThrownBy(() -> roadMapParser.loadTroncon(rootElement.getChildren(RoadMapParser.XML_VECTOR_ELEMENT), roadMap))
                 .isInstanceOf(ParseMapException.class)
                 .hasMessage("Vector has an unknown destination or origin");
     }
@@ -230,11 +230,11 @@ public class RoadMapParserTest {
         roadMap.addIntersection(intersection);
         roadMap.addIntersection(intersection2);
 
-        rootElement.getChildren("troncon").get(0).setAttribute("origine", "3");
+        rootElement.getChildren(RoadMapParser.XML_VECTOR_ELEMENT).get(0).setAttribute(RoadMapParser.XML_ORIGIN_ATTRIBUTE, "3");
 
         // When
         // Then
-        assertThatThrownBy(() -> mapParser.loadTroncon(rootElement.getChildren("troncon"), roadMap))
+        assertThatThrownBy(() -> roadMapParser.loadTroncon(rootElement.getChildren(RoadMapParser.XML_VECTOR_ELEMENT), roadMap))
                 .isInstanceOf(ParseMapException.class)
                 .hasMessage("Vector has an unknown destination or origin");
     }
@@ -248,11 +248,11 @@ public class RoadMapParserTest {
         roadMap.addIntersection(intersection);
         roadMap.addIntersection(intersection2);
 
-        rootElement.getChildren("vector").get(0).setAttribute("origine", "1");
+        rootElement.getChildren(RoadMapParser.XML_VECTOR_ELEMENT).get(0).setAttribute(RoadMapParser.XML_ORIGIN_ATTRIBUTE, "1");
 
         // When
 
-        mapParser.loadTroncon(rootElement.getChildren("vector"), roadMap);
+        roadMapParser.loadTroncon(rootElement.getChildren(RoadMapParser.XML_VECTOR_ELEMENT), roadMap);
 
         // Then
 
@@ -267,7 +267,7 @@ public class RoadMapParserTest {
                 .orElse(null);
 
         assertThat(vector).isNotNull();
-        assertThat(vector.getDestination()).isEqualTo(vector.getOrigine());
+        assertThat(vector.getDestination()).isEqualTo(vector.getOrigin());
     }
 
     @Test
@@ -285,7 +285,7 @@ public class RoadMapParserTest {
 
         // When
 
-        mapParser.loadTroncon(rootElement.getChildren("troncon"), roadMap);
+        roadMapParser.loadTroncon(rootElement.getChildren(RoadMapParser.XML_VECTOR_ELEMENT), roadMap);
 
         // Then
 
@@ -293,18 +293,18 @@ public class RoadMapParserTest {
         assertThat(roadMap.getTronconsFromIntersection(intersection2))
                 .isNotNull()
                 .hasSize(2)
-                .extractingResultOf("getOrigine")
+                .extractingResultOf("getOrigin")
                 .containsOnly(intersection2);
     }
 
     @Test
-    void shouldCreatePlanCorrectly() throws ParseMapException {
+    void shouldCreateRoadMapCorrectly() throws ParseMapException {
 
         // With
 
         // When
 
-        RoadMap roadMap = mapParser.parseMap(rootElement);
+        RoadMap roadMap = roadMapParser.parseMap(rootElement);
 
         // Then
 

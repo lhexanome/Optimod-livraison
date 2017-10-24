@@ -5,12 +5,10 @@ import lhexanome.optimodlivraison.platform.compute.tsp.TSP1;
 import lhexanome.optimodlivraison.platform.models.Delivery;
 import lhexanome.optimodlivraison.platform.models.DeliveryOrder;
 import lhexanome.optimodlivraison.platform.models.Halt;
-import lhexanome.optimodlivraison.platform.models.Entrepot;
 import lhexanome.optimodlivraison.platform.models.Intersection;
 import lhexanome.optimodlivraison.platform.models.Path;
 import lhexanome.optimodlivraison.platform.models.RoadMap;
 import lhexanome.optimodlivraison.platform.models.Tour;
-import lhexanome.optimodlivraison.platform.models.Warehouse;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -39,34 +37,34 @@ public class InterfaceCalcul {
 
     /**
      * Graphe des plus courts chemins entre les livraisons.
-     * Met à jour les attributs roadMap, demande et PlanSimplifie.
+     * Met à jour les attributs roadMap, demande et SimplifiedMap.
      */
-    private PlanSimplifie planSimplifie;
+    private SimplifiedMap simplifiedMap;
 
     /**
      * Génère le graphe des plus courts chemins entre les livraisons.
-     * Met à jour les attributs roadMap, demande et PlanSimplifie.
+     * Met à jour les attributs roadMap, demande et SimplifiedMap.
      */
-    public PlanSimplifie calculerPlanSimplifie(RoadMap roadMap, DeliveryOrder demande) {
+    public SimplifiedMap calculerPlanSimplifie(RoadMap roadMap, DeliveryOrder demande) {
         this.roadMap = roadMap;
         this.demande = demande;
-        this.planSimplifie = new PlanSimplifie(demande, roadMap);
-        planSimplifie.computeGraph();
-        return this.planSimplifie;
+        this.simplifiedMap = new SimplifiedMap(demande, roadMap);
+        simplifiedMap.computeGraph();
+        return this.simplifiedMap;
     }
 
     /**
      * Calcule la tournée optimale en fonction du roadMap simplifié et de la demande de livraison.
      * Met à jour l'attribut sortie.
      */
-    public Tour calculerTournee() {
-        Warehouse warehouse;
+    public Tour calculerTournee(SimplifiedMap simplifiedMap, DeliveryOrder demande) {
+        Intersection warehouse;
         Date start;
         int time;
 
-        java.util.Map graphe = planSimplifie.getGraphe();
+        Map graphe = simplifiedMap.getGraph();
 
-        warehouse = demande.getBeginning();
+        warehouse = demande.getBeginning().getIntersection();
         start = demande.getStart();
         int nbSommets = demande.getDeliveries().size() + 1;
 
@@ -74,12 +72,6 @@ public class InterfaceCalcul {
         ArrayList<Halt> listeSommets = new ArrayList<>();
         listeSommets.add(demande.getBeginning());
         listeSommets.addAll(demande.getDeliveries());
-        ArrayList<Intersection> listeSommets = new ArrayList<>();
-        listeSommets.add(demande.getBeginning().getIntersection());
-
-        for(Livraison l: demande.getDeliveries()){
-            listeSommets.add(l.getIntersection());
-        }
 
         MatriceAdjacence matrix = grapheToMatrix(graphe, nbSommets, listeSommets);
         int[][] matriceCouts = matrix.getMatriceCouts();
@@ -91,11 +83,9 @@ public class InterfaceCalcul {
         tsp.chercheSolution(9999999, nbSommets, matriceCouts, listeDurees);
         time = tsp.getCoutMeilleureSolution();
 
-        ArrayList<Path> deliveries = new ArrayList<>();
-        for (int i = 0; i < nbSommets; i++) {
+        ArrayList<Path> deliveries = new ArrayList<>(nbSommets);
+        for (int i = 0; i < nbSommets - 1; i++) {
             int indexSommet = tsp.getMeilleureSolution(i);
-            Trajet trajet = matriceTrajets[indexSommet][(indexSommet + 1)%nbSommets];
-            deliveries.add( trajet);
             Path path = matricePaths[indexSommet][indexSommet + 1];
             deliveries.set(i, path);
         }
@@ -104,23 +94,23 @@ public class InterfaceCalcul {
         return sortie;
     }
 
-    private MatriceAdjacence grapheToMatrix(Map<Arret, ArrayList<Trajet>> graphe, int nbSommets, ArrayList<Intersection> listeSommets) {
+    private MatriceAdjacence grapheToMatrix(Map<Halt, ArrayList<Path>> graphe, int nbSommets, ArrayList<Halt> listeSommets) {
         int[][] matriceCouts = new int[nbSommets][nbSommets];
         Path[][] matricePaths = new Path[nbSommets][nbSommets];
 
         //entrepot
-        Arret entrepot = demande.getBeginning();
+        Halt entrepot = demande.getBeginning();
         int inter1 = 0;
-        for (Trajet trajet : graphe.get(entrepot)) {
-            int inter2 = listeSommets.indexOf(trajet.getEnd());
-            int cout = trajet.getTimeToTravel();
+        for (Path path : graphe.get(entrepot)) {
+            int inter2 = listeSommets.indexOf(path.getEnd());
+            int cout = path.getTimeToTravel();
             matriceCouts[inter1][inter2] = cout;
-            matriceTrajets[inter1][inter2] = trajet;
+            matricePaths[inter1][inter2] = path;
         }
 
         //le reste
         for (Halt halt : graphe.keySet()) {
-            int inter1 = listeSommets.indexOf(halt.getIntersection());
+            inter1 = listeSommets.indexOf(halt.getIntersection());
             for (Path path : graphe.get(halt)) {
                 int inter2 = listeSommets.indexOf(path.getEnd());
                 int cout = path.getTimeToTravel();
@@ -132,16 +122,16 @@ public class InterfaceCalcul {
         return new MatriceAdjacence(listeSommets, matricePaths, matriceCouts);
     }
 
-    private int[] demandeToDurees(DemandeLivraison demande, int nbSommets, ArrayList<Intersection> listeSommets) {
+    private int[] demandeToDurees(DeliveryOrder demande, int nbSommets, ArrayList<Halt> listeSommets) {
         int[] sortie = new int[nbSommets];
 
         //entrepôt
         sortie[0] = 0;
 
         //le reste
-        for (Arret arret : demande.getDeliveries()) {
-            int index = listeSommets.indexOf(arret.getIntersection());
-            sortie[index] = ((Livraison) arret).getDuration();
+        for (Halt halt : demande.getDeliveries()) {
+            int index = listeSommets.indexOf(halt);
+            sortie[index] = ((Delivery) halt).getDuration();
         }
 
         return sortie;

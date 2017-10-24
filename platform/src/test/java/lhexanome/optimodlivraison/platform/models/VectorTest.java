@@ -31,16 +31,16 @@ public class VectorTest {
     }
 
     @Test
-    void shouldSetOrigine() {
+    void shouldSetOrigin() {
 
         //With
         Intersection intersection = new Intersection(125L, 125, 130);
 
         //When
-        vectorTested.setOrigine(intersection);
+        vectorTested.setOrigin(intersection);
 
         //Then
-        assertEquals(intersection, vectorTested.getOrigine());
+        assertEquals(intersection, vectorTested.getOrigin());
     }
 
     @Test

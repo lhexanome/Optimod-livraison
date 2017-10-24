@@ -14,7 +14,7 @@ public class Vector {
     /**
      * L'une des intersections se situant au bout du tronçon.
      */
-    private Intersection origine;
+    private Intersection origin;
 
     /**
      * L'autre intersection se situant au bout du tronçon.
@@ -35,19 +35,19 @@ public class Vector {
     /**
      * Vector Constructor.
      *
-     * @param origine     intersections se situant au debut du tronçon
+     * @param origin      intersections se situant au debut du tronçon
      * @param destination intersections se situant à la fin du tronçon
      * @param nameStreet  Nom du troncon
      * @see #Vector(Intersection, Intersection, String, float)
      */
-    public Vector(Intersection origine, Intersection destination, String nameStreet) {
+    public Vector(Intersection origin, Intersection destination, String nameStreet) {
         this(
-                origine,
+                origin,
                 destination,
                 nameStreet,
                 (float) Math.sqrt(
-                        Math.pow(origine.getX() - destination.getX(), 2)
-                                + Math.pow(origine.getY() - destination.getY(), 2)
+                        Math.pow(origin.getX() - destination.getX(), 2)
+                                + Math.pow(origin.getY() - destination.getY(), 2)
                 )
         );
     }
@@ -67,7 +67,7 @@ public class Vector {
         Vector vector = (Vector) o;
 
         if (Float.compare(vector.length, length) != 0) return false;
-        if (!origine.equals(vector.origine)) return false;
+        if (!origin.equals(vector.origin)) return false;
         if (!destination.equals(vector.destination)) return false;
         return nameStreet.equals(vector.nameStreet);
     }
@@ -80,7 +80,7 @@ public class Vector {
     @SuppressWarnings("checkstyle:magicnumber")
     @Override
     public int hashCode() {
-        int result = origine.hashCode();
+        int result = origin.hashCode();
         result = 31 * result + destination.hashCode();
         result = 31 * result + nameStreet.hashCode();
         result = 31 * result + (length != +0.0f ? Float.floatToIntBits(length) : 0);
@@ -90,17 +90,17 @@ public class Vector {
     /**
      * Vector Constructor.
      *
-     * @param origine     intersections se situant au debut du tronçon
+     * @param origin      intersections se situant au debut du tronçon
      * @param destination intersections se situant à la fin du tronçon
      * @param nameStreet  Nom du troncon
      * @param length      Longueur du tronçon
-     * @see #origine
+     * @see #origin
      * @see #destination
      * @see #nameStreet
      * @see #length
      */
-    public Vector(Intersection origine, Intersection destination, String nameStreet, float length) {
-        this.origine = origine;
+    public Vector(Intersection origin, Intersection destination, String nameStreet, float length) {
+        this.origin = origin;
         this.destination = destination;
         this.nameStreet = nameStreet;
         this.length = length;
@@ -166,17 +166,17 @@ public class Vector {
      *
      * @return Origine
      */
-    public Intersection getOrigine() {
-        return origine;
+    public Intersection getOrigin() {
+        return origin;
     }
 
     /**
      * Définie l'autre intersection du tronçon.
      *
-     * @param origine Origine
+     * @param origin Origine
      */
-    public void setOrigine(Intersection origine) {
-        this.origine = origine;
+    public void setOrigin(Intersection origin) {
+        this.origin = origin;
     }
 
     /**

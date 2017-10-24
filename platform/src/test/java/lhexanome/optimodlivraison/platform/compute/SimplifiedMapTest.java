@@ -11,9 +11,9 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
-class PlanSimplifieTest {
+class SimplifiedMapTest {
 
 
     //dijkstra
@@ -26,7 +26,7 @@ class PlanSimplifieTest {
         //With
         RoadMap roadMap = new RoadMap();
         DeliveryOrder demande = new DeliveryOrder();
-        PlanSimplifie planSimplifie = new PlanSimplifie(demande, roadMap);
+        SimplifiedMap simplifiedMap = new SimplifiedMap(demande, roadMap);
         Intersection start = new Intersection(0l, 0, 0);
         Intersection end = new Intersection(1l, 0, 0);
         ArrayList<Intersection> intersections = new ArrayList<>();
@@ -55,7 +55,7 @@ class PlanSimplifieTest {
         boolean[] etatDijkstra = new boolean[roadMap.getIntersectionCount()];
         //When
         //TODO test avec une methode private
-        planSimplifie.dijkstra(intersections, predecesseurs, chemins, tempsDijkstra, etatDijkstra);
+        simplifiedMap.dijkstra(intersections, predecesseurs, chemins, tempsDijkstra, etatDijkstra);
         //Then
         assertThat(predecesseurs).hasSameElementsAs(predecesseursExpected);
 
@@ -71,7 +71,7 @@ class PlanSimplifieTest {
         //With
         RoadMap roadMap = new RoadMap();
         DeliveryOrder demande = new DeliveryOrder();
-        PlanSimplifie planSimplifie = new PlanSimplifie(demande, roadMap);
+        SimplifiedMap simplifiedMap = new SimplifiedMap(demande, roadMap);
         Intersection start = new Intersection(0l, 0, 0);
         Intersection end = new Intersection(1l, 0, 0);
         ArrayList<Intersection> intersections = new ArrayList<>();
@@ -99,7 +99,7 @@ class PlanSimplifieTest {
         boolean[] etatDijkstra = new boolean[roadMap.getIntersectionCount()];
         //When
         //TODO test avec une methode private
-        planSimplifie.dijkstra(intersections, predecesseurs, chemins, tempsDijkstra, etatDijkstra);
+        simplifiedMap.dijkstra(intersections, predecesseurs, chemins, tempsDijkstra, etatDijkstra);
         //Then
         assertThat(predecesseurs).hasSameElementsAs(predecesseursExpected);
         assertThat(chemins).hasSameElementsAs(cheminsExpected);
@@ -114,7 +114,7 @@ class PlanSimplifieTest {
         //With
         RoadMap roadMap = new RoadMap();
         DeliveryOrder demande = new DeliveryOrder();
-        PlanSimplifie planSimplifie = new PlanSimplifie(demande, roadMap);
+        SimplifiedMap simplifiedMap = new SimplifiedMap(demande, roadMap);
         //TODO charger un roadMap xml
         //TODO charger demande xml
         ArrayList<Intersection> intersections = new ArrayList<>();
@@ -124,12 +124,12 @@ class PlanSimplifieTest {
         ArrayList<Vector> chemins = new ArrayList<>();
         ArrayList<Vector> cheminsExpected = new ArrayList<>();
         //TODO remplir les chemins attendus
-        //planSimplifie.initIntersectionList(demande.getBeginning().getIntersection(), intersections, predecesseurs, chemins);
+        //simplifiedMap.initIntersectionList(demande.getBeginning().getIntersection(), intersections, predecesseurs, chemins);
         float[] tempsDijkstra = new float[roadMap.getIntersectionCount()];
         boolean[] etatDijkstra = new boolean[roadMap.getIntersectionCount()];
         //When
         //TODO test avec une methode private
-        //planSimplifie.dijkstra(intersections, predecesseurs, chemins, tempsDijkstra, etatDijkstra);
+        //simplifiedMap.dijkstra(intersections, predecesseurs, chemins, tempsDijkstra, etatDijkstra);
         //Then
         assertThat(predecesseurs).hasSameElementsAs(predecesseursExpected);
         assertThat(chemins).hasSameElementsAs(cheminsExpected);
@@ -147,7 +147,7 @@ class PlanSimplifieTest {
         //With
         RoadMap roadMap = new RoadMap();
         DeliveryOrder demande = new DeliveryOrder();
-        PlanSimplifie planSimplifie = new PlanSimplifie(demande, roadMap);
+        SimplifiedMap simplifiedMap = new SimplifiedMap(demande, roadMap);
 
         ArrayList<Intersection> intersections = new ArrayList<>();
         ArrayList<Intersection> intersectionsExpected = new ArrayList<>();
@@ -161,7 +161,7 @@ class PlanSimplifieTest {
 
         //When
         //TODO test avec une methode private
-        planSimplifie.initIntersectionList(null, intersections, predecesseurs, chemins);
+        simplifiedMap.initIntersectionList(null, intersections, predecesseurs, chemins);
         //Then
         assertThat(predecesseurs).hasSameElementsAs(predecesseursExpected);
         assertThat(intersections).hasSameElementsAs(intersectionsExpected);
@@ -178,7 +178,7 @@ class PlanSimplifieTest {
         //With
         RoadMap roadMap = new RoadMap();
         DeliveryOrder demande = new DeliveryOrder();
-        PlanSimplifie planSimplifie = new PlanSimplifie(demande, roadMap);
+        SimplifiedMap simplifiedMap = new SimplifiedMap(demande, roadMap);
         Intersection start = new Intersection(0l, 0, 0);
         Intersection end = new Intersection(1l, 0, 0);
         roadMap.addIntersection(start);
@@ -200,7 +200,7 @@ class PlanSimplifieTest {
 
         //When
         //TODO test avec une methode private
-        planSimplifie.initIntersectionList(start, intersections, predecesseurs, chemins);
+        simplifiedMap.initIntersectionList(start, intersections, predecesseurs, chemins);
         //Then
         assertThat(predecesseurs).hasSameElementsAs(predecesseursExpected);
         assertThat(intersections).hasSameElementsAs(intersectionsExpected);
@@ -217,7 +217,7 @@ class PlanSimplifieTest {
         //With
         RoadMap roadMap = new RoadMap();
         DeliveryOrder demande = new DeliveryOrder();
-        PlanSimplifie planSimplifie = new PlanSimplifie(demande, roadMap);
+        SimplifiedMap simplifiedMap = new SimplifiedMap(demande, roadMap);
         //TODO charger un roadMap xml
 
         ArrayList<Intersection> intersections = new ArrayList<>();
@@ -231,7 +231,7 @@ class PlanSimplifieTest {
         //TODO remplir les chemins attendus
         //When
         //TODO test avec une methode private
-        //planSimplifie.initIntersectionList(demande.getBeginning().getIntersection(), intersections, predecesseurs, chemins);
+        //simplifiedMap.initIntersectionList(demande.getBeginning().getIntersection(), intersections, predecesseurs, chemins);
         //Then
         assertThat(predecesseurs).hasSameElementsAs(predecesseursExpected);
         assertThat(intersections).hasSameElementsAs(intersectionsExpected);
@@ -251,7 +251,7 @@ class PlanSimplifieTest {
         //With
         RoadMap roadMap = new RoadMap();
         DeliveryOrder demande = new DeliveryOrder();
-        PlanSimplifie planSimplifie = new PlanSimplifie(demande, roadMap);
+        SimplifiedMap simplifiedMap = new SimplifiedMap(demande, roadMap);
         Intersection start = new Intersection(0l, 0, 0);
         Intersection end = new Intersection(1l, 0, 0);
         Intersection end2 = new Intersection(2l, 0, 0);
@@ -278,7 +278,7 @@ class PlanSimplifieTest {
         sortieExpected.add(tr2);
         //When
         //TODO test avec une methode private
-        sortie = planSimplifie.shortestPathList(startDelivery, ends);
+        sortie = simplifiedMap.shortestPathList(startDelivery, ends);
         //Then
 
         assertThat(sortie).hasSameElementsAs(sortieExpected);
@@ -292,7 +292,7 @@ class PlanSimplifieTest {
         //With
         RoadMap roadMap = new RoadMap();
         DeliveryOrder demande = new DeliveryOrder();
-        PlanSimplifie planSimplifie = new PlanSimplifie(demande, roadMap);
+        SimplifiedMap simplifiedMap = new SimplifiedMap(demande, roadMap);
         Intersection start = new Intersection(0l, 0, 0);
         Intersection end = new Intersection(1l, 0, 0);
         Intersection end2 = new Intersection(2l, 0, 0);
@@ -310,7 +310,7 @@ class PlanSimplifieTest {
         ends.add(l1);
         //When
         //TODO test avec une methode private
-        sortie = planSimplifie.shortestPathList(startDelivery, ends);
+        sortie = simplifiedMap.shortestPathList(startDelivery, ends);
         //Then
         assertThat(sortie).hasSameElementsAs(sortieExpected);
     }
@@ -323,7 +323,7 @@ class PlanSimplifieTest {
         //With
         RoadMap roadMap = new RoadMap();
         DeliveryOrder demande = new DeliveryOrder();
-        PlanSimplifie planSimplifie = new PlanSimplifie(demande, roadMap);
+        SimplifiedMap simplifiedMap = new SimplifiedMap(demande, roadMap);
         Intersection start = new Intersection(0l, 0, 0);
         Intersection end = new Intersection(1l, 0, 0);
         Intersection end2 = new Intersection(2l, 0, 0);
@@ -341,7 +341,7 @@ class PlanSimplifieTest {
         ends.add(l1);
         //When
         //TODO test avec une methode private
-        sortie = planSimplifie.shortestPathList(startDelivery, ends);
+        sortie = simplifiedMap.shortestPathList(startDelivery, ends);
         //Then
         assertThat(sortie).hasSameElementsAs(sortieExpected);
     }
@@ -354,14 +354,14 @@ class PlanSimplifieTest {
         //With
         RoadMap roadMap = new RoadMap();
         DeliveryOrder demande = new DeliveryOrder();
-        PlanSimplifie planSimplifie = new PlanSimplifie(demande, roadMap);
+        SimplifiedMap simplifiedMap = new SimplifiedMap(demande, roadMap);
         //TODO ajouter le chargement XML
         ArrayList<Path> sortie = new ArrayList<>();
         ArrayList<Path> sortieExpected = new ArrayList<>();
 
         //When
         //TODO test avec une methode private
-       // sortie = planSimplifie.shortestPathList(demande.getBeginning(), demande.getDeliveries());
+        // sortie = simplifiedMap.shortestPathList(demande.getBeginning(), demande.getDeliveries());
         //Then
         assertThat(sortie).hasSameElementsAs(sortieExpected);
     }

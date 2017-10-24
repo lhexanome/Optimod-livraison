@@ -71,7 +71,6 @@ public class Delivery extends Halt {
     }
 
 
-
     /**
      * Renvoie la plage horaire actuelle de la livraison.
      *

@@ -13,19 +13,19 @@ import static org.assertj.core.api.Assertions.fail;
 
 class RoadMapFacadeTest {
 
-    private MapFacade mapFacade;
+    private RoadMapFacade roadMapFacade;
     private File littleMap;
 
     @BeforeEach
     void setup() {
-        mapFacade = new MapFacade();
+        roadMapFacade = new RoadMapFacade();
 
         littleMap = new File(this.getClass().getResource("/xml/map/planLyonPetit.xml").getFile());
     }
 
     @Test
     void shouldLoadTestFile() {
-        mapFacade.addOnUpdateMapListener(new MapListener() {
+        roadMapFacade.addOnUpdateMapListener(new MapListener() {
             @Override
             public void onUpdateMap(RoadMap roadMap) {
                 // 217 intersections dans le xml donc il doit y avoir 217 intersections dans le RoadMap!
@@ -39,6 +39,6 @@ class RoadMapFacadeTest {
         });
 
 
-        mapFacade.loadMapFromFile(littleMap);
+        roadMapFacade.loadMapFromFile(littleMap);
     }
 }

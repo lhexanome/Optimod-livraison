@@ -16,7 +16,7 @@ public interface ComputeListener {
 
     /**
      * Fonction appelée quand une tournée n'a pas pu être calculée.
-     *
+     * <p>
      * TODO Ajouter un genre d'enum pour les différents problèmes
      *
      * @param e Exception contenant la cause

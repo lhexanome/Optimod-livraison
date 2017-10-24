@@ -3,8 +3,8 @@ package lhexanome.optimodlivraison.platform.parsing;
 import lhexanome.optimodlivraison.platform.exceptions.ParseDeliveryOrderException;
 import lhexanome.optimodlivraison.platform.models.Delivery;
 import lhexanome.optimodlivraison.platform.models.DeliveryOrder;
-import lhexanome.optimodlivraison.platform.models.Warehouse;
 import lhexanome.optimodlivraison.platform.models.Intersection;
+import lhexanome.optimodlivraison.platform.models.Warehouse;
 import org.jdom2.Element;
 
 import java.text.DateFormat;
@@ -84,8 +84,12 @@ public class DeliveryOrderParser {
         List<Element> warehouseList = rootElement.getChildren(XML_WAREHOUSE_ELEMENT);
         List<Element> deliveries = rootElement.getChildren(XML_DELIVERY_ELEMENT);
 
-        if (warehouseList.size() != 1) {
+        if (warehouseList.size() > 1) {
             throw new ParseDeliveryOrderException("XML contains too many warehouses");
+        }
+
+        if (warehouseList.size() == 0) {
+            throw new ParseDeliveryOrderException("XML does not have a warehouse");
         }
 
         if (warehouseList.size() + deliveries.size() != rootElement.getChildren().size()) {
@@ -105,7 +109,7 @@ public class DeliveryOrderParser {
     /**
      * Charge l'entrepôt et l'heure de départ.
      *
-     * @param element          Element représentant l'entrepôt
+     * @param element       Element représentant l'entrepôt
      * @param deliveryOrder Demande de livraison
      * @throws ParseDeliveryOrderException Si la structure est mauvaise
      */
@@ -137,7 +141,7 @@ public class DeliveryOrderParser {
     /**
      * Charge les livraisons.
      *
-     * @param deliveries       Liste d'élements représentant des livraisons
+     * @param deliveries    Liste d'élements représentant des livraisons
      * @param deliveryOrder Demande de livraison
      * @throws ParseDeliveryOrderException Si la structure est mauvaise
      */

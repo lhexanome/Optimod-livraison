@@ -91,7 +91,7 @@ public class Path {
      * @return Start
      */
     public Intersection getStart() {
-        return (vectors.size() == 0 ? null : vectors.get(0).getOrigine());
+        return (vectors.size() == 0 ? null : vectors.get(0).getOrigin());
     }
 
     /**
@@ -110,12 +110,12 @@ public class Path {
      * Cette operation met a jour le temp de parcour en lui ajoutent le temp de parcour du vector passer en paramétre.
      *
      * @param vector vector a ajouter au trajet
-     *                L'intersection origine du vector doit étre identique a l'intersection d'arrivée du trajet
+     *               L'intersection origine du vector doit étre identique a l'intersection d'arrivée du trajet
      * @throws RuntimeException si l'intersection origine du vector
      *                          n'est pas identique a l'intersection d'arrivée du trajet
      */
     public void addTroncon(Vector vector) {
-        if (vectors.size() == 0 || getEnd() == vector.getOrigine()) {
+        if (vectors.size() == 0 || getEnd() == vector.getOrigin()) {
             vectors.add(vector);
             timeToTravel += vector.getTimeToTravel();
         } else {
@@ -129,7 +129,7 @@ public class Path {
      * Cette operation met a jour le temp de parcour en lui ajoutent le temp de parcour du vector passer en paramétre.
      *
      * @param vector vector a ajouter au debut du trajet
-     *                L'intersection de destination du vector doit étre identique a l'intersection d'origine du trajet
+     *               L'intersection de destination du vector doit étre identique a l'intersection d'origine du trajet
      * @throws RuntimeException si l'intersection origine du vector
      *                          n'est pas identique a l'intersection d'arrivée du trajet
      */
@@ -148,7 +148,7 @@ public class Path {
      * Cette operation met a jour le temp de parcour en lui ajoutent le temp de parcour du path passer en paramétre.
      *
      * @param path path a ajouter au path courant
-     *               Le depart du path doit étre identique a l'arrivée du path courant
+     *             Le depart du path doit étre identique a l'arrivée du path courant
      * @throws RuntimeException si le depart du path passé en paramétre
      *                          n'est pas identique a l'arrivée du path courant
      */

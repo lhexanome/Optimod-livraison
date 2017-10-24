@@ -99,7 +99,7 @@ public class RoadMapTest {
         assertTrue(intersections.containsAll(Arrays.asList(i1, i2)));
         assertTrue(toncons.containsAll(Arrays.asList(t12)));
 
-        //Vector with know origine
+        //Vector with know origin
         //When
         roadMap.addTroncon(t13);
 

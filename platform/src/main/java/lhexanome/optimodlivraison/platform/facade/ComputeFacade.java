@@ -1,7 +1,7 @@
 package lhexanome.optimodlivraison.platform.facade;
 
 import lhexanome.optimodlivraison.platform.compute.InterfaceCalcul;
-import lhexanome.optimodlivraison.platform.compute.PlanSimplifie;
+import lhexanome.optimodlivraison.platform.compute.SimplifiedMap;
 import lhexanome.optimodlivraison.platform.exceptions.ComputeException;
 import lhexanome.optimodlivraison.platform.listeners.ComputeListener;
 import lhexanome.optimodlivraison.platform.models.DeliveryOrder;
@@ -62,28 +62,27 @@ public class ComputeFacade {
     /**
      * Calcul une tournée.
      *
-     * @param roadMap             RoadMap
+     * @param roadMap       RoadMap
      * @param deliveryOrder Demande de livraison
      */
     public void computeTour(RoadMap roadMap, DeliveryOrder deliveryOrder) {
         try {
             LOGGER.info("Compute tour");
 
-            PlanSimplifie planSimplifie = interfaceCalcul.calculerPlanSimplifie(roadMap, deliveryOrder);
+            SimplifiedMap simplifiedMap = interfaceCalcul.calculerPlanSimplifie(roadMap, deliveryOrder);
 
             LOGGER.info("Simplified roadMap computed");
 
             // FIXME Remove deliveryOrder
-            Tour tour = interfaceCalcul.calculerTournee();
+            Tour tour = interfaceCalcul.calculerTournee(simplifiedMap, deliveryOrder);
 
-            LOGGER.warning("Tour computed, duration =" + tour.getTime() / 60 + "min");
+            LOGGER.warning("Tour computed");
 
             listeners.forEach(l -> l.onComputingTour(tour));
 
             LOGGER.info("Listeners notified !");
         } catch (Exception e) {
             LOGGER.warning(MessageFormat.format("Unknown error", e.getCause()));
-            e.printStackTrace();
             failUpdate(e);
         }
     }

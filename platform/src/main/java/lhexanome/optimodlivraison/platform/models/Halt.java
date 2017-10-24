@@ -11,6 +11,7 @@ public class Halt {
 
     /**
      * constructeur.
+     *
      * @param intersection location de l'arret
      */
     public Halt(Intersection intersection) {
@@ -26,6 +27,7 @@ public class Halt {
 
         return intersection;
     }
+
     /**
      * Définie l'intersection de la livraison.
      *

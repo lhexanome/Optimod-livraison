@@ -7,6 +7,7 @@ public class Warehouse extends Halt {
 
     /**
      * constructeur.
+     *
      * @param intersection location de l'entrepot
      */
     public Warehouse(Intersection intersection) {

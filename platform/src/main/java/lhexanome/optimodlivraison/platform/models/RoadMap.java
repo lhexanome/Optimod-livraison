@@ -39,10 +39,10 @@ public class RoadMap {
      * @param vector Vector
      */
     public void addTroncon(Vector vector) {
-        Intersection origine = vector.getOrigine();
-        addIntersection(origine);
+        Intersection origin = vector.getOrigin();
+        addIntersection(origin);
         addIntersection(vector.getDestination());
-        this.map.get(origine).add(vector);
+        this.map.get(origin).add(vector);
     }
 
     /**
