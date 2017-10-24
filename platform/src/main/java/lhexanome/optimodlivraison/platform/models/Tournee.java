@@ -25,7 +25,7 @@ public class Tournee {
     /**
      * Intersection représentant l'entrepôt.
      */
-    private Intersection warehouse;
+    private Entrepot warehouse;
 
     /**
      * Temps estimé pour compléter une tournée.
@@ -40,7 +40,7 @@ public class Tournee {
      * @param start     Moment de départ de la tournée
      * @param time      Temps estimé pour compléter une tournée. En minutes
      */
-    public Tournee(Intersection warehouse, Date start, int time) {
+    public Tournee(Entrepot warehouse, Date start, int time) {
         this(warehouse, start, time, new ArrayList<>());
     }
 
@@ -57,7 +57,7 @@ public class Tournee {
      * @see #time
      * @see #deliveries
      */
-    public Tournee(Intersection warehouse, Date start, int time, List<Trajet> deliveries) {
+    public Tournee(Entrepot warehouse, Date start, int time, List<Trajet> deliveries) {
         this.start = start;
         this.warehouse = warehouse;
         this.time = time;
@@ -105,7 +105,7 @@ public class Tournee {
      *
      * @return Warehouse
      */
-    public Intersection getWarehouse() {
+    public Entrepot getWarehouse() {
         return warehouse;
     }
 
@@ -114,7 +114,7 @@ public class Tournee {
      *
      * @param warehouse Warehouse
      */
-    public void setWarehouse(Intersection warehouse) {
+    public void setWarehouse(Entrepot warehouse) {
         this.warehouse = warehouse;
     }
 

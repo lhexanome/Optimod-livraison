@@ -149,7 +149,7 @@ public class PlanSimplifie {
                         while (indexStart != indexEnd) {
                             //TODO inverser l'ordre des troncons
                             Troncon tr = chemins.get(indexEnd);
-                            t.addTroncon(tr);
+                            t.addTronconBefore(tr);
                             indexEnd = intersections.indexOf(predecesseurs.get(indexEnd));
                         }
                         sortie.add(t);

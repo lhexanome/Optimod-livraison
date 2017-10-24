@@ -4,6 +4,7 @@ import lhexanome.optimodlivraison.platform.compute.tsp.TSP;
 import lhexanome.optimodlivraison.platform.compute.tsp.TSP1;
 import lhexanome.optimodlivraison.platform.models.Arret;
 import lhexanome.optimodlivraison.platform.models.DemandeLivraison;
+import lhexanome.optimodlivraison.platform.models.Entrepot;
 import lhexanome.optimodlivraison.platform.models.Intersection;
 import lhexanome.optimodlivraison.platform.models.Livraison;
 import lhexanome.optimodlivraison.platform.models.Plan;
@@ -57,21 +58,24 @@ public class InterfaceCalcul {
      * Calcule la tournée optimale en fonction du plan simplifié et de la demande de livraison.
      * Met à jour l'attribut sortie.
      */
-    public Tournee calculerTournee(PlanSimplifie planSimplifie, DemandeLivraison demande) {
-        Intersection warehouse;
+    public Tournee calculerTournee() {
+        Entrepot warehouse;
         Date start;
         int time;
 
         Map<Arret, ArrayList<Trajet>> graphe = planSimplifie.getGraphe();
 
-        warehouse = demande.getBeginning().getIntersection();
+        warehouse = demande.getBeginning();
         start = demande.getStart();
         int nbSommets = demande.getDeliveries().size() + 1;
 
         //sert à assigner chaque sommet à un index.
-        ArrayList<Arret> listeSommets = new ArrayList<>();
-        listeSommets.add(demande.getBeginning());
-        listeSommets.addAll(demande.getDeliveries());
+        ArrayList<Intersection> listeSommets = new ArrayList<>();
+        listeSommets.add(demande.getBeginning().getIntersection());
+        
+        for(Livraison l: demande.getDeliveries()){
+            listeSommets.add(l.getIntersection());
+        }
 
         MatriceAdjacence matrix = grapheToMatrix(graphe, nbSommets, listeSommets);
         int[][] matriceCouts = matrix.getMatriceCouts();
@@ -83,18 +87,18 @@ public class InterfaceCalcul {
         tsp.chercheSolution(9999999, nbSommets, matriceCouts, listeDurees);
         time = tsp.getCoutMeilleureSolution();
 
-        ArrayList<Trajet> deliveries = new ArrayList<>(nbSommets);
+        ArrayList<Trajet> deliveries = new ArrayList<>();
         for (int i = 0; i < nbSommets - 1; i++) {
             int indexSommet = tsp.getMeilleureSolution(i);
             Trajet trajet = matriceTrajets[indexSommet][indexSommet + 1];
-            deliveries.set(i, trajet);
+            deliveries.add( trajet);
         }
 
         this.sortie = new Tournee(warehouse, start, time, deliveries);
         return sortie;
     }
 
-    private MatriceAdjacence grapheToMatrix(Map<Arret, ArrayList<Trajet>> graphe, int nbSommets, ArrayList<Arret> listeSommets) {
+    private MatriceAdjacence grapheToMatrix(Map<Arret, ArrayList<Trajet>> graphe, int nbSommets, ArrayList<Intersection> listeSommets) {
         int[][] matriceCouts = new int[nbSommets][nbSommets];
         Trajet[][] matriceTrajets = new Trajet[nbSommets][nbSommets];
 
@@ -122,7 +126,7 @@ public class InterfaceCalcul {
         return new MatriceAdjacence(listeSommets, matriceTrajets, matriceCouts);
     }
 
-    private int[] demandeToDurees(DemandeLivraison demande, int nbSommets, ArrayList<Arret> listeSommets) {
+    private int[] demandeToDurees(DemandeLivraison demande, int nbSommets, ArrayList<Intersection> listeSommets) {
         int[] sortie = new int[nbSommets];
 
         //entrepôt
@@ -130,7 +134,7 @@ public class InterfaceCalcul {
 
         //le reste
         for (Arret arret : demande.getDeliveries()) {
-            int index = listeSommets.indexOf(arret);
+            int index = listeSommets.indexOf(arret.getIntersection());
             sortie[index] = ((Livraison) arret).getDuration();
         }
 
