@@ -9,12 +9,12 @@ import java.util.Set;
  * Elle contient un ensemble de livraisons à faire,
  * Une date et une intersection de départ.
  */
-public class DemandeLivraison {
+public class DeliveryOrder {
 
     /**
      * Ensemble des livraisons à faire pour une demande.
      */
-    private Set<Livraison> deliveries;
+    private Set<Delivery> deliveries;
     /**
      * Date de début de la livraison.
      */
@@ -23,22 +23,22 @@ public class DemandeLivraison {
      * entrepot de depart de la demande de livraison.
      * Point de départ et d'arriver de la livraison
      */
-    private Entrepot beginning;
+    private Warehouse beginning;
 
     /**
      * Constructeur par défaut.
      * Initialise un Set
      */
-    public DemandeLivraison() {
+    public DeliveryOrder() {
         deliveries = new LinkedHashSet<>();
     }
 
     /**
      * Ajoute une livraison à la demande.
      *
-     * @param delivery Livraison à ajouter
+     * @param delivery Delivery à ajouter
      */
-    public void addDelivery(Livraison delivery) {
+    public void addDelivery(Delivery delivery) {
         this.deliveries.add(delivery);
     }
 
@@ -47,7 +47,7 @@ public class DemandeLivraison {
      *
      * @return La liste des livraisons
      */
-    public Set<Livraison> getDeliveries() {
+    public Set<Delivery> getDeliveries() {
         return deliveries;
     }
 
@@ -74,7 +74,7 @@ public class DemandeLivraison {
      *
      * @return entrepot de départ
      */
-    public Entrepot getBeginning() {
+    public Warehouse getBeginning() {
         return beginning;
     }
 
@@ -83,7 +83,7 @@ public class DemandeLivraison {
      *
      * @param beginning entrepot de départ
      */
-    public void setBeginning(Entrepot beginning) {
+    public void setBeginning(Warehouse beginning) {
         this.beginning = beginning;
     }
 }

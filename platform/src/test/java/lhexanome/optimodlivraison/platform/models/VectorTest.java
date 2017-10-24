@@ -5,13 +5,13 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TronconTest {
+public class VectorTest {
 
-    Troncon tronconTested;
+    Vector vectorTested;
 
     @BeforeEach
     void createTourneeObjects() {
-        tronconTested = new Troncon(
+        vectorTested = new Vector(
                 new Intersection(1L, 101, 102),
                 new Intersection(2L, 201, 202),
                 "Street test"
@@ -24,10 +24,10 @@ public class TronconTest {
         Intersection intersection = new Intersection(123L, 105, 110);
 
         //When
-        tronconTested.setDestination(intersection);
+        vectorTested.setDestination(intersection);
 
         //Then
-        assertEquals(intersection, tronconTested.getDestination());
+        assertEquals(intersection, vectorTested.getDestination());
     }
 
     @Test
@@ -37,10 +37,10 @@ public class TronconTest {
         Intersection intersection = new Intersection(125L, 125, 130);
 
         //When
-        tronconTested.setOrigine(intersection);
+        vectorTested.setOrigine(intersection);
 
         //Then
-        assertEquals(intersection, tronconTested.getOrigine());
+        assertEquals(intersection, vectorTested.getOrigine());
     }
 
     @Test
@@ -49,10 +49,10 @@ public class TronconTest {
         //With
 
         //When
-        tronconTested.setNameStreet("Rue de la liberte");
+        vectorTested.setNameStreet("Rue de la liberte");
 
         //Then
-        assertEquals("Rue de la liberte", tronconTested.getNameStreet());
+        assertEquals("Rue de la liberte", vectorTested.getNameStreet());
 
     }
 
@@ -61,10 +61,10 @@ public class TronconTest {
         //With
 
         //When
-        tronconTested.setLength(22);
+        vectorTested.setLength(22);
 
         //Then
-        assertEquals(22, tronconTested.getLength());
+        assertEquals(22, vectorTested.getLength());
     }
 
     void shouldGetTimeToTravel() {
@@ -72,9 +72,9 @@ public class TronconTest {
         //With
 
         //When
-        tronconTested.setLength(22);
-        float result = tronconTested.getTimeToTravel();
-        float trueResult = tronconTested.getLength() * 15;
+        vectorTested.setLength(22);
+        float result = vectorTested.getTimeToTravel();
+        float trueResult = vectorTested.getLength() * 15;
 
         //Then
         assertEquals(trueResult, result);

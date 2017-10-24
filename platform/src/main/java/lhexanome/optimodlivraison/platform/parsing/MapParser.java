@@ -2,8 +2,8 @@ package lhexanome.optimodlivraison.platform.parsing;
 
 import lhexanome.optimodlivraison.platform.exceptions.ParseMapException;
 import lhexanome.optimodlivraison.platform.models.Intersection;
-import lhexanome.optimodlivraison.platform.models.Plan;
-import lhexanome.optimodlivraison.platform.models.Troncon;
+import lhexanome.optimodlivraison.platform.models.RoadMap;
+import lhexanome.optimodlivraison.platform.models.Vector;
 import org.jdom2.Element;
 
 import java.util.List;
@@ -39,8 +39,8 @@ public class MapParser {
      * @return Un plan
      * @throws ParseMapException Si un problème a lieu lors du parsing
      */
-    public Plan parseMap(Element rootElement) throws ParseMapException {
-        Plan plan = new Plan();
+    public RoadMap parseMap(Element rootElement) throws ParseMapException {
+        RoadMap roadMap = new RoadMap();
 
         LOGGER.info("Start parsing");
 
@@ -54,28 +54,28 @@ public class MapParser {
             throw new ParseMapException("XML contains unknown elements");
         }
 
-        loadNodes(nodes, plan);
+        loadNodes(nodes, roadMap);
 
         LOGGER.info("Nodes loaded");
 
-        loadTroncon(troncons, plan);
+        loadTroncon(troncons, roadMap);
 
         LOGGER.info("End parsing");
-        return plan;
+        return roadMap;
     }
 
     /**
-     * Génère une map pour faciliter la création d'un plan.
+     * Génère une roadMap pour faciliter la création d'un roadMap.
      *
      * @param listNode Liste d'élément jdom
-     * @param plan     Plan
+     * @param roadMap     RoadMap
      * @throws ParseMapException Si le document contient 2x le même id
      */
-    public void loadNodes(List<Element> listNode, Plan plan) throws ParseMapException {
+    public void loadNodes(List<Element> listNode, RoadMap roadMap) throws ParseMapException {
         for (Element node : listNode) {
             Long id = Long.parseLong(node.getAttributeValue("id"));
 
-            if (plan.findIntersectionById(id) != null) {
+            if (roadMap.findIntersectionById(id) != null) {
                 throw new ParseMapException("Node id already exists!");
             }
 
@@ -85,34 +85,34 @@ public class MapParser {
                     Integer.parseInt(node.getAttributeValue("y"))
             );
 
-            plan.addIntersection(intersection);
+            roadMap.addIntersection(intersection);
         }
     }
 
     /**
-     * Génère un plan depuis des tronçons et des intersections.
+     * Génère un roadMap depuis des tronçons et des intersections.
      *
      * @param listTroncon Liste d'éléments jdom
-     * @param plan        Plan
+     * @param roadMap        RoadMap
      * @throws ParseMapException Si un troncon a des intersections inconnues
      */
-    public void loadTroncon(List<Element> listTroncon, Plan plan) throws ParseMapException {
+    public void loadTroncon(List<Element> listTroncon, RoadMap roadMap) throws ParseMapException {
         for (Element node : listTroncon) {
-            Intersection origin = plan.findIntersectionById(
+            Intersection origin = roadMap.findIntersectionById(
                     Long.parseLong(node.getAttributeValue("origine")));
 
-            Intersection destination = plan.findIntersectionById(
+            Intersection destination = roadMap.findIntersectionById(
                     Long.parseLong(node.getAttributeValue("destination")));
 
 
             if (origin == null || destination == null) {
-                throw new ParseMapException("Troncon has an unknown destination or origin");
+                throw new ParseMapException("Vector has an unknown destination or origin");
             }
 
             Float length = Float.parseFloat(node.getAttributeValue("longueur"));
             String streetName = node.getAttributeValue("nomRue");
 
-            Troncon similar = plan.getTronconsFromIntersection(origin)
+            Vector similar = roadMap.getTronconsFromIntersection(origin)
                     .stream()
                     .filter(troncon -> troncon.getDestination() == destination)
                     .findAny()
@@ -120,7 +120,7 @@ public class MapParser {
 
 
             if (similar == null) {
-                plan.addTroncon(new Troncon(
+                roadMap.addTroncon(new Vector(
                         origin,
                         destination,
                         streetName,

@@ -3,7 +3,7 @@ package lhexanome.optimodlivraison.platform.facade;
 import lhexanome.optimodlivraison.platform.exceptions.MapException;
 import lhexanome.optimodlivraison.platform.exceptions.ParseMapException;
 import lhexanome.optimodlivraison.platform.listeners.MapListener;
-import lhexanome.optimodlivraison.platform.models.Plan;
+import lhexanome.optimodlivraison.platform.models.RoadMap;
 import lhexanome.optimodlivraison.platform.parsing.common.LoadFile;
 import lhexanome.optimodlivraison.platform.parsing.MapParser;
 import org.jdom2.Element;
@@ -17,7 +17,7 @@ import java.util.Collection;
 import java.util.logging.Logger;
 
 /**
- * Facade de la partie Plan.
+ * Facade de la partie RoadMap.
  */
 public class MapFacade {
 
@@ -27,7 +27,7 @@ public class MapFacade {
     private static final Logger LOGGER = Logger.getLogger(MapFacade.class.getName());
 
     /**
-     * Map parser.
+     * RoadMap parser.
      */
     private MapParser mapParser;
 
@@ -73,11 +73,11 @@ public class MapFacade {
             Element rootElement = LoadFile.loadFromFile(xmlFile);
             LOGGER.info("XML File loaded");
 
-            Plan newPlan = mapParser.parseMap(rootElement);
+            RoadMap newRoadMap = mapParser.parseMap(rootElement);
 
-            LOGGER.warning(MessageFormat.format("Map loaded with {0} intersections", newPlan.getIntersectionCount()));
+            LOGGER.warning(MessageFormat.format("RoadMap loaded with {0} intersections", newRoadMap.getIntersectionCount()));
 
-            listeners.forEach(l -> l.onUpdateMap(newPlan));
+            listeners.forEach(l -> l.onUpdateMap(newRoadMap));
 
             LOGGER.info("Listeners notified !");
         } catch (JDOMException e) {

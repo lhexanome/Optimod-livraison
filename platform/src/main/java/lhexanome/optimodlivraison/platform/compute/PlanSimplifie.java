@@ -1,25 +1,24 @@
 package lhexanome.optimodlivraison.platform.compute;
 
 
-import lhexanome.optimodlivraison.platform.models.Arret;
-import lhexanome.optimodlivraison.platform.models.DemandeLivraison;
+import lhexanome.optimodlivraison.platform.models.Halt;
+import lhexanome.optimodlivraison.platform.models.DeliveryOrder;
 import lhexanome.optimodlivraison.platform.models.Intersection;
-import lhexanome.optimodlivraison.platform.models.Plan;
-import lhexanome.optimodlivraison.platform.models.Trajet;
-import lhexanome.optimodlivraison.platform.models.Troncon;
+import lhexanome.optimodlivraison.platform.models.Path;
+import lhexanome.optimodlivraison.platform.models.RoadMap;
+import lhexanome.optimodlivraison.platform.models.Vector;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 import java.util.logging.Logger;
 
 
 /**
- * classe qui stocke une version simplifiée du plan,
+ * classe qui stocke une version simplifiée du roadMap,
  * soit un graph orienté et complet avec comme sommets les livraisons,
  * et pour arc des trajets formant les plus courts chemins entre ces livraisons.
  */
@@ -30,67 +29,67 @@ public class PlanSimplifie {
      */
     private static final Logger LOGGER = Logger.getLogger(PlanSimplifie.class.getName());
     /**
-     * reference au plan charge.
+     * reference au roadMap charge.
      */
-    private Plan plan;
+    private RoadMap roadMap;
     /**
      * reference a la demande de livraison chargee.
      */
-    private DemandeLivraison demandeLivraison;
-    private Map<Arret, ArrayList<Trajet>> graphe;
+    private DeliveryOrder deliveryOrder;
+    private java.util.Map graphe;
 
     /***
      * constructeur par defaut.
      */
     public PlanSimplifie() {
-        plan = new Plan();
-        demandeLivraison = new DemandeLivraison();
+        roadMap = new RoadMap();
+        deliveryOrder = new DeliveryOrder();
         graphe = new HashMap<>();
     }
 
     /**
-     * constructeur qui initialise le plan simplifie.
+     * constructeur qui initialise le roadMap simplifie.
      *
-     * @param demandeLivraison la demande de livraison chargee
-     * @param plan             le plan charge
+     * @param deliveryOrder la demande de livraison chargee
+     * @param roadMap             le roadMap charge
      */
-    public PlanSimplifie(DemandeLivraison demandeLivraison, Plan plan) {
-        this.plan = plan;
-        this.demandeLivraison = demandeLivraison;
+    public PlanSimplifie(DeliveryOrder deliveryOrder, RoadMap roadMap) {
+        this.roadMap = roadMap;
+        this.deliveryOrder = deliveryOrder;
         graphe = new HashMap<>();
         //TODO Appeler computeGraph dans le constructeur ?
     }
 
     /**
-     * fonction qui calcule le graphe simplifié à partir du plan.
+     * fonction qui calcule le graphe simplifié à partir du roadMap.
      */
     public void computeGraph() {
         LOGGER.info(MessageFormat.format("compute simplified graph", ""));
-        HashSet<Arret> ptsArret = new HashSet<>();
-        ptsArret.addAll(demandeLivraison.getDeliveries());
-        ptsArret.add(demandeLivraison.getBeginning());
-        for (Arret s : ptsArret) {
-            ArrayList<Trajet> listeTrajets =
-                    shortestPathList(s, ptsArret);
-//            for (Trajet t : listeTrajets) {
+        HashSet<Halt> ptsHalt = new HashSet<>();
+        ptsHalt.addAll(deliveryOrder.getDeliveries());
+        ptsHalt.add(deliveryOrder.getBeginning());
+        for (Halt s : ptsHalt) {
+            ArrayList<Path> listePaths =
+                    shortestPathList(s, ptsHalt);
+//            for (Path t : listePaths) {
 //                graphe.put(s, t);
 //            }
-            graphe.put(s, listeTrajets);
+            graphe.put(s, listePaths);
         }
     }
 
     /**
      * fonction qui renvoie
      * la liste des chemins les plus courts partant de start
-     * et allant à chaque Livraison de ends.
+     * et allant à chaque Delivery de ends.
      *
      * @param start intersection de depart
      * @param ends  Liste des arrives
      * @return liste des plus courts chemins
      */
-    public ArrayList<Trajet> shortestPathList(
-            Arret start, Set<? extends Arret> ends) {
-        ArrayList<Trajet> sortie = new ArrayList<>();
+    public ArrayList<Path> shortestPathList(
+            Halt start, Set<? extends Halt> ends) {
+        ArrayList<Path> sortie = new ArrayList<>();
         LOGGER.info(MessageFormat.format("start compute shortest path for:", start.toString()));
 
         /*
@@ -98,16 +97,16 @@ public class PlanSimplifie {
          * le point de depart et chaque intersection
          * le premier element est celui de l'intersection de depart.
          */
-        float[] tempsDijkstra = new float[plan.getIntersectionCount()];
+        float[] tempsDijkstra = new float[roadMap.getIntersectionCount()];
         /*
          * tableau qui memorise l'etat
          * des intersections lors d'une recherche de chemin
          * (visite/ non visite)
          */
-        boolean[] etatDijkstra = new boolean[plan.getIntersectionCount()];
+        boolean[] etatDijkstra = new boolean[roadMap.getIntersectionCount()];
 
         /*
-         * tableau listant les intersections du plan
+         * tableau listant les intersections du roadMap
          */
         ArrayList<Intersection> intersections = new ArrayList<>();
         /*
@@ -121,9 +120,9 @@ public class PlanSimplifie {
          * de l'intersection i vers celle ci
          * (celui du plus court chemin)
          */
-        ArrayList<Troncon> chemins = new ArrayList<>();
+        ArrayList<Vector> chemins = new ArrayList<>();
         //initialisation
-        if (plan.getIntersectionCount() > 0) {
+        if (roadMap.getIntersectionCount() > 0) {
             tempsDijkstra[0] = 0;
             etatDijkstra[0] = true;
 
@@ -136,9 +135,9 @@ public class PlanSimplifie {
                     tempsDijkstra, etatDijkstra);
 
             //pour chaque livraison, on construit le trajet
-            for (Arret end : ends) {
+            for (Halt end : ends) {
                 if (!end.equals(start)) {
-                    Trajet t = new Trajet();
+                    Path t = new Path();
 
                     //on recupere la liste de troncons
                     int indexStart = intersections.indexOf(start.getIntersection());
@@ -148,7 +147,7 @@ public class PlanSimplifie {
                         //on remonte par la fin la liste des chemins
                         while (indexStart != indexEnd) {
                             //TODO inverser l'ordre des troncons
-                            Troncon tr = chemins.get(indexEnd);
+                            Vector tr = chemins.get(indexEnd);
                             t.addTronconBefore(tr);
                             indexEnd = intersections.indexOf(predecesseurs.get(indexEnd));
                         }
@@ -164,7 +163,7 @@ public class PlanSimplifie {
 
     /**
      * fonction qui initialise la liste des intersections
-     * en parcourant les troncons connectes dans le plan.
+     * en parcourant les troncons connectes dans le roadMap.
      *
      * @param start         intersection de depart
      * @param intersections liste des intersections
@@ -175,15 +174,15 @@ public class PlanSimplifie {
      */
     public void initIntersectionList(Intersection start, ArrayList<Intersection> intersections,
                                      ArrayList<Intersection> predecesseurs,
-                                     ArrayList<Troncon> chemins) {
+                                     ArrayList<Vector> chemins) {
         if (start != null) {
             intersections.add(start);
             predecesseurs.add(null);
             chemins.add(null);
             for (int i = 0; i < intersections.size(); i++) {
-                Collection<Troncon> cheminsPartants =
-                        plan.getTronconsFromIntersection(intersections.get(i));
-                for (Troncon t : cheminsPartants) {
+                Collection<Vector> cheminsPartants =
+                        roadMap.getTronconsFromIntersection(intersections.get(i));
+                for (Vector t : cheminsPartants) {
                     if (!intersections.contains(t.getDestination())) {
                         intersections.add(t.getDestination());
                         predecesseurs.add(null);
@@ -215,14 +214,14 @@ public class PlanSimplifie {
      */
     public void dijkstra(ArrayList<Intersection> intersections,
                          ArrayList<Intersection> predecesseurs,
-                         ArrayList<Troncon> chemins,
+                         ArrayList<Vector> chemins,
                          float[] tempsDijkstra, boolean[] etatDijkstra) {
         LOGGER.info(MessageFormat.format("start Dijkstra algorithm", ""));
 
         //reset
         tempsDijkstra[0] = 0;
         etatDijkstra[0] = false;
-        for (int i = 1; i < plan.getIntersectionCount(); i++) {
+        for (int i = 1; i < roadMap.getIntersectionCount(); i++) {
             //je represente l'infini par -1
             tempsDijkstra[i] = -1;
             etatDijkstra[i] = false;
@@ -256,9 +255,9 @@ public class PlanSimplifie {
                 //on relache tout les arcs
                 // partant de cette intersection
                 courant = intersections.get(indexNouvelleVisite);
-                Collection<Troncon> cheminsPartants =
-                        plan.getTronconsFromIntersection(courant);
-                for (Troncon t : cheminsPartants) {
+                Collection<Vector> cheminsPartants =
+                        roadMap.getTronconsFromIntersection(courant);
+                for (Vector t : cheminsPartants) {
                     int indexDestination =
                             intersections.indexOf(t.getDestination());
                     if (!etatDijkstra[indexDestination]) {
@@ -297,10 +296,10 @@ public class PlanSimplifie {
     }
 
     /**
-     * map stockant le graphe sous la forme d'une association de livraisons
+     * roadMap stockant le graphe sous la forme d'une association de livraisons
      * et de trajets partant de ces livraisons.
      */
-    public Map<Arret, ArrayList<Trajet>> getGraphe() {
+    public java.util.Map getGraphe() {
         return graphe;
     }
 }

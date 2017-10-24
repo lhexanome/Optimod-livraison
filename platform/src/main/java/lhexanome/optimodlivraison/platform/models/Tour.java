@@ -10,12 +10,12 @@ import java.util.List;
  * et la tournée doit avoir un temps minimal.
  * Doit finir à l'entrepôt.
  */
-public class Tournee {
+public class Tour {
 
     /**
      * Liste ordonnée de trajets.
      */
-    private List<Trajet> deliveries;
+    private List<Path> deliveries;
 
     /**
      * Moment de départ de la tournée.
@@ -40,7 +40,7 @@ public class Tournee {
      * @param start     Moment de départ de la tournée
      * @param time      Temps estimé pour compléter une tournée. En minutes
      */
-    public Tournee(Entrepot warehouse, Date start, int time) {
+    public Tour(Entrepot warehouse, Date start, int time) {
         this(warehouse, start, time, new ArrayList<>());
     }
 
@@ -57,7 +57,7 @@ public class Tournee {
      * @see #time
      * @see #deliveries
      */
-    public Tournee(Entrepot warehouse, Date start, int time, List<Trajet> deliveries) {
+    public Tour(Entrepot warehouse, Date start, int time, List<Path> deliveries) {
         this.start = start;
         this.warehouse = warehouse;
         this.time = time;
@@ -69,7 +69,7 @@ public class Tournee {
      *
      * @return Deliveries
      */
-    public List<Trajet> getDeliveries() {
+    public List<Path> getDeliveries() {
         return deliveries;
     }
 
@@ -78,7 +78,7 @@ public class Tournee {
      *
      * @param deliveries Deliveries
      */
-    public void setDeliveries(List<Trajet> deliveries) {
+    public void setDeliveries(List<Path> deliveries) {
         this.deliveries = deliveries;
     }
 

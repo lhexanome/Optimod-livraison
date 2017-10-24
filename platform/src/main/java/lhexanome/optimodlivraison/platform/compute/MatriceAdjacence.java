@@ -1,20 +1,20 @@
 package lhexanome.optimodlivraison.platform.compute;
 
-import lhexanome.optimodlivraison.platform.models.Arret;
+import lhexanome.optimodlivraison.platform.models.Halt;
 import lhexanome.optimodlivraison.platform.models.Intersection;
-import lhexanome.optimodlivraison.platform.models.Trajet;
+import lhexanome.optimodlivraison.platform.models.Path;
 
 import java.util.ArrayList;
 
 //CHECKSTYLE:OFF
 public class MatriceAdjacence {
     private ArrayList<Intersection> listeSommets;
-    private Trajet[][] matriceTrajets;
+    private Path[][] matricePaths;
     private int[][] matriceCouts;
 
-    public MatriceAdjacence(ArrayList<Intersection> listeSommets, Trajet[][] matriceTrajets, int[][] matriceCouts) {
+    public MatriceAdjacence(ArrayList<Intersection> listeSommets, Path[][] matriceTrajets, int[][] matriceCouts) {
         this.listeSommets = listeSommets;
-        this.matriceTrajets = matriceTrajets;
+        this.matricePaths = matricePaths;
         this.matriceCouts = matriceCouts;
     }
 
@@ -23,8 +23,8 @@ public class MatriceAdjacence {
         return listeSommets;
     }
 
-    public Trajet[][] getMatriceTrajets() {
-        return matriceTrajets;
+    public Path[][] getMatricePaths() {
+        return matricePaths;
     }
 
     public int[][] getMatriceCouts() {

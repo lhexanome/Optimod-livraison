@@ -1,18 +1,18 @@
 package lhexanome.optimodlivraison.platform.listeners;
 
 import lhexanome.optimodlivraison.platform.exceptions.MapException;
-import lhexanome.optimodlivraison.platform.models.Plan;
+import lhexanome.optimodlivraison.platform.models.RoadMap;
 
 /**
  * Listener pour les plans.
  */
 public interface MapListener {
     /**
-     * Fonction appelée quand un plan est chargé.
+     * Fonction appelée quand un roadMap est chargé.
      *
-     * @param plan Plan chargé
+     * @param roadMap RoadMap chargé
      */
-    void onUpdateMap(Plan plan);
+    void onUpdateMap(RoadMap roadMap);
 
     /**
      * Fonction appelée quand un plan n'arrive pas à être chargé.

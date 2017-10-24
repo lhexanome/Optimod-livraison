@@ -5,7 +5,7 @@ package lhexanome.optimodlivraison.platform.models;
  * Contient une durée de livraison, une intersection et une plage horaire.
  * Si la plage horaire est null alors la livraison peut s'efectuer a n'importe quelle heur
  */
-public class Livraison extends Arret {
+public class Delivery extends Halt {
 
     /**
      * Durée prise pour la livraison.
@@ -17,7 +17,7 @@ public class Livraison extends Arret {
     /**
      * Plage horaire durant laquelle la livraison peut s'effectuer.
      */
-    private PlageHoraire slot;
+    private TimeSlot slot;
 
     /**
      * Constructeur de livraison.
@@ -28,9 +28,9 @@ public class Livraison extends Arret {
      * @see #duration
      * @see #intersection
      * @see #slot
-     * @see #Livraison(Intersection, int, PlageHoraire)
+     * @see #Delivery(Intersection, int, TimeSlot)
      */
-    public Livraison(Intersection intersection, int duration) {
+    public Delivery(Intersection intersection, int duration) {
         this(intersection, duration, null);
     }
 
@@ -44,9 +44,9 @@ public class Livraison extends Arret {
      * @see #duration
      * @see #intersection
      * @see #slot
-     * @see #Livraison(Intersection, int)
+     * @see #Delivery(Intersection, int)
      */
-    public Livraison(Intersection intersection, int duration, PlageHoraire slot) {
+    public Delivery(Intersection intersection, int duration, TimeSlot slot) {
         super(intersection);
         this.duration = duration;
         this.slot = slot;
@@ -77,7 +77,7 @@ public class Livraison extends Arret {
      *
      * @return Plage horaire
      */
-    public PlageHoraire getSlot() {
+    public TimeSlot getSlot() {
         return slot;
     }
 
@@ -86,7 +86,7 @@ public class Livraison extends Arret {
      *
      * @param slot Plage horaire
      */
-    public void setSlot(PlageHoraire slot) {
+    public void setSlot(TimeSlot slot) {
         this.slot = slot;
     }
 }

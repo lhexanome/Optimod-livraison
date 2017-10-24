@@ -11,12 +11,12 @@ import java.util.Date;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-public class LivraisonTest {
+public class DeliveryTest {
 
 
     private Intersection intersection;
-    private Livraison livraisonToTest;
-    private PlageHoraire slot;
+    private Delivery deliveryToTest;
+    private TimeSlot slot;
 
     @BeforeEach
     void createLivraisonObjects() throws ParseException {
@@ -24,8 +24,8 @@ public class LivraisonTest {
         DateFormat dateFormat = new SimpleDateFormat("DD-MM-YY HH:mm");
         Date start = dateFormat.parse("16-08-17 11:25");
         Date end = dateFormat.parse("16-08-17 13:35");
-        slot = new PlageHoraire(start, end);
-        livraisonToTest = new Livraison(intersection, 35, slot);
+        slot = new TimeSlot(start, end);
+        deliveryToTest = new Delivery(intersection, 35, slot);
     }
 
     @Test
@@ -35,16 +35,16 @@ public class LivraisonTest {
         DateFormat dateFormat = new SimpleDateFormat("DD-MM-YY HH:mm");
         Date start = dateFormat.parse("16-08-17 21:25");
         Date end = dateFormat.parse("16-08-17 23:35");
-        PlageHoraire slot = new PlageHoraire(start, end);
+        TimeSlot slot = new TimeSlot(start, end);
         Intersection intersection = new Intersection(325L, 194, 478);
 
         // When
-        livraisonToTest = new Livraison(intersection, 65, slot);
+        deliveryToTest = new Delivery(intersection, 65, slot);
 
         // Then
-        assertEquals(intersection, livraisonToTest.getIntersection());
-        assertEquals(65, livraisonToTest.getDuration());
-        assertEquals(slot, livraisonToTest.getSlot());
+        assertEquals(intersection, deliveryToTest.getIntersection());
+        assertEquals(65, deliveryToTest.getDuration());
+        assertEquals(slot, deliveryToTest.getSlot());
     }
 
     @Test
@@ -54,12 +54,12 @@ public class LivraisonTest {
         Intersection intersection = new Intersection(325L, 194, 478);
 
         // When
-        livraisonToTest = new Livraison(intersection, 43);
+        deliveryToTest = new Delivery(intersection, 43);
 
         // Then
-        assertEquals(intersection, livraisonToTest.getIntersection());
-        assertEquals(43, livraisonToTest.getDuration());
-        assertNull(livraisonToTest.getSlot());
+        assertEquals(intersection, deliveryToTest.getIntersection());
+        assertEquals(43, deliveryToTest.getDuration());
+        assertNull(deliveryToTest.getSlot());
     }
 
     @Test
@@ -67,10 +67,10 @@ public class LivraisonTest {
         //With
 
         //When
-        livraisonToTest.setDuration(5236);
+        deliveryToTest.setDuration(5236);
 
         //Then
-        assertEquals(5236, livraisonToTest.getDuration());
+        assertEquals(5236, deliveryToTest.getDuration());
     }
 
     @Test
@@ -79,10 +79,10 @@ public class LivraisonTest {
         Intersection intersection = new Intersection(320L, 195, 1995);
 
         //When
-        livraisonToTest.setIntersection(intersection);
+        deliveryToTest.setIntersection(intersection);
 
         //Then
-        assertEquals(intersection, livraisonToTest.getIntersection());
+        assertEquals(intersection, deliveryToTest.getIntersection());
     }
 
     @Test
@@ -91,12 +91,12 @@ public class LivraisonTest {
         DateFormat dateFormat = new SimpleDateFormat("DD-MM-YY HH:mm");
         Date start = dateFormat.parse("15-02-17 12:55");
         Date end = dateFormat.parse("15-02-17 10:55");
-        PlageHoraire slot = new PlageHoraire(start, end);
+        TimeSlot slot = new TimeSlot(start, end);
 
         //When
-        livraisonToTest.setSlot(slot);
+        deliveryToTest.setSlot(slot);
 
         //Then
-        assertEquals(slot, livraisonToTest.getSlot());
+        assertEquals(slot, deliveryToTest.getSlot());
     }
 }

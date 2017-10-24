@@ -1,17 +1,16 @@
 package lhexanome.optimodlivraison.platform.compute;
 
-import lhexanome.optimodlivraison.platform.models.DemandeLivraison;
+import lhexanome.optimodlivraison.platform.models.Delivery;
+import lhexanome.optimodlivraison.platform.models.DeliveryOrder;
 import lhexanome.optimodlivraison.platform.models.Intersection;
-import lhexanome.optimodlivraison.platform.models.Livraison;
-import lhexanome.optimodlivraison.platform.models.Plan;
-import lhexanome.optimodlivraison.platform.models.Trajet;
-import lhexanome.optimodlivraison.platform.models.Troncon;
+import lhexanome.optimodlivraison.platform.models.Path;
+import lhexanome.optimodlivraison.platform.models.RoadMap;
+import lhexanome.optimodlivraison.platform.models.Vector;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.assertj.core.api.Assertions.*;
 
 class PlanSimplifieTest {
@@ -25,23 +24,23 @@ class PlanSimplifieTest {
     @Test
     void shouldDijkstraCasBase() {
         //With
-        Plan plan = new Plan();
-        DemandeLivraison demande = new DemandeLivraison();
-        PlanSimplifie planSimplifie = new PlanSimplifie(demande, plan);
+        RoadMap roadMap = new RoadMap();
+        DeliveryOrder demande = new DeliveryOrder();
+        PlanSimplifie planSimplifie = new PlanSimplifie(demande, roadMap);
         Intersection start = new Intersection(0l, 0, 0);
         Intersection end = new Intersection(1l, 0, 0);
         ArrayList<Intersection> intersections = new ArrayList<>();
 
-        plan.addIntersection(start);
-        plan.addIntersection(end);
+        roadMap.addIntersection(start);
+        roadMap.addIntersection(end);
         intersections.add(start);
         intersections.add(end);
-        Troncon t = new Troncon(start, end, "t", 10);
+        Vector t = new Vector(start, end, "t", 10);
 
-        plan.addTroncon(t);
+        roadMap.addTroncon(t);
         ArrayList<Intersection> predecesseurs = new ArrayList<>();
-        ArrayList<Troncon> chemins = new ArrayList<>();
-        ArrayList<Troncon> cheminsExpected = new ArrayList<>();
+        ArrayList<Vector> chemins = new ArrayList<>();
+        ArrayList<Vector> cheminsExpected = new ArrayList<>();
         ArrayList<Intersection> predecesseursExpected = new ArrayList<>();
 
         predecesseurs.add(null);
@@ -52,8 +51,8 @@ class PlanSimplifieTest {
         cheminsExpected.add(t);
         predecesseursExpected.add(null);
         predecesseursExpected.add(start);
-        float[] tempsDijkstra = new float[plan.getIntersectionCount()];
-        boolean[] etatDijkstra = new boolean[plan.getIntersectionCount()];
+        float[] tempsDijkstra = new float[roadMap.getIntersectionCount()];
+        boolean[] etatDijkstra = new boolean[roadMap.getIntersectionCount()];
         //When
         //TODO test avec une methode private
         planSimplifie.dijkstra(intersections, predecesseurs, chemins, tempsDijkstra, etatDijkstra);
@@ -70,21 +69,21 @@ class PlanSimplifieTest {
     @Test
     void shouldDijkstraCasBaseNonCo() {
         //With
-        Plan plan = new Plan();
-        DemandeLivraison demande = new DemandeLivraison();
-        PlanSimplifie planSimplifie = new PlanSimplifie(demande, plan);
+        RoadMap roadMap = new RoadMap();
+        DeliveryOrder demande = new DeliveryOrder();
+        PlanSimplifie planSimplifie = new PlanSimplifie(demande, roadMap);
         Intersection start = new Intersection(0l, 0, 0);
         Intersection end = new Intersection(1l, 0, 0);
         ArrayList<Intersection> intersections = new ArrayList<>();
-        plan.addIntersection(start);
-        plan.addIntersection(end);
+        roadMap.addIntersection(start);
+        roadMap.addIntersection(end);
         intersections.add(start);
         intersections.add(end);
 
         ArrayList<Intersection> predecesseurs = new ArrayList<>();
         ArrayList<Intersection> predecesseursExpected = new ArrayList<>();
-        ArrayList<Troncon> chemins = new ArrayList<>();
-        ArrayList<Troncon> cheminsExpected = new ArrayList<>();
+        ArrayList<Vector> chemins = new ArrayList<>();
+        ArrayList<Vector> cheminsExpected = new ArrayList<>();
         predecesseurs.add(null);
         predecesseurs.add(null);
 
@@ -96,8 +95,8 @@ class PlanSimplifieTest {
         cheminsExpected.add(null);
         cheminsExpected.add(null);
 
-        float[] tempsDijkstra = new float[plan.getIntersectionCount()];
-        boolean[] etatDijkstra = new boolean[plan.getIntersectionCount()];
+        float[] tempsDijkstra = new float[roadMap.getIntersectionCount()];
+        boolean[] etatDijkstra = new boolean[roadMap.getIntersectionCount()];
         //When
         //TODO test avec une methode private
         planSimplifie.dijkstra(intersections, predecesseurs, chemins, tempsDijkstra, etatDijkstra);
@@ -113,21 +112,21 @@ class PlanSimplifieTest {
     @Test
     void shouldDijkstraCasComplexe() {
         //With
-        Plan plan = new Plan();
-        DemandeLivraison demande = new DemandeLivraison();
-        PlanSimplifie planSimplifie = new PlanSimplifie(demande, plan);
-        //TODO charger un plan xml
+        RoadMap roadMap = new RoadMap();
+        DeliveryOrder demande = new DeliveryOrder();
+        PlanSimplifie planSimplifie = new PlanSimplifie(demande, roadMap);
+        //TODO charger un roadMap xml
         //TODO charger demande xml
         ArrayList<Intersection> intersections = new ArrayList<>();
         ArrayList<Intersection> predecesseurs = new ArrayList<>();
         ArrayList<Intersection> predecesseursExpected = new ArrayList<>();
         //TODO remplir les predecesseurs attendus
-        ArrayList<Troncon> chemins = new ArrayList<>();
-        ArrayList<Troncon> cheminsExpected = new ArrayList<>();
+        ArrayList<Vector> chemins = new ArrayList<>();
+        ArrayList<Vector> cheminsExpected = new ArrayList<>();
         //TODO remplir les chemins attendus
         //planSimplifie.initIntersectionList(demande.getBeginning().getIntersection(), intersections, predecesseurs, chemins);
-        float[] tempsDijkstra = new float[plan.getIntersectionCount()];
-        boolean[] etatDijkstra = new boolean[plan.getIntersectionCount()];
+        float[] tempsDijkstra = new float[roadMap.getIntersectionCount()];
+        boolean[] etatDijkstra = new boolean[roadMap.getIntersectionCount()];
         //When
         //TODO test avec une methode private
         //planSimplifie.dijkstra(intersections, predecesseurs, chemins, tempsDijkstra, etatDijkstra);
@@ -146,9 +145,9 @@ class PlanSimplifieTest {
     @Test
     void shouldInitIntersectionListCasVide() {
         //With
-        Plan plan = new Plan();
-        DemandeLivraison demande = new DemandeLivraison();
-        PlanSimplifie planSimplifie = new PlanSimplifie(demande, plan);
+        RoadMap roadMap = new RoadMap();
+        DeliveryOrder demande = new DeliveryOrder();
+        PlanSimplifie planSimplifie = new PlanSimplifie(demande, roadMap);
 
         ArrayList<Intersection> intersections = new ArrayList<>();
         ArrayList<Intersection> intersectionsExpected = new ArrayList<>();
@@ -156,8 +155,8 @@ class PlanSimplifieTest {
         ArrayList<Intersection> predecesseurs = new ArrayList<>();
         ArrayList<Intersection> predecesseursExpected = new ArrayList<>();
 
-        ArrayList<Troncon> chemins = new ArrayList<>();
-        ArrayList<Troncon> cheminsExpected = new ArrayList<>();
+        ArrayList<Vector> chemins = new ArrayList<>();
+        ArrayList<Vector> cheminsExpected = new ArrayList<>();
 
 
         //When
@@ -177,15 +176,15 @@ class PlanSimplifieTest {
     @Test
     void shouldInitIntersectionListCasBase() {
         //With
-        Plan plan = new Plan();
-        DemandeLivraison demande = new DemandeLivraison();
-        PlanSimplifie planSimplifie = new PlanSimplifie(demande, plan);
+        RoadMap roadMap = new RoadMap();
+        DeliveryOrder demande = new DeliveryOrder();
+        PlanSimplifie planSimplifie = new PlanSimplifie(demande, roadMap);
         Intersection start = new Intersection(0l, 0, 0);
         Intersection end = new Intersection(1l, 0, 0);
-        plan.addIntersection(start);
-        plan.addIntersection(end);
-        Troncon t = new Troncon(start, end, "t", 10);
-        plan.addTroncon(t);
+        roadMap.addIntersection(start);
+        roadMap.addIntersection(end);
+        Vector t = new Vector(start, end, "t", 10);
+        roadMap.addTroncon(t);
         ArrayList<Intersection> intersections = new ArrayList<>();
         ArrayList<Intersection> intersectionsExpected = new ArrayList<>();
         intersectionsExpected.add(start);
@@ -194,8 +193,8 @@ class PlanSimplifieTest {
         ArrayList<Intersection> predecesseursExpected = new ArrayList<>();
         predecesseursExpected.add(null);
         predecesseursExpected.add(null);
-        ArrayList<Troncon> chemins = new ArrayList<>();
-        ArrayList<Troncon> cheminsExpected = new ArrayList<>();
+        ArrayList<Vector> chemins = new ArrayList<>();
+        ArrayList<Vector> cheminsExpected = new ArrayList<>();
         cheminsExpected.add(null);
         cheminsExpected.add(null);
 
@@ -216,10 +215,10 @@ class PlanSimplifieTest {
     @Test
     void shouldInitIntersectionListCasComplexe() {
         //With
-        Plan plan = new Plan();
-        DemandeLivraison demande = new DemandeLivraison();
-        PlanSimplifie planSimplifie = new PlanSimplifie(demande, plan);
-        //TODO charger un plan xml
+        RoadMap roadMap = new RoadMap();
+        DeliveryOrder demande = new DeliveryOrder();
+        PlanSimplifie planSimplifie = new PlanSimplifie(demande, roadMap);
+        //TODO charger un roadMap xml
 
         ArrayList<Intersection> intersections = new ArrayList<>();
         ArrayList<Intersection> intersectionsExpected = new ArrayList<>();
@@ -227,8 +226,8 @@ class PlanSimplifieTest {
         ArrayList<Intersection> predecesseurs = new ArrayList<>();
         ArrayList<Intersection> predecesseursExpected = new ArrayList<>();
         //TODO remplir les predecesseurs attendus
-        ArrayList<Troncon> chemins = new ArrayList<>();
-        ArrayList<Troncon> cheminsExpected = new ArrayList<>();
+        ArrayList<Vector> chemins = new ArrayList<>();
+        ArrayList<Vector> cheminsExpected = new ArrayList<>();
         //TODO remplir les chemins attendus
         //When
         //TODO test avec une methode private
@@ -250,36 +249,36 @@ class PlanSimplifieTest {
     @Test
     void shortestPathListCasBase() {
         //With
-        Plan plan = new Plan();
-        DemandeLivraison demande = new DemandeLivraison();
-        PlanSimplifie planSimplifie = new PlanSimplifie(demande, plan);
+        RoadMap roadMap = new RoadMap();
+        DeliveryOrder demande = new DeliveryOrder();
+        PlanSimplifie planSimplifie = new PlanSimplifie(demande, roadMap);
         Intersection start = new Intersection(0l, 0, 0);
         Intersection end = new Intersection(1l, 0, 0);
         Intersection end2 = new Intersection(2l, 0, 0);
 
-        plan.addIntersection(start);
-        plan.addIntersection(end);
-        Troncon t = new Troncon(start, end, "t", 10);
-        plan.addTroncon(t);
-        Troncon t2 = new Troncon(start, end2, "t2", 20);
-        plan.addTroncon(t2);
-        ArrayList<Trajet> sortie = new ArrayList<>();
-        ArrayList<Trajet> sortieExpected = new ArrayList<>();
-        Livraison startLivraison = new Livraison(start, 1);
-        Livraison l1 = new Livraison(end, 1);
-        Livraison l2 = new Livraison(end2, 1);
-        HashSet<Livraison> ends = new HashSet<>();
+        roadMap.addIntersection(start);
+        roadMap.addIntersection(end);
+        Vector t = new Vector(start, end, "t", 10);
+        roadMap.addTroncon(t);
+        Vector t2 = new Vector(start, end2, "t2", 20);
+        roadMap.addTroncon(t2);
+        ArrayList<Path> sortie = new ArrayList<>();
+        ArrayList<Path> sortieExpected = new ArrayList<>();
+        Delivery startDelivery = new Delivery(start, 1);
+        Delivery l1 = new Delivery(end, 1);
+        Delivery l2 = new Delivery(end2, 1);
+        HashSet<Delivery> ends = new HashSet<>();
         ends.add(l2);
         ends.add(l1);
-        Trajet tr = new Trajet();
+        Path tr = new Path();
         tr.addTroncon(t);
         sortieExpected.add(tr);
-        Trajet tr2 = new Trajet();
+        Path tr2 = new Path();
         tr2.addTroncon(t2);
         sortieExpected.add(tr2);
         //When
         //TODO test avec une methode private
-        sortie = planSimplifie.shortestPathList(startLivraison, ends);
+        sortie = planSimplifie.shortestPathList(startDelivery, ends);
         //Then
 
         assertThat(sortie).hasSameElementsAs(sortieExpected);
@@ -291,27 +290,27 @@ class PlanSimplifieTest {
     @Test
     void shortestPathListCasBaseNonCo() {
         //With
-        Plan plan = new Plan();
-        DemandeLivraison demande = new DemandeLivraison();
-        PlanSimplifie planSimplifie = new PlanSimplifie(demande, plan);
+        RoadMap roadMap = new RoadMap();
+        DeliveryOrder demande = new DeliveryOrder();
+        PlanSimplifie planSimplifie = new PlanSimplifie(demande, roadMap);
         Intersection start = new Intersection(0l, 0, 0);
         Intersection end = new Intersection(1l, 0, 0);
         Intersection end2 = new Intersection(2l, 0, 0);
 
-        plan.addIntersection(start);
-        plan.addIntersection(end);
-        plan.addIntersection(end2);
-        ArrayList<Trajet> sortie = new ArrayList<>();
-        ArrayList<Trajet> sortieExpected = new ArrayList<>();
-        Livraison startLivraison = new Livraison(start, 1);
-        Livraison l1 = new Livraison(end, 1);
-        Livraison l2 = new Livraison(end2, 1);
-        HashSet<Livraison> ends = new HashSet<>();
+        roadMap.addIntersection(start);
+        roadMap.addIntersection(end);
+        roadMap.addIntersection(end2);
+        ArrayList<Path> sortie = new ArrayList<>();
+        ArrayList<Path> sortieExpected = new ArrayList<>();
+        Delivery startDelivery = new Delivery(start, 1);
+        Delivery l1 = new Delivery(end, 1);
+        Delivery l2 = new Delivery(end2, 1);
+        HashSet<Delivery> ends = new HashSet<>();
         ends.add(l2);
         ends.add(l1);
         //When
         //TODO test avec une methode private
-        sortie = planSimplifie.shortestPathList(startLivraison, ends);
+        sortie = planSimplifie.shortestPathList(startDelivery, ends);
         //Then
         assertThat(sortie).hasSameElementsAs(sortieExpected);
     }
@@ -322,27 +321,27 @@ class PlanSimplifieTest {
     @Test
     void shortestPathListCasVide() {
         //With
-        Plan plan = new Plan();
-        DemandeLivraison demande = new DemandeLivraison();
-        PlanSimplifie planSimplifie = new PlanSimplifie(demande, plan);
+        RoadMap roadMap = new RoadMap();
+        DeliveryOrder demande = new DeliveryOrder();
+        PlanSimplifie planSimplifie = new PlanSimplifie(demande, roadMap);
         Intersection start = new Intersection(0l, 0, 0);
         Intersection end = new Intersection(1l, 0, 0);
         Intersection end2 = new Intersection(2l, 0, 0);
 
-        plan.addIntersection(start);
-        plan.addIntersection(end);
+        roadMap.addIntersection(start);
+        roadMap.addIntersection(end);
 
-        ArrayList<Trajet> sortie = new ArrayList<>();
-        ArrayList<Trajet> sortieExpected = new ArrayList<>();
-        Livraison startLivraison = new Livraison(start, 1);
-        Livraison l1 = new Livraison(end, 1);
-        Livraison l2 = new Livraison(end2, 1);
-        HashSet<Livraison> ends = new HashSet<>();
+        ArrayList<Path> sortie = new ArrayList<>();
+        ArrayList<Path> sortieExpected = new ArrayList<>();
+        Delivery startDelivery = new Delivery(start, 1);
+        Delivery l1 = new Delivery(end, 1);
+        Delivery l2 = new Delivery(end2, 1);
+        HashSet<Delivery> ends = new HashSet<>();
         ends.add(l2);
         ends.add(l1);
         //When
         //TODO test avec une methode private
-        sortie = planSimplifie.shortestPathList(startLivraison, ends);
+        sortie = planSimplifie.shortestPathList(startDelivery, ends);
         //Then
         assertThat(sortie).hasSameElementsAs(sortieExpected);
     }
@@ -353,12 +352,12 @@ class PlanSimplifieTest {
     @Test
     void shortestPathListCasComplexe() {
         //With
-        Plan plan = new Plan();
-        DemandeLivraison demande = new DemandeLivraison();
-        PlanSimplifie planSimplifie = new PlanSimplifie(demande, plan);
+        RoadMap roadMap = new RoadMap();
+        DeliveryOrder demande = new DeliveryOrder();
+        PlanSimplifie planSimplifie = new PlanSimplifie(demande, roadMap);
         //TODO ajouter le chargement XML
-        ArrayList<Trajet> sortie = new ArrayList<>();
-        ArrayList<Trajet> sortieExpected = new ArrayList<>();
+        ArrayList<Path> sortie = new ArrayList<>();
+        ArrayList<Path> sortieExpected = new ArrayList<>();
 
         //When
         //TODO test avec une methode private

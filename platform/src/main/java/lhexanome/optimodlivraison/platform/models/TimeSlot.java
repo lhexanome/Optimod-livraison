@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Représente une plage horaire.
  */
-public class PlageHoraire {
+public class TimeSlot {
 
     /**
      * Début de la plage horaire.
@@ -25,7 +25,7 @@ public class PlageHoraire {
      * @param start Date de début
      * @param end   Date de fin
      */
-    public PlageHoraire(Date start, Date end) {
+    public TimeSlot(Date start, Date end) {
         if (start.before(end)) {
             this.start = start;
             this.end = end;

@@ -1,7 +1,7 @@
 package lhexanome.optimodlivraison.platform.listeners;
 
 import lhexanome.optimodlivraison.platform.exceptions.DeliveryException;
-import lhexanome.optimodlivraison.platform.models.DemandeLivraison;
+import lhexanome.optimodlivraison.platform.models.DeliveryOrder;
 
 /**
  * Listener pour les livraisons.
@@ -10,9 +10,9 @@ public interface DeliveryListener {
     /**
      * Fonction appelée quand une demande de livraison est chargée.
      *
-     * @param demandeLivraison Demande de livraison
+     * @param deliveryOrder Demande de livraison
      */
-    void onUpdateDeliveryOrder(DemandeLivraison demandeLivraison);
+    void onUpdateDeliveryOrder(DeliveryOrder deliveryOrder);
 
     /**
      * Fonction appelée quand une demande n'arrive pas à être chargée.

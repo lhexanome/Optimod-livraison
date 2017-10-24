@@ -1,10 +1,10 @@
 package lhexanome.optimodlivraison.platform.parsing;
 
 import lhexanome.optimodlivraison.platform.exceptions.ParseDeliveryOrderException;
-import lhexanome.optimodlivraison.platform.models.DemandeLivraison;
-import lhexanome.optimodlivraison.platform.models.Entrepot;
+import lhexanome.optimodlivraison.platform.models.Delivery;
+import lhexanome.optimodlivraison.platform.models.DeliveryOrder;
+import lhexanome.optimodlivraison.platform.models.Warehouse;
 import lhexanome.optimodlivraison.platform.models.Intersection;
-import lhexanome.optimodlivraison.platform.models.Livraison;
 import org.jdom2.Element;
 
 import java.text.DateFormat;
@@ -70,8 +70,8 @@ public class DeliveryOrderParser {
      * @return Une demande de livraison
      * @throws ParseDeliveryOrderException Si un problème a lieu lors du parsing
      */
-    public DemandeLivraison parseDeliveryOrder(Element rootElement) throws ParseDeliveryOrderException {
-        DemandeLivraison demandeLivraison = new DemandeLivraison();
+    public DeliveryOrder parseDeliveryOrder(Element rootElement) throws ParseDeliveryOrderException {
+        DeliveryOrder deliveryOrder = new DeliveryOrder();
 
         LOGGER.info("Start parsing delivery order");
 
@@ -92,24 +92,24 @@ public class DeliveryOrderParser {
             throw new ParseDeliveryOrderException("XML contains unknown elements");
         }
 
-        loadWarehouse(warehouseList.get(0), demandeLivraison);
+        loadWarehouse(warehouseList.get(0), deliveryOrder);
 
         LOGGER.info("Warehouse loaded");
 
-        loadDeliveries(deliveries, demandeLivraison);
+        loadDeliveries(deliveries, deliveryOrder);
 
         LOGGER.info("End parsing delivery order");
-        return demandeLivraison;
+        return deliveryOrder;
     }
 
     /**
      * Charge l'entrepôt et l'heure de départ.
      *
      * @param element          Element représentant l'entrepôt
-     * @param demandeLivraison Demande de livraison
+     * @param deliveryOrder Demande de livraison
      * @throws ParseDeliveryOrderException Si la structure est mauvaise
      */
-    public void loadWarehouse(Element element, DemandeLivraison demandeLivraison) throws ParseDeliveryOrderException {
+    public void loadWarehouse(Element element, DeliveryOrder deliveryOrder) throws ParseDeliveryOrderException {
         Long address = Long.valueOf(element.getAttributeValue(XML_ADDRESS_ATRTRIBUTE));
         String startTime = element.getAttributeValue(XML_START_TIME_ATTRIBUTE);
 
@@ -119,14 +119,14 @@ public class DeliveryOrderParser {
 
         DateFormat dateFormat = new SimpleDateFormat("H:m:s");
 
-        Entrepot warehouse = new Entrepot(new Intersection(address));
+        Warehouse warehouse = new Warehouse(new Intersection(address));
 
         // FIXME Start time in warehouse ?
         try {
             Date date = dateFormat.parse(startTime);
 
-            demandeLivraison.setBeginning(warehouse);
-            demandeLivraison.setStart(date);
+            deliveryOrder.setBeginning(warehouse);
+            deliveryOrder.setStart(date);
 
         } catch (ParseException e) {
             throw new ParseDeliveryOrderException("Unable to parse date");
@@ -138,10 +138,10 @@ public class DeliveryOrderParser {
      * Charge les livraisons.
      *
      * @param deliveries       Liste d'élements représentant des livraisons
-     * @param demandeLivraison Demande de livraison
+     * @param deliveryOrder Demande de livraison
      * @throws ParseDeliveryOrderException Si la structure est mauvaise
      */
-    public void loadDeliveries(List<Element> deliveries, DemandeLivraison demandeLivraison)
+    public void loadDeliveries(List<Element> deliveries, DeliveryOrder deliveryOrder)
             throws ParseDeliveryOrderException {
 
         for (Element delivery : deliveries) {
@@ -153,9 +153,9 @@ public class DeliveryOrderParser {
             Long address = Long.valueOf(delivery.getAttributeValue(XML_ADDRESS_ATRTRIBUTE));
             Integer duration = Integer.valueOf(delivery.getAttributeValue(XML_DURATION_ATTRIBUTE));
 
-            Livraison livraison = new Livraison(new Intersection(address), duration);
+            Delivery livraison = new Delivery(new Intersection(address), duration);
 
-            demandeLivraison.addDelivery(livraison);
+            deliveryOrder.addDelivery(livraison);
         }
     }
 }

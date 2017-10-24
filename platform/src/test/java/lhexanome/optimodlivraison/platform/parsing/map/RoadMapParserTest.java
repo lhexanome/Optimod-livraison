@@ -2,8 +2,8 @@ package lhexanome.optimodlivraison.platform.parsing.map;
 
 import lhexanome.optimodlivraison.platform.exceptions.ParseMapException;
 import lhexanome.optimodlivraison.platform.models.Intersection;
-import lhexanome.optimodlivraison.platform.models.Plan;
-import lhexanome.optimodlivraison.platform.models.Troncon;
+import lhexanome.optimodlivraison.platform.models.RoadMap;
+import lhexanome.optimodlivraison.platform.models.Vector;
 import lhexanome.optimodlivraison.platform.parsing.MapParser;
 import org.jdom2.Element;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,17 +15,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 
-public class MapParserTest {
+public class RoadMapParserTest {
 
     private Element rootElement;
     private MapParser mapParser;
-    private Plan plan;
+    private RoadMap roadMap;
 
     @BeforeEach
     void setup() {
         mapParser = new MapParser();
 
-        plan = new Plan();
+        roadMap = new RoadMap();
 
         rootElement = new Element("reseau");
 
@@ -60,16 +60,16 @@ public class MapParserTest {
     @Test
     void shouldCreateHashMapOfNodes() throws ParseMapException {
         // Given
-        Plan plan = new Plan();
+        RoadMap roadMap = new RoadMap();
         // When
 
-        mapParser.loadNodes(rootElement.getChildren(MapParser.XML_NODE_ELEMENT), plan);
+        mapParser.loadNodes(rootElement.getChildren(MapParser.XML_NODE_ELEMENT), roadMap);
 
         // Then
 
-        assertThat(plan.getIntersectionCount()).isEqualTo(2);
+        assertThat(roadMap.getIntersectionCount()).isEqualTo(2);
 
-        Intersection intersection = plan.findIntersectionById(1L);
+        Intersection intersection = roadMap.findIntersectionById(1L);
 
         assertThat(intersection).isNotNull();
         assertThat(intersection.getX()).isEqualTo(1);
@@ -81,11 +81,11 @@ public class MapParserTest {
         // Given
         // When
 
-        mapParser.loadNodes(new ArrayList<>(), plan);
+        mapParser.loadNodes(new ArrayList<>(), roadMap);
 
         // Then
 
-        assertThat(plan.getIntersectionCount()).isEqualTo(0);
+        assertThat(roadMap.getIntersectionCount()).isEqualTo(0);
     }
 
     @Test
@@ -96,7 +96,7 @@ public class MapParserTest {
         // When
         // Then
 
-        assertThatThrownBy(() -> mapParser.loadNodes(rootElement.getChildren(MapParser.XML_NODE_ELEMENT), plan))
+        assertThatThrownBy(() -> mapParser.loadNodes(rootElement.getChildren(MapParser.XML_NODE_ELEMENT), roadMap))
                 .isInstanceOf(ParseMapException.class)
                 .hasMessage("Node id already exists!");
     }
@@ -111,17 +111,17 @@ public class MapParserTest {
         Intersection intersection = new Intersection(1L, 654, 321);
         Intersection intersection2 = new Intersection(2L, 852, 741);
 
-        plan.addIntersection(intersection);
-        plan.addIntersection(intersection2);
+        roadMap.addIntersection(intersection);
+        roadMap.addIntersection(intersection2);
 
         // When
 
-        mapParser.loadTroncon(rootElement.getChildren("troncon"), plan);
+        mapParser.loadTroncon(rootElement.getChildren("troncon"), roadMap);
 
         // Then
 
-        assertThat(plan.getIntersectionCount()).isEqualTo(2);
-        assertThat(plan.getTronconsFromIntersection(intersection2))
+        assertThat(roadMap.getIntersectionCount()).isEqualTo(2);
+        assertThat(roadMap.getTronconsFromIntersection(intersection2))
                 .isNotNull()
                 .hasSize(1);
     }
@@ -133,19 +133,19 @@ public class MapParserTest {
         Intersection intersection = new Intersection(1L, 654, 321);
         Intersection intersection2 = new Intersection(2L, 852, 741);
 
-        plan.addIntersection(intersection);
-        plan.addIntersection(intersection2);
+        roadMap.addIntersection(intersection);
+        roadMap.addIntersection(intersection2);
 
         rootElement.addContent(createTroncon(1L, 2L, (float) 5, "Boulevard de la villette"));
 
         // When
 
-        mapParser.loadTroncon(rootElement.getChildren("troncon"), plan);
+        mapParser.loadTroncon(rootElement.getChildren("troncon"), roadMap);
 
         // Then
 
-        assertThat(plan.getIntersectionCount()).isEqualTo(2);
-        assertThat(plan.getTronconsFromIntersection(intersection2))
+        assertThat(roadMap.getIntersectionCount()).isEqualTo(2);
+        assertThat(roadMap.getTronconsFromIntersection(intersection2))
                 .isNotNull()
                 .hasSize(1)
                 .extractingResultOf("getNameStreet")
@@ -159,19 +159,19 @@ public class MapParserTest {
         Intersection intersection = new Intersection(1L, 654, 321);
         Intersection intersection2 = new Intersection(2L, 852, 741);
 
-        plan.addIntersection(intersection);
-        plan.addIntersection(intersection2);
+        roadMap.addIntersection(intersection);
+        roadMap.addIntersection(intersection2);
 
         rootElement.addContent(createTroncon(1L, 2L, (float) 12, "Boulevard de la villette"));
 
         // When
 
-        mapParser.loadTroncon(rootElement.getChildren("troncon"), plan);
+        mapParser.loadTroncon(rootElement.getChildren("troncon"), roadMap);
 
         // Then
 
-        assertThat(plan.getIntersectionCount()).isEqualTo(2);
-        assertThat(plan.getTronconsFromIntersection(intersection2))
+        assertThat(roadMap.getIntersectionCount()).isEqualTo(2);
+        assertThat(roadMap.getTronconsFromIntersection(intersection2))
                 .isNotNull()
                 .hasSize(1)
                 .extractingResultOf("getLength")
@@ -185,19 +185,19 @@ public class MapParserTest {
         Intersection intersection = new Intersection(1L, 654, 321);
         Intersection intersection2 = new Intersection(2L, 852, 741);
 
-        plan.addIntersection(intersection);
-        plan.addIntersection(intersection2);
+        roadMap.addIntersection(intersection);
+        roadMap.addIntersection(intersection2);
 
         rootElement.addContent(createTroncon(1L, 2L, (float) 5, "Rue de la paix"));
 
         // When
 
-        mapParser.loadTroncon(rootElement.getChildren("troncon"), plan);
+        mapParser.loadTroncon(rootElement.getChildren("troncon"), roadMap);
 
         // Then
 
-        assertThat(plan.getIntersectionCount()).isEqualTo(2);
-        assertThat(plan.getTronconsFromIntersection(intersection2))
+        assertThat(roadMap.getIntersectionCount()).isEqualTo(2);
+        assertThat(roadMap.getTronconsFromIntersection(intersection2))
                 .isNotNull()
                 .hasSize(1);
     }
@@ -209,16 +209,16 @@ public class MapParserTest {
         Intersection intersection = new Intersection(1L, 654, 321);
         Intersection intersection2 = new Intersection(2L, 852, 741);
 
-        plan.addIntersection(intersection);
-        plan.addIntersection(intersection2);
+        roadMap.addIntersection(intersection);
+        roadMap.addIntersection(intersection2);
 
         rootElement.getChildren("troncon").get(0).setAttribute("destination", "3");
 
         // When
         // Then
-        assertThatThrownBy(() -> mapParser.loadTroncon(rootElement.getChildren("troncon"), plan))
+        assertThatThrownBy(() -> mapParser.loadTroncon(rootElement.getChildren("troncon"), roadMap))
                 .isInstanceOf(ParseMapException.class)
-                .hasMessage("Troncon has an unknown destination or origin");
+                .hasMessage("Vector has an unknown destination or origin");
     }
 
     @Test
@@ -227,16 +227,16 @@ public class MapParserTest {
         Intersection intersection = new Intersection(1L, 654, 321);
         Intersection intersection2 = new Intersection(2L, 852, 741);
 
-        plan.addIntersection(intersection);
-        plan.addIntersection(intersection2);
+        roadMap.addIntersection(intersection);
+        roadMap.addIntersection(intersection2);
 
         rootElement.getChildren("troncon").get(0).setAttribute("origine", "3");
 
         // When
         // Then
-        assertThatThrownBy(() -> mapParser.loadTroncon(rootElement.getChildren("troncon"), plan))
+        assertThatThrownBy(() -> mapParser.loadTroncon(rootElement.getChildren("troncon"), roadMap))
                 .isInstanceOf(ParseMapException.class)
-                .hasMessage("Troncon has an unknown destination or origin");
+                .hasMessage("Vector has an unknown destination or origin");
     }
 
     @Test
@@ -245,29 +245,29 @@ public class MapParserTest {
         Intersection intersection = new Intersection(1L, 654, 321);
         Intersection intersection2 = new Intersection(2L, 852, 741);
 
-        plan.addIntersection(intersection);
-        plan.addIntersection(intersection2);
+        roadMap.addIntersection(intersection);
+        roadMap.addIntersection(intersection2);
 
-        rootElement.getChildren("troncon").get(0).setAttribute("origine", "1");
+        rootElement.getChildren("vector").get(0).setAttribute("origine", "1");
 
         // When
 
-        mapParser.loadTroncon(rootElement.getChildren("troncon"), plan);
+        mapParser.loadTroncon(rootElement.getChildren("vector"), roadMap);
 
         // Then
 
-        assertThat(plan.getIntersectionCount()).isEqualTo(2);
-        assertThat(plan.getTronconsFromIntersection(intersection))
+        assertThat(roadMap.getIntersectionCount()).isEqualTo(2);
+        assertThat(roadMap.getTronconsFromIntersection(intersection))
                 .isNotNull()
                 .hasSize(1);
 
-        Troncon troncon = plan.getTronconsFromIntersection(intersection)
+        Vector vector = roadMap.getTronconsFromIntersection(intersection)
                 .stream()
                 .findFirst()
                 .orElse(null);
 
-        assertThat(troncon).isNotNull();
-        assertThat(troncon.getDestination()).isEqualTo(troncon.getOrigine());
+        assertThat(vector).isNotNull();
+        assertThat(vector.getDestination()).isEqualTo(vector.getOrigine());
     }
 
     @Test
@@ -277,20 +277,20 @@ public class MapParserTest {
         Intersection intersection2 = new Intersection(2L, 852, 741);
         Intersection intersection3 = new Intersection(3L, 843, 762);
 
-        plan.addIntersection(intersection);
-        plan.addIntersection(intersection2);
-        plan.addIntersection(intersection3);
+        roadMap.addIntersection(intersection);
+        roadMap.addIntersection(intersection2);
+        roadMap.addIntersection(intersection3);
 
         rootElement.addContent(createTroncon(3L, 2L, (float) 12, "Boulevard de la villette"));
 
         // When
 
-        mapParser.loadTroncon(rootElement.getChildren("troncon"), plan);
+        mapParser.loadTroncon(rootElement.getChildren("troncon"), roadMap);
 
         // Then
 
-        assertThat(plan.getIntersectionCount()).isEqualTo(3);
-        assertThat(plan.getTronconsFromIntersection(intersection2))
+        assertThat(roadMap.getIntersectionCount()).isEqualTo(3);
+        assertThat(roadMap.getTronconsFromIntersection(intersection2))
                 .isNotNull()
                 .hasSize(2)
                 .extractingResultOf("getOrigine")
@@ -304,12 +304,12 @@ public class MapParserTest {
 
         // When
 
-        Plan plan = mapParser.parseMap(rootElement);
+        RoadMap roadMap = mapParser.parseMap(rootElement);
 
         // Then
 
-        assertThat(plan).isNotNull();
-        assertThat(plan.getIntersectionCount()).isEqualTo(2);
+        assertThat(roadMap).isNotNull();
+        assertThat(roadMap.getIntersectionCount()).isEqualTo(2);
 
     }
 }

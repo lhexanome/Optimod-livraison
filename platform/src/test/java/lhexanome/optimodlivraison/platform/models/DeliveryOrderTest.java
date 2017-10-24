@@ -9,13 +9,13 @@ import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class DemandeLivraisonTest {
+public class DeliveryOrderTest {
 
     @Test
     void shouldAddDeliverie() {
         //With
-        DemandeLivraison deliveriesRequest = new DemandeLivraison();
-        Livraison deliveries = new Livraison(
+        DeliveryOrder deliveriesRequest = new DeliveryOrder();
+        Delivery deliveries = new Delivery(
                 new Intersection(587L, 689, 754),
                 30
         );
@@ -32,20 +32,20 @@ public class DemandeLivraisonTest {
     @Test
     void shouldSetBeginning() {
         //With
-        DemandeLivraison deliveriesRequest = new DemandeLivraison();
+        DeliveryOrder deliveriesRequest = new DeliveryOrder();
         Intersection intersection = new Intersection(10101L, 1254, 1265);
-        Entrepot entrepot = new Entrepot(intersection);
+        Warehouse warehouse = new Warehouse(intersection);
         //When
-        deliveriesRequest.setBeginning(entrepot);
+        deliveriesRequest.setBeginning(warehouse);
 
         //Then
-        assertEquals(entrepot, deliveriesRequest.getBeginning());
+        assertEquals(warehouse, deliveriesRequest.getBeginning());
     }
 
     @Test
     void shouldSetStart() throws ParseException {
         //With
-        DemandeLivraison deliveriesrequest = new DemandeLivraison();
+        DeliveryOrder deliveriesrequest = new DeliveryOrder();
         DateFormat dateFormat = new SimpleDateFormat("DD-MM-YY HH:mm");
         Date start = dateFormat.parse("15-02-17 12:55");
 

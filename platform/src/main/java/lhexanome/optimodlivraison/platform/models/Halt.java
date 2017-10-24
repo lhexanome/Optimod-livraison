@@ -3,7 +3,7 @@ package lhexanome.optimodlivraison.platform.models;
 /**
  * classe mere representant un point important sur la carte.
  */
-public class Arret {
+public class Halt {
     /**
      * Intersection représentant le lieu de la livraison.
      */
@@ -13,7 +13,7 @@ public class Arret {
      * constructeur.
      * @param intersection location de l'arret
      */
-    public Arret(Intersection intersection) {
+    public Halt(Intersection intersection) {
         this.intersection = intersection;
     }
 

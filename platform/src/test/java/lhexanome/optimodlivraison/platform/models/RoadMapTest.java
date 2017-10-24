@@ -9,12 +9,12 @@ import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class PlanTest {
-    Plan planTested;
+public class RoadMapTest {
+    RoadMap roadMapTested;
     Intersection i1, i2, i3, i4, i5, i6, i7, i8;
     Intersection[] allI;
-    Troncon t12, t13, t14, t18, t21, t24, t25, t27, t28, t32, t45, t54, t56, t72, t81, t82;
-    Troncon[] allT;
+    Vector t12, t13, t14, t18, t21, t24, t25, t27, t28, t32, t45, t54, t56, t72, t81, t82;
+    Vector[] allT;
 
     /*
     Particulariter:
@@ -28,7 +28,7 @@ public class PlanTest {
 
     @BeforeEach
     void createTourneeObjects() {
-        planTested = new Plan();
+        roadMapTested = new RoadMap();
 
         i1 = new Intersection(1001L, 123, 126);
         i2 = new Intersection(1002L, 456, 453);
@@ -42,39 +42,39 @@ public class PlanTest {
         i8 = new Intersection(1008L, 861, 953);
         allI = new Intersection[]{i1, i2, i3, i4, i5, i6, i7, i8};
 
-        t12 = new Troncon(i1, i2, "avenue double sans");
-        planTested.addTroncon(t12);
-        t13 = new Troncon(i1, i3, "rue sans unique de l'avenue vers l'avenue");
-        planTested.addTroncon(t13);
-        t14 = new Troncon(i1, i4, "rue go i6");
-        planTested.addTroncon(t14);
-        t18 = new Troncon(i1, i8, "rue 1-8-2");
-        planTested.addTroncon(t18);
-        t21 = new Troncon(i2, i1, "avenue double sans");
-        planTested.addTroncon(t21);
-        t24 = new Troncon(i2, i4, "rue go rue go i6 (1)");
-        planTested.addTroncon(t24);
-        t25 = new Troncon(i2, i5, "rue go rue go i6 (2)");
-        planTested.addTroncon(t25);
-        t27 = new Troncon(i2, i7, "avenue double sans");
-        planTested.addTroncon(t27);
-        t28 = new Troncon(i2, i8, "rue 1-8-2");
-        planTested.addTroncon(t28);
-        t32 = new Troncon(i3, i2, "rue sans unique de l'avenue vers l'avenue");
-        planTested.addTroncon(t32);
-        t45 = new Troncon(i4, i5, "rue go i6");
-        planTested.addTroncon(t45);
-        t54 = new Troncon(i5, i4, "rue go i6");
-        planTested.addTroncon(t54);
-        t56 = new Troncon(i5, i6, "rue go i6");
-        planTested.addTroncon(t56);
-        t72 = new Troncon(i7, i2, "avenue double sans");
-        planTested.addTroncon(t72);
-        t81 = new Troncon(i8, i1, "rue 1-8-2");
-        planTested.addTroncon(t81);
-        t82 = new Troncon(i8, i2, "rue 1-8-2");
-        planTested.addTroncon(t82);
-        allT = new Troncon[]{t12, t13, t14, t18, t21, t24, t25, t27, t28, t32, t45, t54, t56, t72, t81, t82};
+        t12 = new Vector(i1, i2, "avenue double sans");
+        roadMapTested.addTroncon(t12);
+        t13 = new Vector(i1, i3, "rue sans unique de l'avenue vers l'avenue");
+        roadMapTested.addTroncon(t13);
+        t14 = new Vector(i1, i4, "rue go i6");
+        roadMapTested.addTroncon(t14);
+        t18 = new Vector(i1, i8, "rue 1-8-2");
+        roadMapTested.addTroncon(t18);
+        t21 = new Vector(i2, i1, "avenue double sans");
+        roadMapTested.addTroncon(t21);
+        t24 = new Vector(i2, i4, "rue go rue go i6 (1)");
+        roadMapTested.addTroncon(t24);
+        t25 = new Vector(i2, i5, "rue go rue go i6 (2)");
+        roadMapTested.addTroncon(t25);
+        t27 = new Vector(i2, i7, "avenue double sans");
+        roadMapTested.addTroncon(t27);
+        t28 = new Vector(i2, i8, "rue 1-8-2");
+        roadMapTested.addTroncon(t28);
+        t32 = new Vector(i3, i2, "rue sans unique de l'avenue vers l'avenue");
+        roadMapTested.addTroncon(t32);
+        t45 = new Vector(i4, i5, "rue go i6");
+        roadMapTested.addTroncon(t45);
+        t54 = new Vector(i5, i4, "rue go i6");
+        roadMapTested.addTroncon(t54);
+        t56 = new Vector(i5, i6, "rue go i6");
+        roadMapTested.addTroncon(t56);
+        t72 = new Vector(i7, i2, "avenue double sans");
+        roadMapTested.addTroncon(t72);
+        t81 = new Vector(i8, i1, "rue 1-8-2");
+        roadMapTested.addTroncon(t81);
+        t82 = new Vector(i8, i2, "rue 1-8-2");
+        roadMapTested.addTroncon(t82);
+        allT = new Vector[]{t12, t13, t14, t18, t21, t24, t25, t27, t28, t32, t45, t54, t56, t72, t81, t82};
     }
 
     @Test
@@ -84,14 +84,14 @@ public class PlanTest {
 
         //With
 
-        Plan plan = new Plan();
+        RoadMap roadMap = new RoadMap();
 
-        //fist Troncon
+        //fist Vector
         //When
-        plan.addTroncon(t12);
+        roadMap.addTroncon(t12);
 
-        Collection<Troncon> toncons = plan.getTroncons();
-        Collection<Intersection> intersections = plan.getIntersections();
+        Collection<Vector> toncons = roadMap.getVectors();
+        Collection<Intersection> intersections = roadMap.getIntersections();
 
         //Then
         assertEquals(2, intersections.size());
@@ -99,12 +99,12 @@ public class PlanTest {
         assertTrue(intersections.containsAll(Arrays.asList(i1, i2)));
         assertTrue(toncons.containsAll(Arrays.asList(t12)));
 
-        //Troncon with know origine
+        //Vector with know origine
         //When
-        plan.addTroncon(t13);
+        roadMap.addTroncon(t13);
 
-        toncons = plan.getTroncons();
-        intersections = plan.getIntersections();
+        toncons = roadMap.getVectors();
+        intersections = roadMap.getIntersections();
 
         //Then
         assertEquals(3, intersections.size());
@@ -113,12 +113,12 @@ public class PlanTest {
         assertTrue(toncons.containsAll(Arrays.asList(t12, t13)));
 
 
-        //Troncon with know destination
+        //Vector with know destination
         //When
-        plan.addTroncon(t82);
+        roadMap.addTroncon(t82);
 
-        toncons = plan.getTroncons();
-        intersections = plan.getIntersections();
+        toncons = roadMap.getVectors();
+        intersections = roadMap.getIntersections();
 
         //Then
         assertEquals(4, intersections.size());
@@ -127,12 +127,12 @@ public class PlanTest {
         assertTrue(toncons.containsAll(Arrays.asList(t12, t13, t82)));
 
 
-        //Troncon alredy added
+        //Vector alredy added
         //When
-        plan.addTroncon(t12);
+        roadMap.addTroncon(t12);
 
-        toncons = plan.getTroncons();
-        intersections = plan.getIntersections();
+        toncons = roadMap.getVectors();
+        intersections = roadMap.getIntersections();
 
         //Then
         assertEquals(4, intersections.size());
@@ -150,13 +150,13 @@ public class PlanTest {
         //With
 
         Intersection newIntersection = new Intersection(589156L, 1536, 4759);
-        Plan plan = new Plan();
+        RoadMap roadMap = new RoadMap();
 
         //When
-        plan.addIntersection(newIntersection);
+        roadMap.addIntersection(newIntersection);
 
         //Then
-        assertEquals(newIntersection, plan.findIntersectionById(589156L));
+        assertEquals(newIntersection, roadMap.findIntersectionById(589156L));
     }
 
     @Test
@@ -169,7 +169,7 @@ public class PlanTest {
 
         //When
 
-        Collection<Troncon> toncons = planTested.getTronconsFromIntersection(i1);
+        Collection<Vector> toncons = roadMapTested.getTronconsFromIntersection(i1);
 
         //Then
         assertEquals(4, toncons.size());
@@ -177,7 +177,7 @@ public class PlanTest {
 
         //When know intersection but without troncon
 
-        toncons = planTested.getTronconsFromIntersection(i6);
+        toncons = roadMapTested.getTronconsFromIntersection(i6);
 
         //Then
         assertNotNull(toncons);
@@ -186,7 +186,7 @@ public class PlanTest {
 
         //When unknow intersection
 
-        toncons = planTested.getTronconsFromIntersection(new Intersection(666L, 426, 684));
+        toncons = roadMapTested.getTronconsFromIntersection(new Intersection(666L, 426, 684));
 
         //Then
         assertNotNull(toncons);
@@ -200,11 +200,11 @@ public class PlanTest {
         // TODO spleet test
 
         //With
-        Plan plan = new Plan();
+        RoadMap roadMap = new RoadMap();
 
         //When EmptyPlan
 
-        Collection<Troncon> toncons = plan.getTroncons();
+        Collection<Vector> toncons = roadMap.getVectors();
 
 
 
@@ -214,7 +214,7 @@ public class PlanTest {
 
         //When
 
-        toncons = planTested.getTroncons();
+        toncons = roadMapTested.getVectors();
 
         //Then
         assertEquals(allT.length, toncons.size());
@@ -229,11 +229,11 @@ public class PlanTest {
         // TODO spleet test
 
         //With
-        Plan plan = new Plan();
+        RoadMap roadMap = new RoadMap();
 
         //When EmptyPlan
 
-        int intersectionCount = plan.getIntersectionCount();
+        int intersectionCount = roadMap.getIntersectionCount();
 
         //Then
 
@@ -241,7 +241,7 @@ public class PlanTest {
 
         //When
 
-        intersectionCount = planTested.getIntersectionCount();
+        intersectionCount = roadMapTested.getIntersectionCount();
 
         //Then
         assertEquals(allI.length, intersectionCount);
@@ -256,11 +256,11 @@ public class PlanTest {
         // TODO spleet test
 
         //With
-        Plan plan = new Plan();
+        RoadMap roadMap = new RoadMap();
 
         //When EmptyPlan
 
-        Collection<Intersection> intersections = plan.getIntersections();
+        Collection<Intersection> intersections = roadMap.getIntersections();
 
         //Then
 
@@ -269,7 +269,7 @@ public class PlanTest {
 
         //When
 
-        intersections = planTested.getIntersections();
+        intersections = roadMapTested.getIntersections();
 
         //Then
 
@@ -285,11 +285,11 @@ public class PlanTest {
         // TODO spleet test
 
         //With
-        Plan plan = new Plan();
+        RoadMap roadMap = new RoadMap();
 
         //When EmptyPlan
 
-        Intersection intersection = plan.findIntersectionById(658L);
+        Intersection intersection = roadMap.findIntersectionById(658L);
 
         //Then
 
@@ -297,7 +297,7 @@ public class PlanTest {
 
         //When unKnowId
 
-        intersection = planTested.findIntersectionById(55555555555L);
+        intersection = roadMapTested.findIntersectionById(55555555555L);
 
         //Then
 
@@ -305,7 +305,7 @@ public class PlanTest {
 
         //When
 
-        intersection = planTested.findIntersectionById(i6.getId());
+        intersection = roadMapTested.findIntersectionById(i6.getId());
 
         //Then
 

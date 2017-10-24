@@ -3,13 +3,13 @@ package lhexanome.optimodlivraison.platform.models;
 /**
  * point de depart d'une demande de livraison.
  */
-public class Entrepot extends Arret {
+public class Warehouse extends Halt {
 
     /**
      * constructeur.
      * @param intersection location de l'entrepot
      */
-    public Entrepot(Intersection intersection) {
+    public Warehouse(Intersection intersection) {
         super(intersection);
     }
 }

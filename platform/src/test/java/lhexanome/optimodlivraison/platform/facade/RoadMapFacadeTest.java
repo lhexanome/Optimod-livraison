@@ -2,7 +2,7 @@ package lhexanome.optimodlivraison.platform.facade;
 
 import lhexanome.optimodlivraison.platform.exceptions.MapException;
 import lhexanome.optimodlivraison.platform.listeners.MapListener;
-import lhexanome.optimodlivraison.platform.models.Plan;
+import lhexanome.optimodlivraison.platform.models.RoadMap;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +11,7 @@ import java.io.File;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
-class MapFacadeTest {
+class RoadMapFacadeTest {
 
     private MapFacade mapFacade;
     private File littleMap;
@@ -27,9 +27,9 @@ class MapFacadeTest {
     void shouldLoadTestFile() {
         mapFacade.addOnUpdateMapListener(new MapListener() {
             @Override
-            public void onUpdateMap(Plan plan) {
-                // 217 intersections dans le xml donc il doit y avoir 217 intersections dans le Plan!
-                assertThat(plan.getIntersectionCount()).isEqualTo(217);
+            public void onUpdateMap(RoadMap roadMap) {
+                // 217 intersections dans le xml donc il doit y avoir 217 intersections dans le RoadMap!
+                assertThat(roadMap.getIntersectionCount()).isEqualTo(217);
             }
 
             @Override

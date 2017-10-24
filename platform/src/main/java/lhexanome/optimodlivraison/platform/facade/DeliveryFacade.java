@@ -3,7 +3,7 @@ package lhexanome.optimodlivraison.platform.facade;
 import lhexanome.optimodlivraison.platform.exceptions.DeliveryException;
 import lhexanome.optimodlivraison.platform.exceptions.ParseDeliveryOrderException;
 import lhexanome.optimodlivraison.platform.listeners.DeliveryListener;
-import lhexanome.optimodlivraison.platform.models.DemandeLivraison;
+import lhexanome.optimodlivraison.platform.models.DeliveryOrder;
 import lhexanome.optimodlivraison.platform.parsing.DeliveryOrderParser;
 import lhexanome.optimodlivraison.platform.parsing.common.LoadFile;
 import org.jdom2.Element;
@@ -73,12 +73,12 @@ public class DeliveryFacade {
             Element rootElement = LoadFile.loadFromFile(xmlFile);
             LOGGER.info("XML File loaded");
 
-            DemandeLivraison demandeLivraison = deliveryOrderParser.parseDeliveryOrder(rootElement);
+            DeliveryOrder deliveryOrder = deliveryOrderParser.parseDeliveryOrder(rootElement);
 
             LOGGER.warning(MessageFormat.format("Delivery order loaded with {0} deliveries",
-                    demandeLivraison.getDeliveries().size()));
+                    deliveryOrder.getDeliveries().size()));
 
-            listeners.forEach(l -> l.onUpdateDeliveryOrder(demandeLivraison));
+            listeners.forEach(l -> l.onUpdateDeliveryOrder(deliveryOrder));
 
             LOGGER.info("Listeners notified !");
         } catch (JDOMException e) {

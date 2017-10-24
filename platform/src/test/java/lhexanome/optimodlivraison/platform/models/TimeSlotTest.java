@@ -10,7 +10,7 @@ import java.util.Date;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class PlageHoraireTest {
+public class TimeSlotTest {
     @Test
     void shouldConstructCorrectly() throws ParseException {
         // With
@@ -20,7 +20,7 @@ public class PlageHoraireTest {
 
         // When
 
-        PlageHoraire slot = new PlageHoraire(start, end);
+        TimeSlot slot = new TimeSlot(start, end);
 
         // Then
 
@@ -37,7 +37,7 @@ public class PlageHoraireTest {
 
         // When
 
-        PlageHoraire slot = new PlageHoraire(start, end);
+        TimeSlot slot = new TimeSlot(start, end);
 
         // Then
 
@@ -56,7 +56,7 @@ public class PlageHoraireTest {
 
         // When
 
-        PlageHoraire slot = new PlageHoraire(start, end);
+        TimeSlot slot = new TimeSlot(start, end);
 
         // Then
 

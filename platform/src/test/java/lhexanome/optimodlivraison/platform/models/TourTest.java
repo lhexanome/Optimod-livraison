@@ -13,9 +13,9 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TourneeTest {
+public class TourTest {
 
-    Tournee tourneeTested;
+    Tour tourTested;
 
     @BeforeEach
     void createTourneeObjects() {
@@ -23,20 +23,20 @@ public class TourneeTest {
         Calendar c = Calendar.getInstance();
         c.set(2017, Calendar.OCTOBER, 1, 8, 30, 0);
         Date strat = c.getTime();
-        tourneeTested = new Tournee(intersection, strat, 5);
+        tourTested = new Tour(intersection, strat, 5);
     }
 
     @Test
     void shouldSetdeliveries() {
         //With
 
-        List<Trajet> roundList = new ArrayList<>();
+        List<Path> roundList = new ArrayList<>();
 
         //When
-        tourneeTested.setDeliveries(roundList);
+        tourTested.setDeliveries(roundList);
 
         //Then
-        assertEquals(roundList, tourneeTested.getDeliveries());
+        assertEquals(roundList, tourTested.getDeliveries());
     }
 
     @Test
@@ -46,10 +46,10 @@ public class TourneeTest {
         Date start = dateFormat.parse("15-02-17 12:55");
 
         //When
-        tourneeTested.setStart(start);
+        tourTested.setStart(start);
 
         //Then
-        assertEquals(start, tourneeTested.getStart());
+        assertEquals(start, tourTested.getStart());
     }
 
     @Test
@@ -58,10 +58,10 @@ public class TourneeTest {
         Entrepot intersection = new Entrepot (new Intersection(599L, 102, 103));
 
         //When
-        tourneeTested.setWarehouse(intersection);
+        tourTested.setWarehouse(intersection);
 
         //Then
-        assertEquals(intersection, tourneeTested.getWarehouse());
+        assertEquals(intersection, tourTested.getWarehouse());
     }
 
     @Test
@@ -69,10 +69,10 @@ public class TourneeTest {
         //With
 
         //When
-        tourneeTested.setTime(52);
+        tourTested.setTime(52);
 
         //Then
-        assertEquals(52, tourneeTested.getTime());
+        assertEquals(52, tourTested.getTime());
     }
 
 

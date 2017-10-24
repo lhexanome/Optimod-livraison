@@ -11,23 +11,23 @@ import java.util.Map;
 /**
  * Ensemble d'intersection reliés par des tronçons.
  */
-public class Plan {
+public class RoadMap {
 
     /**
-     * Map contenant les différents tronçons d'une carte.
+     * RoadMap contenant les différents tronçons d'une carte.
      */
-    private Map<Intersection, Collection<Troncon>> map;
+    private Map<Intersection, Collection<Vector>> map;
 
     /**
-     * Map contenant les intersections indexées par leur id.
+     * RoadMap contenant les intersections indexées par leur id.
      */
     private Map<Long, Intersection> intersectionMap;
 
     /**
      * Constructeur par défaut.
-     * Initialise une Map
+     * Initialise une RoadMap
      */
-    public Plan() {
+    public RoadMap() {
         map = new HashMap<>();
         intersectionMap = new HashMap<>();
     }
@@ -36,13 +36,13 @@ public class Plan {
      * Ajoute un tronçon à une intersection.
      * Ajoute les intersections d'origine et de destination au plan si il n'y sont pas
      *
-     * @param troncon Troncon
+     * @param vector Vector
      */
-    public void addTroncon(Troncon troncon) {
-        Intersection origine = troncon.getOrigine();
+    public void addTroncon(Vector vector) {
+        Intersection origine = vector.getOrigine();
         addIntersection(origine);
-        addIntersection(troncon.getDestination());
-        this.map.get(origine).add(troncon);
+        addIntersection(vector.getDestination());
+        this.map.get(origine).add(vector);
     }
 
     /**
@@ -64,8 +64,8 @@ public class Plan {
      * @param start intersection
      * @return Liste de troncon
      */
-    public Collection<Troncon> getTronconsFromIntersection(Intersection start) {
-        Collection<Troncon> res = map.get(start);
+    public Collection<Vector> getTronconsFromIntersection(Intersection start) {
+        Collection<Vector> res = map.get(start);
         return res == null ? Collections.emptyList() : res;
     }
 
@@ -76,9 +76,9 @@ public class Plan {
      *
      * @return Collection de tous les troncons du plan
      */
-    public Collection<Troncon> getTroncons() {
-        List<Troncon> res = new ArrayList<>();
-        map.forEach((intersection, troncons) -> res.addAll(troncons));
+    public Collection<Vector> getVectors() {
+        List<Vector> res = new ArrayList<>();
+        map.forEach((intersection, vectors) -> res.addAll(vectors));
         return res;
     }
 

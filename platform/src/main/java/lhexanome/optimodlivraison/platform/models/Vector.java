@@ -3,7 +3,7 @@ package lhexanome.optimodlivraison.platform.models;
 /**
  * Arc reliant 2 intersections, avec un nom de rue, une longueur.
  */
-public class Troncon {
+public class Vector {
 
     /**
      * Vitesse à laquelle va le livreur durant tout la tournée.
@@ -33,14 +33,14 @@ public class Troncon {
     private float length;
 
     /**
-     * Troncon Constructor.
+     * Vector Constructor.
      *
      * @param origine     intersections se situant au debut du tronçon
      * @param destination intersections se situant à la fin du tronçon
      * @param nameStreet  Nom du troncon
-     * @see #Troncon(Intersection, Intersection, String, float)
+     * @see #Vector(Intersection, Intersection, String, float)
      */
-    public Troncon(Intersection origine, Intersection destination, String nameStreet) {
+    public Vector(Intersection origine, Intersection destination, String nameStreet) {
         this(
                 origine,
                 destination,
@@ -64,12 +64,12 @@ public class Troncon {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Troncon troncon = (Troncon) o;
+        Vector vector = (Vector) o;
 
-        if (Float.compare(troncon.length, length) != 0) return false;
-        if (!origine.equals(troncon.origine)) return false;
-        if (!destination.equals(troncon.destination)) return false;
-        return nameStreet.equals(troncon.nameStreet);
+        if (Float.compare(vector.length, length) != 0) return false;
+        if (!origine.equals(vector.origine)) return false;
+        if (!destination.equals(vector.destination)) return false;
+        return nameStreet.equals(vector.nameStreet);
     }
 
     /**
@@ -88,7 +88,7 @@ public class Troncon {
     }
 
     /**
-     * Troncon Constructor.
+     * Vector Constructor.
      *
      * @param origine     intersections se situant au debut du tronçon
      * @param destination intersections se situant à la fin du tronçon
@@ -99,7 +99,7 @@ public class Troncon {
      * @see #nameStreet
      * @see #length
      */
-    public Troncon(Intersection origine, Intersection destination, String nameStreet, float length) {
+    public Vector(Intersection origine, Intersection destination, String nameStreet, float length) {
         this.origine = origine;
         this.destination = destination;
         this.nameStreet = nameStreet;
