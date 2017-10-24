@@ -13,7 +13,7 @@ public class WelcomeWindow extends Window {
     private WelcomeView welcomeView;
 
     public WelcomeWindow(Controller controller){
-        super(controller, "testHelloMars");
+        super(controller, "Welcome window");
 
         welcomeView = new WelcomeView(controller);
         jFrame.add(welcomeView.getMainPanel());

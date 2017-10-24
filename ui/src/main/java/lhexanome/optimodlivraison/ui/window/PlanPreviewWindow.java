@@ -15,7 +15,7 @@ public class PlanPreviewWindow extends Window{
 
 
     public PlanPreviewWindow(Controller controller){
-        super(controller, "testHelloMars");// TODO Rename frmaeName
+        super(controller, "Map preview");// TODO Rename frmaeName
 
         mapPreviewView = new PlanPreviewView(controller);
 

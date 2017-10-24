@@ -10,7 +10,7 @@ public class DemandPreviewWindow extends Window{
     private DemandPreviewView demandPreviewView;
 
     public DemandPreviewWindow(Controller c) {
-        super(c, "testHelloMars");
+        super(c, "Order preview");
         demandPreviewView = new DemandPreviewView(controller);
 
         jFrame.add(demandPreviewView.getMainPanel());

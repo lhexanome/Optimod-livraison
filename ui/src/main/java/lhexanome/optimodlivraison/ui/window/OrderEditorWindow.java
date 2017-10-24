@@ -12,7 +12,7 @@ public class OrderEditorWindow extends Window{
     OrderEditorView orderEditorView;
 
     public OrderEditorWindow(Controller c) {
-        super(c, "title");
+        super(c, "Delivery order editor");
 
         orderEditorView= new OrderEditorView(controller);
 

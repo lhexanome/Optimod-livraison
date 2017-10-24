@@ -45,7 +45,7 @@
         </constraints>
         <properties>
           <font size="24"/>
-          <text value="Bienvenu sur Optimod livraison"/>
+          <text value="Bienvenue sur Optimod livraison"/>
         </properties>
       </component>
       <vspacer id="e6860">
