@@ -3,9 +3,8 @@ package lhexanome.optimodlivraison.ui.controller;
 import lhexanome.optimodlivraison.platform.exceptions.MapException;
 import lhexanome.optimodlivraison.platform.facade.RoadMapFacade;
 import lhexanome.optimodlivraison.platform.listeners.MapListener;
+import lhexanome.optimodlivraison.platform.models.DeliveryOrder;
 import lhexanome.optimodlivraison.platform.models.RoadMap;
-import lhexanome.optimodlivraison.ui.controller.actions.MainControllerInterface;
-import lhexanome.optimodlivraison.ui.controller.actions.RoadMapControllerInterface;
 import lhexanome.optimodlivraison.ui.panel.RoadMapPanel;
 import lhexanome.optimodlivraison.ui.popup.FileChooserPopup;
 
@@ -14,17 +13,17 @@ import java.io.File;
 import java.util.logging.Logger;
 
 
-public class RoadMapController implements RoadMapControllerInterface {
+public class RoadMapController implements ControllerInterface {
     private static final Logger LOGGER = Logger.getLogger(RoadMapController.class.getName());
 
 
-    private final MainControllerInterface mainController;
+    private final MainController mainController;
 
     private final RoadMapPanel roadMapPanel;
 
     private RoadMap roadMap;
 
-    public RoadMapController(MainControllerInterface mainController) {
+    public RoadMapController(MainController mainController) {
         this.mainController = mainController;
 
         this.roadMapPanel = new RoadMapPanel(this);
@@ -45,13 +44,12 @@ public class RoadMapController implements RoadMapControllerInterface {
         return roadMapPanel.getContentPane();
     }
 
-    @Override
-    public void setRoadMap(RoadMap roadMap) {
+    private void setRoadMap(RoadMap roadMap) {
         this.roadMap = roadMap;
         roadMapPanel.setRoadMap(roadMap);
+        mainController.setRoadMap(roadMap);
     }
 
-    @Override
     public void selectRoadMap(File xmlFile) {
 
         RoadMapFacade mapFacade = new RoadMapFacade();
@@ -75,7 +73,7 @@ public class RoadMapController implements RoadMapControllerInterface {
         mapFacade.loadMapFromFile(xmlFile);
     }
 
-    @Override
+
     public void reloadMap() {
         LOGGER.info("Reloading road map");
         FileChooserPopup popup = new FileChooserPopup("Choisissez un plan", "xml");
@@ -83,9 +81,18 @@ public class RoadMapController implements RoadMapControllerInterface {
 
         if (file != null) {
             LOGGER.info(String.format("User selected file : %s", file.getName()));
+            // Send back to main controller to update other controller if needed
             mainController.selectRoadMap(file);
         } else {
             LOGGER.info("User did not provide a file, doing nothing");
         }
+    }
+
+    public void setDeliveryOrder(DeliveryOrder deliveryOrder) {
+        roadMapPanel.setDeliveryOrder(deliveryOrder);
+    }
+
+    public RoadMap getRoadMap() {
+        return roadMap;
     }
 }

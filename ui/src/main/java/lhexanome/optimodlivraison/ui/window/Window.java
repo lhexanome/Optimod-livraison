@@ -1,6 +1,6 @@
-package lhexanome.optimodlivraison.ui;
+package lhexanome.optimodlivraison.ui.window;
 
-import lhexanome.optimodlivraison.ui.controller.actions.ControllerInterface;
+import lhexanome.optimodlivraison.ui.controller.ControllerInterface;
 
 import javax.swing.*;
 import java.awt.event.WindowEvent;

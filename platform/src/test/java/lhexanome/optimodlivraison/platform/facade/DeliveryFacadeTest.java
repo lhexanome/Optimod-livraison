@@ -41,6 +41,6 @@ class DeliveryFacadeTest {
             }
         });
 
-        deliveryFacade.loadDeliveryOrderFromFile(littleDeliveryOrder);
+        deliveryFacade.loadDeliveryOrderFromFile(littleDeliveryOrder, roadMap);
     }
 }

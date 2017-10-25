@@ -1,6 +1,5 @@
 package lhexanome.optimodlivraison.ui.window;
 
-import lhexanome.optimodlivraison.ui.Window;
 import lhexanome.optimodlivraison.ui.controller.WelcomeController;
 import lhexanome.optimodlivraison.ui.panel.WelcomePanel;
 

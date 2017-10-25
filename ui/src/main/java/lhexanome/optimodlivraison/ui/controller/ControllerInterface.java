@@ -1,4 +1,4 @@
-package lhexanome.optimodlivraison.ui.controller.actions;
+package lhexanome.optimodlivraison.ui.controller;
 
 import java.awt.*;
 

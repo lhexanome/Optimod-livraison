@@ -3,20 +3,19 @@ package lhexanome.optimodlivraison.ui.controller;
 import lhexanome.optimodlivraison.platform.models.DeliveryOrder;
 import lhexanome.optimodlivraison.platform.models.RoadMap;
 import lhexanome.optimodlivraison.platform.models.Tour;
-import lhexanome.optimodlivraison.ui.controller.actions.MainControllerInterface;
 import lhexanome.optimodlivraison.ui.window.MainWindow;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 
-public class MainController implements MainControllerInterface {
+public class MainController implements ControllerInterface {
 
     private final MainWindow mainWindow;
 
-    private RoadMapController roadMapController;
-    private DeliveryOrderController deliveryOrderController;
-    private TourController tourController;
+    private final RoadMapController roadMapController;
+    private final DeliveryOrderController deliveryOrderController;
+    private final TourController tourController;
 
 
     public MainController() {
@@ -26,7 +25,8 @@ public class MainController implements MainControllerInterface {
 
         mainWindow = new MainWindow(
                 this,
-                roadMapController.getContentPane()
+                roadMapController.getContentPane(),
+                deliveryOrderController.getContentPane()
         );
     }
 
@@ -45,28 +45,29 @@ public class MainController implements MainControllerInterface {
         mainWindow.close();
     }
 
-    @Override
     public void selectRoadMap(File xmlFile) {
         roadMapController.selectRoadMap(xmlFile);
     }
 
-    @Override
-    public void setRoadMap(RoadMap roadMap) {
-
+    public void selectDeliveryOrder(File xmlFile) {
+        deliveryOrderController.selectDeliveryOrder(xmlFile, roadMapController.getRoadMap());
     }
 
-    @Override
+    public void setRoadMap(RoadMap roadMap) {
+        // TODO Clear delivery and tour data
+    }
+
+    public void setDeliveryOrder(DeliveryOrder deliveryOrder) {
+        roadMapController.setDeliveryOrder(deliveryOrder);
+    }
+
     public void setTour(Tour tour) {
 
     }
 
-    @Override
-    public void setDeliveryOrder(DeliveryOrder deliveryOrder) {
-
-    }
-
-    @Override
     public void notifyError(String errorMessage) {
         JOptionPane.showMessageDialog(mainWindow.getFrame(), errorMessage);
     }
+
+
 }

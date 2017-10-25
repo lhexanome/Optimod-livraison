@@ -136,7 +136,7 @@ public class RoadMapComponent extends JComponent {
     @SuppressWarnings("checkstyle:magicnumber")
     private Rectangle getMapSize(RoadMap map) {
         if (map == null) {
-            return new Rectangle(0, 0, 500, 500);
+            return new Rectangle(0, 0, 400, 400);
         }
 
         Point min = new Point(Integer.MAX_VALUE, Integer.MAX_VALUE);
@@ -147,7 +147,7 @@ public class RoadMapComponent extends JComponent {
             if (max.x < intersection.getX()) max.x = intersection.getX();
             if (max.y < intersection.getY()) max.y = intersection.getY();
         });
-        // FIXME We should use 0 as x and y no ?
+
         return new Rectangle(min.x, min.y, max.x - min.x, max.y - min.y);
     }
 
@@ -157,7 +157,7 @@ public class RoadMapComponent extends JComponent {
     @Override
     @SuppressWarnings("checkstyle:magicnumber")
     public Dimension getMinimumSize() {
-        return new Dimension(200, 200);
+        return new Dimension(8000, 8000);
     }
 
     /**
@@ -166,8 +166,9 @@ public class RoadMapComponent extends JComponent {
     @Override
     @SuppressWarnings("checkstyle:magicnumber")
     public Dimension getPreferredSize() {
-        return new Dimension(200, 200);
+        return new Dimension(400, 400);
     }
+
 
     /**
      * Called by swing, repaint all the component.

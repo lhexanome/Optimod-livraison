@@ -1,6 +1,6 @@
 package lhexanome.optimodlivraison.ui.panel;
 
-import lhexanome.optimodlivraison.ui.controller.actions.WelcomeControllerInterface;
+import lhexanome.optimodlivraison.ui.controller.WelcomeController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,18 +10,18 @@ public class WelcomePanel extends AbstractPanel {
 
     public JPanel contentPane;
 
-    public WelcomePanel(WelcomeControllerInterface controller) {
+    public WelcomePanel(WelcomeController controller) {
         super(controller);
         setup();
     }
 
     @Override
     public void setup() {
-        openRoadMapButton.addActionListener(e -> ((WelcomeControllerInterface) controller).clickChooseRoadMap());
+        openRoadMapButton.addActionListener(e -> ((WelcomeController) controller).clickChooseRoadMap());
     }
 
     @Override
-    public Container getContentPane() {
+    public JPanel getContentPane() {
         return contentPane;
     }
 
@@ -43,6 +43,7 @@ public class WelcomePanel extends AbstractPanel {
         contentPane = new JPanel();
         contentPane.setLayout(new GridBagLayout());
         contentPane.setBackground(new Color(-1));
+        contentPane.setVisible(true);
         final JPanel spacer1 = new JPanel();
         GridBagConstraints gbc;
         gbc = new GridBagConstraints();

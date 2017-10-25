@@ -1,8 +1,8 @@
 package lhexanome.optimodlivraison.ui.panel;
 
-import lhexanome.optimodlivraison.ui.controller.actions.ControllerInterface;
+import lhexanome.optimodlivraison.ui.controller.ControllerInterface;
 
-import java.awt.*;
+import javax.swing.*;
 
 public abstract class AbstractPanel {
 
@@ -20,5 +20,5 @@ public abstract class AbstractPanel {
      */
     public abstract void setup();
 
-    public abstract Container getContentPane();
+    public abstract JPanel getContentPane();
 }

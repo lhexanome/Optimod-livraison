@@ -1,8 +1,9 @@
 package lhexanome.optimodlivraison.ui.panel;
 
+import lhexanome.optimodlivraison.platform.models.DeliveryOrder;
 import lhexanome.optimodlivraison.platform.models.RoadMap;
 import lhexanome.optimodlivraison.ui.component.RoadMapComponent;
-import lhexanome.optimodlivraison.ui.controller.actions.RoadMapControllerInterface;
+import lhexanome.optimodlivraison.ui.controller.RoadMapController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +14,7 @@ public class RoadMapPanel extends AbstractPanel {
     private JPanel contentPane;
     private JButton reloadRoadMapButton;
 
-    public RoadMapPanel(RoadMapControllerInterface controller) {
+    public RoadMapPanel(RoadMapController controller) {
         super(controller);
         setup();
     }
@@ -24,12 +25,16 @@ public class RoadMapPanel extends AbstractPanel {
 
     @Override
     public void setup() {
-        reloadRoadMapButton.addActionListener(e -> ((RoadMapControllerInterface) controller).reloadMap());
+        reloadRoadMapButton.addActionListener(e -> ((RoadMapController) controller).reloadMap());
     }
 
     @Override
     public JPanel getContentPane() {
         return contentPane;
+    }
+
+    public void setDeliveryOrder(DeliveryOrder deliveryOrder) {
+        roadMapComponent.setDeliveryOrder(deliveryOrder);
     }
 
     {
@@ -49,31 +54,41 @@ public class RoadMapPanel extends AbstractPanel {
     private void $$$setupUI$$$() {
         contentPane = new JPanel();
         contentPane.setLayout(new GridBagLayout());
-        final JPanel spacer1 = new JPanel();
-        GridBagConstraints gbc;
-        gbc = new GridBagConstraints();
-        gbc.gridx = 2;
-        gbc.gridy = 1;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        contentPane.add(spacer1, gbc);
-        final JPanel spacer2 = new JPanel();
-        gbc = new GridBagConstraints();
-        gbc.gridx = 1;
-        gbc.gridy = 2;
-        gbc.fill = GridBagConstraints.VERTICAL;
-        contentPane.add(spacer2, gbc);
+        contentPane.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(new Color(-65528)), null));
         reloadRoadMapButton = new JButton();
         reloadRoadMapButton.setText("Recharger un plan");
+        GridBagConstraints gbc;
         gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 2;
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.weightx = 0.02;
+        gbc.weighty = 0.01;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         contentPane.add(reloadRoadMapButton, gbc);
         roadMapComponent = new RoadMapComponent();
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
+        gbc.gridwidth = 3;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
         contentPane.add(roadMapComponent, gbc);
+        final JPanel spacer1 = new JPanel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.weightx = 0.44;
+        gbc.weighty = 0.1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        contentPane.add(spacer1, gbc);
+        final JPanel spacer2 = new JPanel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 2;
+        gbc.gridy = 1;
+        gbc.weightx = 0.44;
+        gbc.weighty = 0.1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        contentPane.add(spacer2, gbc);
     }
 
     /**

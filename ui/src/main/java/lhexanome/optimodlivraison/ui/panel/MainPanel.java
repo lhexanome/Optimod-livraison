@@ -1,6 +1,6 @@
 package lhexanome.optimodlivraison.ui.panel;
 
-import lhexanome.optimodlivraison.ui.controller.actions.MainControllerInterface;
+import lhexanome.optimodlivraison.ui.controller.MainController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,20 +9,35 @@ public class MainPanel extends AbstractPanel {
     private JPanel contentPane;
     private JPanel wrapperPanel;
     private JPanel roadMapPanel;
+    private JPanel deliveryOrderPanel;
 
-    public MainPanel(MainControllerInterface controller, JPanel roadMapPanel) {
+    public MainPanel(MainController controller,
+                     JPanel roadMapPanel,
+                     JPanel deliveryOrderPanel) {
         super(controller);
         this.roadMapPanel = roadMapPanel;
+        this.deliveryOrderPanel = deliveryOrderPanel;
         setup();
     }
 
     @Override
     public void setup() {
-        wrapperPanel.add(roadMapPanel);
+        GridBagConstraints gbc = new GridBagConstraints();
+
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 0.8;
+        gbc.weighty = 1;
+        gbc.fill = GridBagConstraints.BOTH;
+        wrapperPanel.add(roadMapPanel, gbc);
+
+        gbc.weightx = 0.2;
+        gbc.gridx = 1;
+        wrapperPanel.add(deliveryOrderPanel, gbc);
     }
 
     @Override
-    public Container getContentPane() {
+    public JPanel getContentPane() {
         return contentPane;
     }
 
@@ -42,31 +57,10 @@ public class MainPanel extends AbstractPanel {
      */
     private void $$$setupUI$$$() {
         contentPane = new JPanel();
-        contentPane.setLayout(new GridBagLayout());
+        contentPane.setLayout(new BorderLayout(0, 0));
         wrapperPanel = new JPanel();
         wrapperPanel.setLayout(new GridBagLayout());
-        GridBagConstraints gbc;
-        gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.weightx = 0.8;
-        gbc.weighty = 0.8;
-        gbc.fill = GridBagConstraints.BOTH;
-        contentPane.add(wrapperPanel, gbc);
-        final JPanel spacer1 = new JPanel();
-        gbc = new GridBagConstraints();
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        gbc.weightx = 0.2;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        contentPane.add(spacer1, gbc);
-        final JPanel spacer2 = new JPanel();
-        gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        gbc.weighty = 0.2;
-        gbc.fill = GridBagConstraints.VERTICAL;
-        contentPane.add(spacer2, gbc);
+        contentPane.add(wrapperPanel, BorderLayout.CENTER);
     }
 
     /**

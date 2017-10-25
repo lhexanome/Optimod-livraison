@@ -1,6 +1,5 @@
 package lhexanome.optimodlivraison.ui.controller;
 
-import lhexanome.optimodlivraison.ui.controller.actions.WelcomeControllerInterface;
 import lhexanome.optimodlivraison.ui.popup.FileChooserPopup;
 import lhexanome.optimodlivraison.ui.window.WelcomeWindow;
 
@@ -8,7 +7,7 @@ import java.awt.*;
 import java.io.File;
 import java.util.logging.Logger;
 
-public class WelcomeController implements WelcomeControllerInterface {
+public class WelcomeController implements ControllerInterface {
 
     private static final Logger LOGGER = Logger.getLogger(WelcomeController.class.getName());
 
@@ -30,7 +29,6 @@ public class WelcomeController implements WelcomeControllerInterface {
         return welcomeWindow.getFrame();
     }
 
-    @Override
     public void clickChooseRoadMap() {
         LOGGER.info("Choosing road map");
         FileChooserPopup popup = new FileChooserPopup("Choisissez un plan", "xml");
