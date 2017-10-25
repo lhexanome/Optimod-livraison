@@ -26,7 +26,8 @@ public class MainController implements ControllerInterface {
         mainWindow = new MainWindow(
                 this,
                 roadMapController.getContentPane(),
-                deliveryOrderController.getContentPane()
+                deliveryOrderController.getContentPane(),
+                tourController.getContentPane()
         );
     }
 
@@ -62,12 +63,19 @@ public class MainController implements ControllerInterface {
     }
 
     public void setTour(Tour tour) {
-
+        roadMapController.setTour(tour);
     }
 
     public void notifyError(String errorMessage) {
-        JOptionPane.showMessageDialog(mainWindow.getFrame(), errorMessage);
+        JOptionPane.showMessageDialog(mainWindow.getFrame(), errorMessage, "Erreur", JOptionPane.ERROR_MESSAGE);
     }
 
 
+    public void computeTour() {
+        // TODO Check if available otherwise send an error message ?
+        tourController.computeTour(
+                roadMapController.getRoadMap(),
+                deliveryOrderController.getDeliveryOrder()
+        );
+    }
 }

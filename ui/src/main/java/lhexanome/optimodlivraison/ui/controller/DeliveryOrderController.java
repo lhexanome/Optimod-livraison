@@ -97,4 +97,8 @@ public class DeliveryOrderController implements ControllerInterface {
             LOGGER.info("User did not provide a file, doing nothing");
         }
     }
+
+    public DeliveryOrder getDeliveryOrder() {
+        return deliveryOrder;
+    }
 }

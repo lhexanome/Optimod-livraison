@@ -5,6 +5,7 @@ import lhexanome.optimodlivraison.platform.facade.RoadMapFacade;
 import lhexanome.optimodlivraison.platform.listeners.MapListener;
 import lhexanome.optimodlivraison.platform.models.DeliveryOrder;
 import lhexanome.optimodlivraison.platform.models.RoadMap;
+import lhexanome.optimodlivraison.platform.models.Tour;
 import lhexanome.optimodlivraison.ui.panel.RoadMapPanel;
 import lhexanome.optimodlivraison.ui.popup.FileChooserPopup;
 
@@ -94,5 +95,9 @@ public class RoadMapController implements ControllerInterface {
 
     public RoadMap getRoadMap() {
         return roadMap;
+    }
+
+    public void setTour(Tour tour) {
+        roadMapPanel.setTour(tour);
     }
 }

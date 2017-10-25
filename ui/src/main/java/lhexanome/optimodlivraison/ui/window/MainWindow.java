@@ -8,13 +8,16 @@ import java.awt.*;
 
 public class MainWindow extends Window {
 
-    public MainWindow(MainController controller, JPanel roadMapPanel, JPanel deliveryOrderPanel) {
+    public MainWindow(MainController controller,
+                      JPanel roadMapPanel,
+                      JPanel deliveryOrderPanel,
+                      JPanel tourPanel) {
         super(controller, "Optimod livraison - H4102");
 
+        MainPanel mainPanel = new MainPanel(controller, roadMapPanel, deliveryOrderPanel, tourPanel);
+
         jFrame.setLayout(new BorderLayout());
-        jFrame.add(
-                new MainPanel(controller, roadMapPanel, deliveryOrderPanel).getContentPane(),
-                BorderLayout.CENTER);
+        jFrame.add(mainPanel.getContentPane(), BorderLayout.CENTER);
         jFrame.pack();
         jFrame.setLocationRelativeTo(null);
     }

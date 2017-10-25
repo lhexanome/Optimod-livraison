@@ -10,13 +10,16 @@ public class MainPanel extends AbstractPanel {
     private JPanel wrapperPanel;
     private JPanel roadMapPanel;
     private JPanel deliveryOrderPanel;
+    private JPanel tourPanel;
 
     public MainPanel(MainController controller,
                      JPanel roadMapPanel,
-                     JPanel deliveryOrderPanel) {
+                     JPanel deliveryOrderPanel,
+                     JPanel tourPanel) {
         super(controller);
         this.roadMapPanel = roadMapPanel;
         this.deliveryOrderPanel = deliveryOrderPanel;
+        this.tourPanel = tourPanel;
         setup();
     }
 
@@ -34,6 +37,10 @@ public class MainPanel extends AbstractPanel {
         gbc.weightx = 0.2;
         gbc.gridx = 1;
         wrapperPanel.add(deliveryOrderPanel, gbc);
+
+        gbc.weighty = 0.2;
+        gbc.gridy = 1;
+        wrapperPanel.add(tourPanel, gbc);
     }
 
     @Override
