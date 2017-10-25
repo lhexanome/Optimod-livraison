@@ -56,8 +56,8 @@ public class RoadMapController implements ControllerInterface {
         RoadMapFacade mapFacade = new RoadMapFacade();
         mapFacade.addOnUpdateMapListener(new MapListener() {
             @Override
-            public void onUpdateMap(RoadMap roadMap) {
-                setRoadMap(roadMap);
+            public void onUpdateMap(RoadMap newRoadMap) {
+                setRoadMap(newRoadMap);
                 //TODO roadMapPanel.setLoad(false);
             }
 

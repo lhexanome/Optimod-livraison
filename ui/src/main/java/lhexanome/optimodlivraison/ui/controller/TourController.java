@@ -47,12 +47,12 @@ public class TourController implements ControllerInterface {
             /**
              * Fonction appelée quand le calcul d'une tournée est fini.
              *
-             * @param tour Tournée calculée
+             * @param newTour Tournée calculée
              */
             @Override
-            public void onComputingTour(Tour tour) {
+            public void onComputingTour(Tour newTour) {
                 //TODO deliveryOrderPanel.setLoad(false);
-                setTour(tour);
+                setTour(newTour);
             }
 
             /**

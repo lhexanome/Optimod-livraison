@@ -1,6 +1,5 @@
 package lhexanome.optimodlivraison.platform.compute;
 
-import lhexanome.optimodlivraison.platform.models.Halt;
 import lhexanome.optimodlivraison.platform.models.Intersection;
 import lhexanome.optimodlivraison.platform.models.Path;
 

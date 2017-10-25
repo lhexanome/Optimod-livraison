@@ -184,6 +184,7 @@ public class Vector {
      *
      * @return Time To Travel
      */
+    @SuppressWarnings("checkstyle:magicnumber")
     public int getTimeToTravel() {
         return (int) (3600 * ((length / 10.0) / (SPEED * 1000))); //TODO temps en float
     }

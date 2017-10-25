@@ -57,11 +57,11 @@ public class DeliveryOrderController implements ControllerInterface {
             /**
              * Fonction appelée quand une demande de livraison est chargée.
              *
-             * @param deliveryOrder Demande de livraison
+             * @param newDeliveryOrder Demande de livraison
              */
             @Override
-            public void onUpdateDeliveryOrder(DeliveryOrder deliveryOrder) {
-                setDeliveryOrder(deliveryOrder);
+            public void onUpdateDeliveryOrder(DeliveryOrder newDeliveryOrder) {
+                setDeliveryOrder(newDeliveryOrder);
                 //TODO deliveryOrderPanel.setLoad(false);
             }
 

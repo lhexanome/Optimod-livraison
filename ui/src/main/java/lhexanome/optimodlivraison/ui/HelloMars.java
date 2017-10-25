@@ -12,7 +12,13 @@ import java.util.logging.Logger;
  * IHM Entry point.
  * From: https://www.jetbrains.com/help/idea/getting-started-with-gradle.html
  */
-public class HelloMars {
+public final class HelloMars {
+
+    /**
+     * Disallow instantiation.
+     */
+    private HelloMars() {
+    }
 
     /**
      * Logger.
@@ -30,7 +36,8 @@ public class HelloMars {
             UIManager.setLookAndFeel(
                     UIManager.getSystemLookAndFeelClassName());
 
-        } catch (UnsupportedLookAndFeelException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+        } catch (UnsupportedLookAndFeelException
+                | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
             LOGGER.severe("Unable to set UI Look & Feels :" + e.getMessage());
         }
 

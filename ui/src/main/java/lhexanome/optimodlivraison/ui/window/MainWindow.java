@@ -6,8 +6,20 @@ import lhexanome.optimodlivraison.ui.panel.MainPanel;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Main window.
+ */
 public class MainWindow extends Window {
 
+    /**
+     * Constructor.
+     * Take the main controller and all the panel needed for displaying.
+     *
+     * @param controller         Main controller
+     * @param roadMapPanel       Panel of the roadmap
+     * @param deliveryOrderPanel Panel of the delivery order
+     * @param tourPanel          Panel of the tour
+     */
     public MainWindow(MainController controller,
                       JPanel roadMapPanel,
                       JPanel deliveryOrderPanel,
