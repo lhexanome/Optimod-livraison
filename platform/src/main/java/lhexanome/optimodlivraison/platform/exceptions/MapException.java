@@ -1,7 +1,7 @@
 package lhexanome.optimodlivraison.platform.exceptions;
 
 /**
- * Exception lancée quand il y a un problème dans MapFacade.
+ * Exception lancée quand il y a un problème dans RoadMapFacade.
  */
 public class MapException extends Exception {
 

@@ -3,7 +3,8 @@ package lhexanome.optimodlivraison.platform.facade;
 import lhexanome.optimodlivraison.platform.exceptions.DeliveryException;
 import lhexanome.optimodlivraison.platform.exceptions.ParseDeliveryOrderException;
 import lhexanome.optimodlivraison.platform.listeners.DeliveryListener;
-import lhexanome.optimodlivraison.platform.models.DemandeLivraison;
+import lhexanome.optimodlivraison.platform.models.DeliveryOrder;
+import lhexanome.optimodlivraison.platform.models.RoadMap;
 import lhexanome.optimodlivraison.platform.parsing.DeliveryOrderParser;
 import lhexanome.optimodlivraison.platform.parsing.common.LoadFile;
 import org.jdom2.Element;
@@ -66,19 +67,20 @@ public class DeliveryFacade {
      * Charge un fichier contenant une demande de livraison.
      *
      * @param xmlFile Fichier xml
+     * @param roadMap RoadMap already initialized (to bind X and Y)
      */
-    public void loadDeliveryOrderFromFile(File xmlFile) {
+    public void loadDeliveryOrderFromFile(File xmlFile, RoadMap roadMap) {
         try {
             LOGGER.info(MessageFormat.format("Loading delivery order {0}", xmlFile.getName()));
             Element rootElement = LoadFile.loadFromFile(xmlFile);
             LOGGER.info("XML File loaded");
 
-            DemandeLivraison demandeLivraison = deliveryOrderParser.parseDeliveryOrder(rootElement);
+            DeliveryOrder deliveryOrder = deliveryOrderParser.parseDeliveryOrder(rootElement, roadMap);
 
             LOGGER.warning(MessageFormat.format("Delivery order loaded with {0} deliveries",
-                    demandeLivraison.getDeliveries().size()));
+                    deliveryOrder.getDeliveries().size()));
 
-            listeners.forEach(l -> l.onUpdateDeliveryOrder(demandeLivraison));
+            listeners.forEach(l -> l.onUpdateDeliveryOrder(deliveryOrder));
 
             LOGGER.info("Listeners notified !");
         } catch (JDOMException e) {

@@ -1,12 +1,12 @@
 package lhexanome.optimodlivraison.platform.facade;
 
 import lhexanome.optimodlivraison.platform.compute.InterfaceCalcul;
-import lhexanome.optimodlivraison.platform.compute.PlanSimplifie;
+import lhexanome.optimodlivraison.platform.compute.SimplifiedMap;
 import lhexanome.optimodlivraison.platform.exceptions.ComputeException;
 import lhexanome.optimodlivraison.platform.listeners.ComputeListener;
-import lhexanome.optimodlivraison.platform.models.DemandeLivraison;
-import lhexanome.optimodlivraison.platform.models.Plan;
-import lhexanome.optimodlivraison.platform.models.Tournee;
+import lhexanome.optimodlivraison.platform.models.DeliveryOrder;
+import lhexanome.optimodlivraison.platform.models.RoadMap;
+import lhexanome.optimodlivraison.platform.models.Tour;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -62,23 +62,23 @@ public class ComputeFacade {
     /**
      * Calcul une tournée.
      *
-     * @param plan             Plan
-     * @param demandeLivraison Demande de livraison
+     * @param roadMap       RoadMap
+     * @param deliveryOrder Demande de livraison
      */
-    public void computeTour(Plan plan, DemandeLivraison demandeLivraison) {
+    public void computeTour(RoadMap roadMap, DeliveryOrder deliveryOrder) {
         try {
             LOGGER.info("Compute tour");
 
-            PlanSimplifie planSimplifie = interfaceCalcul.calculerPlanSimplifie(plan, demandeLivraison);
+            SimplifiedMap simplifiedMap = interfaceCalcul.computeSimplifiedRoadMap(roadMap, deliveryOrder);
 
-            LOGGER.info("Simplified map computed");
+            LOGGER.info("Simplified roadMap computed");
 
-            // FIXME Remove demandeLivraison
-            Tournee tournee = interfaceCalcul.calculerTournee(planSimplifie, demandeLivraison);
+            // FIXME Remove deliveryOrder
+            Tour tour = interfaceCalcul.computeTour();
 
             LOGGER.warning("Tour computed");
 
-            listeners.forEach(l -> l.onComputingTour(tournee));
+            listeners.forEach(l -> l.onComputingTour(tour));
 
             LOGGER.info("Listeners notified !");
         } catch (Exception e) {

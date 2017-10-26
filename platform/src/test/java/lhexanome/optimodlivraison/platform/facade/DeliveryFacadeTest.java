@@ -2,7 +2,7 @@ package lhexanome.optimodlivraison.platform.facade;
 
 import lhexanome.optimodlivraison.platform.exceptions.DeliveryException;
 import lhexanome.optimodlivraison.platform.listeners.DeliveryListener;
-import lhexanome.optimodlivraison.platform.models.DemandeLivraison;
+import lhexanome.optimodlivraison.platform.models.DeliveryOrder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -26,13 +26,13 @@ class DeliveryFacadeTest {
     void shouldLoadTestFile() {
         deliveryFacade.addOnUpdateDeliveryListener(new DeliveryListener() {
             @Override
-            public void onUpdateDeliveryOrder(DemandeLivraison demandeLivraison) {
-                assertThat(demandeLivraison).isNotNull();
-                assertThat(demandeLivraison.getDeliveries())
+            public void onUpdateDeliveryOrder(DeliveryOrder deliveryOrder) {
+                assertThat(deliveryOrder).isNotNull();
+                assertThat(deliveryOrder.getDeliveries())
                         .isNotNull()
                         .hasSize(4);
 
-                assertThat(demandeLivraison.getBeginning()).isNotNull();
+                assertThat(deliveryOrder.getBeginning()).isNotNull();
             }
 
             @Override
@@ -41,6 +41,6 @@ class DeliveryFacadeTest {
             }
         });
 
-        deliveryFacade.loadDeliveryOrderFromFile(littleDeliveryOrder);
+//        deliveryFacade.loadDeliveryOrderFromFile(littleDeliveryOrder, roadMap);
     }
 }

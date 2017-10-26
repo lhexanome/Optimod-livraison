@@ -1,17 +1,13 @@
 package lhexanome.optimodlivraison.platform.compute;
 
-import lhexanome.optimodlivraison.platform.compute.tsp.TSP;
-import lhexanome.optimodlivraison.platform.compute.tsp.TSP1;
-import lhexanome.optimodlivraison.platform.models.Arret;
-import lhexanome.optimodlivraison.platform.models.DemandeLivraison;
-import lhexanome.optimodlivraison.platform.models.Intersection;
-import lhexanome.optimodlivraison.platform.models.Livraison;
-import lhexanome.optimodlivraison.platform.models.Plan;
-import lhexanome.optimodlivraison.platform.models.Tournee;
-import lhexanome.optimodlivraison.platform.models.Trajet;
+import lhexanome.optimodlivraison.platform.models.Delivery;
+import lhexanome.optimodlivraison.platform.models.DeliveryOrder;
+import lhexanome.optimodlivraison.platform.models.Halt;
+import lhexanome.optimodlivraison.platform.models.Path;
+import lhexanome.optimodlivraison.platform.models.RoadMap;
+import lhexanome.optimodlivraison.platform.models.Tour;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Map;
 
 /**
@@ -21,117 +17,60 @@ import java.util.Map;
 public class InterfaceCalcul {
 
     /**
-     * reference du plan charge.
+     * reference du roadMap charge.
      */
-    private Plan plan;
+    private RoadMap roadMap;
 
     /**
      * reference de la demande de livraison chargee.
      */
-    private DemandeLivraison demande;
+    private DeliveryOrder demande;
 
     /**
-     * Tournee retournee par le calcul de tournee optimise.
+     * Tour retournee par le calcul de tournee optimise.
      */
-    private Tournee sortie;
+    private Tour sortie;
 
     /**
      * Graphe des plus courts chemins entre les livraisons.
-     * Met à jour les attributs plan, demande et PlanSimplifie.
+     * Met à jour les attributs roadMap, demande et SimplifiedMap.
      */
-    private PlanSimplifie planSimplifie;
+    private SimplifiedMap simplifiedMap;
 
     /**
      * Génère le graphe des plus courts chemins entre les livraisons.
-     * Met à jour les attributs plan, demande et PlanSimplifie.
+     * Met à jour les attributs roadMap, demande et SimplifiedMap.
      */
-    public PlanSimplifie calculerPlanSimplifie(Plan plan, DemandeLivraison demande) {
-        this.plan = plan;
+    public SimplifiedMap computeSimplifiedRoadMap(RoadMap roadMap, DeliveryOrder demande) {
+        this.roadMap = roadMap;
         this.demande = demande;
-        this.planSimplifie = new PlanSimplifie(demande, plan);
-        planSimplifie.computeGraph();
-        return this.planSimplifie;
+        this.simplifiedMap = new SimplifiedMap(demande, roadMap);
+        simplifiedMap.computeGraph();
+        return this.simplifiedMap;
     }
 
     /**
-     * Calcule la tournée optimale en fonction du plan simplifié et de la demande de livraison.
+     * Calcule la tournée optimale en fonction du roadMap simplifié et de la demande de livraison.
      * Met à jour l'attribut sortie.
      */
-    public Tournee calculerTournee(PlanSimplifie planSimplifie, DemandeLivraison demande) {
-        Intersection warehouse;
-        Date start;
-        int time;
-
-        Map<Arret, ArrayList<Trajet>> graphe = planSimplifie.getGraphe();
-
-        warehouse = demande.getBeginning().getIntersection();
-        start = demande.getStart();
-        int nbSommets = demande.getDeliveries().size() + 1;
-
-        //sert à assigner chaque sommet à un index.
-        ArrayList<Arret> listeSommets = new ArrayList<>();
-        listeSommets.add(demande.getBeginning());
-        listeSommets.addAll(demande.getDeliveries());
-
-        MatriceAdjacence matrix = grapheToMatrix(graphe, nbSommets, listeSommets);
-        int[][] matriceCouts = matrix.getMatriceCouts();
-        Trajet[][] matriceTrajets = matrix.getMatriceTrajets();
-
-        int[] listeDurees = demandeToDurees(demande, nbSommets, listeSommets);
-
-        TSP tsp = new TSP1();
-        tsp.chercheSolution(9999999, nbSommets, matriceCouts, listeDurees);
-        time = tsp.getCoutMeilleureSolution();
-
-        ArrayList<Trajet> deliveries = new ArrayList<>(nbSommets);
-        for (int i = 0; i < nbSommets - 1; i++) {
-            int indexSommet = tsp.getMeilleureSolution(i);
-            Trajet trajet = matriceTrajets[indexSommet][indexSommet + 1];
-            deliveries.set(i, trajet);
-        }
-
-        this.sortie = new Tournee(warehouse, start, time, deliveries);
+    public Tour computeTour() {
         return sortie;
     }
 
-    private MatriceAdjacence grapheToMatrix(Map<Arret, ArrayList<Trajet>> graphe, int nbSommets, ArrayList<Arret> listeSommets) {
-        int[][] matriceCouts = new int[nbSommets][nbSommets];
-        Trajet[][] matriceTrajets = new Trajet[nbSommets][nbSommets];
-
-        //entrepot
-        Arret entrepot = demande.getBeginning();
-        int inter1 = 0;
-        for (Trajet trajet : graphe.get(entrepot)) {
-            int inter2 = listeSommets.indexOf(trajet.getEnd());
-            int cout = trajet.getTimeToTravel();
-            matriceCouts[inter1][inter2] = cout;
-            matriceTrajets[inter1][inter2] = trajet;
-        }
-
-        //le reste
-        for (Arret arret : graphe.keySet()) {
-            inter1 = listeSommets.indexOf(arret.getIntersection());
-            for (Trajet trajet : graphe.get(arret)) {
-                int inter2 = listeSommets.indexOf(trajet.getEnd());
-                int cout = trajet.getTimeToTravel();
-                matriceCouts[inter1][inter2] = cout;
-                matriceTrajets[inter1][inter2] = trajet;
-            }
-        }
-
-        return new MatriceAdjacence(listeSommets, matriceTrajets, matriceCouts);
+    private MatriceAdjacence grapheToMatrix(Map<Halt, ArrayList<Path>> graphe, int nbSommets, ArrayList<Halt> listeSommets) {
+        return null;
     }
 
-    private int[] demandeToDurees(DemandeLivraison demande, int nbSommets, ArrayList<Arret> listeSommets) {
+    private int[] demandeToDurees(DeliveryOrder demande, int nbSommets, ArrayList<Halt> listeSommets) {
         int[] sortie = new int[nbSommets];
 
         //entrepôt
         sortie[0] = 0;
 
         //le reste
-        for (Arret arret : demande.getDeliveries()) {
-            int index = listeSommets.indexOf(arret);
-            sortie[index] = ((Livraison) arret).getDuration();
+        for (Halt halt : demande.getDeliveries()) {
+            int index = listeSommets.indexOf(halt);
+            sortie[index] = ((Delivery) halt).getDuration();
         }
 
         return sortie;
