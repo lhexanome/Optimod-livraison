@@ -109,11 +109,11 @@ public class SimplifiedMap {
 
 
             //initialisation
-            IntersectionWrapper startW = new IntersectionWrapper(start.getIntersection());
+            IntersectionWrapper startW = new IntersectionWrapper(start.getIntersection(), start);
             startW.setAsStart();
             visites.add(startW);
             //calcul
-            dijkstra(visites, ends, endWrappers);
+            dijkstra(start, visites, ends, endWrappers);
 
             //pour chaque livraison, on construit le path
             reconstitutePathFromDijkstra(start, ends, endWrappers, sortie);
@@ -137,13 +137,13 @@ public class SimplifiedMap {
                 Path t = new Path();
 
                 //on recupere le wrapper correspondant a la livraison d'arrivee
-                IntersectionWrapper endWrapper = findIntersectionWrapper(endWrappers, end);
+                IntersectionWrapper endWrapper = findIntersectionWrapper(endWrappers, end.getIntersection());
                 if (endWrapper == null) {
                     LOGGER.warning(MessageFormat.format("no path found for:",
                             start.toString() + " and " + end.toString()));
                 }
                 //on remonte les prececesseurs pour obtenir tout les chemins
-                while (endWrapper != null) {
+                while (endWrapper != null && endWrapper.getPredecesseur() != null) {
                     //TODO ajouter le debut et la fin au path
                     Vector tr = endWrapper.getCheminArrivant();
                     t.addTronconBefore(tr);
@@ -155,22 +155,24 @@ public class SimplifiedMap {
         }
     }
 
+
     /**
-     * internal function searching for the wrapper for the end.
+     * internal function searching for the wrapper for an intersection.
      *
      * @param intersections list of wrappers
-     * @param end           halt concerned
+     * @param i             intersection concerned
      * @return the end's wrapper
      */
-    private IntersectionWrapper findIntersectionWrapper(ArrayList<IntersectionWrapper> intersections, Halt end) {
+    private IntersectionWrapper findIntersectionWrapper(ArrayList<IntersectionWrapper> intersections, Intersection i) {
 
         for (IntersectionWrapper iw : intersections) {
-            if (iw.getIntersection().equals(end.getIntersection())) {
+            if (iw.getIntersection().equals(i)) {
                 return iw;
             }
         }
         return null;
     }
+
 
     /**
      * internal function checking if a wrapper wrap one of the ends.
@@ -193,32 +195,38 @@ public class SimplifiedMap {
     /**
      * function computing the dijkstra algorithm.
      *
-     * @param visites      list of visited intersections wrappers
-     * @param ends         list of halts where we want to go
+     * @param start       start halt for this execution of Dijkstra
+     * @param visites     list of visited intersections wrappers
+     * @param ends        list of halts where we want to go
      * @param endWrappers list of their wrappers
      */
-    public void dijkstra(ArrayList<IntersectionWrapper> visites,
+    public void dijkstra(Halt start, ArrayList<IntersectionWrapper> visites,
                          Set<? extends Halt> ends,
                          ArrayList<IntersectionWrapper> endWrappers) {
         LOGGER.info(MessageFormat.format("start Dijkstra algorithm", ""));
 
 
         boolean continueDijkstra = true;
+        boolean firstTime = true;
         int indexNouvelleVisite = 0;
         IntersectionWrapper courant = visites.get(visites.size() - 1);
         while (continueDijkstra) {
             //recherche du sommet de plus petit temps et non visite
             float tempsMin = Float.MAX_VALUE;
-            indexNouvelleVisite = -1;
-            for (int i = 0; i < visites.size(); i++) {
-                if (!visites.get(i).isBlack()) {
+            if (!firstTime) {
+                indexNouvelleVisite = -1;
+                for (int i = 0; i < visites.size(); i++) {
+                    if (!visites.get(i).isBlack()) {
 
-                    if (visites.get(i).getTempsDijkstra() < tempsMin) {
-                        indexNouvelleVisite = i;
-                        tempsMin = visites.get(i).getTempsDijkstra();
+                        if (visites.get(i).getTempsDijkstra() < tempsMin) {
+                            indexNouvelleVisite = i;
+                            tempsMin = visites.get(i).getTempsDijkstra();
+                        }
+
                     }
-
                 }
+            } else {
+                firstTime = false;
             }
             if (indexNouvelleVisite != -1) {
                 //on change son etat
@@ -231,11 +239,11 @@ public class SimplifiedMap {
                         roadMap.getTronconsFromIntersection(courant.getIntersection());
 
                 for (Vector t : cheminsPartants) {
-                    //pour recuperer les
                     Intersection successeur = t.getDestination();
-                    if (courant.isSuccesseurVisite(successeur)) {
-                        //cas ou l'intersection a deja ete visitee
-                        IntersectionWrapper successeurWrapper = courant.getSuccesseurVisite(successeur);
+                    if (successeur.getWrapper() != null && successeur.getWrapper().getStart() == start) {
+                        //cas ou l'intersection a deja ete visitee pendant cette execution
+                        IntersectionWrapper successeurWrapper = successeur.getWrapper();
+
 
                         if (!successeurWrapper.isBlack()) {
                             if (successeurWrapper.getTempsDijkstra()
@@ -256,8 +264,7 @@ public class SimplifiedMap {
                         //cas ou l'intersection n'a pas ete visitee
 
                         //on cree le wrapper, et on l'ajoute a la liste des visites
-                        IntersectionWrapper successeurWrapper = new IntersectionWrapper(successeur);
-                        courant.addSuccesseurVisite(successeurWrapper);
+                        IntersectionWrapper successeurWrapper = new IntersectionWrapper(successeur, start);
                         visites.add(successeurWrapper);
                         if (isInEnd(ends, successeurWrapper)) {
                             endWrappers.add(successeurWrapper);
@@ -270,6 +277,7 @@ public class SimplifiedMap {
                         successeurWrapper.setTempsDijkstra(
                                 courant.getTempsDijkstra()
                                         + t.getTimeToTravel());
+                        System.out.println(t.getTimeToTravel());
                     }
                 }
             } else {

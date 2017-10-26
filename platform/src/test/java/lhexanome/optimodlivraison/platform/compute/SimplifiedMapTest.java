@@ -26,14 +26,14 @@ class SimplifiedMapTest {
         Intersection E = new Intersection(4L, 0, 0);
         Intersection F = new Intersection(5L, 0, 0);
 
-        Vector t = new Vector(A, B, "A->B", 1);
-        Vector t1 = new Vector(A, E, "A->E", 2);
-        Vector t2 = new Vector(B, C, "B->C", 1);
-        Vector t3 = new Vector(B, D, "B->D", 1);
-        Vector t4 = new Vector(E, C, "E->C", 1);
-        Vector t5 = new Vector(C, F, "C->F", 1);
-        Vector t6 = new Vector(F, B, "F->B", 3);
-        Vector t7 = new Vector(D, A, "D->A", 1);
+        Vector t = new Vector(A, B, "A->B", 1000);
+        Vector t1 = new Vector(A, E, "A->E", 2000);
+        Vector t2 = new Vector(B, C, "B->C", 1000);
+        Vector t3 = new Vector(B, D, "B->D", 1000);
+        Vector t4 = new Vector(E, C, "E->C", 1000);
+        Vector t5 = new Vector(C, F, "C->F", 1000);
+        Vector t6 = new Vector(F, B, "F->B", 3000);
+        Vector t7 = new Vector(D, A, "D->A", 1000);
 
         roadMap.addIntersection(A);
         roadMap.addIntersection(B);

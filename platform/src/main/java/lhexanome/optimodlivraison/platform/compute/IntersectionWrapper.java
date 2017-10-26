@@ -1,9 +1,8 @@
 package lhexanome.optimodlivraison.platform.compute;
 
+import lhexanome.optimodlivraison.platform.models.Halt;
 import lhexanome.optimodlivraison.platform.models.Intersection;
 import lhexanome.optimodlivraison.platform.models.Vector;
-
-import java.util.ArrayList;
 
 /**
  * Class which stores additional information needed for Dijkstra.
@@ -34,18 +33,25 @@ public class IntersectionWrapper {
      */
     private Vector cheminArrivant;
 
+
+
     /**
-     * list of neighbours (sons) visited by Dijkstra.
+     * reference to the start point of the Dijkstra algorithm.
+     * it's used to know on which row of the path findings we are,
+     * so there is no need to reset all intersections after each.
      */
-    private ArrayList<IntersectionWrapper> successeursVisites = new ArrayList<>();
+    private Halt start;
 
     /**
      * constructor.
      *
-     * @param i intersection wrapped by the object.
+     * @param i     intersection wrapped by the object.
+     * @param start starting Halt for Dijkstra
      */
-    public IntersectionWrapper(Intersection i) {
+    public IntersectionWrapper(Intersection i, Halt start) {
         intersection = i;
+        this.start = start;
+        i.setWrapper(this);
     }
 
     /**
@@ -72,7 +78,9 @@ public class IntersectionWrapper {
      * @param intersection the intersection to set
      */
     public void setIntersection(Intersection intersection) {
+        this.intersection.setWrapper(null);
         this.intersection = intersection;
+        this.intersection.setWrapper(this);
     }
 
     /**
@@ -138,44 +146,6 @@ public class IntersectionWrapper {
         return cheminArrivant;
     }
 
-    /**
-     * check if the intersection successeur is in the list of visited sons.
-     *
-     * @param successeur intersection to check.
-     * @return the result of the test
-     */
-    public boolean isSuccesseurVisite(Intersection successeur) {
-        for (IntersectionWrapper sv : successeursVisites) {
-            if (sv.intersection.equals(successeur)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * get the wrapper for the intersection successeur in the list of visited sons.
-     *
-     * @param successeur intersection to get.
-     * @return the wrapper (null if is not in)
-     */
-    public IntersectionWrapper getSuccesseurVisite(Intersection successeur) {
-        for (IntersectionWrapper sv : successeursVisites) {
-            if (sv.intersection.equals(successeur)) {
-                return sv;
-            }
-        }
-        return null;
-    }
-
-    /**
-     * adds a neighbour to the list of visited ones.
-     *
-     * @param successeur the neighbour
-     */
-    public void addSuccesseurVisite(IntersectionWrapper successeur) {
-        successeursVisites.add(successeur);
-    }
 
     /**
      * setter for the vector coming here.
@@ -184,5 +154,13 @@ public class IntersectionWrapper {
      */
     public void setCheminArrivant(Vector cheminArrivant) {
         this.cheminArrivant = cheminArrivant;
+    }
+
+    /**
+     * getter for start.
+     * @return start.
+     */
+    public Halt getStart() {
+        return start;
     }
 }

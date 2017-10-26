@@ -1,5 +1,7 @@
 package lhexanome.optimodlivraison.platform.models;
 
+import lhexanome.optimodlivraison.platform.compute.IntersectionWrapper;
+
 import java.util.ArrayList;
 
 /**
@@ -24,10 +26,17 @@ public class Intersection {
     private Long id;
 
     /**
-     * liste des intersections sur lesquelles un vector partant
-     * de cette intersection arrive.
+     * list of intersections where vectors leaving
+     * this intersection arrive.
      */
     private ArrayList<Intersection> successeurs = new ArrayList<>();
+
+
+    /**
+     * wrapper reference.
+     * used to remove the need of O(n) researches in the compute module
+     */
+    private IntersectionWrapper wrapper = null;
 
     /**
      * Intersection conctructeur.
@@ -109,13 +118,31 @@ public class Intersection {
     }
 
     /**
-     * fonction qui ajoute l'arrivee d'un vector dans la
-     * liste des successeurs, à l'ajout de celui-ci.
+     * function adding the end of a vector to the successeurs
+     * when a vector is added to the roadmap.
      *
-     * @param vector vector qui donne le successeur
+     * @param vector vector added
      */
     public void addTronconSortant(Vector vector) {
         successeurs.add(vector.getDestination());
+    }
+
+    /**
+     * getter for wrapper.
+     *
+     * @return wrapper
+     */
+    public IntersectionWrapper getWrapper() {
+        return wrapper;
+    }
+
+    /**
+     * setter for wrapper.
+     *
+     * @param wrapper ref given
+     */
+    public void setWrapper(IntersectionWrapper wrapper) {
+        this.wrapper = wrapper;
     }
 
     /**
