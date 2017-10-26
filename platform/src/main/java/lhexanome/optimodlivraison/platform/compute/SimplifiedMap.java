@@ -126,12 +126,12 @@ public class SimplifiedMap {
      *
      * @param start       Path's starting point
      * @param ends        set of deliveries from which it creates the paths
-     * @param sortie      list of paths modified by this function
+     * @param output      list of paths modified by this function
      * @param endWrappers one of Dijkstra's algo output, containing the list of intersection wrappers for the ends
      */
     public void reconstitutePathFromDijkstra(Halt start, Set<? extends Halt> ends,
                                              ArrayList<IntersectionWrapper> endWrappers,
-                                             ArrayList<Path> sortie) {
+                                             ArrayList<Path> output) {
         for (Halt end : ends) {
             if (!end.equals(start)) {
                 Path t = new Path(start, end);
@@ -143,13 +143,13 @@ public class SimplifiedMap {
                             start.toString() + " and " + end.toString()));
                 }
                 //on remonte les prececesseurs pour obtenir tout les chemins
-                while (endWrapper != null && endWrapper.getPredecesseur() != null) {
+                while (endWrapper != null && endWrapper.getPredecessor() != null) {
                     //TODO ajouter le debut et la fin au path
-                    Vector tr = endWrapper.getCheminArrivant();
+                    Vector tr = endWrapper.getIncomingVector();
                     t.addTronconBefore(tr);
-                    endWrapper = endWrapper.getPredecesseur();
+                    endWrapper = endWrapper.getPredecessor();
                 }
-                sortie.add(t);
+                output.add(t);
 
             }
         }
@@ -196,11 +196,11 @@ public class SimplifiedMap {
      * function computing the dijkstra algorithm.
      *
      * @param start       start halt for this execution of Dijkstra
-     * @param visites     list of visited intersections wrappers
+     * @param visits     list of visited intersections wrappers
      * @param ends        list of halts where we want to go
      * @param endWrappers list of their wrappers
      */
-    public void dijkstra(Halt start, ArrayList<IntersectionWrapper> visites,
+    public void dijkstra(Halt start, ArrayList<IntersectionWrapper> visits,
                          Set<? extends Halt> ends,
                          ArrayList<IntersectionWrapper> endWrappers) {
         LOGGER.info(MessageFormat.format("start Dijkstra algorithm", ""));
@@ -209,18 +209,18 @@ public class SimplifiedMap {
         boolean continueDijkstra = true;
         boolean firstTime = true;
         int indexNouvelleVisite = 0;
-        IntersectionWrapper courant = visites.get(visites.size() - 1);
+        IntersectionWrapper courant = visits.get(visits.size() - 1);
         while (continueDijkstra) {
             //recherche du sommet de plus petit temps et non visite
             float tempsMin = Float.MAX_VALUE;
             if (!firstTime) {
                 indexNouvelleVisite = -1;
-                for (int i = 0; i < visites.size(); i++) {
-                    if (!visites.get(i).isBlack()) {
+                for (int i = 0; i < visits.size(); i++) {
+                    if (!visits.get(i).isBlack()) {
 
-                        if (visites.get(i).getTempsDijkstra() < tempsMin) {
+                        if (visits.get(i).getTempsDijkstra() < tempsMin) {
                             indexNouvelleVisite = i;
-                            tempsMin = visites.get(i).getTempsDijkstra();
+                            tempsMin = visits.get(i).getTempsDijkstra();
                         }
 
                     }
@@ -230,11 +230,11 @@ public class SimplifiedMap {
             }
             if (indexNouvelleVisite != -1) {
                 //on change son etat
-                visites.get(indexNouvelleVisite).setBlack(true);
+                visits.get(indexNouvelleVisite).setBlack(true);
 
                 //on relache tout les arcs
                 // partant de cette intersection
-                courant = visites.get(indexNouvelleVisite);
+                courant = visits.get(indexNouvelleVisite);
                 Collection<Vector> cheminsPartants =
                         roadMap.getTronconsFromIntersection(courant.getIntersection());
 
@@ -250,9 +250,9 @@ public class SimplifiedMap {
                                     >= courant.getTempsDijkstra()
                                     + t.getTimeToTravel()) {
                                 //on stocke le predecesseur
-                                successeurWrapper.setPredecesseur(courant);
+                                successeurWrapper.setPredecessor(courant);
                                 //et le vector qui les separe
-                                successeurWrapper.setCheminArrivant(t);
+                                successeurWrapper.setIncomingVector(t);
                                 //on relache l'arc
                                 successeurWrapper.setTempsDijkstra(
                                         courant.getTempsDijkstra()
@@ -265,14 +265,14 @@ public class SimplifiedMap {
 
                         //on cree le wrapper, et on l'ajoute a la liste des visites
                         IntersectionWrapper successeurWrapper = new IntersectionWrapper(successeur, start);
-                        visites.add(successeurWrapper);
+                        visits.add(successeurWrapper);
                         if (isInEnd(ends, successeurWrapper)) {
                             endWrappers.add(successeurWrapper);
                         }
                         //on stocke le predecesseur
-                        successeurWrapper.setPredecesseur(courant);
+                        successeurWrapper.setPredecessor(courant);
                         //et le vector qui les separe
-                        successeurWrapper.setCheminArrivant(t);
+                        successeurWrapper.setIncomingVector(t);
                         //on relache l'arc
                         successeurWrapper.setTempsDijkstra(
                                 courant.getTempsDijkstra()
@@ -291,7 +291,7 @@ public class SimplifiedMap {
      *
      * @return the graph
      */
-    public java.util.Map getGraph() {
+    public Map<Halt, ArrayList<Path>> getGraph() {
         return graph;
     }
 }

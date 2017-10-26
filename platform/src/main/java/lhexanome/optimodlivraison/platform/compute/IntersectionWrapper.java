@@ -27,11 +27,11 @@ public class IntersectionWrapper {
     /**
      * intersection Wrapper which is before in the order for the shortest path.
      */
-    private IntersectionWrapper predecesseur;
+    private IntersectionWrapper predecessor;
     /**
-     * vector used to go from predecesseur to this intersection.
+     * vector used to go from predecessor to this intersection.
      */
-    private Vector cheminArrivant;
+    private Vector incomingVector;
 
 
 
@@ -120,21 +120,21 @@ public class IntersectionWrapper {
     }
 
     /**
-     * getter for predecesseur.
+     * getter for predecessor.
      *
-     * @return predecesseur
+     * @return predecessor
      */
-    public IntersectionWrapper getPredecesseur() {
-        return predecesseur;
+    public IntersectionWrapper getPredecessor() {
+        return predecessor;
     }
 
     /**
-     * setter for predecesseur.
+     * setter for predecessor.
      *
-     * @param predecesseur predecesseur given
+     * @param predecessor predecessor given
      */
-    public void setPredecesseur(IntersectionWrapper predecesseur) {
-        this.predecesseur = predecesseur;
+    public void setPredecessor(IntersectionWrapper predecessor) {
+        this.predecessor = predecessor;
     }
 
     /**
@@ -142,18 +142,18 @@ public class IntersectionWrapper {
      *
      * @return the vector
      */
-    public Vector getCheminArrivant() {
-        return cheminArrivant;
+    public Vector getIncomingVector() {
+        return incomingVector;
     }
 
 
     /**
      * setter for the vector coming here.
      *
-     * @param cheminArrivant vector given
+     * @param incomingVector vector given
      */
-    public void setCheminArrivant(Vector cheminArrivant) {
-        this.cheminArrivant = cheminArrivant;
+    public void setIncomingVector(Vector incomingVector) {
+        this.incomingVector = incomingVector;
     }
 
     /**
