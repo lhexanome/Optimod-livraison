@@ -1,84 +1,188 @@
 package lhexanome.optimodlivraison.platform.compute;
 
 import lhexanome.optimodlivraison.platform.models.Intersection;
-import lhexanome.optimodlivraison.platform.models.Troncon;
+import lhexanome.optimodlivraison.platform.models.Vector;
 
 import java.util.ArrayList;
 
-public class IntersectionWrapper{
+/**
+ * Class which stores additional information needed for Dijkstra.
+ */
+public class IntersectionWrapper {
 
+    /**
+     * the intersection wrapped.
+     */
     private Intersection intersection;
+
+    /**
+     * time stored, value used as path weight in Dijkstra.
+     */
     private float tempsDijkstra = Float.MAX_VALUE;
-    private boolean noir = false;
+
+    /**
+     * Dijkstra state: black == every neighbours are done.
+     */
+    private boolean black = false;
+
+    /**
+     * intersection Wrapper which is before in the order for the shortest path.
+     */
     private IntersectionWrapper predecesseur;
-    private Troncon cheminArrivant;
+    /**
+     * vector used to go from predecesseur to this intersection.
+     */
+    private Vector cheminArrivant;
+
+    /**
+     * list of neighbours (sons) visited by Dijkstra.
+     */
     private ArrayList<IntersectionWrapper> successeursVisites = new ArrayList<>();
 
+    /**
+     * constructor.
+     *
+     * @param i intersection wrapped by the object.
+     */
     public IntersectionWrapper(Intersection i) {
-        intersection=i;
-    }
-    public void setAsStart(){
-        tempsDijkstra=0;
-        noir =true;
+        intersection = i;
     }
 
+    /**
+     * function used to set this object as the starting point
+     * for the path finding.
+     */
+    public void setAsStart() {
+        tempsDijkstra = 0;
+        black = true;
+    }
 
+    /**
+     * getter for intersection.
+     *
+     * @return the intersection.
+     */
     public Intersection getIntersection() {
         return intersection;
     }
 
+    /**
+     * setter for intersection.
+     *
+     * @param intersection the intersection to set
+     */
     public void setIntersection(Intersection intersection) {
         this.intersection = intersection;
     }
 
+    /**
+     * getter for tempsDijkstra.
+     *
+     * @return tempsDijkstra
+     */
     public float getTempsDijkstra() {
         return tempsDijkstra;
     }
 
+    /**
+     * setter for tempsDijkstra.
+     *
+     * @param tempsDijkstra tempsDijkstra given
+     */
     public void setTempsDijkstra(float tempsDijkstra) {
         this.tempsDijkstra = tempsDijkstra;
     }
 
-    public boolean isNoir() {
-        return noir;
+    /**
+     * getter for Dijkstra state.
+     *
+     * @return if is black
+     */
+    public boolean isBlack() {
+        return black;
     }
 
-    public void setNoir(boolean noir) {
-        this.noir = noir;
+    /**
+     * setter for Dijkstra state.
+     *
+     * @param black state
+     */
+    public void setBlack(boolean black) {
+        this.black = black;
     }
 
+    /**
+     * getter for predecesseur.
+     *
+     * @return predecesseur
+     */
     public IntersectionWrapper getPredecesseur() {
         return predecesseur;
     }
 
+    /**
+     * setter for predecesseur.
+     *
+     * @param predecesseur predecesseur given
+     */
     public void setPredecesseur(IntersectionWrapper predecesseur) {
         this.predecesseur = predecesseur;
     }
 
-    public Troncon getCheminArrivant() {
+    /**
+     * getter for the vector.
+     *
+     * @return the vector
+     */
+    public Vector getCheminArrivant() {
         return cheminArrivant;
     }
-    public boolean isSuccesseurVisite(Intersection successeur){
-        for (IntersectionWrapper sv: successeursVisites){
-            if(sv.intersection.equals(successeur)){
+
+    /**
+     * check if the intersection successeur is in the list of visited sons.
+     *
+     * @param successeur intersection to check.
+     * @return the result of the test
+     */
+    public boolean isSuccesseurVisite(Intersection successeur) {
+        for (IntersectionWrapper sv : successeursVisites) {
+            if (sv.intersection.equals(successeur)) {
                 return true;
             }
         }
         return false;
     }
-    public IntersectionWrapper getSuccesseurVisite(Intersection successeur){
-        for (IntersectionWrapper sv: successeursVisites){
-            if(sv.intersection.equals(successeur)){
+
+    /**
+     * get the wrapper for the intersection successeur in the list of visited sons.
+     *
+     * @param successeur intersection to get.
+     * @return the wrapper (null if is not in)
+     */
+    public IntersectionWrapper getSuccesseurVisite(Intersection successeur) {
+        for (IntersectionWrapper sv : successeursVisites) {
+            if (sv.intersection.equals(successeur)) {
                 return sv;
             }
         }
         return null;
     }
-    public void addSuccesseurVisite(IntersectionWrapper successeur){
+
+    /**
+     * adds a neighbour to the list of visited ones.
+     *
+     * @param successeur the neighbour
+     */
+    public void addSuccesseurVisite(IntersectionWrapper successeur) {
         successeursVisites.add(successeur);
     }
 
-    public void setCheminArrivant(Troncon cheminArrivant) {
+    /**
+     * setter for the vector coming here.
+     *
+     * @param cheminArrivant vector given
+     */
+    public void setCheminArrivant(Vector cheminArrivant) {
         this.cheminArrivant = cheminArrivant;
     }
 }

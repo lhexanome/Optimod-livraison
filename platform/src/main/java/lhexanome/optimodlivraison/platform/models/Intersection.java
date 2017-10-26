@@ -23,7 +23,12 @@ public class Intersection {
      */
     private Long id;
 
+    /**
+     * liste des intersections sur lesquelles un vector partant
+     * de cette intersection arrive
+     */
     private ArrayList<Intersection> successeurs = new ArrayList<>();
+
     /**
      * Intersection conctructeur.
      *
@@ -103,9 +108,16 @@ public class Intersection {
         this.id = id;
     }
 
-    public void addTronconSortant(Troncon troncon){
-        successeurs.add(troncon.getDestination());
+    /**
+     * fonction qui ajoute l'arrivee d'un vector dans la
+     * liste des successeurs, à l'ajout de celui-ci.
+     *
+     * @param vector vector qui donne le successeur
+     */
+    public void addTronconSortant(Vector vector) {
+        successeurs.add(vector.getDestination());
     }
+
     /**
      * Equals.
      *

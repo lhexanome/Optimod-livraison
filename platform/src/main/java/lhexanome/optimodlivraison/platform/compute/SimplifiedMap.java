@@ -19,11 +19,10 @@ import java.util.logging.Logger;
 
 
 /**
- * Classe qui stocke une version simplifiée du roadMap.
- * soit un graph orienté et complet avec comme sommets les livraisons,
+ * classe qui stocke une version simplifiée du roadMap,
+ * soit un graphe orienté et complet avec comme sommets les livraisons,
  * et pour arc des trajets formant les plus courts chemins entre ces livraisons.
  */
-//CHECKSTYLE:OFF
 public class SimplifiedMap {
     /**
      * Logger.
@@ -36,11 +35,11 @@ public class SimplifiedMap {
     /**
      * reference a la demande de livraison chargee.
      */
-    private DemandeLivraison demandeLivraison;
+    private DeliveryOrder deliveryOrder;
     /**
      * graphe oriente.
      */
-    private Map<Arret, ArrayList<Trajet>> graphe;
+    private Map<Halt, ArrayList<Path>> graph;
 
     /***
      * constructeur par defaut.
@@ -62,7 +61,6 @@ public class SimplifiedMap {
         this.roadMap = roadMap;
         this.deliveryOrder = deliveryOrder;
         graph = new HashMap<>();
-        //TODO Appeler computeGraph dans le constructeur ?
     }
 
     /**
@@ -91,9 +89,9 @@ public class SimplifiedMap {
      * @param ends  Liste des arrives
      * @return liste des plus courts chemins
      */
-    public ArrayList<Trajet> shortestPathList(
-            Arret start, Set<? extends Arret> ends) {
-        ArrayList<Trajet> sortie = new ArrayList<>();
+    public ArrayList<Path> shortestPathList(
+            Halt start, Set<? extends Halt> ends) {
+        ArrayList<Path> sortie = new ArrayList<>();
         LOGGER.info(MessageFormat.format("start compute shortest path for:", start.toString()));
 
 
@@ -107,33 +105,36 @@ public class SimplifiedMap {
          */
         ArrayList<IntersectionWrapper> endWrappers = new ArrayList<>();
 
-        if (plan.getIntersectionCount() > 0) {
+        if (roadMap.getIntersectionCount() > 0) {
 
 
             //initialisation
-            IntersectionWrapper start_w = new IntersectionWrapper(start.getIntersection());
-            start_w.setAsStart();
-            visites.add(start_w);
+            IntersectionWrapper startW = new IntersectionWrapper(start.getIntersection());
+            startW.setAsStart();
+            visites.add(startW);
             //calcul
-            dijkstra(visites,ends,endWrappers);
+            dijkstra(visites, ends, endWrappers);
 
-            //pour chaque livraison, on construit le trajet
-            reconstitutePathFromDijkstra(start, ends,endWrappers, sortie);
+            //pour chaque livraison, on construit le path
+            reconstitutePathFromDijkstra(start, ends, endWrappers, sortie);
         }
         return sortie;
     }
 
     /**
      * function building path from the results of Dijkstra's algorithm.
-     * @param start Path's starting point
-     * @param ends set of deliveries from which it creates the paths
-     * @param sortie list of paths modified by this function
+     *
+     * @param start       Path's starting point
+     * @param ends        set of deliveries from which it creates the paths
+     * @param sortie      list of paths modified by this function
      * @param endWrappers one of Dijkstra's algo output, containing the list of intersection wrappers for the ends
      */
-    public void reconstitutePathFromDijkstra(Arret start, Set<? extends Arret> ends,ArrayList<IntersectionWrapper> endWrappers, ArrayList<Trajet> sortie) {
-        for (Arret end : ends) {
+    public void reconstitutePathFromDijkstra(Halt start, Set<? extends Halt> ends,
+                                             ArrayList<IntersectionWrapper> endWrappers,
+                                             ArrayList<Path> sortie) {
+        for (Halt end : ends) {
             if (!end.equals(start)) {
-                Trajet t = new Trajet();
+                Path t = new Path();
 
                 //on recupere le wrapper correspondant a la livraison d'arrivee
                 IntersectionWrapper endWrapper = findIntersectionWrapper(endWrappers, end);
@@ -143,8 +144,8 @@ public class SimplifiedMap {
                 }
                 //on remonte les prececesseurs pour obtenir tout les chemins
                 while (endWrapper != null) {
-                    //TODO ajouter le debut et la fin au trajet
-                    Troncon tr = endWrapper.getCheminArrivant();
+                    //TODO ajouter le debut et la fin au path
+                    Vector tr = endWrapper.getCheminArrivant();
                     t.addTronconBefore(tr);
                     endWrapper = endWrapper.getPredecesseur();
                 }
@@ -155,12 +156,13 @@ public class SimplifiedMap {
     }
 
     /**
-     * internal function searching for the wrapper for the end
+     * internal function searching for the wrapper for the end.
+     *
      * @param intersections list of wrappers
-     * @param end halt concerned
-     * @return
+     * @param end           halt concerned
+     * @return the end's wrapper
      */
-    private IntersectionWrapper findIntersectionWrapper(ArrayList<IntersectionWrapper> intersections, Arret end) {
+    private IntersectionWrapper findIntersectionWrapper(ArrayList<IntersectionWrapper> intersections, Halt end) {
 
         for (IntersectionWrapper iw : intersections) {
             if (iw.getIntersection().equals(end.getIntersection())) {
@@ -172,13 +174,14 @@ public class SimplifiedMap {
 
     /**
      * internal function checking if a wrapper wrap one of the ends.
-     * @param ends list of halts
+     *
+     * @param ends                list of halts
      * @param intersectionWrapper wrapper concerned
      * @return the result of the check
      */
-    private boolean isInEnd(Set<? extends Arret> ends, IntersectionWrapper intersectionWrapper) {
+    private boolean isInEnd(Set<? extends Halt> ends, IntersectionWrapper intersectionWrapper) {
 
-        for (Arret end : ends) {
+        for (Halt end : ends) {
             if (intersectionWrapper.getIntersection().equals(end.getIntersection())) {
                 return true;
             }
@@ -188,22 +191,14 @@ public class SimplifiedMap {
 
 
     /**
+     * function computing the dijkstra algorithm.
      *
-     * @param visites       liste des intersections
-     * @param predecesseurs liste des predecesseurs
-     *                      (soit pour chaque intersection i,
-     *                      l'element i est son predecesseur)
-     * @param chemins       liste des plus courts troncons
-     *                      partant des predecesseurs
-     *                      vers les intersections
-     * @param tempsDijkstra tableau stockant
-     *                      les temps pour le relachement
-     * @param etatDijkstra  tableau stockant
-     *                      l'etat de visite d'une intersection
-     *                      (visite/non visite)
+     * @param visites      list of visited intersections wrappers
+     * @param ends         list of halts where we want to go
+     * @param endWrappers list of their wrappers
      */
     public void dijkstra(ArrayList<IntersectionWrapper> visites,
-                         Set<? extends Arret> ends,
+                         Set<? extends Halt> ends,
                          ArrayList<IntersectionWrapper> endWrappers) {
         LOGGER.info(MessageFormat.format("start Dijkstra algorithm", ""));
 
@@ -216,7 +211,7 @@ public class SimplifiedMap {
             float tempsMin = Float.MAX_VALUE;
             indexNouvelleVisite = -1;
             for (int i = 0; i < visites.size(); i++) {
-                if (!visites.get(i).isNoir()) {
+                if (!visites.get(i).isBlack()) {
 
                     if (visites.get(i).getTempsDijkstra() < tempsMin) {
                         indexNouvelleVisite = i;
@@ -227,28 +222,28 @@ public class SimplifiedMap {
             }
             if (indexNouvelleVisite != -1) {
                 //on change son etat
-                visites.get(indexNouvelleVisite).setNoir(true);
+                visites.get(indexNouvelleVisite).setBlack(true);
 
                 //on relache tout les arcs
                 // partant de cette intersection
                 courant = visites.get(indexNouvelleVisite);
-                Collection<Troncon> cheminsPartants =
-                        plan.getTronconsFromIntersection(courant.getIntersection());
+                Collection<Vector> cheminsPartants =
+                        roadMap.getTronconsFromIntersection(courant.getIntersection());
 
-                for (Troncon t : cheminsPartants) {
+                for (Vector t : cheminsPartants) {
                     //pour recuperer les
                     Intersection successeur = t.getDestination();
                     if (courant.isSuccesseurVisite(successeur)) {
                         //cas ou l'intersection a deja ete visitee
                         IntersectionWrapper successeurWrapper = courant.getSuccesseurVisite(successeur);
 
-                        if (!successeurWrapper.isNoir()) {
+                        if (!successeurWrapper.isBlack()) {
                             if (successeurWrapper.getTempsDijkstra()
                                     >= courant.getTempsDijkstra()
                                     + t.getTimeToTravel()) {
                                 //on stocke le predecesseur
                                 successeurWrapper.setPredecesseur(courant);
-                                //et le troncon qui les separe
+                                //et le vector qui les separe
                                 successeurWrapper.setCheminArrivant(t);
                                 //on relache l'arc
                                 successeurWrapper.setTempsDijkstra(
@@ -264,12 +259,12 @@ public class SimplifiedMap {
                         IntersectionWrapper successeurWrapper = new IntersectionWrapper(successeur);
                         courant.addSuccesseurVisite(successeurWrapper);
                         visites.add(successeurWrapper);
-                        if(isInEnd(ends,successeurWrapper)){
+                        if (isInEnd(ends, successeurWrapper)) {
                             endWrappers.add(successeurWrapper);
                         }
                         //on stocke le predecesseur
                         successeurWrapper.setPredecesseur(courant);
-                        //et le troncon qui les separe
+                        //et le vector qui les separe
                         successeurWrapper.setCheminArrivant(t);
                         //on relache l'arc
                         successeurWrapper.setTempsDijkstra(
@@ -283,10 +278,10 @@ public class SimplifiedMap {
         }
     }
 
-
     /**
-     * roadMap stockant le graph sous la forme d'une association de livraisons
-     * et de trajets partant de ces livraisons.
+     * getter for the simplified graph.
+     *
+     * @return the graph
      */
     public java.util.Map getGraph() {
         return graph;

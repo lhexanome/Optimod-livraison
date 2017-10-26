@@ -41,6 +41,7 @@ public class RoadMap {
     public void addVector(Vector vector) {
         Intersection origin = vector.getOrigin();
         addIntersection(origin);
+        origin.addTronconSortant(vector);
         addIntersection(vector.getDestination());
         this.map.get(origin).add(vector);
     }
