@@ -134,7 +134,7 @@ public class SimplifiedMap {
                                              ArrayList<Path> sortie) {
         for (Halt end : ends) {
             if (!end.equals(start)) {
-                Path t = new Path();
+                Path t = new Path(start, end);
 
                 //on recupere le wrapper correspondant a la livraison d'arrivee
                 IntersectionWrapper endWrapper = findIntersectionWrapper(endWrappers, end.getIntersection());
