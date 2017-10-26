@@ -25,7 +25,7 @@ public class Intersection {
 
     /**
      * liste des intersections sur lesquelles un vector partant
-     * de cette intersection arrive
+     * de cette intersection arrive.
      */
     private ArrayList<Intersection> successeurs = new ArrayList<>();
 
