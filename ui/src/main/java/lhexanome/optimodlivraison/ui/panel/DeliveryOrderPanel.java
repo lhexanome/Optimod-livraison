@@ -59,19 +59,6 @@ public class DeliveryOrderPanel extends AbstractPanel {
      */
     public void setDeliveryOrder(DeliveryOrder deliveryOrder) {
         this.deliveryOrder = deliveryOrder;
-
-        DefaultListModel<String> listModel = new DefaultListModel<>();
-
-        Iterator<Delivery> deliverySet = deliveryOrder.getDeliveries().iterator();
-
-        int i = 0;
-        while (deliverySet.hasNext()) {
-            Delivery currDelivery = deliverySet.next();
-
-            i++;
-        }
-
-        deliveryJList.setModel(listModel);
         contentPane.revalidate();
     }
 
