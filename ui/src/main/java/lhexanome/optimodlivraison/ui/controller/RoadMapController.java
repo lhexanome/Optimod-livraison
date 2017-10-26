@@ -13,44 +13,84 @@ import javax.swing.*;
 import java.io.File;
 import java.util.logging.Logger;
 
-
+/**
+ * Road map controller.
+ */
 public class RoadMapController implements ControllerInterface {
+
+    /**
+     * Logger.
+     */
     private static final Logger LOGGER = Logger.getLogger(RoadMapController.class.getName());
 
-
+    /**
+     * Main controller (parent).
+     */
     private final MainController mainController;
 
+    /**
+     * Road map panel.
+     */
     private final RoadMapPanel roadMapPanel;
 
+    /**
+     * Current road map.
+     */
     private RoadMap roadMap;
 
+    /**
+     * Constructor.
+     *
+     * @param mainController Main controller
+     */
     public RoadMapController(MainController mainController) {
         this.mainController = mainController;
 
         this.roadMapPanel = new RoadMapPanel(this);
     }
 
+    /**
+     * {@link ControllerInterface#closeWindow()}.
+     */
     @Override
     public void closeWindow() {
         mainController.closeWindow();
     }
 
+    /**
+     * {@link ControllerInterface#start()}.
+     */
     @Override
     public void start() {
         mainController.start();
     }
 
+    /**
+     * {@link ControllerInterface#getContentPane()}.
+     */
     @Override
     public JPanel getContentPane() {
         return roadMapPanel.getContentPane();
     }
 
+    /**
+     * Road map setter.
+     * Called by the {@link #selectRoadMap(File)} function.
+     *
+     * @param roadMap new Road map
+     */
     private void setRoadMap(RoadMap roadMap) {
         this.roadMap = roadMap;
         roadMapPanel.setRoadMap(roadMap);
         mainController.setRoadMap(roadMap);
     }
 
+    /**
+     * Load a road map file.
+     * Called by the main controller.
+     *
+     * @param xmlFile XML file
+     */
     public void selectRoadMap(File xmlFile) {
 
         RoadMapFacade mapFacade = new RoadMapFacade();
@@ -74,7 +114,10 @@ public class RoadMapController implements ControllerInterface {
         mapFacade.loadMapFromFile(xmlFile);
     }
 
-
+    /**
+     * Ask the user for a new map.
+     * Called by the panel
+     */
     public void reloadMap() {
         LOGGER.info("Reloading road map");
         FileChooserPopup popup = new FileChooserPopup("Choisissez un plan", "xml");
@@ -89,14 +132,31 @@ public class RoadMapController implements ControllerInterface {
         }
     }
 
+    /**
+     * Delivery order setter.
+     * Called by the main controller.
+     *
+     * @param deliveryOrder new Delivery order
+     */
     public void setDeliveryOrder(DeliveryOrder deliveryOrder) {
         roadMapPanel.setDeliveryOrder(deliveryOrder);
     }
 
+    /**
+     * Road map getter.
+     *
+     * @return Road map
+     */
     public RoadMap getRoadMap() {
         return roadMap;
     }
 
+    /**
+     * Tour setter.
+     * Called by the main controller
+     *
+     * @param tour new Tour
+     */
     public void setTour(Tour tour) {
         roadMapPanel.setTour(tour);
     }

@@ -7,28 +7,55 @@ import java.awt.*;
 import java.io.File;
 import java.util.logging.Logger;
 
+/**
+ * Welcome controller.
+ */
 public class WelcomeController implements ControllerInterface {
 
+    /**
+     * Logger.
+     */
     private static final Logger LOGGER = Logger.getLogger(WelcomeController.class.getName());
 
+    /**
+     * Welcome window.
+     */
     private WelcomeWindow welcomeWindow;
+
+    /**
+     * Main controller (parent).
+     */
     private MainController mainController;
 
+    /**
+     * Constructor.
+     *
+     * @param mainController Main controller
+     */
     public WelcomeController(MainController mainController) {
         this.mainController = mainController;
     }
 
+    /**
+     * {@link ControllerInterface#start()}.
+     */
     @Override
     public void start() {
         welcomeWindow = new WelcomeWindow(this);
         welcomeWindow.open();
     }
 
+    /**
+     * {@link ControllerInterface#getContentPane()}.
+     */
     @Override
     public Container getContentPane() {
         return welcomeWindow.getFrame();
     }
 
+    /**
+     * Called when an user want to choose a map file.
+     */
     public void clickChooseRoadMap() {
         LOGGER.info("Choosing road map");
         FileChooserPopup popup = new FileChooserPopup("Choisissez un plan", "xml");
@@ -46,6 +73,9 @@ public class WelcomeController implements ControllerInterface {
         }
     }
 
+    /**
+     * {@link ControllerInterface#closeWindow()}.
+     */
     @Override
     public void closeWindow() {
         welcomeWindow.close();

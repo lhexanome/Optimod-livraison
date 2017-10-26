@@ -11,35 +11,72 @@ import lhexanome.optimodlivraison.ui.panel.TourPanel;
 import javax.swing.*;
 import java.util.logging.Logger;
 
+/**
+ * Tour controller.
+ */
 public class TourController implements ControllerInterface {
+    /**
+     * Logger.
+     */
     private static final Logger LOGGER = Logger.getLogger(TourController.class.getName());
 
+    /**
+     * Main controller.
+     */
     private final MainController mainController;
+
+    /**
+     * Tour panel.
+     */
     private final TourPanel tourPanel;
 
+    /**
+     * Current tour.
+     */
     private Tour tour;
 
+    /**
+     * Constructor.
+     *
+     * @param mainController Main controller
+     */
     public TourController(MainController mainController) {
         this.mainController = mainController;
 
         this.tourPanel = new TourPanel(this);
     }
 
+    /**
+     * {@link ControllerInterface#closeWindow()}.
+     */
     @Override
     public void closeWindow() {
         mainController.closeWindow();
     }
 
+    /**
+     * {@link ControllerInterface#start()}.
+     */
     @Override
     public void start() {
         mainController.start();
     }
 
+    /**
+     * {@link ControllerInterface#getContentPane()}.
+     */
     @Override
     public JPanel getContentPane() {
         return tourPanel.getContentPane();
     }
 
+    /**
+     * Compute a tour.
+     * Called by the main controller.
+     *
+     * @param roadMap       Road map
+     * @param deliveryOrder Delivery order
+     */
     public void computeTour(RoadMap roadMap, DeliveryOrder deliveryOrder) {
 
         ComputeFacade computeFacade = new ComputeFacade();
@@ -75,11 +112,20 @@ public class TourController implements ControllerInterface {
         computeFacade.computeTour(roadMap, deliveryOrder);
     }
 
+    /**
+     * Tour setter.
+     * Call the main controller to notify change
+     *
+     * @param tour new tour
+     */
     private void setTour(Tour tour) {
         this.tour = tour;
         mainController.setTour(tour);
     }
 
+    /**
+     * Called by the panel when the user want a new computation.
+     */
     public void newComputation() {
         mainController.computeTour();
     }

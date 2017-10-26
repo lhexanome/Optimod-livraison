@@ -12,44 +12,86 @@ import javax.swing.*;
 import java.io.File;
 import java.util.logging.Logger;
 
+/**
+ * Delivery order controller.
+ */
 public class DeliveryOrderController implements ControllerInterface {
 
+    /**
+     * Logger.
+     */
     private static final Logger LOGGER = Logger.getLogger(DeliveryOrderController.class.getName());
 
-
+    /**
+     * Main controller (parent).
+     */
     private final MainController mainController;
 
+    /**
+     * Delivery order panel.
+     */
     private final DeliveryOrderPanel deliveryOrderPanel;
 
+    /**
+     * Current delivery order.
+     */
     private DeliveryOrder deliveryOrder;
 
+    /**
+     * Constructor.
+     *
+     * @param mainController Main controller
+     */
     public DeliveryOrderController(MainController mainController) {
         this.mainController = mainController;
 
         this.deliveryOrderPanel = new DeliveryOrderPanel(this);
     }
 
+
+    /**
+     * {@link ControllerInterface#closeWindow()}.
+     */
     @Override
     public void closeWindow() {
         mainController.closeWindow();
     }
 
+    /**
+     * {@link ControllerInterface#start()}.
+     */
     @Override
     public void start() {
         mainController.start();
     }
 
+    /**
+     * {@link ControllerInterface#getContentPane()}.
+     */
     @Override
     public JPanel getContentPane() {
         return deliveryOrderPanel.getContentPane();
     }
 
+    /**
+     * Delivery order setter.
+     * Called at the end of delivery order loading
+     *
+     * @param deliveryOrder new Delivery order
+     */
     private void setDeliveryOrder(DeliveryOrder deliveryOrder) {
         this.deliveryOrder = deliveryOrder;
         deliveryOrderPanel.setDeliveryOrder(deliveryOrder);
         mainController.setDeliveryOrder(deliveryOrder);
     }
 
+    /**
+     * Load a delivery order.
+     * Called by the main controller.
+     *
+     * @param xmlFile XML file
+     * @param roadMap Road map
+     */
     public void selectDeliveryOrder(File xmlFile, RoadMap roadMap) {
 
         DeliveryFacade deliveryFacade = new DeliveryFacade();
@@ -83,6 +125,10 @@ public class DeliveryOrderController implements ControllerInterface {
         deliveryFacade.loadDeliveryOrderFromFile(xmlFile, roadMap);
     }
 
+    /**
+     * Ask for a new file.
+     * Called by the panel
+     */
     public void reloadDeliveryOrder() {
         LOGGER.info("Reloading delivery order");
         FileChooserPopup popup = new FileChooserPopup("Choisissez une demande de livraison", "xml");
@@ -98,6 +144,11 @@ public class DeliveryOrderController implements ControllerInterface {
         }
     }
 
+    /**
+     * Delivery order getter.
+     *
+     * @return Current delivery order
+     */
     public DeliveryOrder getDeliveryOrder() {
         return deliveryOrder;
     }

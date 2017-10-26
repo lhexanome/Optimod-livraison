@@ -9,39 +9,81 @@ import lhexanome.optimodlivraison.ui.controller.RoadMapController;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Panel containing a road map and some related buttons.
+ */
 public class RoadMapPanel extends AbstractPanel {
 
+    /**
+     * Road map component.
+     */
     private RoadMapComponent roadMapComponent;
+
+    /**
+     * Content panel.
+     */
     private JPanel contentPane;
+
+    /**
+     * Button to reload the map.
+     */
     private JButton reloadRoadMapButton;
 
+    /**
+     * Constructor.
+     *
+     * @param controller Road map controller.
+     */
     public RoadMapPanel(RoadMapController controller) {
         super(controller);
         setup();
     }
 
-    public void setRoadMap(RoadMap roadMap) {
-        this.roadMapComponent.setRoadMap(roadMap);
-    }
-
+    /**
+     * {@link AbstractPanel#setup()}.
+     */
     @Override
     public void setup() {
         reloadRoadMapButton.addActionListener(e -> ((RoadMapController) controller).reloadMap());
     }
 
+    /**
+     * {@link AbstractPanel#getContentPane()}.
+     */
     @Override
     public JPanel getContentPane() {
         return contentPane;
     }
 
+    /**
+     * Delivery order setter.
+     * Called by the controller. Forwarded to roadMapComponent.
+     *
+     * @param deliveryOrder New delivery order
+     */
     public void setDeliveryOrder(DeliveryOrder deliveryOrder) {
         roadMapComponent.setDeliveryOrder(deliveryOrder);
     }
 
+    /**
+     * Road Map setter.
+     * Called by the controller. Forwarded to roadMapComponent.
+     *
+     * @param roadMap New road map
+     */
+    public void setRoadMap(RoadMap roadMap) {
+        this.roadMapComponent.setRoadMap(roadMap);
+    }
+
+    /**
+     * Tour setter.
+     * Called by the controller. Forwarded to roadMapComponent.
+     *
+     * @param tour New tour
+     */
     public void setTour(Tour tour) {
         roadMapComponent.setTour(tour);
     }
-
 
     // Disable Checkstyle for generated code
     //CHECKSTYLE:OFF

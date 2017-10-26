@@ -5,13 +5,46 @@ import lhexanome.optimodlivraison.ui.controller.MainController;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Main panel of the application.
+ * Contains the other panels.
+ */
 public class MainPanel extends AbstractPanel {
+    /**
+     * Content panel.
+     */
     private JPanel contentPane;
+
+    /**
+     * Wrapper panel.
+     * Needed because other panels are initialized in the constructor,
+     * after Intellij's functions.
+     */
     private JPanel wrapperPanel;
+
+    /**
+     * Road map panel.
+     */
     private JPanel roadMapPanel;
+
+    /**
+     * Delivery order panel.
+     */
     private JPanel deliveryOrderPanel;
+
+    /**
+     * Tour panel.
+     */
     private JPanel tourPanel;
 
+    /**
+     * Constructor.
+     *
+     * @param controller         Main controller
+     * @param roadMapPanel       Road map panel
+     * @param deliveryOrderPanel Delivery order panel
+     * @param tourPanel          Tour panel
+     */
     public MainPanel(MainController controller,
                      JPanel roadMapPanel,
                      JPanel deliveryOrderPanel,
@@ -23,6 +56,10 @@ public class MainPanel extends AbstractPanel {
         setup();
     }
 
+    /**
+     * {@link AbstractPanel#setup()}.
+     * Here, dispose panels in the main panel.
+     */
     @Override
     @SuppressWarnings("checkstyle:magicnumber")
     public void setup() {
@@ -44,6 +81,9 @@ public class MainPanel extends AbstractPanel {
         wrapperPanel.add(tourPanel, gbc);
     }
 
+    /**
+     * {@link AbstractPanel#getContentPane()}.
+     */
     @Override
     public JPanel getContentPane() {
         return contentPane;

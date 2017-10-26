@@ -6,34 +6,63 @@ import lhexanome.optimodlivraison.ui.controller.DeliveryOrderController;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Delivery order panel.
+ */
 public class DeliveryOrderPanel extends AbstractPanel {
 
+    /**
+     * Content panel.
+     */
     private JPanel contentPane;
+
+    /**
+     * JList displaying the orders.
+     */
     private JList deliveryJList;
+
+    /**
+     * Button to load delivery order.
+     */
     private JButton loadDeliveryOrderButton;
+
+    /**
+     * Current delivery order.
+     */
     private DeliveryOrder deliveryOrder;
 
+    /**
+     * Constructor.
+     *
+     * @param controller Delivery order controller
+     */
     public DeliveryOrderPanel(DeliveryOrderController controller) {
         super(controller);
         setup();
     }
 
     /**
-     * WARNING: This function is not called by the constructor.
-     * You have to call it after calling super() !
-     * Explications : Intellij GUI designer use an initializer block to initialize components,
-     * But the initializer block is called after the super() method.
+     * {@link AbstractPanel#setup()}.
      */
     @Override
     public void setup() {
         loadDeliveryOrderButton.addActionListener(e -> ((DeliveryOrderController) controller).reloadDeliveryOrder());
     }
 
+    /**
+     * {@link AbstractPanel#getContentPane()}.
+     */
     @Override
     public JPanel getContentPane() {
         return contentPane;
     }
 
+    /**
+     * Delivery order setter.
+     * Called by the controller.
+     *
+     * @param deliveryOrder Delivery order
+     */
     public void setDeliveryOrder(DeliveryOrder deliveryOrder) {
         this.deliveryOrder = deliveryOrder;
         contentPane.revalidate();

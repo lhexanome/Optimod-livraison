@@ -5,21 +5,41 @@ import lhexanome.optimodlivraison.ui.controller.WelcomeController;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Welcome panel is the first display show to the user.
+ */
 public class WelcomePanel extends AbstractPanel {
+    /**
+     * Button to open a road map.
+     */
     private JButton openRoadMapButton;
 
+    /**
+     * Panel containing the interface.
+     */
     private JPanel contentPane;
 
+    /**
+     * Constructor.
+     *
+     * @param controller Welcome controller
+     */
     public WelcomePanel(WelcomeController controller) {
         super(controller);
         setup();
     }
 
+    /**
+     * {@link AbstractPanel#setup()}.
+     */
     @Override
     public void setup() {
         openRoadMapButton.addActionListener(e -> ((WelcomeController) controller).clickChooseRoadMap());
     }
 
+    /**
+     * {@link AbstractPanel#getContentPane()}.
+     */
     @Override
     public JPanel getContentPane() {
         return contentPane;

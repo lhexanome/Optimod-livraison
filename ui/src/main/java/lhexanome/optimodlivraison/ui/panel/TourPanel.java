@@ -5,27 +5,42 @@ import lhexanome.optimodlivraison.ui.controller.TourController;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Panel containing all the components needed for a tour.
+ */
 public class TourPanel extends AbstractPanel {
 
+    /**
+     * Content panel.
+     */
     private JPanel contentPane;
+
+    /**
+     * Button to compute a tour.
+     */
     private JButton computeTourButton;
 
+    /**
+     * Constructor.
+     *
+     * @param controller Tour controller
+     */
     public TourPanel(TourController controller) {
         super(controller);
         setup();
     }
 
     /**
-     * WARNING: This function is not called by the constructor.
-     * You have to call it after calling super() !
-     * Explications : Intellij GUI designer use an initializer block to initialize components,
-     * But the initializer block is called after the super() method.
+     * {@link AbstractPanel#setup()}.
      */
     @Override
     public void setup() {
         computeTourButton.addActionListener(e -> ((TourController) controller).newComputation());
     }
 
+    /**
+     * {@link AbstractPanel#getContentPane()}.
+     */
     @Override
     public JPanel getContentPane() {
         return contentPane;
