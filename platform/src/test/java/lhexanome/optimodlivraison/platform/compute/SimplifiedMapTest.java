@@ -56,6 +56,7 @@ class SimplifiedMapTest {
         demande.addDelivery(new Delivery(F, 0));
         SimplifiedMap sm = new SimplifiedMap(demande,roadMap);
         sm.computeGraph();
+        //TODO real assert
         assertThat(sm).isEqualTo(sm);
     }
 }
