@@ -2,7 +2,7 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="lhexanome.optimodlivraison.ui.panel.RoadMapPanel">
   <grid id="27dc6" binding="contentPane" layout-manager="GridBagLayout">
     <constraints>
-      <xy x="20" y="20" width="500" height="400"/>
+      <xy x="20" y="20" width="8002" height="8026"/>
     </constraints>
     <properties/>
     <border type="line">
@@ -20,7 +20,7 @@
       </component>
       <component id="92ac2" class="lhexanome.optimodlivraison.ui.component.RoadMapComponent" binding="roadMapComponent">
         <constraints>
-          <grid row="0" column="0" row-span="1" col-span="3" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="0" column="0" row-span="1" col-span="3" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
           <gridbag weightx="1.0" weighty="1.0"/>
         </constraints>
         <properties/>

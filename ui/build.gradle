@@ -3,3 +3,7 @@ version '1.0-SNAPSHOT'
 dependencies {
     compile project(':platform')
 }
+
+apply plugin: 'application'
+
+mainClassName = "lhexanome.optimodlivraison.ui.HelloMars"
