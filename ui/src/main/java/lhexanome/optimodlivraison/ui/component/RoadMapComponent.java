@@ -11,13 +11,16 @@ import lhexanome.optimodlivraison.platform.models.Warehouse;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Collection;
 
 /**
  * RoadMap swing component.
  */
-public class RoadMapComponent extends JComponent {
+public class RoadMapComponent extends JComponent implements MouseListener{
 
     /**
      * X offset marker red.
@@ -101,12 +104,20 @@ public class RoadMapComponent extends JComponent {
      * RoadMap constructor.
      * Load images from jar file.
      */
+
+    /**
+     * Selected intersection to display.
+     */
+    private Intersection currentIntersection;
+
     public RoadMapComponent() {
         super();
         try {
             markerRed = ImageIO.read(getClass().getResource(RESOURCE_NAME_PLAN_MARKER_RED));
             markerOrange = ImageIO.read(getClass().getResource(RESOURCE_NAME_PLAN_MARKER_ORANGE));
             compass = ImageIO.read(getClass().getResource(RESOURCE_NAME_PLAN_COMPASS));
+            currentIntersection = null;
+            addMouseListener(this);
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(1);
@@ -169,6 +180,18 @@ public class RoadMapComponent extends JComponent {
         return new Dimension(400, 400);
     }
 
+    /**
+     * @return the roadmap
+     */
+    public RoadMap getRoadMap(){ return roadMap; }
+
+    /**
+     * @return the selected intersection
+     */
+    public Intersection getCurrentIntersection(){ return currentIntersection; }
+
+
+
 
     /**
      * Called by swing, repaint all the component.
@@ -197,6 +220,9 @@ public class RoadMapComponent extends JComponent {
         }
         if (deliveryOrder != null) {
             paintComponent(g2, deliveryOrder);
+        }
+        if (currentIntersection != null) {
+            paintComponent(g2, currentIntersection);
         }
     }
 
@@ -291,6 +317,19 @@ public class RoadMapComponent extends JComponent {
     }
 
     /**
+     * Draw the current intersection.
+     *
+     * @param g2     Graphics
+     * @param intersection Vector
+     */
+    private void paintComponent(Graphics2D g2, Intersection intersection){
+        int x = (int) (this.offsetY + getSize().width / 2 + intersection.getY() * scalY);
+        int y = (int) (-this.offsetX + getSize().height / 2 + -intersection.getX() * scalX);
+
+        g2.drawImage(markerOrange, x + MARKER_ORANGE_OFFSET_X, y + MARKER_ORANGE_OFFSET_Y, null);
+    }
+
+    /**
      * Set the road map.
      * Remove old watcher if present and add a new one.
      *
@@ -338,5 +377,66 @@ public class RoadMapComponent extends JComponent {
         repaint();
 
         //TODO add wacher
+    }
+
+    /**
+     * setter for currentIntersection
+     */
+    public void setCurrentIntersection(Intersection newCurrentIntersection){
+        currentIntersection = newCurrentIntersection;
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent mouseEvent) {
+        int xMouse = mouseEvent.getX();
+        int yMouse = mouseEvent.getY();
+//        System.out.print("clicked : ("+xMouse+","+yMouse+")");
+        double minimal_distance = 10000000;
+        Collection<Intersection> intersections = roadMap.getIntersections();
+        for (Intersection intersection : intersections) {
+            int xIntersection = getXFromIntersection(intersection);
+            int yIntersection = getYFromIntersection(intersection);
+            double distanceIntersectionToMouse = distance(xIntersection, yIntersection, xMouse, yMouse);
+            if (distanceIntersectionToMouse <= minimal_distance){
+                minimal_distance = distanceIntersectionToMouse;
+                setCurrentIntersection(intersection);
+            }
+        }
+//        System.out.println("currentIntersection : (" + getXFromIntersection(currentIntersection) + "," + getYFromIntersection(currentIntersection) + ")");
+        repaint();
+    }
+
+    @Override
+    public void mousePressed(MouseEvent mouseEvent) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent mouseEvent) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent mouseEvent) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent mouseEvent) {
+
+    }
+
+    private double distance(int xIntersection, int yIntersection, int xMouse, int yMouse) {
+        return Math.sqrt(Math.pow(xIntersection - xMouse, 2) + Math.pow(yIntersection - yMouse, 2));
+    }
+
+    private int getXFromIntersection(Intersection intersection) {
+        float vOffsetX = this.offsetX + getSize().width / 2;
+        return (int) (intersection.getY() * scalY + vOffsetX);
+    }
+
+    private int getYFromIntersection(Intersection intersection) {
+        float vOffsetY = -this.offsetY + getSize().height / 2;
+        return (int) (-intersection.getX() * scalX + vOffsetY);
     }
 }
