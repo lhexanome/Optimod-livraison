@@ -234,7 +234,7 @@ public class RoadMapComponent extends JComponent {
         g2.setColor(TOUR_VECTOR_COLOR);
         g2.setStroke(new BasicStroke(2));
         // TODO Set stroke with the zoom level
-        tourToDraw.getDeliveries().forEach(path ->
+        tourToDraw.getPaths().forEach(path ->
                 path.getVectors().forEach(vector -> paintComponent(g2, vector))
         );
     }
