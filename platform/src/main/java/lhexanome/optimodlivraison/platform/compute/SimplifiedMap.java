@@ -88,6 +88,7 @@ public class SimplifiedMap {
      *
      * @return tour generated.
      */
+    @SuppressWarnings("checkstyle:magicnumber")
     public Tour generateFakeTour() {
         ArrayList<Path> listPath = new ArrayList<>();
         Tour sortie = null;
