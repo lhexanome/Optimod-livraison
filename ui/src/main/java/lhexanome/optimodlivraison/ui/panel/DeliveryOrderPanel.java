@@ -18,14 +18,13 @@ public class DeliveryOrderPanel extends AbstractPanel {
     private JPanel contentPane;
 
     /**
-     * JList displaying the orders.
-     */
-    private JList<String> deliveryJList;
-
-    /**
      * Button to load delivery order.
      */
     private JButton loadDeliveryOrderButton;
+
+    /**
+     * Netbeans panel for a delivery order panel.
+     */
     private lhexanome.optimodlivraison.ui.netbeanpanel.DeliveryOrderPanel deliveryOrderPanel;
 
     /**
@@ -55,12 +54,12 @@ public class DeliveryOrderPanel extends AbstractPanel {
      * Delivery order setter.
      * Called by the controller.
      *
-     * @param deliveryOrder Delivery order
-     * @param roadMap roadMap
+     * @param newDeliveryOrder Delivery order
+     * @param roadMap       roadMap
      */
-    public void setData(DeliveryOrder deliveryOrder, RoadMap roadMap) {
-        this.deliveryOrder = deliveryOrder;
-        deliveryOrderPanel.setData(deliveryOrder, roadMap);
+    public void setData(DeliveryOrder newDeliveryOrder, RoadMap roadMap) {
+        this.deliveryOrder = newDeliveryOrder;
+        deliveryOrderPanel.setData(newDeliveryOrder, roadMap);
         contentPane.revalidate();
     }
 
@@ -73,25 +72,6 @@ public class DeliveryOrderPanel extends AbstractPanel {
 
         // Disable Checkstyle for generated code
         //CHECKSTYLE:OFF
-    }
-
-    /**
-     * @noinspection ALL
-     */
-    private Font $$$getFont$$$(String fontName, int style, int size, Font currentFont) {
-        if (currentFont == null) return null;
-        String resultName;
-        if (fontName == null) {
-            resultName = currentFont.getName();
-        } else {
-            Font testFont = new Font(fontName, Font.PLAIN, 10);
-            if (testFont.canDisplay('a') && testFont.canDisplay('1')) {
-                resultName = fontName;
-            } else {
-                resultName = currentFont.getName();
-            }
-        }
-        return new Font(resultName, style >= 0 ? style : currentFont.getStyle(), size >= 0 ? size : currentFont.getSize());
     }
 
     {
@@ -136,6 +116,25 @@ public class DeliveryOrderPanel extends AbstractPanel {
         gbc.ipady = 5;
         gbc.insets = new Insets(5, 0, 5, 0);
         contentPane.add(loadDeliveryOrderButton, gbc);
+    }
+
+    /**
+     * @noinspection ALL
+     */
+    private Font $$$getFont$$$(String fontName, int style, int size, Font currentFont) {
+        if (currentFont == null) return null;
+        String resultName;
+        if (fontName == null) {
+            resultName = currentFont.getName();
+        } else {
+            Font testFont = new Font(fontName, Font.PLAIN, 10);
+            if (testFont.canDisplay('a') && testFont.canDisplay('1')) {
+                resultName = fontName;
+            } else {
+                resultName = currentFont.getName();
+            }
+        }
+        return new Font(resultName, style >= 0 ? style : currentFont.getStyle(), size >= 0 ? size : currentFont.getSize());
     }
 
     /**

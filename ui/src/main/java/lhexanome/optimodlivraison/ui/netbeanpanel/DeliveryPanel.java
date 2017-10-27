@@ -10,6 +10,7 @@ import java.util.Set;
 
 /**
  * @author hugues
+ * CHECKSTYLE:OFF
  */
 public class DeliveryPanel extends javax.swing.JPanel {
 

@@ -10,18 +10,19 @@ import java.util.Set;
 
 /**
  * @author hugues
+ * CHECKSTYLE:OFF
  */
 public class DeliveryListPanel extends javax.swing.JPanel {
 
-    private Map<Delivery, DeliveryPanel> deliverys;
+    private Map<Delivery, DeliveryPanel> deliveries;
 
     /**
      * Creates new form DeliveryListPanel
      */
     public DeliveryListPanel(Set<Delivery> deliveries, RoadMap roadMap) {
-        deliverys = new HashMap<>();
+        this.deliveries = new HashMap<>();
         for (Delivery delivery : deliveries)
-            deliverys.put(delivery, new DeliveryPanel(delivery, roadMap));
+            this.deliveries.put(delivery, new DeliveryPanel(delivery, roadMap));
 
         initComponents();
     }
@@ -38,7 +39,7 @@ public class DeliveryListPanel extends javax.swing.JPanel {
         setLayout(new java.awt.GridBagLayout());
 
         int[] pos = {0};
-        deliverys.forEach((delivery, deliveryPanel) -> {
+        deliveries.forEach((delivery, deliveryPanel) -> {
             GridBagConstraints gridBagConstraints = new GridBagConstraints();
             gridBagConstraints.gridx = 0;
             gridBagConstraints.gridy = pos[0];

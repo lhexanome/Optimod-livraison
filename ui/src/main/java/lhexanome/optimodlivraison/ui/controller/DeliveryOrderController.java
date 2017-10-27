@@ -77,13 +77,13 @@ public class DeliveryOrderController implements ControllerInterface {
      * Delivery order setter.
      * Called at the end of delivery order loading
      *
-     * @param deliveryOrder new Delivery order
-     * @param roadMap
+     * @param newDeliveryOrder new Delivery order
+     * @param newRoadMap new Road map
      */
-    private void setData(DeliveryOrder deliveryOrder, RoadMap roadMap) {
-        this.deliveryOrder = deliveryOrder;
-        deliveryOrderPanel.setData(deliveryOrder, roadMap);
-        mainController.setDeliveryOrder(deliveryOrder);
+    private void setData(DeliveryOrder newDeliveryOrder, RoadMap newRoadMap) {
+        this.deliveryOrder = newDeliveryOrder;
+        deliveryOrderPanel.setData(newDeliveryOrder, newRoadMap);
+        mainController.setDeliveryOrder(newDeliveryOrder);
     }
 
     /**

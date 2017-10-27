@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 
 /**
  * @author hugue
+ * CHECKSTYLE:OFF
  */
 public class DeliveryOrderPanel extends javax.swing.JPanel {
 
