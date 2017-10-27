@@ -20,7 +20,7 @@ public class DeliveryPanel extends javax.swing.JPanel {
     /**
      * Creates new form orderItem
      *
-     * @param delivery
+     * @param delivery delivery
      */
 
     public DeliveryPanel(Delivery delivery, RoadMap roadMap) {

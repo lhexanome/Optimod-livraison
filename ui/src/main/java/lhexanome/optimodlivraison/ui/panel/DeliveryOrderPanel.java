@@ -56,7 +56,7 @@ public class DeliveryOrderPanel extends AbstractPanel {
      * Called by the controller.
      *
      * @param deliveryOrder Delivery order
-     * @param roadMap
+     * @param roadMap roadMap
      */
     public void setData(DeliveryOrder deliveryOrder, RoadMap roadMap) {
         this.deliveryOrder = deliveryOrder;

@@ -23,8 +23,8 @@ public class DeliveryOrderPanel extends javax.swing.JPanel {
     }
 
     /**
-     * @param deliveryOrder
-     * @param roadMap
+     * @param deliveryOrder deliveryOrder
+     * @param roadMap roadMap
      */
     public void setData(DeliveryOrder deliveryOrder, RoadMap roadMap) {
         this.deliveryOrder = deliveryOrder;
