@@ -65,8 +65,6 @@ public class InterfaceCalcul {
      * Calcule la tournée optimale en fonction du roadMap simplifié et de la demande de livraison.
      * Met à jour l'attribut sortie.
      *
-     * @param simplifiedMap Le plan simplifié calculé précédemment.
-     * @param demande       La demande de livraison à traiter.
      * @return La tournée calculée.
      */
     public Tour computeTour() {
