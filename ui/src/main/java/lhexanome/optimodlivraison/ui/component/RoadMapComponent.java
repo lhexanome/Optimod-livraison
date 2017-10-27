@@ -7,12 +7,15 @@ import lhexanome.optimodlivraison.platform.models.RoadMap;
 import lhexanome.optimodlivraison.platform.models.Tour;
 import lhexanome.optimodlivraison.platform.models.Vector;
 import lhexanome.optimodlivraison.platform.models.Warehouse;
+import lhexanome.optimodlivraison.ui.controller.RoadMapController;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Collection;
@@ -105,23 +108,37 @@ public class RoadMapComponent extends JComponent implements MouseListener{
      * Load images from jar file.
      */
 
-    /**
-     * Selected intersection to display.
-     */
-    private Intersection currentIntersection;
+    private double imageScale;
 
-    public RoadMapComponent() {
+    private RoadMapController roadMapController;
+
+    public RoadMapComponent(RoadMapController roadMapController) {
         super();
         try {
+            this.roadMapController = roadMapController;
+            imageScale = 0.5;
             markerRed = ImageIO.read(getClass().getResource(RESOURCE_NAME_PLAN_MARKER_RED));
             markerOrange = ImageIO.read(getClass().getResource(RESOURCE_NAME_PLAN_MARKER_ORANGE));
             compass = ImageIO.read(getClass().getResource(RESOURCE_NAME_PLAN_COMPASS));
-            currentIntersection = null;
             addMouseListener(this);
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(1);
         }
+    }
+
+    /**
+     * resizes a bufferedimage
+     */
+    private BufferedImage scaleImage(BufferedImage markerOrangeBefore) {
+        int w = markerOrangeBefore.getWidth();
+        int h = markerOrangeBefore.getHeight();
+        markerOrange = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+        AffineTransform at = new AffineTransform();
+        at.scale(imageScale, imageScale);
+        AffineTransformOp scaleOp =
+                new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
+        return scaleOp.filter(markerOrangeBefore, markerOrange);
     }
 
     /**
@@ -186,14 +203,6 @@ public class RoadMapComponent extends JComponent implements MouseListener{
     public RoadMap getRoadMap(){ return roadMap; }
 
     /**
-     * @return the selected intersection
-     */
-    public Intersection getCurrentIntersection(){ return currentIntersection; }
-
-
-
-
-    /**
      * Called by swing, repaint all the component.
      * <p>
      * Before painting data, we paint some GUI elements.
@@ -221,8 +230,8 @@ public class RoadMapComponent extends JComponent implements MouseListener{
         if (deliveryOrder != null) {
             paintComponent(g2, deliveryOrder);
         }
-        if (currentIntersection != null) {
-            paintComponent(g2, currentIntersection);
+        if (roadMapController.getCurrentIntersection() != null) {
+            paintComponent(g2, roadMapController.getCurrentIntersection());
         }
     }
 
@@ -306,13 +315,11 @@ public class RoadMapComponent extends JComponent implements MouseListener{
     private void paintComponent(Graphics2D g2, Vector vector) {
         Intersection origin = vector.getOrigin();
         Intersection destination = vector.getDestination();
-        float vOffsetX = this.offsetX + getSize().width / 2;
-        float vOffsetY = -this.offsetY + getSize().height / 2;
         g2.drawLine(
-                (int) (origin.getY() * scalY + vOffsetX),
-                (int) (-origin.getX() * scalX + vOffsetY),
-                (int) (destination.getY() * scalY + vOffsetX),
-                (int) (-destination.getX() * scalX + vOffsetY)
+                getXFromIntersection(origin),
+                getYFromIntersection(origin),
+                getXFromIntersection(destination),
+                getYFromIntersection(destination)
         );
     }
 
@@ -325,7 +332,6 @@ public class RoadMapComponent extends JComponent implements MouseListener{
     private void paintComponent(Graphics2D g2, Intersection intersection){
         int x = (int) (this.offsetY + getSize().width / 2 + intersection.getY() * scalY);
         int y = (int) (-this.offsetX + getSize().height / 2 + -intersection.getX() * scalX);
-
         g2.drawImage(markerOrange, x + MARKER_ORANGE_OFFSET_X, y + MARKER_ORANGE_OFFSET_Y, null);
     }
 
@@ -380,29 +386,14 @@ public class RoadMapComponent extends JComponent implements MouseListener{
     }
 
     /**
-     * setter for currentIntersection
+     * updates the current selected intersection
+     * @param mouseEvent
      */
-    public void setCurrentIntersection(Intersection newCurrentIntersection){
-        currentIntersection = newCurrentIntersection;
-    }
-
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
         int xMouse = mouseEvent.getX();
         int yMouse = mouseEvent.getY();
-//        System.out.print("clicked : ("+xMouse+","+yMouse+")");
-        double minimal_distance = 10000000;
-        Collection<Intersection> intersections = roadMap.getIntersections();
-        for (Intersection intersection : intersections) {
-            int xIntersection = getXFromIntersection(intersection);
-            int yIntersection = getYFromIntersection(intersection);
-            double distanceIntersectionToMouse = distance(xIntersection, yIntersection, xMouse, yMouse);
-            if (distanceIntersectionToMouse <= minimal_distance){
-                minimal_distance = distanceIntersectionToMouse;
-                setCurrentIntersection(intersection);
-            }
-        }
-//        System.out.println("currentIntersection : (" + getXFromIntersection(currentIntersection) + "," + getYFromIntersection(currentIntersection) + ")");
+        roadMapController.updateCurrentIntersection(xMouse,yMouse);
         repaint();
     }
 
@@ -426,16 +417,33 @@ public class RoadMapComponent extends JComponent implements MouseListener{
 
     }
 
-    private double distance(int xIntersection, int yIntersection, int xMouse, int yMouse) {
-        return Math.sqrt(Math.pow(xIntersection - xMouse, 2) + Math.pow(yIntersection - yMouse, 2));
+    /**
+     *
+     * @param x1
+     * @param y1
+     * @param x2
+     * @param y2
+     * @return the euclidian distance between two points A(x1, y1) and B(x2, y2)
+     */
+    public double distance(int x1, int y1, int x2, int y2) {
+        return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
     }
 
-    private int getXFromIntersection(Intersection intersection) {
+    /**
+     * @param intersection
+     * @return the x coordinate on the screen
+     */
+    public int getXFromIntersection(Intersection intersection) {
         float vOffsetX = this.offsetX + getSize().width / 2;
         return (int) (intersection.getY() * scalY + vOffsetX);
     }
 
-    private int getYFromIntersection(Intersection intersection) {
+    /**
+     *
+     * @param intersection
+     * @return the y coordinate on the screen
+     */
+    public int getYFromIntersection(Intersection intersection) {
         float vOffsetY = -this.offsetY + getSize().height / 2;
         return (int) (-intersection.getX() * scalX + vOffsetY);
     }

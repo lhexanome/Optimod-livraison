@@ -4,6 +4,7 @@ import lhexanome.optimodlivraison.platform.exceptions.MapException;
 import lhexanome.optimodlivraison.platform.facade.RoadMapFacade;
 import lhexanome.optimodlivraison.platform.listeners.MapListener;
 import lhexanome.optimodlivraison.platform.models.DeliveryOrder;
+import lhexanome.optimodlivraison.platform.models.Intersection;
 import lhexanome.optimodlivraison.platform.models.RoadMap;
 import lhexanome.optimodlivraison.platform.models.Tour;
 import lhexanome.optimodlivraison.ui.panel.RoadMapPanel;
@@ -11,6 +12,7 @@ import lhexanome.optimodlivraison.ui.popup.FileChooserPopup;
 
 import javax.swing.*;
 import java.io.File;
+import java.util.Collection;
 import java.util.logging.Logger;
 
 /**
@@ -39,6 +41,11 @@ public class RoadMapController implements ControllerInterface {
     private RoadMap roadMap;
 
     /**
+     * Current selected intersection
+     */
+    private Intersection currentIntersection;
+
+    /**
      * Constructor.
      *
      * @param mainController Main controller
@@ -47,6 +54,7 @@ public class RoadMapController implements ControllerInterface {
         this.mainController = mainController;
 
         this.roadMapPanel = new RoadMapPanel(this);
+        currentIntersection = null;
     }
 
     /**
@@ -159,5 +167,26 @@ public class RoadMapController implements ControllerInterface {
      */
     public void setTour(Tour tour) {
         roadMapPanel.setTour(tour);
+    }
+
+    public void updateCurrentIntersection(int xMouse, int yMouse){
+        double minimal_distance = 10000000;
+        Intersection closestIntersection = null;
+        Collection<Intersection> intersections = roadMap.getIntersections();
+        for (Intersection intersection : intersections) {
+            int xIntersection = roadMapPanel.getComponent().getXFromIntersection(intersection);
+            int yIntersection = roadMapPanel.getComponent().getYFromIntersection(intersection);
+            double distanceIntersectionToMouse =
+                    roadMapPanel.getComponent().distance(xIntersection, yIntersection, xMouse, yMouse); // TODO use a common distance function
+            if (distanceIntersectionToMouse <= minimal_distance){
+                minimal_distance = distanceIntersectionToMouse;
+                closestIntersection = intersection;
+            }
+        }
+        currentIntersection = closestIntersection;
+    }
+
+    public Intersection getCurrentIntersection(){
+        return currentIntersection;
     }
 }
