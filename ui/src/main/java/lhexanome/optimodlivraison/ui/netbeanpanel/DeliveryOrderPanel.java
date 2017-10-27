@@ -8,7 +8,6 @@ import java.awt.*;
 import java.text.SimpleDateFormat;
 
 /**
- *
  * @author hugue
  */
 public class DeliveryOrderPanel extends javax.swing.JPanel {

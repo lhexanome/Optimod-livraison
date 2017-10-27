@@ -4,13 +4,11 @@ import lhexanome.optimodlivraison.platform.models.Delivery;
 import lhexanome.optimodlivraison.platform.models.RoadMap;
 
 import javax.swing.*;
-import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.util.HashSet;
 import java.util.Set;
 
 /**
- *
  * @author hugues
  */
 public class DeliveryPanel extends javax.swing.JPanel {
@@ -21,8 +19,8 @@ public class DeliveryPanel extends javax.swing.JPanel {
 
     /**
      * Creates new form orderItem
-     * @param delivery
      *
+     * @param delivery
      */
 
     public DeliveryPanel(Delivery delivery, RoadMap roadMap) {
@@ -36,7 +34,7 @@ public class DeliveryPanel extends javax.swing.JPanel {
     /**
      * @return
      */
-    private String getTextAdresse(){
+    private String getTextAdresse() {
         return "adresse : " + delivery.getIntersection().getId();
     }
 
@@ -80,7 +78,7 @@ public class DeliveryPanel extends javax.swing.JPanel {
         add(jLabelAdresse, gridBagConstraints);
 
         int gridY = 3;
-        if(delivery.getSlot() != null) {
+        if (delivery.getSlot() != null) {
             jLabelTimeSlot.setText(getTextTimeSlot());
             gridBagConstraints = new java.awt.GridBagConstraints();
             gridBagConstraints.gridx = 3;
@@ -90,7 +88,7 @@ public class DeliveryPanel extends javax.swing.JPanel {
             gridY++;
         }
 
-        for(String streat : getStreats()){
+        for (String streat : getStreats()) {
             JLabel streatLabel = new JLabel();
             streatLabel.setText(streat);
             gridBagConstraints = new java.awt.GridBagConstraints();
@@ -101,7 +99,7 @@ public class DeliveryPanel extends javax.swing.JPanel {
             gridY++;
         }
 
-        if(gridY<10)gridY=10;
+        if (gridY < 10) gridY = 10;
         JSeparator jSeparator1 = new JSeparator();
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -111,7 +109,7 @@ public class DeliveryPanel extends javax.swing.JPanel {
         add(jSeparator1, gridBagConstraints);
 
         jLabelNumber.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
-        jLabelNumber.setText(number < 0?"O":number+"");
+        jLabelNumber.setText(number < 0 ? "O" : number + "");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
@@ -162,13 +160,13 @@ public class DeliveryPanel extends javax.swing.JPanel {
 
     public String getTextTimeSlot() {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-        return "de "+sdf.format(delivery.getSlot().getStart())+" à "+sdf.format(delivery.getSlot().getEnd());
+        return "de " + sdf.format(delivery.getSlot().getStart()) + " à " + sdf.format(delivery.getSlot().getEnd());
     }
 
-    private Set<String> getStreats(){
+    private Set<String> getStreats() {
         Set<String> res = new HashSet<>();
         roadMap.getTronconsFromIntersection(delivery.getIntersection()).forEach(vector -> {
-            res.add(vector.getNameStreet().isEmpty()?"rue sans nom":vector.getNameStreet());
+            res.add(vector.getNameStreet().isEmpty() ? "rue sans nom" : vector.getNameStreet());
         });
         return res;
     }

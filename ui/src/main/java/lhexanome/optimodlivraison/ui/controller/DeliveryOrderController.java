@@ -82,7 +82,7 @@ public class DeliveryOrderController implements ControllerInterface {
      */
     private void setData(DeliveryOrder deliveryOrder, RoadMap roadMap) {
         this.deliveryOrder = deliveryOrder;
-        deliveryOrderPanel.setData(deliveryOrder,roadMap);
+        deliveryOrderPanel.setData(deliveryOrder, roadMap);
         mainController.setDeliveryOrder(deliveryOrder);
     }
 

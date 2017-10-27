@@ -9,19 +9,19 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- *
  * @author hugues
  */
 public class DeliveryListPanel extends javax.swing.JPanel {
 
-    private Map<Delivery,DeliveryPanel> deliverys;
+    private Map<Delivery, DeliveryPanel> deliverys;
+
     /**
      * Creates new form DeliveryListPanel
      */
     public DeliveryListPanel(Set<Delivery> deliveries, RoadMap roadMap) {
         deliverys = new HashMap<>();
-        for(Delivery delivery : deliveries)
-            deliverys.put(delivery,new DeliveryPanel(delivery, roadMap));
+        for (Delivery delivery : deliveries)
+            deliverys.put(delivery, new DeliveryPanel(delivery, roadMap));
 
         initComponents();
     }
@@ -45,8 +45,8 @@ public class DeliveryListPanel extends javax.swing.JPanel {
             gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
             gridBagConstraints.weightx = 0.1;
             gridBagConstraints.weighty = 0.1;
-            add(deliveryPanel,gridBagConstraints);
-            pos[0] ++;
+            add(deliveryPanel, gridBagConstraints);
+            pos[0]++;
         });
 
     }// </editor-fold>//GEN-END:initComponents

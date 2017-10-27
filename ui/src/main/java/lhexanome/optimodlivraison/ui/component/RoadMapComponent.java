@@ -1,12 +1,6 @@
 package lhexanome.optimodlivraison.ui.component;
 
-import lhexanome.optimodlivraison.platform.models.Delivery;
-import lhexanome.optimodlivraison.platform.models.DeliveryOrder;
-import lhexanome.optimodlivraison.platform.models.Intersection;
-import lhexanome.optimodlivraison.platform.models.RoadMap;
-import lhexanome.optimodlivraison.platform.models.Tour;
-import lhexanome.optimodlivraison.platform.models.Vector;
-import lhexanome.optimodlivraison.platform.models.Warehouse;
+import lhexanome.optimodlivraison.platform.models.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
