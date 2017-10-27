@@ -12,6 +12,7 @@ import lhexanome.optimodlivraison.ui.popup.FileChooserPopup;
 
 import javax.swing.*;
 import java.io.File;
+import java.util.Collection;
 import java.util.logging.Logger;
 
 /**

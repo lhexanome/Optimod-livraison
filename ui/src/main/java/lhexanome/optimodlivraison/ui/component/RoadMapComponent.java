@@ -138,15 +138,12 @@ public class RoadMapComponent extends JComponent implements MouseListener {
     private static final double IMAGE_SCALE = 0.5;
 
     /**
-     * RoadMap controller.
+     * Selected intersection to display.
      */
+    private Intersection currentIntersection;
+
     private RoadMapController roadMapController;
 
-    /**
-     * Constructor.
-     *
-     * @param roadMapController the roadMapController you assign to the RoadMapComponent.
-     */
     public RoadMapComponent(RoadMapController roadMapController) {
         super();
         try {
@@ -238,9 +235,9 @@ public class RoadMapComponent extends JComponent implements MouseListener {
     /**
      * @return the roadmap
      */
-    public RoadMap getRoadMap() {
-        return roadMap;
-    }
+    public RoadMap getRoadMap(){ return roadMap; }
+
+
 
     /**
      * Called by swing, repaint all the component.
