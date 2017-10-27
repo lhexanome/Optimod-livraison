@@ -1,12 +1,10 @@
 package lhexanome.optimodlivraison.ui.panel;
 
-import lhexanome.optimodlivraison.platform.models.Delivery;
 import lhexanome.optimodlivraison.platform.models.DeliveryOrder;
 import lhexanome.optimodlivraison.ui.controller.DeliveryOrderController;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Iterator;
 
 /**
  * Delivery order panel.

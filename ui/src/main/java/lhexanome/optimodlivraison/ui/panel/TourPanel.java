@@ -20,6 +20,10 @@ public class TourPanel extends AbstractPanel {
      * Button to compute a tour.
      */
     private JButton computeTourButton;
+
+    /**
+     * Label indicating the current Tour duration.
+     */
     private JLabel durationLabel;
 
     /**
