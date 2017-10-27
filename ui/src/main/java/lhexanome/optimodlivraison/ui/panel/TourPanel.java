@@ -44,6 +44,8 @@ public class TourPanel extends AbstractPanel {
     @Override
     public JPanel getContentPane() {
         return contentPane;
+        // Disable Checkstyle for generated code
+        //CHECKSTYLE:OFF
     }
 
     {

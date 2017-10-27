@@ -1,10 +1,12 @@
 package lhexanome.optimodlivraison.ui.panel;
 
+import lhexanome.optimodlivraison.platform.models.Delivery;
 import lhexanome.optimodlivraison.platform.models.DeliveryOrder;
 import lhexanome.optimodlivraison.ui.controller.DeliveryOrderController;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Iterator;
 
 /**
  * Delivery order panel.
@@ -59,6 +61,15 @@ public class DeliveryOrderPanel extends AbstractPanel {
         this.deliveryOrder = deliveryOrder;
 
         DefaultListModel<String> listModel = new DefaultListModel<>();
+
+        Iterator<Delivery> deliverySet = deliveryOrder.getDeliveries().iterator();
+
+        int i = 0;
+        while (deliverySet.hasNext()) {
+            Delivery currDelivery = deliverySet.next();
+
+            i++;
+        }
 
         deliveryJList.setModel(listModel);
         contentPane.revalidate();

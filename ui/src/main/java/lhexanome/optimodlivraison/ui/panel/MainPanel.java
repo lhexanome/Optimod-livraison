@@ -87,6 +87,9 @@ public class MainPanel extends AbstractPanel {
     @Override
     public JPanel getContentPane() {
         return contentPane;
+
+        // Disable Checkstyle for generated code
+        //CHECKSTYLE:OFF
     }
 
     {
@@ -119,7 +122,5 @@ public class MainPanel extends AbstractPanel {
     }
 
 
-    // Disable Checkstyle for generated code
-    //CHECKSTYLE:OFF
 
 }
