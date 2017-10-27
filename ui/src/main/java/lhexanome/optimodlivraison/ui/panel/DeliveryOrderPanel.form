@@ -2,46 +2,37 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="lhexanome.optimodlivraison.ui.panel.DeliveryOrderPanel">
   <grid id="27dc6" binding="contentPane" layout-manager="GridBagLayout">
     <constraints>
-      <xy x="20" y="20" width="500" height="400"/>
+      <xy x="20" y="20" width="515" height="400"/>
     </constraints>
     <properties/>
     <border type="none"/>
     <children>
-      <vspacer id="97b7e">
+      <scrollpane id="7a346">
         <constraints>
-          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-          <gridbag weightx="0.0" weighty="0.0"/>
+          <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="0.1" weighty="0.1"/>
         </constraints>
-      </vspacer>
+        <properties>
+          <horizontalScrollBarPolicy value="31"/>
+          <verticalScrollBarPolicy value="20"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="f78c2" class="lhexanome.optimodlivraison.ui.netbeanpanel.DeliveryOrderPanel" binding="deliveryOrderPanel">
+            <constraints/>
+            <properties/>
+          </component>
+        </children>
+      </scrollpane>
       <component id="1e2bd" class="javax.swing.JButton" binding="loadDeliveryOrderButton">
         <constraints>
-          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-          <gridbag weightx="0.0" weighty="0.0"/>
+          <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+          <gridbag top="5" left="0" bottom="5" right="0" weightx="0.0" weighty="0.0" ipadx="5" ipady="5"/>
         </constraints>
         <properties>
           <text value="Charger demande de livraison"/>
         </properties>
       </component>
-      <scrollpane id="7a346">
-        <constraints>
-          <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-          <gridbag weightx="0.5" weighty="0.5"/>
-        </constraints>
-        <properties>
-          <horizontalScrollBarPolicy value="31"/>
-          <verticalScrollBarPolicy value="22"/>
-        </properties>
-        <border type="none"/>
-        <children>
-          <component id="4a251" class="javax.swing.JList" binding="deliveryJList">
-            <constraints/>
-            <properties>
-              <model/>
-              <selectionMode value="0"/>
-            </properties>
-          </component>
-        </children>
-      </scrollpane>
     </children>
   </grid>
 </form>

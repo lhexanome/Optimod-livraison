@@ -10,6 +10,7 @@ import lhexanome.optimodlivraison.ui.popup.FileChooserPopup;
 
 import javax.swing.*;
 import java.io.File;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -77,12 +78,13 @@ public class DeliveryOrderController implements ControllerInterface {
      * Delivery order setter.
      * Called at the end of delivery order loading
      *
-     * @param deliveryOrder new Delivery order
+     * @param newDeliveryOrder new Delivery order
+     * @param newRoadMap       new Road map
      */
-    private void setDeliveryOrder(DeliveryOrder deliveryOrder) {
-        this.deliveryOrder = deliveryOrder;
-        deliveryOrderPanel.setDeliveryOrder(deliveryOrder);
-        mainController.setDeliveryOrder(deliveryOrder);
+    private void setData(DeliveryOrder newDeliveryOrder, RoadMap newRoadMap) {
+        this.deliveryOrder = newDeliveryOrder;
+        deliveryOrderPanel.setData(newDeliveryOrder, newRoadMap);
+        mainController.setDeliveryOrder(newDeliveryOrder);
     }
 
     /**
@@ -103,7 +105,7 @@ public class DeliveryOrderController implements ControllerInterface {
              */
             @Override
             public void onUpdateDeliveryOrder(DeliveryOrder newDeliveryOrder) {
-                setDeliveryOrder(newDeliveryOrder);
+                setData(newDeliveryOrder, roadMap);
                 //TODO deliveryOrderPanel.setLoad(false);
             }
 
@@ -115,8 +117,7 @@ public class DeliveryOrderController implements ControllerInterface {
             @Override
             public void onFailUpdateDeliveryOrder(DeliveryException e) {
                 //TODO deliveryOrderPanel.setLoad(false);
-
-                LOGGER.warning(String.format("Error while updating delivery order :%s", e.getMessage()));
+                LOGGER.log(Level.WARNING, "Error while updating delivery order ", e);
                 mainController.notifyError(e.getMessage());
             }
         });
