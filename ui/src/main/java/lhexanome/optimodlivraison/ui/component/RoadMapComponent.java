@@ -7,17 +7,23 @@ import lhexanome.optimodlivraison.platform.models.RoadMap;
 import lhexanome.optimodlivraison.platform.models.Tour;
 import lhexanome.optimodlivraison.platform.models.Vector;
 import lhexanome.optimodlivraison.platform.models.Warehouse;
+import lhexanome.optimodlivraison.ui.controller.RoadMapController;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Collection;
 
 /**
  * RoadMap swing component.
  */
-public class RoadMapComponent extends JComponent {
+public class RoadMapComponent extends JComponent implements MouseListener{
 
     /**
      * X offset marker red.
@@ -101,16 +107,38 @@ public class RoadMapComponent extends JComponent {
      * RoadMap constructor.
      * Load images from jar file.
      */
-    public RoadMapComponent() {
+
+    private double imageScale;
+
+    private RoadMapController roadMapController;
+
+    public RoadMapComponent(RoadMapController roadMapController) {
         super();
         try {
+            this.roadMapController = roadMapController;
+            imageScale = 0.5;
             markerRed = ImageIO.read(getClass().getResource(RESOURCE_NAME_PLAN_MARKER_RED));
             markerOrange = ImageIO.read(getClass().getResource(RESOURCE_NAME_PLAN_MARKER_ORANGE));
             compass = ImageIO.read(getClass().getResource(RESOURCE_NAME_PLAN_COMPASS));
+            addMouseListener(this);
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(1);
         }
+    }
+
+    /**
+     * resizes a bufferedimage
+     */
+    private BufferedImage scaleImage(BufferedImage markerOrangeBefore) {
+        int w = markerOrangeBefore.getWidth();
+        int h = markerOrangeBefore.getHeight();
+        markerOrange = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+        AffineTransform at = new AffineTransform();
+        at.scale(imageScale, imageScale);
+        AffineTransformOp scaleOp =
+                new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
+        return scaleOp.filter(markerOrangeBefore, markerOrange);
     }
 
     /**
@@ -169,6 +197,10 @@ public class RoadMapComponent extends JComponent {
         return new Dimension(400, 400);
     }
 
+    /**
+     * @return the roadmap
+     */
+    public RoadMap getRoadMap(){ return roadMap; }
 
     /**
      * Called by swing, repaint all the component.
@@ -197,6 +229,9 @@ public class RoadMapComponent extends JComponent {
         }
         if (deliveryOrder != null) {
             paintComponent(g2, deliveryOrder);
+        }
+        if (roadMapController.getCurrentIntersection() != null) {
+            paintComponent(g2, roadMapController.getCurrentIntersection());
         }
     }
 
@@ -280,14 +315,24 @@ public class RoadMapComponent extends JComponent {
     private void paintComponent(Graphics2D g2, Vector vector) {
         Intersection origin = vector.getOrigin();
         Intersection destination = vector.getDestination();
-        float vOffsetX = this.offsetX + getSize().width / 2;
-        float vOffsetY = -this.offsetY + getSize().height / 2;
         g2.drawLine(
-                (int) (origin.getY() * scalY + vOffsetX),
-                (int) (-origin.getX() * scalX + vOffsetY),
-                (int) (destination.getY() * scalY + vOffsetX),
-                (int) (-destination.getX() * scalX + vOffsetY)
+                getXFromIntersection(origin),
+                getYFromIntersection(origin),
+                getXFromIntersection(destination),
+                getYFromIntersection(destination)
         );
+    }
+
+    /**
+     * Draw the current intersection.
+     *
+     * @param g2     Graphics
+     * @param intersection Vector
+     */
+    private void paintComponent(Graphics2D g2, Intersection intersection){
+        int x = (int) (this.offsetY + getSize().width / 2 + intersection.getY() * scalY);
+        int y = (int) (-this.offsetX + getSize().height / 2 + -intersection.getX() * scalX);
+        g2.drawImage(markerOrange, x + MARKER_ORANGE_OFFSET_X, y + MARKER_ORANGE_OFFSET_Y, null);
     }
 
     /**
@@ -338,5 +383,68 @@ public class RoadMapComponent extends JComponent {
         repaint();
 
         //TODO add wacher
+    }
+
+    /**
+     * updates the current selected intersection
+     * @param mouseEvent
+     */
+    @Override
+    public void mouseClicked(MouseEvent mouseEvent) {
+        int xMouse = mouseEvent.getX();
+        int yMouse = mouseEvent.getY();
+        roadMapController.updateCurrentIntersection(xMouse,yMouse);
+        repaint();
+    }
+
+    @Override
+    public void mousePressed(MouseEvent mouseEvent) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent mouseEvent) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent mouseEvent) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent mouseEvent) {
+
+    }
+
+    /**
+     *
+     * @param x1
+     * @param y1
+     * @param x2
+     * @param y2
+     * @return the euclidian distance between two points A(x1, y1) and B(x2, y2)
+     */
+    public double distance(int x1, int y1, int x2, int y2) {
+        return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
+    }
+
+    /**
+     * @param intersection
+     * @return the x coordinate on the screen
+     */
+    public int getXFromIntersection(Intersection intersection) {
+        float vOffsetX = this.offsetX + getSize().width / 2;
+        return (int) (intersection.getY() * scalY + vOffsetX);
+    }
+
+    /**
+     *
+     * @param intersection
+     * @return the y coordinate on the screen
+     */
+    public int getYFromIntersection(Intersection intersection) {
+        float vOffsetY = -this.offsetY + getSize().height / 2;
+        return (int) (-intersection.getX() * scalX + vOffsetY);
     }
 }
