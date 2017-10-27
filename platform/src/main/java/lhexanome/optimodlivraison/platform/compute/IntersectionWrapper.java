@@ -34,7 +34,6 @@ public class IntersectionWrapper {
     private Vector incomingVector;
 
 
-
     /**
      * reference to the start point of the Dijkstra algorithm.
      * it's used to know on which row of the path findings we are,
@@ -158,6 +157,7 @@ public class IntersectionWrapper {
 
     /**
      * getter for start.
+     *
      * @return start.
      */
     public Halt getStart() {
