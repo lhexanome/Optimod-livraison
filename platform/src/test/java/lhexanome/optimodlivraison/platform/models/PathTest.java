@@ -9,31 +9,35 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class PathTest {
     Path pathTested;
 
-    @BeforeEach
-    void createTourneeObjects() {
-        pathTested = new Path();
-    }
+
 
     @Test
     void shouldConstructCorrectly() {
 
         //With
-
+        Intersection i = new Intersection(0l);
+        Halt b = new Halt(i);
+        Intersection i2 = new Intersection(0l);
+        Halt e = new Halt(i2);
         //When
-        pathTested = new Path();
+        pathTested = new Path(b,e);
 
         //Then
         assertEquals(0, pathTested.getTimeToTravel());
         assertEquals(0, pathTested.getVectors().size());
-        assertEquals(null, pathTested.getStart());
-        assertEquals(null, pathTested.getEnd());
+        assertEquals(b, pathTested.getStart());
+        assertEquals(e, pathTested.getEnd());
 
     }
 
     @Test
     void shouldSetTimeToTravel() {
         //With
-
+        Intersection i = new Intersection(0l);
+        Halt b = new Halt(i);
+        Intersection i2 = new Intersection(0l);
+        Halt e = new Halt(i2);
+        pathTested = new Path(b,e);
         //When
         pathTested.setTimeToTravel(12);
 
@@ -52,22 +56,22 @@ public class PathTest {
         Vector vector23 = new Vector(i2, i3, "i2 i3");
 
 
-        //When
 
-        //Then
-        assertEquals(null, pathTested.getStart());
 
         //When
+        Halt b = new Halt(i1);
+        Halt e = new Halt(i2);
+        pathTested = new Path(b,e);
         pathTested.addTroncon(vector12);
 
         //Then
-        assertEquals(i1, pathTested.getStart());
+        assertEquals(b, pathTested.getStart());
 
         //When
         pathTested.addTroncon(vector23);
 
         //Then
-        assertEquals(i1, pathTested.getStart());
+        assertEquals(b, pathTested.getStart());
     }
 
     @Test
@@ -82,21 +86,19 @@ public class PathTest {
 
 
         //When
-
-        //Then
-        assertEquals(null, pathTested.getStart());
-
-        //When
+        Halt b = new Halt(i1);
+        Halt e = new Halt(i3);
+        pathTested = new Path(b,e);
         pathTested.addTroncon(vector12);
 
         //Then
-        assertEquals(i2, pathTested.getEnd());
+        assertEquals(e, pathTested.getEnd());
 
         //When
         pathTested.addTroncon(vector23);
 
         //Then
-        assertEquals(i3, pathTested.getEnd());
+        assertEquals(e, pathTested.getEnd());
     }
 
     @Test
@@ -111,6 +113,9 @@ public class PathTest {
 
 
         //When
+        Halt b = new Halt(i1);
+        Halt e = new Halt(i3);
+        pathTested = new Path(b,e);
         pathTested.addTronconBefore(vector23);
 
         //Then
@@ -138,7 +143,9 @@ public class PathTest {
 
         Vector vector12 = new Vector(i1, i2, "i1 i2");
         Vector vector34 = new Vector(i3, i4, "i3 i4");
-
+        Halt b = new Halt(i1);
+        Halt e = new Halt(i4);
+        pathTested = new Path(b,e);
         pathTested.addTroncon(vector12);
 
         //When
@@ -149,7 +156,7 @@ public class PathTest {
             //Then
             assertTrue(false);
 
-        } catch (RuntimeException e) {
+        } catch (RuntimeException ex) {
             //Then
             assertTrue(true);
         }
@@ -165,7 +172,9 @@ public class PathTest {
 
         Vector vector12 = new Vector(i1, i2, "i1 i2");
         Vector vector23 = new Vector(i2, i3, "i2 i3");
-
+        Halt b = new Halt(i1);
+        Halt e = new Halt(i3);
+        pathTested = new Path(b,e);
 
         //When
         pathTested.addTroncon(vector12);
@@ -195,7 +204,9 @@ public class PathTest {
 
         Vector vector12 = new Vector(i1, i2, "i1 i2");
         Vector vector34 = new Vector(i3, i4, "i3 i4");
-
+        Halt b = new Halt(i1);
+        Halt e = new Halt(i4);
+        pathTested = new Path(b,e);
         pathTested.addTroncon(vector12);
 
         //When
@@ -206,7 +217,7 @@ public class PathTest {
             //Then
             assertTrue(false);
 
-        } catch (RuntimeException e) {
+        } catch (RuntimeException ex) {
             //Then
             assertTrue(true);
         }
@@ -226,12 +237,16 @@ public class PathTest {
         Vector vector23 = new Vector(i2, i3, "i2 i3");
         Vector vector34 = new Vector(i3, i4, "i3 i4");
         Vector vector45 = new Vector(i4, i5, "i4 i5");
+        Halt b1 = new Halt(i1);
+        Halt e1 = new Halt(i1);
+        Halt e2 = new Halt(i3);
+        Halt e3 = new Halt(i5);
+        pathTested = new Path(b1,e1);
 
-
-        Path path13 = new Path();
+        Path path13 = new Path(e1,e2);
         path13.addTroncon(vector12);
         path13.addTroncon(vector23);
-        Path path35 = new Path();
+        Path path35 = new Path(e2,e3);
         path35.addTroncon(vector34);
         path35.addTroncon(vector45);
 
@@ -270,7 +285,12 @@ public class PathTest {
 
         Vector vector34 = new Vector(i3, i4, "i3 i4");
         Vector vector45 = new Vector(i4, i5, "i4 i5");
-        Path path35 = new Path();
+        Halt b1 = new Halt(i1);
+        Halt e1 = new Halt(i2);
+        Halt e2 = new Halt(i3);
+        Halt e3 = new Halt(i5);
+        pathTested = new Path(b1,e1);
+        Path path35 = new Path(e2,e3);
         path35.addTroncon(vector34);
         ;
         path35.addTroncon(vector45);

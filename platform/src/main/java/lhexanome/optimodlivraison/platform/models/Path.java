@@ -21,11 +21,25 @@ public class Path {
     private int timeToTravel;
 
     /**
-     * Constructor.
+     * starting halt of the path.
      */
-    public Path() {
+    private Halt begin;
+
+    /**
+     * ending halt of the path.
+     */
+    private Halt end;
+
+    /**
+     * Constructor.
+     * @param begin starting halt.
+     * @param end ending halt.
+     */
+    public Path(Halt begin, Halt end) {
         vectors = new LinkedList<>();
         this.timeToTravel = 0;
+        this.begin = begin;
+        this.end = end;
     }
 
     /**
@@ -90,8 +104,8 @@ public class Path {
      *
      * @return Start
      */
-    public Intersection getStart() {
-        return (vectors.size() == 0 ? null : vectors.get(0).getOrigin());
+    public Halt getStart() {
+        return begin;
     }
 
     /**
@@ -99,10 +113,8 @@ public class Path {
      *
      * @return End
      */
-    public Intersection getEnd() {
-        int size = vectors.size();
-        if (size == 0) return null;
-        return vectors.get(size - 1).getDestination();
+    public Halt getEnd() {
+        return end;
     }
 
     /**
@@ -115,11 +127,11 @@ public class Path {
      *                          n'est pas identique a l'intersection d'arrivée du trajet
      */
     public void addTroncon(Vector vector) {
-        if (vectors.size() == 0 || getEnd() == vector.getOrigin()) {
+        if (vectors.size() == 0 || vectors.get(vectors.size() - 1).getDestination() == vector.getOrigin()) {
             vectors.add(vector);
             timeToTravel += vector.getTimeToTravel();
         } else {
-            throw new RuntimeException("The vector is not at the end of the trajet");
+            throw new RuntimeException("The vector is not at the end of the path");
         }
 
     }
@@ -134,7 +146,7 @@ public class Path {
      *                          n'est pas identique a l'intersection d'arrivée du trajet
      */
     public void addTronconBefore(Vector vector) {
-        if (vectors.size() == 0 || getStart() == vector.getDestination()) {
+        if (vectors.size() == 0 || vectors.get(0).getOrigin() == vector.getDestination()) {
             vectors.add(0, vector);
             timeToTravel += vector.getTimeToTravel();
         } else {
@@ -145,7 +157,7 @@ public class Path {
 
     /**
      * Ajout un path a la suit du path.
-     * Cette operation met a jour le temp de parcour en lui ajoutent le temp de parcour du path passer en paramétre.
+     * Cette operation met a jour le temp de parcours en lui ajoutant le temp de parcours du path passe en parametre.
      *
      * @param path path a ajouter au path courant
      *             Le depart du path doit étre identique a l'arrivée du path courant
@@ -157,6 +169,7 @@ public class Path {
 
             vectors.addAll(path.vectors);
             timeToTravel += path.getTimeToTravel();
+            end = path.getEnd();
         } else {
             throw new RuntimeException("The troncon is not at the end of the path");
         }

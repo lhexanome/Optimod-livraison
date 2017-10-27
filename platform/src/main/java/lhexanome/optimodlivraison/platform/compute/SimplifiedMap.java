@@ -13,18 +13,16 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Logger;
 
 
 /**
- * Classe qui stocke une version simplifiée du roadMap.
- * soit un graph orienté et complet avec comme sommets les livraisons,
+ * classe qui stocke une version simplifiée du roadMap,
+ * soit un graphe orienté et complet avec comme sommets les livraisons,
  * et pour arc des trajets formant les plus courts chemins entre ces livraisons.
  */
-//CHECKSTYLE:OFF
 public class SimplifiedMap {
     /**
      * Logger.
@@ -38,7 +36,10 @@ public class SimplifiedMap {
      * reference a la demande de livraison chargee.
      */
     private DeliveryOrder deliveryOrder;
-    private Map<Halt, List<Path>> graph;
+    /**
+     * graphe oriente.
+     */
+    private Map<Halt, ArrayList<Path>> graph;
 
     /***
      * constructeur par defaut.
@@ -55,11 +56,11 @@ public class SimplifiedMap {
      * @param deliveryOrder la demande de livraison chargee
      * @param roadMap       le roadMap charge
      */
+
     public SimplifiedMap(DeliveryOrder deliveryOrder, RoadMap roadMap) {
         this.roadMap = roadMap;
         this.deliveryOrder = deliveryOrder;
         graph = new HashMap<>();
-        //TODO Appeler computeGraph dans le constructeur ?
     }
 
     /**
@@ -67,15 +68,14 @@ public class SimplifiedMap {
      */
     public void computeGraph() {
         LOGGER.info(MessageFormat.format("compute simplified graph", ""));
+
         HashSet<Halt> ptsHalt = new HashSet<>();
         ptsHalt.addAll(deliveryOrder.getDeliveries());
         ptsHalt.add(deliveryOrder.getBeginning());
         for (Halt s : ptsHalt) {
             ArrayList<Path> listePaths =
                     shortestPathList(s, ptsHalt);
-//            for (Path t : listePaths) {
-//                graph.put(s, t);
-//            }
+
             graph.put(s, listePaths);
         }
     }
@@ -89,205 +89,195 @@ public class SimplifiedMap {
      * @param ends  Liste des arrives
      * @return liste des plus courts chemins
      */
-    public ArrayList<Path> shortestPathList(Halt start, Set<? extends Halt> ends) {
+    public ArrayList<Path> shortestPathList(
+            Halt start, Set<? extends Halt> ends) {
         ArrayList<Path> sortie = new ArrayList<>();
         LOGGER.info(MessageFormat.format("start compute shortest path for:", start.toString()));
 
-        /*
-         * tableau des temps de trajet entre
-         * le point de depart et chaque intersection
-         * le premier element est celui de l'intersection de depart.
-         */
-        float[] tempsDijkstra = new float[roadMap.getIntersectionCount()];
-        /*
-         * tableau qui memorise l'etat
-         * des intersections lors d'une recherche de chemin
-         * (visite/ non visite)
-         */
-        boolean[] etatDijkstra = new boolean[roadMap.getIntersectionCount()];
 
         /*
-         * tableau listant les intersections du roadMap
+         * tableau les elements visites par dijkstra (les gris)
          */
-        ArrayList<Intersection> intersections = new ArrayList<>();
-        /*
-         * tableau contenant à l'indice i
-         * le predecesseur de l'intersection i dans le parcours
+        ArrayList<IntersectionWrapper> visites = new ArrayList<>();
+        /**
+         * list containing wrappers for ends
+         * it's used to accelerate the research of wrappers when rebuilding path
          */
-        ArrayList<Intersection> predecesseurs = new ArrayList<>();
-         /*
-         * tableau contenant à l'indice i
-         * le troncon qui part du predecesseur
-         * de l'intersection i vers celle ci
-         * (celui du plus court chemin)
-         */
-        ArrayList<Vector> chemins = new ArrayList<>();
-        //initialisation
+        ArrayList<IntersectionWrapper> endWrappers = new ArrayList<>();
+
         if (roadMap.getIntersectionCount() > 0) {
-            tempsDijkstra[0] = 0;
-            etatDijkstra[0] = true;
 
 
-            //initialisation de la liste d'intersections
-            initIntersectionList(start.getIntersection(), intersections, predecesseurs, chemins);
+            //initialisation
+            IntersectionWrapper startW = new IntersectionWrapper(start.getIntersection(), start);
+            startW.setAsStart();
+            visites.add(startW);
             //calcul
-            dijkstra(intersections, predecesseurs,
-                    chemins,
-                    tempsDijkstra, etatDijkstra);
+            dijkstra(start, visites, ends, endWrappers);
 
-            //pour chaque livraison, on construit le trajet
-            for (Halt end : ends) {
-                if (!end.equals(start)) {
-                    Path t = new Path();
-
-                    //on recupere la liste de troncons
-                    int indexStart = intersections.indexOf(start.getIntersection());
-                    int indexEnd = intersections.indexOf(end.getIntersection());
-                    if (indexEnd != -1) {
-
-                        //on remonte par la fin la liste des chemins
-                        while (indexStart != indexEnd) {
-                            //TODO inverser l'ordre des troncons
-                            Vector tr = chemins.get(indexEnd);
-                            t.addTronconBefore(tr);
-                            indexEnd = intersections.indexOf(predecesseurs.get(indexEnd));
-                        }
-                        sortie.add(t);
-                    }
-                    LOGGER.warning(MessageFormat.format("no path found for:",
-                            start.toString() + " and " + end.toString()));
-                }
-            }
+            //pour chaque livraison, on construit le path
+            reconstitutePathFromDijkstra(start, ends, endWrappers, sortie);
         }
         return sortie;
     }
 
     /**
-     * fonction qui initialise la liste des intersections
-     * en parcourant les troncons connectes dans le roadMap.
+     * function building path from the results of Dijkstra's algorithm.
      *
-     * @param start         intersection de depart
-     * @param intersections liste des intersections
-     * @param predecesseurs liste des predecesseurs
-     * @param chemins       liste des plus courts troncons
-     *                      partant des predecesseurs
-     *                      vers les intersections
+     * @param start       Path's starting point
+     * @param ends        set of deliveries from which it creates the paths
+     * @param output      list of paths modified by this function
+     * @param endWrappers one of Dijkstra's algo output, containing the list of intersection wrappers for the ends
      */
-    public void initIntersectionList(Intersection start, ArrayList<Intersection> intersections,
-                                     ArrayList<Intersection> predecesseurs,
-                                     ArrayList<Vector> chemins) {
-        if (start == null) return;
+    public void reconstitutePathFromDijkstra(Halt start, Set<? extends Halt> ends,
+                                             ArrayList<IntersectionWrapper> endWrappers,
+                                             ArrayList<Path> output) {
+        for (Halt end : ends) {
+            if (!end.equals(start)) {
+                Path t = new Path(start, end);
 
-        intersections.add(start);
-        predecesseurs.add(null);
-        chemins.add(null);
-        for (int i = 0; i < intersections.size(); i++) {
-            Collection<Vector> cheminsPartants =
-                    roadMap.getTronconsFromIntersection(intersections.get(i));
-            for (Vector t : cheminsPartants) {
-                if (!intersections.contains(t.getDestination())) {
-                    intersections.add(t.getDestination());
-                    predecesseurs.add(null);
-                    chemins.add(null);
+                //on recupere le wrapper correspondant a la livraison d'arrivee
+                IntersectionWrapper endWrapper = findIntersectionWrapper(endWrappers, end.getIntersection());
+                if (endWrapper == null) {
+                    LOGGER.warning(MessageFormat.format("no path found for:",
+                            start.toString() + " and " + end.toString()));
                 }
+                //on remonte les prececesseurs pour obtenir tout les chemins
+                while (endWrapper != null && endWrapper.getPredecessor() != null) {
+                    //TODO ajouter le debut et la fin au path
+                    Vector tr = endWrapper.getIncomingVector();
+                    t.addTronconBefore(tr);
+                    endWrapper = endWrapper.getPredecessor();
+                }
+                output.add(t);
+
             }
         }
     }
 
+
     /**
-     * fonction qui applique l'algorithme Dijkstra
-     * sur la liste des intersections
-     * elle remplit la liste des predecesseurs,
-     * et les plus courts chemins.
+     * internal function searching for the wrapper for an intersection.
      *
-     * @param intersections liste des intersections
-     * @param predecesseurs liste des predecesseurs
-     *                      (soit pour chaque intersection i,
-     *                      l'element i est son predecesseur)
-     * @param chemins       liste des plus courts troncons
-     *                      partant des predecesseurs
-     *                      vers les intersections
-     * @param tempsDijkstra tableau stockant
-     *                      les temps pour le relachement
-     * @param etatDijkstra  tableau stockant
-     *                      l'etat de visite d'une intersection
-     *                      (visite/non visite)
+     * @param intersections list of wrappers
+     * @param i             intersection concerned
+     * @return the end's wrapper
      */
-    public void dijkstra(ArrayList<Intersection> intersections,
-                         ArrayList<Intersection> predecesseurs,
-                         ArrayList<Vector> chemins,
-                         float[] tempsDijkstra, boolean[] etatDijkstra) {
+    private IntersectionWrapper findIntersectionWrapper(ArrayList<IntersectionWrapper> intersections, Intersection i) {
+
+        for (IntersectionWrapper iw : intersections) {
+            if (iw.getIntersection().equals(i)) {
+                return iw;
+            }
+        }
+        return null;
+    }
+
+
+    /**
+     * internal function checking if a wrapper wrap one of the ends.
+     *
+     * @param ends                list of halts
+     * @param intersectionWrapper wrapper concerned
+     * @return the result of the check
+     */
+    private boolean isInEnd(Set<? extends Halt> ends, IntersectionWrapper intersectionWrapper) {
+
+        for (Halt end : ends) {
+            if (intersectionWrapper.getIntersection().equals(end.getIntersection())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    /**
+     * function computing the dijkstra algorithm.
+     *
+     * @param start       start halt for this execution of Dijkstra
+     * @param visits     list of visited intersections wrappers
+     * @param ends        list of halts where we want to go
+     * @param endWrappers list of their wrappers
+     */
+    public void dijkstra(Halt start, ArrayList<IntersectionWrapper> visits,
+                         Set<? extends Halt> ends,
+                         ArrayList<IntersectionWrapper> endWrappers) {
         LOGGER.info(MessageFormat.format("start Dijkstra algorithm", ""));
 
-        //reset
-        tempsDijkstra[0] = 0;
-        etatDijkstra[0] = false;
-        for (int i = 1; i < roadMap.getIntersectionCount(); i++) {
-            //je represente l'infini par -1
-            tempsDijkstra[i] = -1;
-            etatDijkstra[i] = false;
-        }
+
         boolean continueDijkstra = true;
+        boolean firstTime = true;
         int indexNouvelleVisite = 0;
-        Intersection courant = intersections.get(indexNouvelleVisite);
+        IntersectionWrapper courant = visits.get(visits.size() - 1);
         while (continueDijkstra) {
             //recherche du sommet de plus petit temps et non visite
-            float tempsMin = -1;
-            indexNouvelleVisite = -1;
-            for (int i = 0; i < intersections.size(); i++) {
-                if (!etatDijkstra[i]) {
-                    if (tempsMin == -1) {
-                        indexNouvelleVisite = i;
-                        tempsMin = tempsDijkstra[i];
+            float tempsMin = Float.MAX_VALUE;
+            if (!firstTime) {
+                indexNouvelleVisite = -1;
+                for (int i = 0; i < visits.size(); i++) {
+                    if (!visits.get(i).isBlack()) {
 
-                    } else {
-                        if (tempsDijkstra[i] != -1
-                                && tempsDijkstra[i] < tempsMin) {
+                        if (visits.get(i).getTempsDijkstra() < tempsMin) {
                             indexNouvelleVisite = i;
-                            tempsMin = tempsDijkstra[i];
+                            tempsMin = visits.get(i).getTempsDijkstra();
                         }
+
                     }
                 }
+            } else {
+                firstTime = false;
             }
             if (indexNouvelleVisite != -1) {
                 //on change son etat
-                etatDijkstra[indexNouvelleVisite] = true;
+                visits.get(indexNouvelleVisite).setBlack(true);
 
                 //on relache tout les arcs
                 // partant de cette intersection
-                courant = intersections.get(indexNouvelleVisite);
+                courant = visits.get(indexNouvelleVisite);
                 Collection<Vector> cheminsPartants =
-                        roadMap.getTronconsFromIntersection(courant);
+                        roadMap.getTronconsFromIntersection(courant.getIntersection());
+
                 for (Vector t : cheminsPartants) {
-                    int indexDestination =
-                            intersections.indexOf(t.getDestination());
-                    if (!etatDijkstra[indexDestination]) {
-                        if (tempsDijkstra[indexDestination] != -1) {
-                            //on stocke le plus court troncon
-                            if (tempsDijkstra[indexDestination]
-                                    >= tempsDijkstra[indexNouvelleVisite]
+                    Intersection successeur = t.getDestination();
+                    if (successeur.getWrapper() != null && successeur.getWrapper().getStart() == start) {
+                        //cas ou l'intersection a deja ete visitee pendant cette execution
+                        IntersectionWrapper successeurWrapper = successeur.getWrapper();
+
+
+                        if (!successeurWrapper.isBlack()) {
+                            if (successeurWrapper.getTempsDijkstra()
+                                    >= courant.getTempsDijkstra()
                                     + t.getTimeToTravel()) {
                                 //on stocke le predecesseur
-                                predecesseurs.set(indexDestination, courant);
-                                //et le troncon qui les separe
-                                chemins.set(indexDestination, t);
+                                successeurWrapper.setPredecessor(courant);
+                                //et le vector qui les separe
+                                successeurWrapper.setIncomingVector(t);
                                 //on relache l'arc
-                                tempsDijkstra[indexDestination] =
-                                        tempsDijkstra[indexNouvelleVisite]
-                                                + t.getTimeToTravel();
+                                successeurWrapper.setTempsDijkstra(
+                                        courant.getTempsDijkstra()
+                                                + t.getTimeToTravel());
                             }
                             //on ne change pas le temps
-
-                        } else {
-                            //on stocke le predecesseur
-                            predecesseurs.set(indexDestination, courant);
-                            //et le troncon qui les separe
-                            chemins.set(indexDestination, t);
-                            //on relache l'arc
-                            tempsDijkstra[indexDestination] =
-                                    tempsDijkstra[indexNouvelleVisite]
-                                            + t.getTimeToTravel();
                         }
+                    } else {
+                        //cas ou l'intersection n'a pas ete visitee
+
+                        //on cree le wrapper, et on l'ajoute a la liste des visites
+                        IntersectionWrapper successeurWrapper = new IntersectionWrapper(successeur, start);
+                        visits.add(successeurWrapper);
+                        if (isInEnd(ends, successeurWrapper)) {
+                            endWrappers.add(successeurWrapper);
+                        }
+                        //on stocke le predecesseur
+                        successeurWrapper.setPredecessor(courant);
+                        //et le vector qui les separe
+                        successeurWrapper.setIncomingVector(t);
+                        //on relache l'arc
+                        successeurWrapper.setTempsDijkstra(
+                                courant.getTempsDijkstra()
+                                        + t.getTimeToTravel());
+                        System.out.println(t.getTimeToTravel());
                     }
                 }
             } else {
@@ -297,10 +287,11 @@ public class SimplifiedMap {
     }
 
     /**
-     * roadMap stockant le graph sous la forme d'une association de livraisons
-     * et de trajets partant de ces livraisons.
+     * getter for the simplified graph.
+     *
+     * @return the graph
      */
-    public java.util.Map getGraph() {
+    public Map<Halt, ArrayList<Path>> getGraph() {
         return graph;
     }
 }

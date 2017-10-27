@@ -93,7 +93,7 @@ public class Vector {
      * @param origin      intersections se situant au debut du tronçon
      * @param destination intersections se situant à la fin du tronçon
      * @param nameStreet  Nom du troncon
-     * @param length      Longueur du tronçon
+     * @param length      Longueur du tronçon en m
      * @see #origin
      * @see #destination
      * @see #nameStreet
@@ -186,6 +186,6 @@ public class Vector {
      */
     @SuppressWarnings("checkstyle:magicnumber")
     public int getTimeToTravel() {
-        return (int) (3600 * ((length / 10.0) / (SPEED * 1000))); //TODO temps en float
+        return (int) (((float) length) / ((float) (SPEED * (1000.0 / 3600.0)))); //TODO temps en float
     }
 }

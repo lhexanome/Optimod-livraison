@@ -1,5 +1,9 @@
 package lhexanome.optimodlivraison.platform.models;
 
+import lhexanome.optimodlivraison.platform.compute.IntersectionWrapper;
+
+import java.util.ArrayList;
+
 /**
  * Représente un point ou noeud sur la carte (identifié).
  */
@@ -21,6 +25,18 @@ public class Intersection {
      */
     private Long id;
 
+    /**
+     * list of intersections where vectors leaving
+     * this intersection arrive.
+     */
+    private ArrayList<Intersection> successeurs = new ArrayList<>();
+
+
+    /**
+     * wrapper reference.
+     * used to remove the need of O(n) researches in the compute module
+     */
+    private IntersectionWrapper wrapper = null;
 
     /**
      * Intersection conctructeur.
@@ -99,6 +115,34 @@ public class Intersection {
      */
     public void setId(long id) {
         this.id = id;
+    }
+
+    /**
+     * function adding the end of a vector to the successeurs
+     * when a vector is added to the roadmap.
+     *
+     * @param vector vector added
+     */
+    public void addTronconSortant(Vector vector) {
+        successeurs.add(vector.getDestination());
+    }
+
+    /**
+     * getter for wrapper.
+     *
+     * @return wrapper
+     */
+    public IntersectionWrapper getWrapper() {
+        return wrapper;
+    }
+
+    /**
+     * setter for wrapper.
+     *
+     * @param wrapper ref given
+     */
+    public void setWrapper(IntersectionWrapper wrapper) {
+        this.wrapper = wrapper;
     }
 
     /**
