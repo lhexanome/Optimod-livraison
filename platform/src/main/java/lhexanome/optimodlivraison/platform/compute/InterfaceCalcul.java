@@ -82,7 +82,7 @@ public class InterfaceCalcul {
             deliveries.add(trajet);
             indexDepart = indexArrivee;
         }
-        deliveries.add(matriceTrajets[indexDepart][tsp.getMeilleureSolution(0)]);//retour entrepot
+        deliveries.add(matriceTrajets[indexDepart][tsp.getMeilleureSolution(0)]); //retour entrepot
 
         return new Tour(warehouse, start, time, deliveries);
     }
@@ -132,7 +132,7 @@ public class InterfaceCalcul {
     /**
      * Crée la liste des coûts des sommets.
      *
-     * @param demande   La demande de livraison à traiter.
+     * @param demande      La demande de livraison à traiter.
      * @param nbSommets    Nombre de sommets du graphe.
      * @param listeSommets Liste attribuant chaque sommet à un index.
      * @return La liste des coûts des sommets.
