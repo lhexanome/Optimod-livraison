@@ -157,7 +157,7 @@ public class RoadMapComponent extends JComponent {
     @Override
     @SuppressWarnings("checkstyle:magicnumber")
     public Dimension getMinimumSize() {
-        return new Dimension(8000, 8000);
+        return new Dimension(400, 400);
     }
 
     /**
@@ -302,7 +302,7 @@ public class RoadMapComponent extends JComponent {
         }*/
 
         this.roadMap = map;
-        revalidate();
+        repaint();
         //TODO add wacher
     }
 
@@ -319,7 +319,7 @@ public class RoadMapComponent extends JComponent {
 
         this.deliveryOrder = deliveryOrder;
 
-        revalidate();
+        repaint();
         //TODO add wacher
     }
 
@@ -335,7 +335,7 @@ public class RoadMapComponent extends JComponent {
         }*/
 
         this.tour = tour;
-        revalidate();
+        repaint();
 
         //TODO add wacher
     }

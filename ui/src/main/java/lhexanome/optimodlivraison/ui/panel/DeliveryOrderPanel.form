@@ -36,16 +36,7 @@
           <component id="4a251" class="javax.swing.JList" binding="deliveryJList">
             <constraints/>
             <properties>
-              <model>
-                <item value="Livraison 1"/>
-                <item value="Livriason 2"/>
-                <item value="Livriason 3"/>
-                <item value="Livriason 4"/>
-                <item value="Livriason 5"/>
-                <item value="Livriason 6"/>
-                <item value="Livriason 7"/>
-                <item value="Livriason 8"/>
-              </model>
+              <model/>
               <selectionMode value="0"/>
             </properties>
           </component>
