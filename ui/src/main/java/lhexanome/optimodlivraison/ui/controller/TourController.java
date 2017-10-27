@@ -121,6 +121,7 @@ public class TourController implements ControllerInterface {
     private void setTour(Tour tour) {
         this.tour = tour;
         mainController.setTour(tour);
+        tourPanel.setTour(tour);
     }
 
     /**
