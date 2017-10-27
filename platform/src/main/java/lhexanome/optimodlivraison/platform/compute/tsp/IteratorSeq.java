@@ -3,7 +3,6 @@ package lhexanome.optimodlivraison.platform.compute.tsp;
 import java.util.Collection;
 import java.util.Iterator;
 
-//CHECKSTYLE:OFF
 public class IteratorSeq implements Iterator<Integer> {
 
     private Integer[] candidats;

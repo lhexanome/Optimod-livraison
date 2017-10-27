@@ -1,6 +1,5 @@
 package lhexanome.optimodlivraison.platform.compute.tsp;
 
-//CHECKSTYLE:OFF
 public interface TSP {
 
     /**

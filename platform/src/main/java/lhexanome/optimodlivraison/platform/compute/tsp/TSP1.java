@@ -3,7 +3,6 @@ package lhexanome.optimodlivraison.platform.compute.tsp;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-//CHECKSTYLE:OFF
 public class TSP1 extends TemplateTSP {
 
     @Override
