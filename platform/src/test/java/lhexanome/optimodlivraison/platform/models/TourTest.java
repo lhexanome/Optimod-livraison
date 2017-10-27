@@ -33,10 +33,10 @@ public class TourTest {
         List<Path> roundList = new ArrayList<>();
 
         //When
-        tourTested.setDeliveries(roundList);
+        tourTested.setPaths(roundList);
 
         //Then
-        assertEquals(roundList, tourTested.getDeliveries());
+        assertEquals(roundList, tourTested.getPaths());
     }
 
     @Test

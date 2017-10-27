@@ -6,7 +6,10 @@ import lhexanome.optimodlivraison.platform.models.Halt;
 import lhexanome.optimodlivraison.platform.models.Intersection;
 import lhexanome.optimodlivraison.platform.models.Path;
 import lhexanome.optimodlivraison.platform.models.RoadMap;
+import lhexanome.optimodlivraison.platform.models.Tour;
 import lhexanome.optimodlivraison.platform.models.Vector;
+import lhexanome.optimodlivraison.platform.models.Warehouse;
+import lhexanome.optimodlivraison.platform.utils.DateUtil;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -78,6 +81,26 @@ public class SimplifiedMap {
 
             graph.put(s, listePaths);
         }
+    }
+
+    /**
+     * creates tour from all path in the graph.
+     *
+     * @return tour generated.
+     */
+    public Tour generateFakeTour() {
+        ArrayList<Path> listPath = new ArrayList<>();
+        Tour sortie = null;
+        boolean first = true;
+        for (Halt s : graph.keySet()) {
+            if (s instanceof Warehouse) {
+                sortie = new Tour((Warehouse) s, DateUtil.getDate(10, 10), 0);
+            }
+            ArrayList<Path> list = graph.get(s);
+            listPath.addAll(list);
+        }
+        sortie.setPaths(listPath);
+        return sortie;
     }
 
     /**
@@ -196,7 +219,7 @@ public class SimplifiedMap {
      * function computing the dijkstra algorithm.
      *
      * @param start       start halt for this execution of Dijkstra
-     * @param visits     list of visited intersections wrappers
+     * @param visits      list of visited intersections wrappers
      * @param ends        list of halts where we want to go
      * @param endWrappers list of their wrappers
      */
@@ -277,7 +300,6 @@ public class SimplifiedMap {
                         successeurWrapper.setTempsDijkstra(
                                 courant.getTempsDijkstra()
                                         + t.getTimeToTravel());
-                        System.out.println(t.getTimeToTravel());
                     }
                 }
             } else {

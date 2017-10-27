@@ -6,7 +6,6 @@
     <content url="file://$MODULE_DIR$/../../../ui/src/main">
       <sourceFolder url="file://$MODULE_DIR$/../../../ui/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../../../ui/src/main/resources" type="java-resource" />
-      <excludeFolder url="file://$MODULE_DIR$/../../../ui/src/main/resourcesSources" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

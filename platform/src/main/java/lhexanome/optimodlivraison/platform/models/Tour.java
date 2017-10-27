@@ -15,7 +15,7 @@ public class Tour {
     /**
      * Liste ordonnée de trajets.
      */
-    private List<Path> deliveries;
+    private List<Path> paths;
 
     /**
      * Moment de départ de la tournée.
@@ -51,17 +51,17 @@ public class Tour {
      * @param start      Moment de départ de la tournée
      * @param time       Temps estimé pour compléter une tournée.
      *                   En minutes
-     * @param deliveries Liste ordonnée de trajets.
+     * @param paths Liste ordonnée de trajets.
      * @see #warehouse
      * @see #start
      * @see #time
-     * @see #deliveries
+     * @see #paths
      */
-    public Tour(Warehouse warehouse, Date start, int time, List<Path> deliveries) {
+    public Tour(Warehouse warehouse, Date start, int time, List<Path> paths) {
         this.start = start;
         this.warehouse = warehouse;
         this.time = time;
-        this.deliveries = deliveries;
+        this.paths = paths;
     }
 
     /**
@@ -69,17 +69,17 @@ public class Tour {
      *
      * @return Deliveries
      */
-    public List<Path> getDeliveries() {
-        return deliveries;
+    public List<Path> getPaths() {
+        return paths;
     }
 
     /**
      * Définie la liste des livraisons.
      *
-     * @param deliveries Deliveries
+     * @param paths Deliveries
      */
-    public void setDeliveries(List<Path> deliveries) {
-        this.deliveries = deliveries;
+    public void setPaths(List<Path> paths) {
+        this.paths = paths;
     }
 
     /**
