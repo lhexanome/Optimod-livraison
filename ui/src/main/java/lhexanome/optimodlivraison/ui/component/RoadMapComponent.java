@@ -13,11 +13,18 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * RoadMap swing component.
  */
 public class RoadMapComponent extends JComponent {
+
+    /**
+     * Logger.
+     */
+    private static final Logger LOGGER = Logger.getLogger(RoadMapComponent.class.getName());
 
     /**
      * X offset marker red.
@@ -108,7 +115,7 @@ public class RoadMapComponent extends JComponent {
             markerOrange = ImageIO.read(getClass().getResource(RESOURCE_NAME_PLAN_MARKER_ORANGE));
             compass = ImageIO.read(getClass().getResource(RESOURCE_NAME_PLAN_COMPASS));
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Error while getting resources", e);
             System.exit(1);
         }
     }

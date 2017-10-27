@@ -10,6 +10,7 @@ import lhexanome.optimodlivraison.ui.popup.FileChooserPopup;
 
 import javax.swing.*;
 import java.io.File;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -78,7 +79,7 @@ public class DeliveryOrderController implements ControllerInterface {
      * Called at the end of delivery order loading
      *
      * @param newDeliveryOrder new Delivery order
-     * @param newRoadMap new Road map
+     * @param newRoadMap       new Road map
      */
     private void setData(DeliveryOrder newDeliveryOrder, RoadMap newRoadMap) {
         this.deliveryOrder = newDeliveryOrder;
@@ -116,8 +117,7 @@ public class DeliveryOrderController implements ControllerInterface {
             @Override
             public void onFailUpdateDeliveryOrder(DeliveryException e) {
                 //TODO deliveryOrderPanel.setLoad(false);
-                e.printStackTrace();
-                LOGGER.warning(String.format("Error while updating delivery order :%s", e.getMessage()));
+                LOGGER.log(Level.WARNING, "Error while updating delivery order ", e);
                 mainController.notifyError(e.getMessage());
             }
         });
