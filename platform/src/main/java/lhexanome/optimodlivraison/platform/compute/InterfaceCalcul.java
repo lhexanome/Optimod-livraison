@@ -2,6 +2,7 @@ package lhexanome.optimodlivraison.platform.compute;
 
 import lhexanome.optimodlivraison.platform.compute.tsp.TSP;
 import lhexanome.optimodlivraison.platform.compute.tsp.TSP1;
+import lhexanome.optimodlivraison.platform.compute.tsp.TSP2;
 import lhexanome.optimodlivraison.platform.models.Delivery;
 import lhexanome.optimodlivraison.platform.models.DeliveryOrder;
 import lhexanome.optimodlivraison.platform.models.Halt;
@@ -66,7 +67,7 @@ public class InterfaceCalcul {
 
         int[] listeDurees = demandeToDurees(demande, nbSommets, listeSommets);
 
-        TSP tsp = new TSP1();
+        TSP tsp = new TSP2();
         tsp.chercheSolution(TPS_LIMITE, nbSommets, matrix.getMatriceCouts(), listeDurees);
         time = tsp.getCoutMeilleureSolution();
 
