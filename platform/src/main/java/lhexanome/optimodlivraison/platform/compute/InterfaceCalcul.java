@@ -25,49 +25,28 @@ public class InterfaceCalcul {
     public static final int TPS_LIMITE = 9999999;
 
     /**
-     * reference du roadMap charge.
-     */
-    private RoadMap roadMap;
-
-    /**
-     * reference de la demande de livraison chargee.
-     */
-    private DeliveryOrder demande;
-
-    /**
-     * Tour retournee par le calcul de tournee optimise.
-     */
-    private Tour sortie;
-
-    /**
-     * Graphe des plus courts chemins entre les livraisons.
-     * Met à jour les attributs roadMap, demande et SimplifiedMap.
-     */
-    private SimplifiedMap simplifiedMap;
-
-    /**
      * Génère le graphe des plus courts chemins entre les livraisons.
      * Met à jour les attributs roadMap, demande et SimplifiedMap.
      *
-     * @param newRoadMap    Le plan général concernant la demande.
-     * @param newDemande La demande de livraison à traiter.
+     * @param roadMap Le plan général concernant la demande.
+     * @param demande La demande de livraison à traiter.
      * @return Le plan simplifié contenant les trajets reliant les points de livraison.
      */
-    public SimplifiedMap computeSimplifiedRoadMap(RoadMap newRoadMap, DeliveryOrder newDemande) {
-        this.roadMap = newRoadMap;
-        this.demande = newDemande;
-        this.simplifiedMap = new SimplifiedMap(demande, newRoadMap);
+    public SimplifiedMap computeSimplifiedRoadMap(RoadMap roadMap, DeliveryOrder demande) {
+        SimplifiedMap simplifiedMap = new SimplifiedMap(demande, roadMap);
         simplifiedMap.computeGraph();
-        return this.simplifiedMap;
+        return simplifiedMap;
     }
 
     /**
      * Calcule la tournée optimale en fonction du roadMap simplifié et de la demande de livraison.
      * Met à jour l'attribut sortie.
      *
+     * @param simplifiedMap La map simplifié calculée précédemment.
+     * @param demande       La demande de livraison.
      * @return La tournée calculée.
      */
-    public Tour computeTour() {
+    public Tour computeTour(SimplifiedMap simplifiedMap, DeliveryOrder demande) {
         Warehouse warehouse;
         Date start;
         int time;
@@ -83,7 +62,7 @@ public class InterfaceCalcul {
         listeSommets.add(demande.getBeginning());
         listeSommets.addAll(demande.getDeliveries());
 
-        MatriceAdjacence matrix = grapheToMatrix(graphe, nbSommets, listeSommets);
+        MatriceAdjacence matrix = grapheToMatrix(graphe, nbSommets, listeSommets, demande);
 
         int[] listeDurees = demandeToDurees(demande, nbSommets, listeSommets);
 
@@ -100,8 +79,7 @@ public class InterfaceCalcul {
             deliveries.add(trajet);
         }
 
-        this.sortie = new Tour(warehouse, start, time, deliveries);
-        return sortie;
+        return new Tour(warehouse, start, time, deliveries);
     }
 
     /**
@@ -111,12 +89,13 @@ public class InterfaceCalcul {
      * @param graphe       Graphe devant être traité.
      * @param nbSommets    Nombre de sommets du graphe.
      * @param listeSommets Liste attribuant chaque sommet à un index.
+     * @param demande      La demande de livraison.
      * @return La MatriceAdjacence contenant :
      * La matrice des couts de trajets d'un sommet x à un sommet y,
      * La matrice des trajets d'un sommet x à un sommet y.
      */
     private MatriceAdjacence grapheToMatrix(Map<Halt, ArrayList<Path>> graphe, int nbSommets,
-                                            ArrayList<Halt> listeSommets) {
+                                            ArrayList<Halt> listeSommets, DeliveryOrder demande) {
 
         int[][] matriceCouts = new int[nbSommets][nbSommets];
         Path[][] matriceTrajets = new Path[nbSommets][nbSommets];
@@ -148,13 +127,13 @@ public class InterfaceCalcul {
     /**
      * Crée la liste des coûts des sommets.
      *
-     * @param newDemande   La demande de livraison à traiter.
+     * @param demande   La demande de livraison à traiter.
      * @param nbSommets    Nombre de sommets du graphe.
      * @param listeSommets Liste attribuant chaque sommet à un index.
      * @return La liste des coûts des sommets.
      */
 
-    private int[] demandeToDurees(DeliveryOrder newDemande, int nbSommets, ArrayList<Halt> listeSommets) {
+    private int[] demandeToDurees(DeliveryOrder demande, int nbSommets, ArrayList<Halt> listeSommets) {
         int[] listeDurees = new int[nbSommets];
 
 

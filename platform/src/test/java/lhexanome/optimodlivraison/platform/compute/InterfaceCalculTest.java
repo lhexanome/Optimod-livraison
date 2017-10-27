@@ -58,8 +58,8 @@ class InterfaceCalculTest {
         demande.setBeginning(e);
         demande.addDelivery(new Delivery(D, 0));
         demande.addDelivery(new Delivery(F, 0));
-        ic.computeSimplifiedRoadMap(roadMap, demande);
-        Tour tour = ic.computeTour();
+        SimplifiedMap simplifiedMap = ic.computeSimplifiedRoadMap(roadMap, demande);
+        Tour tour = ic.computeTour(simplifiedMap, demande);
         Tour tourExpected = new Tour(e, new Date(), 0);
         assertEquals(tourExpected, tour);
     }
