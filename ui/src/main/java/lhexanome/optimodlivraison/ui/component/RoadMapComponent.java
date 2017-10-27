@@ -12,6 +12,8 @@ import lhexanome.optimodlivraison.ui.controller.RoadMapController;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.AffineTransform;
@@ -137,6 +139,11 @@ public class RoadMapComponent extends JComponent implements MouseListener {
      */
     private static final double IMAGE_SCALE = 0.5;
 
+    private  int zoom=1;
+    int xSouris;
+    int ySouris;
+
+
     /**
      * RoadMap controller.
      */
@@ -159,6 +166,21 @@ public class RoadMapComponent extends JComponent implements MouseListener {
             LOGGER.log(Level.SEVERE, "Error while getting resources", e);
             System.exit(1);
         }
+        this.addMouseWheelListener(new MouseWheelListener() {
+            @Override
+            public void mouseWheelMoved(MouseWheelEvent e) {
+                if (e.getWheelRotation()<0 && zoom<6){
+                    zoom++;
+                }
+                if(e.getWheelRotation()>0 && zoom>1){
+                    zoom--;
+                }
+                xSouris = e.getX();
+                ySouris = e.getY();
+                repaint();
+            }
+        });
+
     }
 
     /**
@@ -186,10 +208,10 @@ public class RoadMapComponent extends JComponent implements MouseListener {
 
         float windowsSize = Math.min(getWidth(), getHeight());
 
-        scalX = windowsSize / (recPlan.width);
-        scalY = windowsSize / (recPlan.height);
-        offsetX = (recPlan.width / 2 - recPlan.x - recPlan.width) * scalX;
-        offsetY = (recPlan.height / 2 - recPlan.y - recPlan.height) * scalY;
+        scalX = windowsSize / (recPlan.width)*zoom;
+        scalY = windowsSize / (recPlan.height)*zoom;
+        offsetX = (recPlan.width / 2 - recPlan.x - recPlan.width) * scalX + xSouris;
+        offsetY = (recPlan.height / 2 - recPlan.y - recPlan.height) * scalY + ySouris;
     }
 
     /**
