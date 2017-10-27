@@ -170,6 +170,10 @@ public class RoadMapController implements ControllerInterface {
     }
 
     public void updateCurrentIntersection(int xMouse, int yMouse){
+        currentIntersection = getClosestIntersection(xMouse, yMouse);
+    }
+
+    public Intersection getClosestIntersection(int xMouse, int yMouse){
         double minimal_distance = 10000000;
         Intersection closestIntersection = null;
         Collection<Intersection> intersections = roadMap.getIntersections();
@@ -183,7 +187,7 @@ public class RoadMapController implements ControllerInterface {
                 closestIntersection = intersection;
             }
         }
-        currentIntersection = closestIntersection;
+        return closestIntersection;
     }
 
     public Intersection getCurrentIntersection(){
