@@ -196,7 +196,7 @@ public class SimplifiedMap {
      * function computing the dijkstra algorithm.
      *
      * @param start       start halt for this execution of Dijkstra
-     * @param visits     list of visited intersections wrappers
+     * @param visits      list of visited intersections wrappers
      * @param ends        list of halts where we want to go
      * @param endWrappers list of their wrappers
      */

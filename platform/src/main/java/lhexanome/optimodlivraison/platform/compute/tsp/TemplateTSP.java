@@ -66,7 +66,7 @@ public abstract class TemplateTSP implements TSP {
      * @param vus       la liste des sommets visites (y compris sommetCrt)
      * @param coutVus   la somme des couts des arcs du chemin passant par tous les sommets de vus + la somme des duree des sommets de vus
      * @param cout      : cout[i][j] = duree pour aller de i a j, avec 0 <= i < nbSommets et 0 <= j < nbSommets
-     * @param duree     : duree[i] = duree pour visiter le sommet i, avec 0 <= i < nbSommets
+     * @param duree     : duree[i] = duree pour visiterlibtracker-sparql-1.12.3-1 le sommet i, avec 0 <= i < nbSommets
      * @param tpsDebut  : moment ou la resolution a commence
      * @param tpsLimite : limite de temps pour la resolution
      */
