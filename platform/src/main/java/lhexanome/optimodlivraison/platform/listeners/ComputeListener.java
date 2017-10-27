@@ -22,4 +22,11 @@ public interface ComputeListener {
      * @param e Exception contenant la cause
      */
     void onFailCompute(ComputeException e);
+
+    /**
+     * Function called when a delivery is added.
+     * It updates the tour object with a new delivery
+     * placed at the provided index.
+     */
+//    void onAddedDelivery();
 }

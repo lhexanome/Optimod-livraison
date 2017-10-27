@@ -151,5 +151,4 @@ public class RoadMapPanel extends AbstractPanel {
         return contentPane;
     }
 
-
 }

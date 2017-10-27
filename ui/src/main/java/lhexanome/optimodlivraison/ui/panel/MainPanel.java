@@ -120,7 +120,4 @@ public class MainPanel extends AbstractPanel {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
-
-
-
 }
