@@ -32,7 +32,7 @@ public class TSP2 extends TemplateTSP {
      * @return le cout le plus faible parmi les sommets atteignables
      */
     @Override
-    protected int bound(Integer sommetCourant, ArrayList<Integer> nonVus, int[][] cout, int[] duree) {
+    public int bound(Integer sommetCourant, ArrayList<Integer> nonVus, int[][] cout, int[] duree) {
         int coutMin = Integer.MAX_VALUE;
         int coutCurrent = 0;
         for (int i = 0; i < nonVus.size(); i++) {
