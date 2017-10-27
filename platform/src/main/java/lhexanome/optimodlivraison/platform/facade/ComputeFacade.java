@@ -76,8 +76,8 @@ public class ComputeFacade {
             LOGGER.info("Simplified roadMap computed");
 
             // FIXME Remove deliveryOrder
-            //Tour tour = interfaceCalcul.computeTour();
-            Tour tour = simplifiedMap.generateFakeTour();
+            Tour tour = interfaceCalcul.computeTour();
+            //Tour tour = simplifiedMap.generateFakeTour();
             LOGGER.warning("Tour computed");
 
             listeners.forEach(l -> l.onComputingTour(tour));
