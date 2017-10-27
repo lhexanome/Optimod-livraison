@@ -85,6 +85,13 @@ public class TourPanel extends AbstractPanel {
         gbc.gridy = 0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         contentPane.add(computeTourButton, gbc);
+        durationLabel = new JLabel();
+        durationLabel.setText("");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.WEST;
+        contentPane.add(durationLabel, gbc);
     }
 
     /**
