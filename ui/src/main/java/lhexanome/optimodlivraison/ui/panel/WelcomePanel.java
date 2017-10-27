@@ -111,6 +111,8 @@ public class WelcomePanel extends AbstractPanel {
         gbc.gridy = 1;
         gbc.weightx = 0.1;
         gbc.weighty = 0.1;
+        gbc.ipadx = 5;
+        gbc.ipady = 5;
         gbc.insets = new Insets(10, 0, 50, 0);
         contentPane.add(openRoadMapButton, gbc);
     }

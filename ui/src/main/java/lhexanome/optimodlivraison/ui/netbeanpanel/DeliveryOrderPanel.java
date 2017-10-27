@@ -2,8 +2,9 @@ package lhexanome.optimodlivraison.ui.netbeanpanel;
 
 
 import lhexanome.optimodlivraison.platform.models.DeliveryOrder;
+import lhexanome.optimodlivraison.platform.models.RoadMap;
 
-import java.awt.GridBagConstraints;
+import java.awt.*;
 import java.text.SimpleDateFormat;
 
 /**
@@ -18,10 +19,37 @@ public class DeliveryOrderPanel extends javax.swing.JPanel {
     /**
      * Creates new form oderList
      */
-    public DeliveryOrderPanel(DeliveryOrder deliveryOrder) {
+    public DeliveryOrderPanel() {
+
+    }
+
+    /**
+     * @param deliveryOrder
+     * @param roadMap
+     */
+    public void setData(DeliveryOrder deliveryOrder, RoadMap roadMap) {
         this.deliveryOrder = deliveryOrder;
-        deliveryListPanel = new DeliveryListPanel(deliveryOrder.getDeliveries());
+        deliveryListPanel = new DeliveryListPanel(deliveryOrder.getDeliveries(), roadMap);
+
         initComponents();
+    }
+
+    /**
+     * @return Minimum dimension
+     */
+    @Override
+    @SuppressWarnings("checkstyle:magicnumber")
+    public Dimension getMinimumSize() {
+        return new Dimension(400, 400);
+    }
+
+    /**
+     * @return Preferred dimension
+     */
+    @Override
+    @SuppressWarnings("checkstyle:magicnumber")
+    public Dimension getPreferredSize() {
+        return new Dimension(400, 400);
     }
 
     /**
@@ -32,6 +60,7 @@ public class DeliveryOrderPanel extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        removeAll();
         java.awt.GridBagConstraints gridBagConstraints;
 
         jLabel1 = new javax.swing.JLabel();

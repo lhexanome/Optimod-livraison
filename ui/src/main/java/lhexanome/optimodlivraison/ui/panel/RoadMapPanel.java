@@ -113,9 +113,10 @@ public class RoadMapPanel extends AbstractPanel {
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
         gbc.gridy = 1;
-        gbc.weightx = 0.02;
-        gbc.weighty = 0.01;
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.ipadx = 5;
+        gbc.ipady = 5;
+        gbc.insets = new Insets(5, 0, 5, 0);
         contentPane.add(reloadRoadMapButton, gbc);
         roadMapComponent = new RoadMapComponent();
         gbc = new GridBagConstraints();
@@ -150,5 +151,4 @@ public class RoadMapPanel extends AbstractPanel {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
-
 }

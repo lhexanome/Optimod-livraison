@@ -78,10 +78,11 @@ public class DeliveryOrderController implements ControllerInterface {
      * Called at the end of delivery order loading
      *
      * @param deliveryOrder new Delivery order
+     * @param roadMap
      */
-    private void setDeliveryOrder(DeliveryOrder deliveryOrder) {
+    private void setData(DeliveryOrder deliveryOrder, RoadMap roadMap) {
         this.deliveryOrder = deliveryOrder;
-        deliveryOrderPanel.setDeliveryOrder(deliveryOrder);
+        deliveryOrderPanel.setData(deliveryOrder,roadMap);
         mainController.setDeliveryOrder(deliveryOrder);
     }
 
@@ -103,7 +104,7 @@ public class DeliveryOrderController implements ControllerInterface {
              */
             @Override
             public void onUpdateDeliveryOrder(DeliveryOrder newDeliveryOrder) {
-                setDeliveryOrder(newDeliveryOrder);
+                setData(newDeliveryOrder, roadMap);
                 //TODO deliveryOrderPanel.setLoad(false);
             }
 
@@ -115,7 +116,7 @@ public class DeliveryOrderController implements ControllerInterface {
             @Override
             public void onFailUpdateDeliveryOrder(DeliveryException e) {
                 //TODO deliveryOrderPanel.setLoad(false);
-
+                e.printStackTrace();
                 LOGGER.warning(String.format("Error while updating delivery order :%s", e.getMessage()));
                 mainController.notifyError(e.getMessage());
             }

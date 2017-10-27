@@ -1,10 +1,10 @@
 package lhexanome.optimodlivraison.ui.netbeanpanel;
 
 import lhexanome.optimodlivraison.platform.models.Delivery;
+import lhexanome.optimodlivraison.platform.models.RoadMap;
 
 import java.awt.*;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -14,15 +14,14 @@ import java.util.Set;
  */
 public class DeliveryListPanel extends javax.swing.JPanel {
 
-    private Map<Delivery,DeliveryPanel> panelsDeliverys;
-    private List<Delivery> deliveries;
+    private Map<Delivery,DeliveryPanel> deliverys;
     /**
      * Creates new form DeliveryListPanel
      */
-    public DeliveryListPanel(Set<Delivery> deliveries) {
-        panelsDeliverys = new HashMap<>();
+    public DeliveryListPanel(Set<Delivery> deliveries, RoadMap roadMap) {
+        deliverys = new HashMap<>();
         for(Delivery delivery : deliveries)
-            panelsDeliverys.put(delivery,new DeliveryPanel(delivery));
+            deliverys.put(delivery,new DeliveryPanel(delivery, roadMap));
 
         initComponents();
     }
@@ -35,22 +34,20 @@ public class DeliveryListPanel extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
         setLayout(new java.awt.GridBagLayout());
 
-        int pos = 0;
-        for(Delivery delivery : deliveries){
-
-            gridBagConstraints = new GridBagConstraints();
+        int[] pos = {0};
+        deliverys.forEach((delivery, deliveryPanel) -> {
+            GridBagConstraints gridBagConstraints = new GridBagConstraints();
             gridBagConstraints.gridx = 0;
-            gridBagConstraints.gridy = pos;
+            gridBagConstraints.gridy = pos[0];
             gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
             gridBagConstraints.weightx = 0.1;
             gridBagConstraints.weighty = 0.1;
-            add(panelsDeliverys.get(delivery),gridBagConstraints);
-            pos ++;
-        }
+            add(deliveryPanel,gridBagConstraints);
+            pos[0] ++;
+        });
 
     }// </editor-fold>//GEN-END:initComponents
 
