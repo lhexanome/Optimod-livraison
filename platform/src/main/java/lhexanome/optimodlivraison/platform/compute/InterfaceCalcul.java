@@ -65,29 +65,29 @@ public class InterfaceCalcul {
      * Calcule la tournée optimale en fonction du roadMap simplifié et de la demande de livraison.
      * Met à jour l'attribut sortie.
      *
-     * @param newPlanSimplifie Le plan simplifié calculé précédemment.
-     * @param newDemande       La demande de livraison à traiter.
+     * @param simplifiedMap Le plan simplifié calculé précédemment.
+     * @param demande       La demande de livraison à traiter.
      * @return La tournée calculée.
      */
-    public Tour computeTour(SimplifiedMap newPlanSimplifie, DeliveryOrder newDemande) {
+    public Tour computeTour() {
         Warehouse warehouse;
         Date start;
         int time;
 
-        Map<Halt, ArrayList<Path>> graphe = newPlanSimplifie.getGraph();
+        Map<Halt, ArrayList<Path>> graphe = simplifiedMap.getGraph();
 
-        warehouse = newDemande.getBeginning();
-        start = newDemande.getStart();
-        int nbSommets = newDemande.getDeliveries().size() + 1;
+        warehouse = demande.getBeginning();
+        start = demande.getStart();
+        int nbSommets = demande.getDeliveries().size() + 1;
 
         //sert à assigner chaque sommet à un index.
         ArrayList<Halt> listeSommets = new ArrayList<>();
-        listeSommets.add(newDemande.getBeginning());
-        listeSommets.addAll(newDemande.getDeliveries());
+        listeSommets.add(demande.getBeginning());
+        listeSommets.addAll(demande.getDeliveries());
 
         MatriceAdjacence matrix = grapheToMatrix(graphe, nbSommets, listeSommets);
 
-        int[] listeDurees = demandeToDurees(newDemande, nbSommets, listeSommets);
+        int[] listeDurees = demandeToDurees(demande, nbSommets, listeSommets);
 
         TSP tsp = new TSP1();
         tsp.chercheSolution(TPS_LIMITE, nbSommets, matrix.getMatriceCouts(), listeDurees);
