@@ -5,12 +5,12 @@ import lhexanome.optimodlivraison.platform.models.Delivery;
 import lhexanome.optimodlivraison.platform.models.DeliveryOrder;
 import lhexanome.optimodlivraison.platform.models.Intersection;
 import lhexanome.optimodlivraison.platform.models.RoadMap;
+import lhexanome.optimodlivraison.platform.models.TimeSlot;
 import lhexanome.optimodlivraison.platform.models.Warehouse;
+import lhexanome.optimodlivraison.platform.utils.DateUtil;
 import org.jdom2.Element;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
@@ -54,6 +54,16 @@ public class DeliveryOrderParser {
      * XML start time attribute.
      */
     public static final String XML_START_TIME_ATTRIBUTE = "heureDepart";
+
+    /**
+     * XML start time slot attribute.
+     */
+    public static final String XML_START_TIME_SLOT_ATTRIBUTE = "debutPlage";
+
+    /**
+     * XML end time slot attribute.
+     */
+    public static final String XML_END_TIME_SLOT_ATTRIBUTE = "finPlage";
 
 
     /**
@@ -125,19 +135,16 @@ public class DeliveryOrderParser {
             throw new ParseDeliveryOrderException("Warehouse element is missing attribute" + XML_START_TIME_ATTRIBUTE);
         }
 
-        DateFormat dateFormat = new SimpleDateFormat("H:m:s");
-
         Warehouse warehouse = new Warehouse(findIntersectionFromElement(element, roadMap));
 
-        // FIXME Start time in warehouse ?
         try {
-            Date date = dateFormat.parse(startTime);
+            Date date = DateUtil.parseDate("H:m:s", startTime);
 
             deliveryOrder.setBeginning(warehouse);
             deliveryOrder.setStart(date);
 
         } catch (ParseException e) {
-            throw new ParseDeliveryOrderException("Unable to parse date");
+            throw new ParseDeliveryOrderException("Unable to parse the start time of the warehouse");
         }
     }
 
@@ -162,6 +169,26 @@ public class DeliveryOrderParser {
             Integer duration = Integer.valueOf(delivery.getAttributeValue(XML_DURATION_ATTRIBUTE));
 
             Delivery delivery1 = new Delivery(intersection, duration);
+
+
+            if (delivery.getAttribute(XML_START_TIME_SLOT_ATTRIBUTE) != null
+                    && delivery.getAttribute(XML_END_TIME_SLOT_ATTRIBUTE) != null) {
+                Date startTime;
+                Date endTime;
+
+                try {
+
+                    startTime = DateUtil.parseDate("H:m:s", delivery.getAttributeValue(XML_START_TIME_SLOT_ATTRIBUTE));
+                    endTime = DateUtil.parseDate("H:m:s", delivery.getAttributeValue(XML_END_TIME_SLOT_ATTRIBUTE));
+
+                    TimeSlot timeSlot = new TimeSlot(startTime, endTime);
+
+                    delivery1.setSlot(timeSlot);
+
+                } catch (ParseException e) {
+                    throw new ParseDeliveryOrderException("Unable to parse the time slot of a delivery");
+                }
+            }
 
             deliveryOrder.addDelivery(delivery1);
         }
