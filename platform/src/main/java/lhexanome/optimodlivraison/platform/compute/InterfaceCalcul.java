@@ -73,11 +73,16 @@ public class InterfaceCalcul {
         ArrayList<Path> deliveries = new ArrayList<>(nbSommets);
 
         Path[][] matriceTrajets = matrix.getMatricePaths();
-        for (int i = 0; i < nbSommets; i++) {
-            int indexSommet = tsp.getMeilleureSolution(i);
-            Path trajet = matriceTrajets[indexSommet][(indexSommet + 1) % nbSommets];
+
+        int indexDepart, indexArrivee;
+        indexDepart = tsp.getMeilleureSolution(0);
+        for (int i = 1; i < nbSommets; i++) {
+            indexArrivee = tsp.getMeilleureSolution(i);
+            Path trajet = matriceTrajets[indexDepart][indexArrivee];
             deliveries.add(trajet);
+            indexDepart = indexArrivee;
         }
+        deliveries.add(matriceTrajets[indexDepart][tsp.getMeilleureSolution(0)]); //retour entrepot
 
         return new Tour(warehouse, start, time, deliveries);
     }
@@ -127,7 +132,7 @@ public class InterfaceCalcul {
     /**
      * Crée la liste des coûts des sommets.
      *
-     * @param demande   La demande de livraison à traiter.
+     * @param demande      La demande de livraison à traiter.
      * @param nbSommets    Nombre de sommets du graphe.
      * @param listeSommets Liste attribuant chaque sommet à un index.
      * @return La liste des coûts des sommets.
