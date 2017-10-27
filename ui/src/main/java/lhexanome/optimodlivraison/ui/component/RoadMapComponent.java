@@ -140,8 +140,8 @@ public class RoadMapComponent extends JComponent implements MouseListener {
     private static final double IMAGE_SCALE = 0.5;
 
     private  int zoom=1;
-    int xSouris;
-    int ySouris;
+    float xSouris;
+    float ySouris;
 
 
     /**
@@ -204,13 +204,22 @@ public class RoadMapComponent extends JComponent implements MouseListener {
      * Compute the scale coefficients to use with the size of the component.
      */
     private void rescale() {
+        if ( zoom==1)
+        {
+            xSouris=0;
+            ySouris=0;
+        }
         Rectangle recPlan = getMapSize(this.roadMap);
 
         float windowsSize = Math.min(getWidth(), getHeight());
 
         scalX = windowsSize / (recPlan.width)*zoom;
         scalY = windowsSize / (recPlan.height)*zoom;
-        offsetX = (recPlan.width / 2 - recPlan.x - recPlan.width) * scalX + xSouris;
+        /*if (xSouris!=0 && ySouris!=0){
+            xSouris = xSouris*(9000/((windowsSize / (recPlan.width))*10000))-9000;
+            ySouris = ySouris*(9000/((windowsSize / (recPlan.height))*10000))-9000;
+        }*/
+        offsetX = (recPlan.width / 2 - recPlan.x - recPlan.width) * scalX - xSouris;
         offsetY = (recPlan.height / 2 - recPlan.y - recPlan.height) * scalY + ySouris;
     }
 
