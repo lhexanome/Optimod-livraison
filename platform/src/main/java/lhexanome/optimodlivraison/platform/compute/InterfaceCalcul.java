@@ -94,10 +94,10 @@ public class InterfaceCalcul {
         ArrayList<Path> deliveries = new ArrayList<>(nbSommets);
 
         Path[][] matriceTrajets = matrix.getMatricePaths();
-        for (int i = 0; i < nbSommets - 1; i++) {
+        for (int i = 0; i < nbSommets; i++) {
             int indexSommet = tsp.getMeilleureSolution(i);
-            Path trajet = matriceTrajets[indexSommet][indexSommet + 1];
-            deliveries.set(i, trajet);
+            Path trajet = matriceTrajets[indexSommet][(indexSommet + 1) % nbSommets];
+            deliveries.add(trajet);
         }
 
         this.sortie = new Tour(warehouse, start, time, deliveries);
@@ -133,7 +133,7 @@ public class InterfaceCalcul {
 
         //le reste
         for (Halt arret : graphe.keySet()) {
-            inter1 = listeSommets.indexOf(arret.getIntersection());
+            inter1 = listeSommets.indexOf(arret);
             for (Path trajet : graphe.get(arret)) {
                 int inter2 = listeSommets.indexOf(trajet.getEnd());
                 int cout = trajet.getTimeToTravel();
