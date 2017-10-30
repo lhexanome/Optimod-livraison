@@ -1,7 +1,6 @@
 package lhexanome.optimodlivraison.platform.facade;
 
-import lhexanome.optimodlivraison.platform.exceptions.DeliveryException;
-import lhexanome.optimodlivraison.platform.listeners.DeliveryListener;
+import lhexanome.optimodlivraison.platform.listeners.ParseDeliveryOrderListener;
 import lhexanome.optimodlivraison.platform.models.DeliveryOrder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,19 +23,19 @@ class DeliveryFacadeTest {
 
     @Test
     void shouldLoadTestFile() {
-        deliveryFacade.addOnUpdateDeliveryListener(new DeliveryListener() {
+        deliveryFacade.addOnUpdateDeliveryListener(new ParseDeliveryOrderListener() {
             @Override
-            public void onUpdateDeliveryOrder(DeliveryOrder deliveryOrder) {
-                assertThat(deliveryOrder).isNotNull();
-                assertThat(deliveryOrder.getDeliveries())
+            public void onDeliveryOrderParsed(DeliveryOrder deliveryOrderParsed) {
+                assertThat(deliveryOrderParsed).isNotNull();
+                assertThat(deliveryOrderParsed.getDeliveries())
                         .isNotNull()
                         .hasSize(4);
 
-                assertThat(deliveryOrder.getBeginning()).isNotNull();
+                assertThat(deliveryOrderParsed.getBeginning()).isNotNull();
             }
 
             @Override
-            public void onFailUpdateDeliveryOrder(DeliveryException e) {
+            public void onDeliveryOrderParsingFail(Exception e) {
                 fail("Call on fail method", e);
             }
         });

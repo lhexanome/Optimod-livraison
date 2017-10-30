@@ -2,7 +2,7 @@ package lhexanome.optimodlivraison.platform.facade;
 
 import lhexanome.optimodlivraison.platform.exceptions.MapException;
 import lhexanome.optimodlivraison.platform.exceptions.ParseMapException;
-import lhexanome.optimodlivraison.platform.listeners.MapListener;
+import lhexanome.optimodlivraison.platform.listeners.ParseMapListener;
 import lhexanome.optimodlivraison.platform.models.RoadMap;
 import lhexanome.optimodlivraison.platform.parsing.RoadMapParser;
 import lhexanome.optimodlivraison.platform.parsing.common.LoadFile;
@@ -34,7 +34,7 @@ public class RoadMapFacade {
     /**
      * Liste de listeners.
      */
-    private Collection<MapListener> listeners;
+    private Collection<ParseMapListener> listeners;
 
     /**
      * Constructeur par défaut.
@@ -49,7 +49,7 @@ public class RoadMapFacade {
      *
      * @param listener Listener
      */
-    public void addOnUpdateMapListener(MapListener listener) {
+    public void addOnUpdateMapListener(ParseMapListener listener) {
         listeners.add(listener);
     }
 
@@ -58,7 +58,7 @@ public class RoadMapFacade {
      *
      * @param listener Listener
      */
-    public void removeOnUpdateMapListner(MapListener listener) {
+    public void removeOnUpdateMapListner(ParseMapListener listener) {
         listeners.remove(listener);
     }
 
@@ -78,7 +78,7 @@ public class RoadMapFacade {
             LOGGER.warning(MessageFormat.format("RoadMap loaded with {0} intersections",
                     newRoadMap.getIntersectionCount()));
 
-            listeners.forEach(l -> l.onUpdateMap(newRoadMap));
+            listeners.forEach(l -> l.onMapParsed(newRoadMap));
 
             LOGGER.info("Listeners notified !");
         } catch (JDOMException e) {
@@ -102,6 +102,6 @@ public class RoadMapFacade {
      * @param e Exception générant l'erreur
      */
     private void failUpdate(Exception e) {
-        listeners.forEach(l -> l.onFailUpdateMap(new MapException(e)));
+        listeners.forEach(l -> l.onMapParsingFail(new MapException(e)));
     }
 }

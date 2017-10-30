@@ -1,8 +1,7 @@
 package lhexanome.optimodlivraison.ui.controller;
 
-import lhexanome.optimodlivraison.platform.exceptions.ComputeException;
-import lhexanome.optimodlivraison.platform.facade.ComputeFacade;
-import lhexanome.optimodlivraison.platform.listeners.ComputeListener;
+import lhexanome.optimodlivraison.platform.command.ComputeTourCommand;
+import lhexanome.optimodlivraison.platform.listeners.ComputeTourListener;
 import lhexanome.optimodlivraison.platform.models.DeliveryOrder;
 import lhexanome.optimodlivraison.platform.models.RoadMap;
 import lhexanome.optimodlivraison.platform.models.Tour;
@@ -14,7 +13,7 @@ import java.util.logging.Logger;
 /**
  * Tour controller.
  */
-public class TourController implements ControllerInterface {
+public class TourController implements ControllerInterface, ComputeTourListener {
     /**
      * Logger.
      */
@@ -34,6 +33,8 @@ public class TourController implements ControllerInterface {
      * Current tour.
      */
     private Tour tour;
+
+    private ComputeTourCommand computeTourCommand;
 
     /**
      * Constructor.
@@ -78,38 +79,19 @@ public class TourController implements ControllerInterface {
      * @param deliveryOrder Delivery order
      */
     public void computeTour(RoadMap roadMap, DeliveryOrder deliveryOrder) {
+        if (computeTourCommand != null && !computeTourCommand.isCancelled()) {
+            mainController.notifyError("Un calcul est déjà en cours !");
+            return;
+        }
+        computeTourCommand = new ComputeTourCommand(roadMap, deliveryOrder);
+        computeTourCommand.setListener(this);
+        computeTourCommand.execute();
+    }
 
-        ComputeFacade computeFacade = new ComputeFacade();
-        computeFacade.addOnComputeListener(new ComputeListener() {
-            /**
-             * Fonction appelée quand le calcul d'une tournée est fini.
-             *
-             * @param newTour Tournée calculée
-             */
-            @Override
-            public void onComputingTour(Tour newTour) {
-                //TODO deliveryOrderPanel.setLoad(false);
-                setTour(newTour);
-            }
-
-            /**
-             * Fonction appelée quand une tournée n'a pas pu être calculée.
-             * <p>
-             * TODO Ajouter un genre d'enum pour les différents problèmes
-             *
-             * @param e Exception contenant la cause
-             */
-            @Override
-            public void onFailCompute(ComputeException e) {
-                //TODO deliveryOrderPanel.setLoad(false);
-
-                LOGGER.warning(String.format("Error while computing a tour error : %s", e.getMessage()));
-                mainController.notifyError(e.getMessage());
-            }
-        });
-
-        // TODO deliveryOrderPanel.setLoad(true);
-        computeFacade.computeTour(roadMap, deliveryOrder);
+    public void cancelComputeTour() {
+        if (computeTourCommand != null && !computeTourCommand.isCancelled()) {
+            computeTourCommand.cancel(true);
+        }
     }
 
     /**
@@ -129,5 +111,46 @@ public class TourController implements ControllerInterface {
      */
     public void newComputation() {
         mainController.computeTour();
+    }
+
+
+    /**
+     * Called when a tour is computed for the first time.
+     * Then, it will be updated and improved.
+     *
+     * @param firstTour First tour computed
+     */
+    @Override
+    public void onTourFirstTourComputed(Tour firstTour) {
+        setTour(firstTour);
+    }
+
+    /**
+     * Called when the tour was improved.
+     * The listener must use the old reference.
+     */
+    @Override
+    public void onTourImproved() {
+        // TODO Update display
+    }
+
+    /**
+     * Called at the end of the computing.
+     */
+    @Override
+    public void onComputingTourEnd() {
+        // TODO End computation
+        computeTourCommand = null;
+    }
+
+    /**
+     * Called when a the application was unable to compute a tour.
+     *
+     * @param e Exception raised
+     */
+    @Override
+    public void onTourComputingFail(Exception e) {
+        LOGGER.warning(String.format("Error while computing a tour error : %s", e.getMessage()));
+        mainController.notifyError(e.getMessage());
     }
 }

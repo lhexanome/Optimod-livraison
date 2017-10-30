@@ -4,6 +4,7 @@ import lhexanome.optimodlivraison.platform.compute.InterfaceCalcul;
 import lhexanome.optimodlivraison.platform.compute.SimplifiedMap;
 import lhexanome.optimodlivraison.platform.exceptions.ComputeException;
 import lhexanome.optimodlivraison.platform.listeners.ComputeListener;
+import lhexanome.optimodlivraison.platform.models.Delivery;
 import lhexanome.optimodlivraison.platform.models.DeliveryOrder;
 import lhexanome.optimodlivraison.platform.models.RoadMap;
 import lhexanome.optimodlivraison.platform.models.Tour;
@@ -88,8 +89,18 @@ public class ComputeFacade {
             LOGGER.info("Listeners notified !");
         } catch (Exception e) {
             LOGGER.warning(MessageFormat.format("Unknown error", e.getCause()));
-            failUpdate(e);
+            failCompute(e);
         }
+    }
+
+
+    /**
+     *
+     * @param tour
+     * @param delivery
+     */
+    public void addDelivery(Tour tour, Delivery delivery) {
+
     }
 
     /**
@@ -97,7 +108,7 @@ public class ComputeFacade {
      *
      * @param e Exception générant l'erreur
      */
-    private void failUpdate(Exception e) {
+    private void failCompute(Exception e) {
         listeners.forEach(l -> l.onFailCompute(new ComputeException(e)));
     }
 }

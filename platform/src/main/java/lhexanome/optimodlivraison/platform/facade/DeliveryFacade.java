@@ -2,7 +2,7 @@ package lhexanome.optimodlivraison.platform.facade;
 
 import lhexanome.optimodlivraison.platform.exceptions.DeliveryException;
 import lhexanome.optimodlivraison.platform.exceptions.ParseDeliveryOrderException;
-import lhexanome.optimodlivraison.platform.listeners.DeliveryListener;
+import lhexanome.optimodlivraison.platform.listeners.ParseDeliveryOrderListener;
 import lhexanome.optimodlivraison.platform.models.DeliveryOrder;
 import lhexanome.optimodlivraison.platform.models.RoadMap;
 import lhexanome.optimodlivraison.platform.parsing.DeliveryOrderParser;
@@ -35,7 +35,7 @@ public class DeliveryFacade {
     /**
      * Liste de listeners.
      */
-    private Collection<DeliveryListener> listeners;
+    private Collection<ParseDeliveryOrderListener> listeners;
 
     /**
      * Constructeur par défaut.
@@ -50,7 +50,7 @@ public class DeliveryFacade {
      *
      * @param listener Listener
      */
-    public void addOnUpdateDeliveryListener(DeliveryListener listener) {
+    public void addOnUpdateDeliveryListener(ParseDeliveryOrderListener listener) {
         listeners.add(listener);
     }
 
@@ -59,7 +59,7 @@ public class DeliveryFacade {
      *
      * @param listener Listener
      */
-    public void removeOnUpdateDeliveryListner(DeliveryListener listener) {
+    public void removeOnUpdateDeliveryListner(ParseDeliveryOrderListener listener) {
         listeners.remove(listener);
     }
 
@@ -80,7 +80,7 @@ public class DeliveryFacade {
             LOGGER.warning(MessageFormat.format("Delivery order loaded with {0} deliveries",
                     deliveryOrder.getDeliveries().size()));
 
-            listeners.forEach(l -> l.onUpdateDeliveryOrder(deliveryOrder));
+            listeners.forEach(l -> l.onDeliveryOrderParsed(deliveryOrder));
 
             LOGGER.info("Listeners notified !");
         } catch (JDOMException e) {
@@ -104,6 +104,6 @@ public class DeliveryFacade {
      * @param e Exception générant l'erreur
      */
     private void failUpdate(Exception e) {
-        listeners.forEach(l -> l.onFailUpdateDeliveryOrder(new DeliveryException(e)));
+        listeners.forEach(l -> l.onDeliveryOrderParsingFail(new DeliveryException(e)));
     }
 }
