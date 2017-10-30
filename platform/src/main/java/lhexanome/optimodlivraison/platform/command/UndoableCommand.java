@@ -1,5 +1,8 @@
 package lhexanome.optimodlivraison.platform.command;
 
+/**
+ * Interface for a command capable of being undo and redo.
+ */
 public interface UndoableCommand extends Command {
 
     /**
