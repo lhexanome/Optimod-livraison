@@ -1,6 +1,5 @@
-package lhexanome.optimodlivraison.platform.facade;
+package lhexanome.optimodlivraison.platform.command;
 
-import lhexanome.optimodlivraison.platform.exceptions.MapException;
 import lhexanome.optimodlivraison.platform.listeners.ParseMapListener;
 import lhexanome.optimodlivraison.platform.models.RoadMap;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,21 +10,19 @@ import java.io.File;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
-class RoadMapFacadeTest {
-
-    private RoadMapFacade roadMapFacade;
+class ParseMapCommandTest {
+    private ParseMapCommand command;
     private File littleMap;
 
     @BeforeEach
     void setup() {
-        roadMapFacade = new RoadMapFacade();
-
         littleMap = new File(this.getClass().getResource("/xml/map/planLyonPetit.xml").getFile());
+        command = new ParseMapCommand(littleMap);
     }
 
     @Test
     void shouldLoadTestFile() {
-        roadMapFacade.addOnUpdateMapListener(new ParseMapListener() {
+        command.setListener(new ParseMapListener() {
             @Override
             public void onMapParsed(RoadMap roadMapParsed) {
                 // 217 intersections dans le xml donc il doit y avoir 217 intersections dans le RoadMap!
@@ -33,12 +30,11 @@ class RoadMapFacadeTest {
             }
 
             @Override
-            public void onMapParsingFail(MapException e) {
+            public void onMapParsingFail(Exception e) {
                 fail("Call on fail method", e);
             }
         });
 
-
-        roadMapFacade.loadMapFromFile(littleMap);
+        command.execute();
     }
 }

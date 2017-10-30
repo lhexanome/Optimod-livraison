@@ -76,12 +76,12 @@ public class ComputeTourCommand extends SwingWorker<Void, Tour> {
 
             LOGGER.info("Simplified roadMap computed");
 
-            Tour tour = interfaceCalcul.computeTour(simplifiedMap, deliveryOrder);
+            Tour computedTour = interfaceCalcul.computeTour(simplifiedMap, deliveryOrder);
             //Tour tour = simplifiedMap.generateFakeTour();
 
             // TODO Send multiple time tour updates.
             // TODO Set progress (by time)
-            publish(tour);
+            publish(computedTour);
 
             LOGGER.warning("Tour computed");
         } catch (Exception e) {
