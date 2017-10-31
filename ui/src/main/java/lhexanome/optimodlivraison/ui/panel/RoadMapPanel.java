@@ -29,6 +29,9 @@ public class RoadMapPanel extends AbstractPanel {
      */
     private JButton reloadRoadMapButton;
 
+    /**
+     * The roadMapController assigned to the roadMapPanel.
+     */
     private RoadMapController roadMapController;
 
     /**

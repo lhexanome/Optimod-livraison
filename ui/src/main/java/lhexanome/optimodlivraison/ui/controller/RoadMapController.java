@@ -46,8 +46,11 @@ public class RoadMapController implements ControllerInterface, ParseMapListener 
     private Intersection currentIntersection;
 
     /**
+     * A distance greater than any other one during execution.
+     */
+    private final double maxDistance = 1000000000;
+    /**
      * Constructor.
-     *
      * @param mainController Main controller
      */
     public RoadMapController(MainController mainController) {
