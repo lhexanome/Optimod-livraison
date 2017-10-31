@@ -34,6 +34,9 @@ public class TourController implements ControllerInterface, ComputeTourListener 
      */
     private Tour tour;
 
+    /**
+     * Compute tour command.
+     */
     private ComputeTourCommand computeTourCommand;
 
     /**
@@ -88,6 +91,9 @@ public class TourController implements ControllerInterface, ComputeTourListener 
         computeTourCommand.execute();
     }
 
+    /**
+     * Cancel a tour computation.
+     */
     public void cancelComputeTour() {
         if (computeTourCommand != null && !computeTourCommand.isCancelled()) {
             computeTourCommand.cancel(true);

@@ -83,6 +83,11 @@ public class RoadMapPanel extends AbstractPanel {
     }
 
 
+    /**
+     * Set loading state.
+     *
+     * @param visible When true, map is loading
+     */
     public void setLoading(boolean visible) {
         loadingContainer.setVisible(visible);
         roadMapComponent.setVisible(!visible);
