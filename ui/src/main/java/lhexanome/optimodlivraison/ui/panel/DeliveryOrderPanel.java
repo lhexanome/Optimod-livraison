@@ -30,6 +30,10 @@ public class DeliveryOrderPanel extends AbstractPanel {
      * List displaying all the deliveries.
      */
     private JList<Delivery> deliveryList;
+
+    /**
+     * Label for the start hour of a warehouse.
+     */
     private JLabel startHour;
 
     /**

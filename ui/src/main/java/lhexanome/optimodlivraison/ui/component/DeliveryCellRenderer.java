@@ -10,6 +10,9 @@ import java.awt.*;
 import java.awt.font.TextAttribute;
 import java.util.Map;
 
+/**
+ * Delivery celle renderer.
+ */
 public class DeliveryCellRenderer implements ListCellRenderer<Delivery> {
 
     /**
@@ -36,7 +39,7 @@ public class DeliveryCellRenderer implements ListCellRenderer<Delivery> {
      * @see ListSelectionModel
      * @see ListModel
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "checkstyle:magicnumber"})
     @Override
     public Component getListCellRendererComponent(JList<? extends Delivery> list, Delivery value,
                                                   int index, boolean isSelected, boolean cellHasFocus) {
@@ -152,6 +155,11 @@ public class DeliveryCellRenderer implements ListCellRenderer<Delivery> {
         return panel;
     }
 
+    /**
+     * Road map setter.
+     *
+     * @param roadMap Road map
+     */
     public void setRoadMap(RoadMap roadMap) {
         this.roadMap = roadMap;
     }
