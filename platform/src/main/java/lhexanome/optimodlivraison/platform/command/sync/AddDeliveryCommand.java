@@ -37,9 +37,19 @@ public class AddDeliveryCommand implements UndoableCommand {
     private InterfaceCalcul interfaceCalcul;
 
 
+    /**
+     * Command status.
+     */
     private UndoableCommandStatus status;
 
 
+    /**
+     * Constructor.
+     *
+     * @param tour          Tour
+     * @param deliveryToAdd Delivery to add
+     * @param index         Index where to add the delivery
+     */
     public AddDeliveryCommand(Tour tour, Delivery deliveryToAdd, int index) {
         this.index = index;
         this.deliveryToAdd = deliveryToAdd;
