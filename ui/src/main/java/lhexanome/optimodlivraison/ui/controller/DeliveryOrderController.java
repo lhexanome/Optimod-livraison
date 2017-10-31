@@ -1,8 +1,7 @@
 package lhexanome.optimodlivraison.ui.controller;
 
-import lhexanome.optimodlivraison.platform.exceptions.DeliveryException;
-import lhexanome.optimodlivraison.platform.facade.DeliveryFacade;
-import lhexanome.optimodlivraison.platform.listeners.DeliveryListener;
+import lhexanome.optimodlivraison.platform.command.ParseDeliveryOrderCommand;
+import lhexanome.optimodlivraison.platform.listeners.ParseDeliveryOrderListener;
 import lhexanome.optimodlivraison.platform.models.DeliveryOrder;
 import lhexanome.optimodlivraison.platform.models.RoadMap;
 import lhexanome.optimodlivraison.ui.panel.DeliveryOrderPanel;
@@ -95,35 +94,23 @@ public class DeliveryOrderController implements ControllerInterface {
      * @param roadMap Road map
      */
     public void selectDeliveryOrder(File xmlFile, RoadMap roadMap) {
+        ParseDeliveryOrderCommand command = new ParseDeliveryOrderCommand(xmlFile, roadMap);
 
-        DeliveryFacade deliveryFacade = new DeliveryFacade();
-        deliveryFacade.addOnUpdateDeliveryListener(new DeliveryListener() {
-            /**
-             * Fonction appelée quand une demande de livraison est chargée.
-             *
-             * @param newDeliveryOrder Demande de livraison
-             */
+        command.setListener(new ParseDeliveryOrderListener() {
             @Override
-            public void onUpdateDeliveryOrder(DeliveryOrder newDeliveryOrder) {
-                setData(newDeliveryOrder, roadMap);
-                //TODO deliveryOrderPanel.setLoad(false);
+            public void onDeliveryOrderParsed(DeliveryOrder deliveryOrderParsed) {
+                setData(deliveryOrderParsed, roadMap);
             }
 
-            /**
-             * Fonction appelée quand une demande n'arrive pas à être chargée.
-             *
-             * @param e Exception contenant la cause
-             */
             @Override
-            public void onFailUpdateDeliveryOrder(DeliveryException e) {
-                //TODO deliveryOrderPanel.setLoad(false);
+            public void onDeliveryOrderParsingFail(Exception e) {
                 LOGGER.log(Level.WARNING, "Error while updating delivery order ", e);
                 mainController.notifyError(e.getMessage());
             }
         });
 
         // TODO deliveryOrderPanel.setLoad(true);
-        deliveryFacade.loadDeliveryOrderFromFile(xmlFile, roadMap);
+        command.execute();
     }
 
     /**
@@ -152,5 +139,13 @@ public class DeliveryOrderController implements ControllerInterface {
      */
     public DeliveryOrder getDeliveryOrder() {
         return deliveryOrder;
+    }
+
+    /**
+     * Clear current delivery order.
+     */
+    public void clearDeliveryOrder() {
+        deliveryOrder = null;
+        deliveryOrderPanel.setData(null, null);
     }
 }

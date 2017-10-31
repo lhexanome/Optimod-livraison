@@ -99,7 +99,8 @@ public class MainController implements ControllerInterface {
      * @param roadMap Road map
      */
     public void setRoadMap(RoadMap roadMap) {
-        // TODO Clear delivery and tour data
+        deliveryOrderController.clearDeliveryOrder();
+        tourController.clearTour();
     }
 
     /**
@@ -109,6 +110,7 @@ public class MainController implements ControllerInterface {
      */
     public void setDeliveryOrder(DeliveryOrder deliveryOrder) {
         roadMapController.setDeliveryOrder(deliveryOrder);
+        tourController.clearTour();
     }
 
     /**

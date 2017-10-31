@@ -2,7 +2,7 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="lhexanome.optimodlivraison.ui.panel.RoadMapPanel">
   <grid id="27dc6" binding="contentPane" layout-manager="GridBagLayout">
     <constraints>
-      <xy x="20" y="20" width="419" height="446"/>
+      <xy x="20" y="20" width="419" height="639"/>
     </constraints>
     <properties/>
     <border type="line">
@@ -11,7 +11,7 @@
     <children>
       <component id="523c5" class="javax.swing.JButton" binding="reloadRoadMapButton">
         <constraints>
-          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
           <gridbag top="5" left="0" bottom="5" right="0" weightx="0.0" weighty="0.0" ipadx="5" ipady="5"/>
         </constraints>
         <properties>
@@ -20,23 +20,35 @@
       </component>
       <component id="92ac2" class="lhexanome.optimodlivraison.ui.component.RoadMapComponent" binding="roadMapComponent">
         <constraints>
-          <grid row="0" column="0" row-span="1" col-span="3" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="1" column="0" row-span="1" col-span="3" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
           <gridbag weightx="1.0" weighty="1.0"/>
         </constraints>
-        <properties/>
+        <properties>
+          <enabled value="true"/>
+        </properties>
       </component>
       <hspacer id="4e11a">
         <constraints>
-          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
           <gridbag weightx="0.44" weighty="0.1"/>
         </constraints>
       </hspacer>
       <hspacer id="1d172">
         <constraints>
-          <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
           <gridbag weightx="0.44" weighty="0.1"/>
         </constraints>
       </hspacer>
+      <component id="fae63" class="javax.swing.JLabel" binding="loadingContainer">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="1.0" weighty="1.0"/>
+        </constraints>
+        <properties>
+          <icon value="loading/double_ring.gif"/>
+          <text value=""/>
+        </properties>
+      </component>
     </children>
   </grid>
 </form>

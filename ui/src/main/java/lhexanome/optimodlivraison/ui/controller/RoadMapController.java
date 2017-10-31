@@ -1,8 +1,7 @@
 package lhexanome.optimodlivraison.ui.controller;
 
-import lhexanome.optimodlivraison.platform.exceptions.MapException;
-import lhexanome.optimodlivraison.platform.facade.RoadMapFacade;
-import lhexanome.optimodlivraison.platform.listeners.MapListener;
+import lhexanome.optimodlivraison.platform.command.ParseMapCommand;
+import lhexanome.optimodlivraison.platform.listeners.ParseMapListener;
 import lhexanome.optimodlivraison.platform.models.DeliveryOrder;
 import lhexanome.optimodlivraison.platform.models.RoadMap;
 import lhexanome.optimodlivraison.platform.models.Tour;
@@ -16,7 +15,7 @@ import java.util.logging.Logger;
 /**
  * Road map controller.
  */
-public class RoadMapController implements ControllerInterface {
+public class RoadMapController implements ControllerInterface, ParseMapListener {
 
     /**
      * Logger.
@@ -92,26 +91,10 @@ public class RoadMapController implements ControllerInterface {
      * @param xmlFile XML file
      */
     public void selectRoadMap(File xmlFile) {
-
-        RoadMapFacade mapFacade = new RoadMapFacade();
-        mapFacade.addOnUpdateMapListener(new MapListener() {
-            @Override
-            public void onUpdateMap(RoadMap newRoadMap) {
-                setRoadMap(newRoadMap);
-                //TODO roadMapPanel.setLoad(false);
-            }
-
-            @Override
-            public void onFailUpdateMap(MapException e) {
-                //TODO roadMapPanel.setLoad(false);
-
-                LOGGER.warning(String.format("Error while updating road map :%s", e.getMessage()));
-                mainController.notifyError(e.getMessage());
-            }
-        });
-
-        // TODO roadMapPanel.setLoad(true);
-        mapFacade.loadMapFromFile(xmlFile);
+        roadMapPanel.setLoading(true);
+        ParseMapCommand command = new ParseMapCommand(xmlFile);
+        command.setListener(this);
+        command.execute();
     }
 
     /**
@@ -159,5 +142,29 @@ public class RoadMapController implements ControllerInterface {
      */
     public void setTour(Tour tour) {
         roadMapPanel.setTour(tour);
+    }
+
+
+    /**
+     * Called when map is loaded.
+     *
+     * @param roadMapParsed RoadMap loaded
+     */
+    @Override
+    public void onMapParsed(RoadMap roadMapParsed) {
+        roadMapPanel.setLoading(false);
+        setRoadMap(roadMapParsed);
+    }
+
+    /**
+     * Called when the map could not be loaded.
+     *
+     * @param e Exception raised
+     */
+    @Override
+    public void onMapParsingFail(Exception e) {
+        roadMapPanel.setLoading(false);
+        LOGGER.warning(String.format("Error while updating road map :%s", e.getMessage()));
+        mainController.notifyError(e.getMessage());
     }
 }

@@ -27,6 +27,11 @@ public class TourPanel extends AbstractPanel {
     private JLabel durationLabel;
 
     /**
+     * Button to cancel a computation.
+     */
+    private JButton cancelComputationButton;
+
+    /**
      * Constructor.
      *
      * @param controller Tour controller
@@ -42,6 +47,7 @@ public class TourPanel extends AbstractPanel {
     @Override
     public void setup() {
         computeTourButton.addActionListener(e -> ((TourController) controller).newComputation());
+        cancelComputationButton.addActionListener(e -> ((TourController) controller).cancelComputeTour());
     }
 
     /**
@@ -85,17 +91,24 @@ public class TourPanel extends AbstractPanel {
         computeTourButton.setText("Calculer Tournée");
         GridBagConstraints gbc;
         gbc = new GridBagConstraints();
-        gbc.gridx = 0;
+        gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         contentPane.add(computeTourButton, gbc);
         durationLabel = new JLabel();
         durationLabel.setText("");
         gbc = new GridBagConstraints();
-        gbc.gridx = 1;
+        gbc.gridx = 2;
         gbc.gridy = 0;
         gbc.anchor = GridBagConstraints.WEST;
         contentPane.add(durationLabel, gbc);
+        cancelComputationButton = new JButton();
+        cancelComputationButton.setText("Annuler calcul");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        contentPane.add(cancelComputationButton, gbc);
     }
 
     /**

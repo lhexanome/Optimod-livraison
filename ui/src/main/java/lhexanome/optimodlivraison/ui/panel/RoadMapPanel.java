@@ -30,6 +30,11 @@ public class RoadMapPanel extends AbstractPanel {
     private JButton reloadRoadMapButton;
 
     /**
+     * Loading label, the icon will be in it.
+     */
+    private JLabel loadingContainer;
+
+    /**
      * Constructor.
      *
      * @param controller Road map controller.
@@ -77,6 +82,17 @@ public class RoadMapPanel extends AbstractPanel {
         roadMapComponent.setTour(tour);
     }
 
+
+    /**
+     * Set loading state.
+     *
+     * @param visible When true, map is loading
+     */
+    public void setLoading(boolean visible) {
+        loadingContainer.setVisible(visible);
+        roadMapComponent.setVisible(!visible);
+    }
+
     /**
      * {@link AbstractPanel#getContentPane()}.
      */
@@ -112,16 +128,17 @@ public class RoadMapPanel extends AbstractPanel {
         GridBagConstraints gbc;
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
-        gbc.gridy = 1;
+        gbc.gridy = 2;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.ipadx = 5;
         gbc.ipady = 5;
         gbc.insets = new Insets(5, 0, 5, 0);
         contentPane.add(reloadRoadMapButton, gbc);
         roadMapComponent = new RoadMapComponent();
+        roadMapComponent.setEnabled(true);
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
-        gbc.gridy = 0;
+        gbc.gridy = 1;
         gbc.gridwidth = 3;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
@@ -130,7 +147,7 @@ public class RoadMapPanel extends AbstractPanel {
         final JPanel spacer1 = new JPanel();
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
-        gbc.gridy = 1;
+        gbc.gridy = 2;
         gbc.weightx = 0.44;
         gbc.weighty = 0.1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -138,11 +155,21 @@ public class RoadMapPanel extends AbstractPanel {
         final JPanel spacer2 = new JPanel();
         gbc = new GridBagConstraints();
         gbc.gridx = 2;
-        gbc.gridy = 1;
+        gbc.gridy = 2;
         gbc.weightx = 0.44;
         gbc.weighty = 0.1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         contentPane.add(spacer2, gbc);
+        loadingContainer = new JLabel();
+        loadingContainer.setIcon(new ImageIcon(getClass().getResource("/loading/double_ring.gif")));
+        loadingContainer.setText("");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 3;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        contentPane.add(loadingContainer, gbc);
     }
 
     /**

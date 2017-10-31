@@ -55,7 +55,7 @@ public class DeliveryOrderPanel extends AbstractPanel {
      * Called by the controller.
      *
      * @param newDeliveryOrder Delivery order
-     * @param roadMap       roadMap
+     * @param roadMap          roadMap
      */
     public void setData(DeliveryOrder newDeliveryOrder, RoadMap roadMap) {
         this.deliveryOrder = newDeliveryOrder;
@@ -72,6 +72,25 @@ public class DeliveryOrderPanel extends AbstractPanel {
 
         // Disable Checkstyle for generated code
         //CHECKSTYLE:OFF
+    }
+
+    /**
+     * @noinspection ALL
+     */
+    private Font $$$getFont$$$(String fontName, int style, int size, Font currentFont) {
+        if (currentFont == null) return null;
+        String resultName;
+        if (fontName == null) {
+            resultName = currentFont.getName();
+        } else {
+            Font testFont = new Font(fontName, Font.PLAIN, 10);
+            if (testFont.canDisplay('a') && testFont.canDisplay('1')) {
+                resultName = fontName;
+            } else {
+                resultName = currentFont.getName();
+            }
+        }
+        return new Font(resultName, style >= 0 ? style : currentFont.getStyle(), size >= 0 ? size : currentFont.getSize());
     }
 
     {
@@ -116,25 +135,6 @@ public class DeliveryOrderPanel extends AbstractPanel {
         gbc.ipady = 5;
         gbc.insets = new Insets(5, 0, 5, 0);
         contentPane.add(loadDeliveryOrderButton, gbc);
-    }
-
-    /**
-     * @noinspection ALL
-     */
-    private Font $$$getFont$$$(String fontName, int style, int size, Font currentFont) {
-        if (currentFont == null) return null;
-        String resultName;
-        if (fontName == null) {
-            resultName = currentFont.getName();
-        } else {
-            Font testFont = new Font(fontName, Font.PLAIN, 10);
-            if (testFont.canDisplay('a') && testFont.canDisplay('1')) {
-                resultName = fontName;
-            } else {
-                resultName = currentFont.getName();
-            }
-        }
-        return new Font(resultName, style >= 0 ? style : currentFont.getStyle(), size >= 0 ? size : currentFont.getSize());
     }
 
     /**
