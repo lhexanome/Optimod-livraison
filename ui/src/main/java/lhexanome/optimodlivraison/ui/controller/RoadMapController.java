@@ -91,6 +91,7 @@ public class RoadMapController implements ControllerInterface, ParseMapListener 
      * @param xmlFile XML file
      */
     public void selectRoadMap(File xmlFile) {
+        roadMapPanel.setLoading(true);
         ParseMapCommand command = new ParseMapCommand(xmlFile);
         command.setListener(this);
         command.execute();
@@ -151,6 +152,7 @@ public class RoadMapController implements ControllerInterface, ParseMapListener 
      */
     @Override
     public void onMapParsed(RoadMap roadMapParsed) {
+        roadMapPanel.setLoading(false);
         setRoadMap(roadMapParsed);
     }
 
@@ -161,6 +163,7 @@ public class RoadMapController implements ControllerInterface, ParseMapListener 
      */
     @Override
     public void onMapParsingFail(Exception e) {
+        roadMapPanel.setLoading(false);
         LOGGER.warning(String.format("Error while updating road map :%s", e.getMessage()));
         mainController.notifyError(e.getMessage());
     }
