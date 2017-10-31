@@ -140,4 +140,12 @@ public class DeliveryOrderController implements ControllerInterface {
     public DeliveryOrder getDeliveryOrder() {
         return deliveryOrder;
     }
+
+    /**
+     * Clear current delivery order.
+     */
+    public void clearDeliveryOrder() {
+        deliveryOrder = null;
+        deliveryOrderPanel.setData(null, null);
+    }
 }

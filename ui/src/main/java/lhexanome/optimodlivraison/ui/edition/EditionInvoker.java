@@ -1,6 +1,6 @@
 package lhexanome.optimodlivraison.ui.edition;
 
-import lhexanome.optimodlivraison.platform.command.UndoableCommand;
+import lhexanome.optimodlivraison.platform.command.sync.UndoableCommand;
 
 import java.util.Stack;
 
@@ -51,7 +51,7 @@ public class EditionInvoker {
         if (!commands.isEmpty()) {
             UndoableCommand command = commands.pop();
             redoCommands.push(command);
-            command.unexecute();
+            command.undo();
         }
     }
 
@@ -63,8 +63,7 @@ public class EditionInvoker {
         if (!redoCommands.isEmpty()) {
             UndoableCommand command = redoCommands.pop();
             commands.push(command);
-            command.reexecute();
+            command.redo();
         }
     }
-
 }

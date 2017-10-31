@@ -167,6 +167,8 @@ public class RoadMapPanel extends AbstractPanel {
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridwidth = 3;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
         contentPane.add(loadingContainer, gbc);
     }
 

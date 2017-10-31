@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 
 /**
  * Command to parse road map.
+ * It use {@link SwingWorker} to work, so the logic part is executed in another thread than the UI Thread.
  */
 public class ParseMapCommand extends SwingWorker<RoadMap, Void> {
 

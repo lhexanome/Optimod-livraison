@@ -159,4 +159,12 @@ public class TourController implements ControllerInterface, ComputeTourListener 
         LOGGER.warning(String.format("Error while computing a tour error : %s", e.getMessage()));
         mainController.notifyError(e.getMessage());
     }
+
+    /**
+     * Clear current tour.
+     */
+    public void clearTour() {
+        tour = null;
+        tourPanel.setTour(null);
+    }
 }

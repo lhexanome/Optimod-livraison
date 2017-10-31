@@ -42,7 +42,7 @@
       <component id="fae63" class="javax.swing.JLabel" binding="loadingContainer">
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-          <gridbag weightx="0.0" weighty="0.0"/>
+          <gridbag weightx="1.0" weighty="1.0"/>
         </constraints>
         <properties>
           <icon value="loading/double_ring.gif"/>
