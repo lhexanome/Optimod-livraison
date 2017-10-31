@@ -41,7 +41,6 @@ public class DeliveryCellRenderer implements ListCellRenderer<Delivery> {
     public Component getListCellRendererComponent(JList<? extends Delivery> list, Delivery value,
                                                   int index, boolean isSelected, boolean cellHasFocus) {
         JPanel panel = new JPanel();
-        panel.setOpaque(false);
         panel.setLayout(new GridBagLayout());
 
         GridBagConstraints gbc = new GridBagConstraints();
@@ -49,6 +48,7 @@ public class DeliveryCellRenderer implements ListCellRenderer<Delivery> {
         gbc.gridy = 0;
         gbc.gridx = 0;
         gbc.anchor = GridBagConstraints.FIRST_LINE_START;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
         // Index line
 
@@ -56,7 +56,7 @@ public class DeliveryCellRenderer implements ListCellRenderer<Delivery> {
 
         Font font = indexLabel.getFont();
         Map attributes = font.getAttributes();
-        attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
+        attributes.put(TextAttribute.WEIGHT, TextAttribute.WEIGHT_DEMIBOLD);
         indexLabel.setFont(font.deriveFont(attributes));
 
         gbc.weightx = 0.2;
@@ -101,7 +101,7 @@ public class DeliveryCellRenderer implements ListCellRenderer<Delivery> {
 
         addressLabel.setFont(font.deriveFont(attributes));
 
-        gbc.weightx = 0.2;
+//        gbc.weightx = 0.2;
         gbc.gridx = 0;
 
         panel.add(addressLabel, gbc);
@@ -122,6 +122,7 @@ public class DeliveryCellRenderer implements ListCellRenderer<Delivery> {
         // Duration label
 
         JLabel durationLabel = new JLabel("Durée de livraison :");
+        durationLabel.setFont(font.deriveFont(attributes));
         gbc.gridx = 0;
         gbc.weightx = 0.2;
 
@@ -133,6 +134,20 @@ public class DeliveryCellRenderer implements ListCellRenderer<Delivery> {
         gbc.gridx = 1;
 
         panel.add(durationValue, gbc);
+
+        // Separator
+
+        panel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
+
+        // Selection
+
+        if (isSelected) {
+            panel.setBackground(new Color(0, 0, 100, 70));
+        } else if (cellHasFocus) {
+            panel.setBackground(new Color(0, 0, 0, 40));
+        } else {
+            panel.setOpaque(false);
+        }
 
         return panel;
     }

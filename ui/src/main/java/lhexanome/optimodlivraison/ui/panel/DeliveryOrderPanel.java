@@ -38,11 +38,6 @@ public class DeliveryOrderPanel extends AbstractPanel {
     private DeliveryCellRenderer cellRenderer;
 
     /**
-     * Netbeans panel for a delivery order panel.
-     */
-//    private lhexanome.optimodlivraison.ui.netbeanpanel.DeliveryOrderPanel deliveryOrderPanel;
-
-    /**
      * Current delivery order.
      */
     private DeliveryOrder deliveryOrder;
