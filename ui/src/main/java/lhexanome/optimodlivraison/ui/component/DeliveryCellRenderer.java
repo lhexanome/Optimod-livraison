@@ -44,14 +44,12 @@ public class DeliveryCellRenderer implements ListCellRenderer<Delivery> {
     public Component getListCellRendererComponent(JList<? extends Delivery> list, Delivery value,
                                                   int index, boolean isSelected, boolean cellHasFocus) {
         JPanel panel = new JPanel();
-        panel.setLayout(new GridBagLayout());
 
-        GridBagConstraints gbc = new GridBagConstraints();
+        GroupLayout layout = new GroupLayout(panel);
+        panel.setLayout(layout);
 
-        gbc.gridy = 0;
-        gbc.gridx = 0;
-        gbc.anchor = GridBagConstraints.FIRST_LINE_START;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
+        layout.setAutoCreateContainerGaps(true);
+        layout.setAutoCreateGaps(true);
 
         // Index line
 
@@ -62,39 +60,27 @@ public class DeliveryCellRenderer implements ListCellRenderer<Delivery> {
         attributes.put(TextAttribute.WEIGHT, TextAttribute.WEIGHT_DEMIBOLD);
         indexLabel.setFont(font.deriveFont(attributes));
 
-        gbc.weightx = 0.2;
-
-        panel.add(indexLabel, gbc);
-
         JLabel indexValue = new JLabel(String.valueOf(index));
-        gbc.weightx = 0.8;
-        gbc.gridx = 1;
-
-        panel.add(indexValue, gbc);
-        gbc.gridy++;
 
 
         // Time slot line
 
         TimeSlot timeSlot = value.getSlot();
+        GroupLayout.SequentialGroup timeSlotGroupSeq = layout.createSequentialGroup();
+        GroupLayout.ParallelGroup timeSlotGroupParallel = layout.createParallelGroup();
 
         if (timeSlot != null) {
             JLabel timeSlotLabel = new JLabel("Plage horaire :");
             timeSlotLabel.setFont(font.deriveFont(attributes));
 
-            gbc.weightx = 0.2;
-            gbc.gridx = 0;
-
-            panel.add(timeSlotLabel, gbc);
-
             JLabel timeSlotValue = new JLabel(value.getSlot().toString());
 
-            gbc.weightx = 0.8;
-            gbc.gridx = 1;
-
-            panel.add(timeSlotValue, gbc);
-
-            gbc.gridy++;
+            timeSlotGroupSeq
+                    .addComponent(timeSlotLabel)
+                    .addComponent(timeSlotValue);
+            timeSlotGroupParallel
+                    .addComponent(timeSlotLabel)
+                    .addComponent(timeSlotValue);
         }
 
 
@@ -104,39 +90,56 @@ public class DeliveryCellRenderer implements ListCellRenderer<Delivery> {
 
         addressLabel.setFont(font.deriveFont(attributes));
 
-//        gbc.weightx = 0.2;
-        gbc.gridx = 0;
-
-        panel.add(addressLabel, gbc);
-        gbc.gridy++;
-        gbc.weightx = 0.8;
-        gbc.gridx = 1;
+        GroupLayout.SequentialGroup addressGroupSeq = layout.createSequentialGroup();
+        GroupLayout.ParallelGroup addressGroupParallel = layout.createParallelGroup();
 
         for (Vector street : roadMap.getTronconsFromIntersection(value.getIntersection())) {
             String streetName = street.getNameStreet();
             if (streetName == null) streetName = "Rue sans nom";
 
-            JLabel line = new JLabel(streetName);
+            JLabel line = new JLabel("- " + streetName);
 
-            panel.add(line, gbc);
-            gbc.gridy++;
+            addressGroupParallel.addComponent(line);
+            addressGroupSeq.addComponent(line);
         }
 
         // Duration label
 
         JLabel durationLabel = new JLabel("Durée de livraison :");
         durationLabel.setFont(font.deriveFont(attributes));
-        gbc.gridx = 0;
-        gbc.weightx = 0.2;
 
-        panel.add(durationLabel, gbc);
+        JLabel durationValue = new JLabel(String.valueOf(value.getDuration() / 100) + " min");
 
-        JLabel durationValue = new JLabel(String.valueOf(value.getDuration() / 100) + "min");
 
-        gbc.weightx = 0.8;
-        gbc.gridx = 1;
+        // Placement
 
-        panel.add(durationValue, gbc);
+        layout.setHorizontalGroup(layout.createParallelGroup()
+                .addGroup(layout.createSequentialGroup()
+                        .addComponent(indexLabel)
+                        .addComponent(indexValue)
+                )
+                .addGroup(timeSlotGroupSeq)
+                .addGroup(layout.createSequentialGroup()
+                        .addComponent(durationLabel)
+                        .addComponent(durationValue)
+                )
+                .addComponent(addressLabel)
+                .addGroup(addressGroupParallel)
+        );
+
+        layout.setVerticalGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup()
+                        .addComponent(indexLabel)
+                        .addComponent(indexValue)
+                )
+                .addGroup(timeSlotGroupParallel)
+                .addGroup(layout.createParallelGroup()
+                        .addComponent(durationLabel)
+                        .addComponent(durationValue)
+                )
+                .addComponent(addressLabel)
+                .addGroup(addressGroupSeq)
+        );
 
         // Separator
 

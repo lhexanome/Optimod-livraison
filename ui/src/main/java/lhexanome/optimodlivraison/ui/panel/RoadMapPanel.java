@@ -142,6 +142,8 @@ public class RoadMapPanel extends AbstractPanel {
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
         gbc.fill = GridBagConstraints.BOTH;
+        gbc.ipadx = 15;
+        gbc.ipady = 15;
         contentPane.add(roadMapComponent, gbc);
         final JPanel spacer1 = new JPanel();
         gbc = new GridBagConstraints();
