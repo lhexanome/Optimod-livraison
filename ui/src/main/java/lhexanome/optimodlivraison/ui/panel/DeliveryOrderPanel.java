@@ -64,6 +64,8 @@ public class DeliveryOrderPanel extends AbstractPanel {
         cellRenderer = new DeliveryCellRenderer();
         deliveryList.setCellRenderer(cellRenderer);
 
+        deliveryList.addListSelectionListener(e ->
+                ((DeliveryOrderController) controller).selectDeliveryFromList(deliveryList.getSelectedValue()));
         loadDeliveryOrderButton.addActionListener(e -> ((DeliveryOrderController) controller).reloadDeliveryOrder());
     }
 
@@ -94,6 +96,16 @@ public class DeliveryOrderPanel extends AbstractPanel {
 
 //        deliveryOrderPanel.setData(newDeliveryOrder, roadMap);
         contentPane.revalidate();
+    }
+
+
+    /**
+     * Select a delivery on the jlist.
+     *
+     * @param selectValue Selected delivery
+     */
+    public void selectDeliveryFromMap(Delivery selectValue) {
+        deliveryList.setSelectedValue(selectValue, true);
     }
 
     /**
@@ -178,4 +190,6 @@ public class DeliveryOrderPanel extends AbstractPanel {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
+
+
 }
