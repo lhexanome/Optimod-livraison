@@ -1,5 +1,6 @@
 package lhexanome.optimodlivraison.platform.models;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -87,5 +88,18 @@ public class TimeSlot {
         return date.equals(start)
                 || date.equals(end)
                 || (date.after(start) && date.before(end));
+    }
+
+
+    /**
+     * To string method.
+     *
+     * @return String
+     */
+    @Override
+    public String toString() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH'h'mm");
+
+        return "De " + simpleDateFormat.format(start) + " à " + simpleDateFormat.format(end);
     }
 }

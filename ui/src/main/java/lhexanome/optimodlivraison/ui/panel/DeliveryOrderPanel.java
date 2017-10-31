@@ -1,11 +1,15 @@
 package lhexanome.optimodlivraison.ui.panel;
 
+import lhexanome.optimodlivraison.platform.models.Delivery;
 import lhexanome.optimodlivraison.platform.models.DeliveryOrder;
 import lhexanome.optimodlivraison.platform.models.RoadMap;
+import lhexanome.optimodlivraison.ui.component.DeliveryCellRenderer;
 import lhexanome.optimodlivraison.ui.controller.DeliveryOrderController;
 
 import javax.swing.*;
 import java.awt.*;
+import java.text.SimpleDateFormat;
+import java.util.Vector;
 
 /**
  * Delivery order panel.
@@ -23,9 +27,20 @@ public class DeliveryOrderPanel extends AbstractPanel {
     private JButton loadDeliveryOrderButton;
 
     /**
+     * List displaying all the deliveries.
+     */
+    private JList<Delivery> deliveryList;
+    private JLabel startHour;
+
+    /**
+     * Cell renderer.
+     */
+    private DeliveryCellRenderer cellRenderer;
+
+    /**
      * Netbeans panel for a delivery order panel.
      */
-    private lhexanome.optimodlivraison.ui.netbeanpanel.DeliveryOrderPanel deliveryOrderPanel;
+//    private lhexanome.optimodlivraison.ui.netbeanpanel.DeliveryOrderPanel deliveryOrderPanel;
 
     /**
      * Current delivery order.
@@ -47,6 +62,9 @@ public class DeliveryOrderPanel extends AbstractPanel {
      */
     @Override
     public void setup() {
+        cellRenderer = new DeliveryCellRenderer();
+        deliveryList.setCellRenderer(cellRenderer);
+
         loadDeliveryOrderButton.addActionListener(e -> ((DeliveryOrderController) controller).reloadDeliveryOrder());
     }
 
@@ -59,7 +77,23 @@ public class DeliveryOrderPanel extends AbstractPanel {
      */
     public void setData(DeliveryOrder newDeliveryOrder, RoadMap roadMap) {
         this.deliveryOrder = newDeliveryOrder;
-        deliveryOrderPanel.setData(newDeliveryOrder, roadMap);
+
+        if (newDeliveryOrder == null) {
+            this.deliveryList.removeAll();
+            startHour.setText("");
+            this.cellRenderer.setRoadMap(null);
+        } else {
+            this.cellRenderer.setRoadMap(roadMap);
+
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH'h'mm");
+            startHour.setText(simpleDateFormat.format(newDeliveryOrder.getStart()));
+
+            Vector<Delivery> deliveries = new Vector<>(newDeliveryOrder.getDeliveries());
+
+            deliveryList.setListData(deliveries);
+        }
+
+//        deliveryOrderPanel.setData(newDeliveryOrder, roadMap);
         contentPane.revalidate();
     }
 
@@ -72,25 +106,6 @@ public class DeliveryOrderPanel extends AbstractPanel {
 
         // Disable Checkstyle for generated code
         //CHECKSTYLE:OFF
-    }
-
-    /**
-     * @noinspection ALL
-     */
-    private Font $$$getFont$$$(String fontName, int style, int size, Font currentFont) {
-        if (currentFont == null) return null;
-        String resultName;
-        if (fontName == null) {
-            resultName = currentFont.getName();
-        } else {
-            Font testFont = new Font(fontName, Font.PLAIN, 10);
-            if (testFont.canDisplay('a') && testFont.canDisplay('1')) {
-                resultName = fontName;
-            } else {
-                resultName = currentFont.getName();
-            }
-        }
-        return new Font(resultName, style >= 0 ? style : currentFont.getStyle(), size >= 0 ? size : currentFont.getSize());
     }
 
     {
@@ -111,30 +126,51 @@ public class DeliveryOrderPanel extends AbstractPanel {
         contentPane = new JPanel();
         contentPane.setLayout(new GridBagLayout());
         final JScrollPane scrollPane1 = new JScrollPane();
-        scrollPane1.setHorizontalScrollBarPolicy(31);
+        scrollPane1.setHorizontalScrollBarPolicy(30);
         scrollPane1.setVerticalScrollBarPolicy(20);
         GridBagConstraints gbc;
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
-        gbc.gridy = 0;
+        gbc.gridy = 1;
         gbc.gridwidth = 2;
         gbc.weightx = 0.1;
-        gbc.weighty = 0.1;
+        gbc.weighty = 0.8;
         gbc.fill = GridBagConstraints.BOTH;
         contentPane.add(scrollPane1, gbc);
-        deliveryOrderPanel = new lhexanome.optimodlivraison.ui.netbeanpanel.DeliveryOrderPanel();
-        scrollPane1.setViewportView(deliveryOrderPanel);
+        deliveryList = new JList();
+        deliveryList.setLayoutOrientation(0);
+        deliveryList.setSelectionMode(0);
+        scrollPane1.setViewportView(deliveryList);
         loadDeliveryOrderButton = new JButton();
         loadDeliveryOrderButton.setText("Charger demande de livraison");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
-        gbc.gridy = 1;
+        gbc.gridy = 2;
         gbc.gridwidth = 2;
         gbc.fill = GridBagConstraints.VERTICAL;
         gbc.ipadx = 5;
         gbc.ipady = 5;
         gbc.insets = new Insets(5, 0, 5, 0);
         contentPane.add(loadDeliveryOrderButton, gbc);
+    }
+
+    /**
+     * @noinspection ALL
+     */
+    private Font $$$getFont$$$(String fontName, int style, int size, Font currentFont) {
+        if (currentFont == null) return null;
+        String resultName;
+        if (fontName == null) {
+            resultName = currentFont.getName();
+        } else {
+            Font testFont = new Font(fontName, Font.PLAIN, 10);
+            if (testFont.canDisplay('a') && testFont.canDisplay('1')) {
+                resultName = fontName;
+            } else {
+                resultName = currentFont.getName();
+            }
+        }
+        return new Font(resultName, style >= 0 ? style : currentFont.getStyle(), size >= 0 ? size : currentFont.getSize());
     }
 
     /**
