@@ -1,7 +1,9 @@
 package lhexanome.optimodlivraison.ui.controller;
 
 import lhexanome.optimodlivraison.platform.command.sync.AddDeliveryCommand;
+import lhexanome.optimodlivraison.platform.command.sync.RemoveDeliveryCommand;
 import lhexanome.optimodlivraison.platform.models.Delivery;
+import lhexanome.optimodlivraison.platform.models.RoadMap;
 import lhexanome.optimodlivraison.platform.models.Tour;
 import lhexanome.optimodlivraison.ui.edition.EditionInvoker;
 import lhexanome.optimodlivraison.ui.panel.TourEditorPanel;
@@ -85,6 +87,26 @@ public class TourEditorController implements ControllerInterface {
         this.tour = tour;
         mainController.setTour(tour);
         tourEditorPanel.setTour(tour);
+
+        if (tour == null) {
+            hide();
+        } else {
+            show();
+        }
+    }
+
+    /**
+     * Hide the panel.
+     */
+    public void hide() {
+        tourEditorPanel.getContentPane().setVisible(false);
+    }
+
+    /**
+     * Show the panel.
+     */
+    public void show() {
+        tourEditorPanel.getContentPane().setVisible(true);
     }
 
 
@@ -106,11 +128,29 @@ public class TourEditorController implements ControllerInterface {
 
     /**
      * Add a delivery to the current tour.
-     *
-     * @param delivery Delivery to add
      */
-    public void addDelivery(Delivery delivery, int index) {
-        AddDeliveryCommand command = new AddDeliveryCommand(tour, delivery, index);
+    public void addDelivery() {
+        // Ask for data
+        AddDeliveryCommand command = new AddDeliveryCommand(tour, null, 0);
+        editionInvoker.storeAndExecute(command);
+    }
+
+    /**
+     * Road map needed for the view.
+     *
+     * @param roadMap Road map
+     */
+    public void setRoadMap(RoadMap roadMap) {
+        tourEditorPanel.setRoadMap(roadMap);
+    }
+
+    /**
+     * Remove a delivery from a tour.
+     *
+     * @param selectedValue Delivery to remove
+     */
+    public void removeDelivery(Delivery selectedValue) {
+        RemoveDeliveryCommand command = new RemoveDeliveryCommand(tour, selectedValue);
         editionInvoker.storeAndExecute(command);
     }
 }

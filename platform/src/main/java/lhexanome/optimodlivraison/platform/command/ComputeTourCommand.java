@@ -96,7 +96,7 @@ public class ComputeTourCommand extends SwingWorker<Void, Tour> {
 
     /**
      * Notify of a new improved tour.
-     * The first, call the `onTourFirstTourComputed` and then
+     * The first, call the `onFirstTourComputed` and then
      * call `onTourImproved`.
      *
      * @param chunks Computed tour (every chunk are the same and first Tour instance)
@@ -107,7 +107,7 @@ public class ComputeTourCommand extends SwingWorker<Void, Tour> {
 
         if (tour == null) {
             this.tour = chunks.get(0);
-            listener.onTourFirstTourComputed(tour);
+            listener.onFirstTourComputed(tour);
         } else {
             listener.onTourImproved();
         }

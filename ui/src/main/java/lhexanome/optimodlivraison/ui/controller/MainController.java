@@ -37,18 +37,26 @@ public class MainController implements ControllerInterface {
 
 
     /**
+     * Tour editor controller.
+     */
+    private final TourEditorController tourEditorController;
+
+
+    /**
      * Constructor.
      */
     public MainController() {
         roadMapController = new RoadMapController(this);
         deliveryOrderController = new DeliveryOrderController(this);
         tourController = new TourController(this);
+        tourEditorController = new TourEditorController(this);
 
         mainWindow = new MainWindow(
                 this,
                 roadMapController.getContentPane(),
                 deliveryOrderController.getContentPane(),
-                tourController.getContentPane()
+                tourController.getContentPane(),
+                tourEditorController.getContentPane()
         );
     }
 
@@ -102,6 +110,7 @@ public class MainController implements ControllerInterface {
     public void setRoadMap(RoadMap roadMap) {
         deliveryOrderController.clearDeliveryOrder();
         tourController.clearTour();
+        tourEditorController.setRoadMap(roadMap);
     }
 
     /**
@@ -121,6 +130,8 @@ public class MainController implements ControllerInterface {
      */
     public void setTour(Tour tour) {
         roadMapController.setTour(tour);
+        tourEditorController.setTour(tour);
+        deliveryOrderController.hide();
     }
 
     /**

@@ -1,10 +1,17 @@
 package lhexanome.optimodlivraison.ui.panel;
 
+import lhexanome.optimodlivraison.platform.models.Delivery;
+import lhexanome.optimodlivraison.platform.models.Halt;
+import lhexanome.optimodlivraison.platform.models.RoadMap;
 import lhexanome.optimodlivraison.platform.models.Tour;
+import lhexanome.optimodlivraison.platform.models.Warehouse;
+import lhexanome.optimodlivraison.ui.component.DeliveryCellRenderer;
 import lhexanome.optimodlivraison.ui.controller.ControllerInterface;
+import lhexanome.optimodlivraison.ui.controller.TourEditorController;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Vector;
 
 /**
  * Panel used to edit a tour.
@@ -14,7 +21,41 @@ public class TourEditorPanel extends AbstractPanel {
      * Content pane.
      */
     private JPanel contentPane;
+
+    /**
+     * List of the tour deliveries.
+     */
+    private JList<Delivery> deliveryList;
+
+    /**
+     * Button to add a new delivery.
+     */
+    private JButton addDeliveryButton;
+
+    /**
+     * Button to remove the selected delivery.
+     */
+    private JButton removeDeliveryButton;
+
+    /**
+     * Button to change the time slot of the selected delivery.
+     */
+    private JButton changeTimeSlotButton;
+
+    /**
+     * Tour.
+     */
     private Tour tour;
+
+    /**
+     * Delivery cell renderer.
+     */
+    private DeliveryCellRenderer cellRenderer;
+
+    /**
+     * Road Map. Needed to find addresses.
+     */
+    private RoadMap roadMap;
 
     /**
      * Initialize a panel with a panel.
@@ -23,6 +64,7 @@ public class TourEditorPanel extends AbstractPanel {
      */
     public TourEditorPanel(ControllerInterface controller) {
         super(controller);
+        setup();
     }
 
     /**
@@ -34,7 +76,48 @@ public class TourEditorPanel extends AbstractPanel {
      */
     @Override
     public void setup() {
+        // Do not show , controller will set it visible later
+        contentPane.setVisible(false);
 
+        cellRenderer = new DeliveryCellRenderer();
+        deliveryList.setCellRenderer(cellRenderer);
+
+        // TODO Add select listener
+        addDeliveryButton.addActionListener(e -> ((TourEditorController) controller).addDelivery());
+        removeDeliveryButton.addActionListener(e -> ((TourEditorController) controller).removeDelivery(deliveryList.getSelectedValue()));
+    }
+
+
+    public void setRoadMap(RoadMap roadMap) {
+        this.roadMap = roadMap;
+        this.cellRenderer.setRoadMap(roadMap);
+    }
+
+    /**
+     * Tour setter.
+     *
+     * @param tour new Tour
+     */
+    public void setTour(Tour tour) {
+        this.tour = tour;
+
+        if (tour == null) {
+            // We create an empty model because removeAll() bug...
+            deliveryList.setListData(new Vector<>(0));
+            this.cellRenderer.setRoadMap(null);
+        } else {
+
+            Vector<Halt> haltList = tour.getOrderedHaltVector();
+
+            // Here we can force cast the expression because
+            // We removed the first element and there is only one warehouse
+            // The rest is only deliveries
+
+            Warehouse warehouse = (Warehouse) haltList.remove(0);
+
+            //noinspection unchecked
+            deliveryList.setListData((Vector<? extends Delivery>) haltList);
+        }
     }
 
     /**
@@ -47,6 +130,25 @@ public class TourEditorPanel extends AbstractPanel {
     public JPanel getContentPane() {
         return contentPane;
         //CHECKSTYLE:OFF
+    }
+
+    /**
+     * @noinspection ALL
+     */
+    private Font $$$getFont$$$(String fontName, int style, int size, Font currentFont) {
+        if (currentFont == null) return null;
+        String resultName;
+        if (fontName == null) {
+            resultName = currentFont.getName();
+        } else {
+            Font testFont = new Font(fontName, Font.PLAIN, 10);
+            if (testFont.canDisplay('a') && testFont.canDisplay('1')) {
+                resultName = fontName;
+            } else {
+                resultName = currentFont.getName();
+            }
+        }
+        return new Font(resultName, style >= 0 ? style : currentFont.getStyle(), size >= 0 ? size : currentFont.getSize());
     }
 
     {
@@ -73,9 +175,5 @@ public class TourEditorPanel extends AbstractPanel {
      */
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
-    }
-
-    public void setTour(Tour tour) {
-        this.tour = tour;
     }
 }
