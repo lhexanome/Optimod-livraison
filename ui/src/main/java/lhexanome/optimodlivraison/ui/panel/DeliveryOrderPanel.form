@@ -2,37 +2,74 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="lhexanome.optimodlivraison.ui.panel.DeliveryOrderPanel">
   <grid id="27dc6" binding="contentPane" layout-manager="GridBagLayout">
     <constraints>
-      <xy x="20" y="20" width="515" height="400"/>
+      <xy x="20" y="20" width="515" height="416"/>
     </constraints>
     <properties/>
     <border type="none"/>
     <children>
       <scrollpane id="7a346">
         <constraints>
-          <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-          <gridbag weightx="0.1" weighty="0.1"/>
+          <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="0.1" weighty="0.8"/>
         </constraints>
         <properties>
-          <horizontalScrollBarPolicy value="31"/>
+          <horizontalScrollBarPolicy value="30"/>
           <verticalScrollBarPolicy value="20"/>
         </properties>
         <border type="none"/>
         <children>
-          <component id="f78c2" class="lhexanome.optimodlivraison.ui.netbeanpanel.DeliveryOrderPanel" binding="deliveryOrderPanel">
+          <component id="68e99" class="javax.swing.JList" binding="deliveryList">
             <constraints/>
-            <properties/>
+            <properties>
+              <layoutOrientation value="0"/>
+              <selectionMode value="0"/>
+            </properties>
           </component>
         </children>
       </scrollpane>
       <component id="1e2bd" class="javax.swing.JButton" binding="loadDeliveryOrderButton">
         <constraints>
-          <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+          <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
           <gridbag top="5" left="0" bottom="5" right="0" weightx="0.0" weighty="0.0" ipadx="5" ipady="5"/>
         </constraints>
         <properties>
           <text value="Charger demande de livraison"/>
         </properties>
       </component>
+      <grid id="11aab" layout-manager="BorderLayout" hgap="0" vgap="0">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="0.0" weighty="0.1"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="e1aef" class="javax.swing.JLabel">
+            <constraints border-constraint="North"/>
+            <properties>
+              <font size="16" style="1"/>
+              <horizontalAlignment value="0"/>
+              <horizontalTextPosition value="2"/>
+              <text value="Demande de livraisons"/>
+              <verticalAlignment value="0"/>
+            </properties>
+          </component>
+          <component id="8c5c2" class="javax.swing.JLabel">
+            <constraints border-constraint="West"/>
+            <properties>
+              <font style="2"/>
+              <text value="Heure de départ : "/>
+            </properties>
+          </component>
+          <component id="30476" class="javax.swing.JLabel" binding="startHour">
+            <constraints border-constraint="Center"/>
+            <properties>
+              <horizontalTextPosition value="10"/>
+              <text value=""/>
+            </properties>
+          </component>
+        </children>
+      </grid>
     </children>
   </grid>
 </form>

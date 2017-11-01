@@ -2,6 +2,7 @@ package lhexanome.optimodlivraison.ui.controller;
 
 import lhexanome.optimodlivraison.platform.command.ParseMapCommand;
 import lhexanome.optimodlivraison.platform.listeners.ParseMapListener;
+import lhexanome.optimodlivraison.platform.models.Delivery;
 import lhexanome.optimodlivraison.platform.models.DeliveryOrder;
 import lhexanome.optimodlivraison.platform.models.RoadMap;
 import lhexanome.optimodlivraison.platform.models.Tour;
@@ -142,6 +143,15 @@ public class RoadMapController implements ControllerInterface, ParseMapListener 
      */
     public void setTour(Tour tour) {
         roadMapPanel.setTour(tour);
+    }
+
+    /**
+     * Called by the main controller when a delivery is selected.
+     *
+     * @param selectedValue Selected delivery
+     */
+    public void selectDeliveryFromList(Delivery selectedValue) {
+        // TODO Select on map!
     }
 
 

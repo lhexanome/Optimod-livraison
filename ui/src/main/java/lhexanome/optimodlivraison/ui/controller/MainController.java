@@ -1,5 +1,6 @@
 package lhexanome.optimodlivraison.ui.controller;
 
+import lhexanome.optimodlivraison.platform.models.Delivery;
 import lhexanome.optimodlivraison.platform.models.DeliveryOrder;
 import lhexanome.optimodlivraison.platform.models.RoadMap;
 import lhexanome.optimodlivraison.platform.models.Tour;
@@ -140,5 +141,25 @@ public class MainController implements ControllerInterface {
                 roadMapController.getRoadMap(),
                 deliveryOrderController.getDeliveryOrder()
         );
+    }
+
+    /**
+     * Select a value from the list.
+     * Notify the road map
+     *
+     * @param selectedValue Selected delivery
+     */
+    public void selectDeliveryFromList(Delivery selectedValue) {
+        roadMapController.selectDeliveryFromList(selectedValue);
+    }
+
+    /**
+     * Select a value from the road map.
+     * Notify the list
+     *
+     * @param selectValue Selected delivery
+     */
+    public void selectDeliveryFromMap(Delivery selectValue) {
+        deliveryOrderController.selectDeliveryFromMap(selectValue);
     }
 }

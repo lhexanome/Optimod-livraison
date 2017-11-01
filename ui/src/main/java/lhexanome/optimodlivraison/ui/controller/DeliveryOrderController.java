@@ -2,6 +2,7 @@ package lhexanome.optimodlivraison.ui.controller;
 
 import lhexanome.optimodlivraison.platform.command.ParseDeliveryOrderCommand;
 import lhexanome.optimodlivraison.platform.listeners.ParseDeliveryOrderListener;
+import lhexanome.optimodlivraison.platform.models.Delivery;
 import lhexanome.optimodlivraison.platform.models.DeliveryOrder;
 import lhexanome.optimodlivraison.platform.models.RoadMap;
 import lhexanome.optimodlivraison.ui.panel.DeliveryOrderPanel;
@@ -139,6 +140,26 @@ public class DeliveryOrderController implements ControllerInterface {
      */
     public DeliveryOrder getDeliveryOrder() {
         return deliveryOrder;
+    }
+
+    /**
+     * Call by the view.
+     * Notify the main controller of a selection.
+     *
+     * @param selectedValue Selected delivery
+     */
+    public void selectDeliveryFromList(Delivery selectedValue) {
+        mainController.selectDeliveryFromList(selectedValue);
+    }
+
+    /**
+     * Called by the main controller.
+     * Notify the view of a selection
+     *
+     * @param selectValue Selected delivery
+     */
+    public void selectDeliveryFromMap(Delivery selectValue) {
+        deliveryOrderPanel.selectDeliveryFromMap(selectValue);
     }
 
     /**

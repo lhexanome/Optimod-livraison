@@ -122,7 +122,6 @@ public class RoadMapPanel extends AbstractPanel {
     private void $$$setupUI$$$() {
         contentPane = new JPanel();
         contentPane.setLayout(new GridBagLayout());
-        contentPane.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(new Color(-65528)), null));
         reloadRoadMapButton = new JButton();
         reloadRoadMapButton.setText("Recharger un plan");
         GridBagConstraints gbc;
@@ -143,6 +142,8 @@ public class RoadMapPanel extends AbstractPanel {
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
         gbc.fill = GridBagConstraints.BOTH;
+        gbc.ipadx = 15;
+        gbc.ipady = 15;
         contentPane.add(roadMapComponent, gbc);
         final JPanel spacer1 = new JPanel();
         gbc = new GridBagConstraints();

@@ -67,12 +67,12 @@ public class MainPanel extends AbstractPanel {
 
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.weightx = 1;
+        gbc.weightx = 0.6;
         gbc.weighty = 1;
         gbc.fill = GridBagConstraints.BOTH;
         wrapperPanel.add(roadMapPanel, gbc);
 
-        gbc.weightx = 0;
+        gbc.weightx = 0.4;
         gbc.weighty = 0;
 
         gbc.gridx = 1;

@@ -1,11 +1,15 @@
 package lhexanome.optimodlivraison.ui.panel;
 
+import lhexanome.optimodlivraison.platform.models.Delivery;
 import lhexanome.optimodlivraison.platform.models.DeliveryOrder;
 import lhexanome.optimodlivraison.platform.models.RoadMap;
+import lhexanome.optimodlivraison.ui.component.DeliveryCellRenderer;
 import lhexanome.optimodlivraison.ui.controller.DeliveryOrderController;
 
 import javax.swing.*;
 import java.awt.*;
+import java.text.SimpleDateFormat;
+import java.util.Vector;
 
 /**
  * Delivery order panel.
@@ -23,9 +27,19 @@ public class DeliveryOrderPanel extends AbstractPanel {
     private JButton loadDeliveryOrderButton;
 
     /**
-     * Netbeans panel for a delivery order panel.
+     * List displaying all the deliveries.
      */
-    private lhexanome.optimodlivraison.ui.netbeanpanel.DeliveryOrderPanel deliveryOrderPanel;
+    private JList<Delivery> deliveryList;
+
+    /**
+     * Label for the start hour of a warehouse.
+     */
+    private JLabel startHour;
+
+    /**
+     * Cell renderer.
+     */
+    private DeliveryCellRenderer cellRenderer;
 
     /**
      * Current delivery order.
@@ -47,6 +61,11 @@ public class DeliveryOrderPanel extends AbstractPanel {
      */
     @Override
     public void setup() {
+        cellRenderer = new DeliveryCellRenderer();
+        deliveryList.setCellRenderer(cellRenderer);
+
+        deliveryList.addListSelectionListener(e ->
+                ((DeliveryOrderController) controller).selectDeliveryFromList(deliveryList.getSelectedValue()));
         loadDeliveryOrderButton.addActionListener(e -> ((DeliveryOrderController) controller).reloadDeliveryOrder());
     }
 
@@ -59,8 +78,32 @@ public class DeliveryOrderPanel extends AbstractPanel {
      */
     public void setData(DeliveryOrder newDeliveryOrder, RoadMap roadMap) {
         this.deliveryOrder = newDeliveryOrder;
-        deliveryOrderPanel.setData(newDeliveryOrder, roadMap);
-        contentPane.revalidate();
+
+        if (newDeliveryOrder == null) {
+            // We create an empty model because removeAll() bug...
+            deliveryList.setListData(new Vector<>(0));
+            startHour.setText("");
+            this.cellRenderer.setRoadMap(null);
+        } else {
+            this.cellRenderer.setRoadMap(roadMap);
+
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH'h'mm");
+            startHour.setText(simpleDateFormat.format(newDeliveryOrder.getStart()));
+
+            Vector<Delivery> deliveries = new Vector<>(newDeliveryOrder.getDeliveries());
+
+            deliveryList.setListData(deliveries);
+        }
+    }
+
+
+    /**
+     * Select a delivery on the jlist.
+     *
+     * @param selectValue Selected delivery
+     */
+    public void selectDeliveryFromMap(Delivery selectValue) {
+        deliveryList.setSelectedValue(selectValue, true);
     }
 
     /**
@@ -111,30 +154,58 @@ public class DeliveryOrderPanel extends AbstractPanel {
         contentPane = new JPanel();
         contentPane.setLayout(new GridBagLayout());
         final JScrollPane scrollPane1 = new JScrollPane();
-        scrollPane1.setHorizontalScrollBarPolicy(31);
+        scrollPane1.setHorizontalScrollBarPolicy(30);
         scrollPane1.setVerticalScrollBarPolicy(20);
         GridBagConstraints gbc;
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
-        gbc.gridy = 0;
+        gbc.gridy = 1;
         gbc.gridwidth = 2;
         gbc.weightx = 0.1;
-        gbc.weighty = 0.1;
+        gbc.weighty = 0.8;
         gbc.fill = GridBagConstraints.BOTH;
         contentPane.add(scrollPane1, gbc);
-        deliveryOrderPanel = new lhexanome.optimodlivraison.ui.netbeanpanel.DeliveryOrderPanel();
-        scrollPane1.setViewportView(deliveryOrderPanel);
+        deliveryList = new JList();
+        deliveryList.setLayoutOrientation(0);
+        deliveryList.setSelectionMode(0);
+        scrollPane1.setViewportView(deliveryList);
         loadDeliveryOrderButton = new JButton();
         loadDeliveryOrderButton.setText("Charger demande de livraison");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
-        gbc.gridy = 1;
+        gbc.gridy = 2;
         gbc.gridwidth = 2;
         gbc.fill = GridBagConstraints.VERTICAL;
         gbc.ipadx = 5;
         gbc.ipady = 5;
         gbc.insets = new Insets(5, 0, 5, 0);
         contentPane.add(loadDeliveryOrderButton, gbc);
+        final JPanel panel1 = new JPanel();
+        panel1.setLayout(new BorderLayout(0, 0));
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 2;
+        gbc.weighty = 0.1;
+        gbc.fill = GridBagConstraints.BOTH;
+        contentPane.add(panel1, gbc);
+        final JLabel label1 = new JLabel();
+        Font label1Font = this.$$$getFont$$$(null, Font.BOLD, 16, label1.getFont());
+        if (label1Font != null) label1.setFont(label1Font);
+        label1.setHorizontalAlignment(0);
+        label1.setHorizontalTextPosition(2);
+        label1.setText("Demande de livraisons");
+        label1.setVerticalAlignment(0);
+        panel1.add(label1, BorderLayout.NORTH);
+        final JLabel label2 = new JLabel();
+        Font label2Font = this.$$$getFont$$$(null, Font.ITALIC, -1, label2.getFont());
+        if (label2Font != null) label2.setFont(label2Font);
+        label2.setText("Heure de départ : ");
+        panel1.add(label2, BorderLayout.WEST);
+        startHour = new JLabel();
+        startHour.setHorizontalTextPosition(10);
+        startHour.setText("");
+        panel1.add(startHour, BorderLayout.CENTER);
     }
 
     /**
