@@ -80,7 +80,8 @@ public class DeliveryOrderPanel extends AbstractPanel {
         this.deliveryOrder = newDeliveryOrder;
 
         if (newDeliveryOrder == null) {
-            this.deliveryList.removeAll();
+            // We create an empty model because removeAll() bug...
+            deliveryList.setListData(new Vector<>(0));
             startHour.setText("");
             this.cellRenderer.setRoadMap(null);
         } else {
@@ -93,9 +94,6 @@ public class DeliveryOrderPanel extends AbstractPanel {
 
             deliveryList.setListData(deliveries);
         }
-
-//        deliveryOrderPanel.setData(newDeliveryOrder, roadMap);
-        contentPane.revalidate();
     }
 
 
@@ -117,6 +115,25 @@ public class DeliveryOrderPanel extends AbstractPanel {
 
         // Disable Checkstyle for generated code
         //CHECKSTYLE:OFF
+    }
+
+    /**
+     * @noinspection ALL
+     */
+    private Font $$$getFont$$$(String fontName, int style, int size, Font currentFont) {
+        if (currentFont == null) return null;
+        String resultName;
+        if (fontName == null) {
+            resultName = currentFont.getName();
+        } else {
+            Font testFont = new Font(fontName, Font.PLAIN, 10);
+            if (testFont.canDisplay('a') && testFont.canDisplay('1')) {
+                resultName = fontName;
+            } else {
+                resultName = currentFont.getName();
+            }
+        }
+        return new Font(resultName, style >= 0 ? style : currentFont.getStyle(), size >= 0 ? size : currentFont.getSize());
     }
 
     {
@@ -163,25 +180,32 @@ public class DeliveryOrderPanel extends AbstractPanel {
         gbc.ipady = 5;
         gbc.insets = new Insets(5, 0, 5, 0);
         contentPane.add(loadDeliveryOrderButton, gbc);
-    }
-
-    /**
-     * @noinspection ALL
-     */
-    private Font $$$getFont$$$(String fontName, int style, int size, Font currentFont) {
-        if (currentFont == null) return null;
-        String resultName;
-        if (fontName == null) {
-            resultName = currentFont.getName();
-        } else {
-            Font testFont = new Font(fontName, Font.PLAIN, 10);
-            if (testFont.canDisplay('a') && testFont.canDisplay('1')) {
-                resultName = fontName;
-            } else {
-                resultName = currentFont.getName();
-            }
-        }
-        return new Font(resultName, style >= 0 ? style : currentFont.getStyle(), size >= 0 ? size : currentFont.getSize());
+        final JPanel panel1 = new JPanel();
+        panel1.setLayout(new BorderLayout(0, 0));
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 2;
+        gbc.weighty = 0.1;
+        gbc.fill = GridBagConstraints.BOTH;
+        contentPane.add(panel1, gbc);
+        final JLabel label1 = new JLabel();
+        Font label1Font = this.$$$getFont$$$(null, Font.BOLD, 16, label1.getFont());
+        if (label1Font != null) label1.setFont(label1Font);
+        label1.setHorizontalAlignment(0);
+        label1.setHorizontalTextPosition(2);
+        label1.setText("Demande de livraisons");
+        label1.setVerticalAlignment(0);
+        panel1.add(label1, BorderLayout.NORTH);
+        final JLabel label2 = new JLabel();
+        Font label2Font = this.$$$getFont$$$(null, Font.ITALIC, -1, label2.getFont());
+        if (label2Font != null) label2.setFont(label2Font);
+        label2.setText("Heure de départ : ");
+        panel1.add(label2, BorderLayout.WEST);
+        startHour = new JLabel();
+        startHour.setHorizontalTextPosition(10);
+        startHour.setText("");
+        panel1.add(startHour, BorderLayout.CENTER);
     }
 
     /**
@@ -190,6 +214,4 @@ public class DeliveryOrderPanel extends AbstractPanel {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
-
-
 }

@@ -309,6 +309,8 @@ public class RoadMapComponent extends JComponent {
         }*/
 
         this.roadMap = map;
+        this.tour = null;
+        this.deliveryOrder = null;
         repaint();
         //TODO add wacher
     }
@@ -325,6 +327,7 @@ public class RoadMapComponent extends JComponent {
         }*/
 
         this.deliveryOrder = deliveryOrder;
+        this.tour = null;
 
         repaint();
         //TODO add wacher

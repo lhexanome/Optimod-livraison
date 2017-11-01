@@ -57,7 +57,11 @@ public class TourPanel extends AbstractPanel {
      * @param tour newTour
      */
     public void setTour(Tour tour) {
-        durationLabel.setText("Durée de la tournée : " + tour.getTime() / 60 + " minutes");
+        if (tour == null) {
+            durationLabel.setText("");
+        } else {
+            durationLabel.setText("Durée de la tournée : " + tour.getTime() / 60 + " minutes");
+        }
     }
 
     /**
