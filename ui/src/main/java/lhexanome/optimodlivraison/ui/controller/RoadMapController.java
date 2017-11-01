@@ -48,7 +48,7 @@ public class RoadMapController implements ControllerInterface, ParseMapListener 
     /**
      * A distance greater than any other one during execution.
      */
-    private final double maxDistance = 1000000000;
+    private static final double MAX_DISTANCE = Double.MAX_VALUE;
     /**
      * Constructor.
      * @param mainController Main controller

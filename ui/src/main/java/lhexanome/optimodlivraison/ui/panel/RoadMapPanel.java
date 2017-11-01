@@ -49,7 +49,6 @@ public class RoadMapPanel extends AbstractPanel {
         roadMapController = controller;
         $$$setupUI$$$();
         setup();
-
     }
 
     /**
