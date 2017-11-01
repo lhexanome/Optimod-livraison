@@ -169,4 +169,18 @@ public class DeliveryOrderController implements ControllerInterface {
         deliveryOrder = null;
         deliveryOrderPanel.setData(null, null);
     }
+
+    /**
+     * Hide the panel.
+     */
+    public void hide() {
+        deliveryOrderPanel.getContentPane().setVisible(false);
+    }
+
+    /**
+     * Show the panel.
+     */
+    public void show() {
+        deliveryOrderPanel.getContentPane().setVisible(true);
+    }
 }

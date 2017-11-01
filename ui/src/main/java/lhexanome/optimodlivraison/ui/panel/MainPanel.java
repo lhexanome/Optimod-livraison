@@ -67,16 +67,19 @@ public class MainPanel extends AbstractPanel {
 
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.weightx = 0.6;
-        gbc.weighty = 1;
-        gbc.fill = GridBagConstraints.BOTH;
-        wrapperPanel.add(roadMapPanel, gbc);
-
         gbc.weightx = 0.4;
-        gbc.weighty = 0;
+        gbc.weighty = 1;
+        gbc.gridheight = 2;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.anchor = GridBagConstraints.LINE_START;
 
-        gbc.gridx = 1;
         wrapperPanel.add(deliveryOrderPanel, gbc);
+
+        gbc.weightx = 0.6;
+        gbc.gridheight = 1;
+        gbc.gridx = 1;
+
+        wrapperPanel.add(roadMapPanel, gbc);
 
         gbc.gridy = 1;
         wrapperPanel.add(tourPanel, gbc);
