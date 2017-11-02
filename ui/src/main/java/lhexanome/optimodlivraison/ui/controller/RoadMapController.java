@@ -4,6 +4,7 @@ import lhexanome.optimodlivraison.platform.command.ParseMapCommand;
 import lhexanome.optimodlivraison.platform.listeners.ParseMapListener;
 import lhexanome.optimodlivraison.platform.models.Delivery;
 import lhexanome.optimodlivraison.platform.models.DeliveryOrder;
+import lhexanome.optimodlivraison.platform.models.Intersection;
 import lhexanome.optimodlivraison.platform.models.RoadMap;
 import lhexanome.optimodlivraison.platform.models.Tour;
 import lhexanome.optimodlivraison.ui.panel.RoadMapPanel;
@@ -176,5 +177,15 @@ public class RoadMapController implements ControllerInterface, ParseMapListener 
         roadMapPanel.setLoading(false);
         LOGGER.warning(String.format("Error while updating road map :%s", e.getMessage()));
         mainController.notifyError(e.getMessage());
+    }
+
+    /**
+     * Return the selected intersection on the map.
+     *
+     * @return Selected intersection
+     */
+    public Intersection getSelectedIntersection() {
+        // TODO Return selected intersection
+        return null;
     }
 }

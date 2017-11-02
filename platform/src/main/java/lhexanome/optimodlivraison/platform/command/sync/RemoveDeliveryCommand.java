@@ -3,10 +3,18 @@ package lhexanome.optimodlivraison.platform.command.sync;
 import lhexanome.optimodlivraison.platform.models.Delivery;
 import lhexanome.optimodlivraison.platform.models.Tour;
 
+import java.util.logging.Logger;
+
 /**
  * Remove delivery from a tour.
  */
-public class RemoveDeliveryCommand implements UndoableCommand {
+public class RemoveDeliveryCommand extends UndoableCommand {
+
+    /**
+     * Logger.
+     */
+    private static final Logger LOGGER = Logger.getLogger(RemoveDeliveryCommand.class.getName());
+
     /**
      * Tour.
      */
@@ -29,26 +37,26 @@ public class RemoveDeliveryCommand implements UndoableCommand {
     }
 
     /**
-     * Called to execute an action.
+     * Executed by the execute method.
      */
     @Override
-    public void execute() {
+    protected void doExecute() {
 
     }
 
     /**
-     * Called when the action must be undoed.
+     * Executed by the undo method.
      */
     @Override
-    public void undo() {
+    protected void doUndo() {
 
     }
 
     /**
-     * Called when the action must be redoed.
+     * Executed by the redo method.
      */
     @Override
-    public void redo() {
+    protected void doRedo() {
 
     }
 }

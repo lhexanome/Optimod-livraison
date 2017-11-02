@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 /**
  * Command to compute a tour.
  */
-public class AddDeliveryCommand implements UndoableCommand {
+public class AddDeliveryCommand extends UndoableCommand {
 
     /**
      * Logger.
@@ -38,12 +38,6 @@ public class AddDeliveryCommand implements UndoableCommand {
 
 
     /**
-     * Command status.
-     */
-    private UndoableCommandStatus status;
-
-
-    /**
      * Constructor.
      *
      * @param tour          Tour
@@ -51,50 +45,36 @@ public class AddDeliveryCommand implements UndoableCommand {
      * @param index         Index where to add the delivery
      */
     public AddDeliveryCommand(Tour tour, Delivery deliveryToAdd, int index) {
+        super();
+
         this.index = index;
         this.deliveryToAdd = deliveryToAdd;
         this.tour = tour;
 
-        this.status = UndoableCommandStatus.INITIALIZED;
         this.interfaceCalcul = new InterfaceCalcul();
     }
 
     /**
-     * Called to execute an action.
+     * Executed by the execute method.
      */
     @Override
-    public void execute() {
-        if (this.status != UndoableCommandStatus.INITIALIZED) {
-            throw new RuntimeException("The command was already executed !");
-        }
+    protected void doExecute() {
 
-        // TODO Add the delivery
-        this.status = UndoableCommandStatus.EXECUTED;
     }
 
     /**
-     * Called when the action must be undoed.
+     * Executed by the undo method.
      */
     @Override
-    public void undo() {
-        if (this.status != UndoableCommandStatus.EXECUTED) {
-            throw new RuntimeException("Tried to undo before executing the action !");
-        }
+    protected void doUndo() {
 
-        // TODO Remove the delivery
-        this.status = UndoableCommandStatus.UNDOED;
     }
 
     /**
-     * Called when the action must be redoed.
+     * Executed by the redo method.
      */
     @Override
-    public void redo() {
-        if (this.status != UndoableCommandStatus.UNDOED) {
-            throw new RuntimeException("Tried to redo before undoing the action !");
-        }
+    protected void doRedo() {
 
-        // TODO Readd the delivery
-        this.status = UndoableCommandStatus.REDOED;
     }
 }

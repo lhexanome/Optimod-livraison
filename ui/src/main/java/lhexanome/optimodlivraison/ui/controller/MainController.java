@@ -2,6 +2,7 @@ package lhexanome.optimodlivraison.ui.controller;
 
 import lhexanome.optimodlivraison.platform.models.Delivery;
 import lhexanome.optimodlivraison.platform.models.DeliveryOrder;
+import lhexanome.optimodlivraison.platform.models.Intersection;
 import lhexanome.optimodlivraison.platform.models.RoadMap;
 import lhexanome.optimodlivraison.platform.models.Tour;
 import lhexanome.optimodlivraison.ui.window.MainWindow;
@@ -172,5 +173,14 @@ public class MainController implements ControllerInterface {
      */
     public void selectDeliveryFromMap(Delivery selectValue) {
         deliveryOrderController.selectDeliveryFromMap(selectValue);
+    }
+
+    /**
+     * Return the selected intersection in the road map controller.
+     *
+     * @return Selected intersection
+     */
+    public Intersection getSelectedIntersection() {
+        return roadMapController.getSelectedIntersection();
     }
 }

@@ -3,10 +3,13 @@ package lhexanome.optimodlivraison.ui.controller;
 import lhexanome.optimodlivraison.platform.command.sync.AddDeliveryCommand;
 import lhexanome.optimodlivraison.platform.command.sync.RemoveDeliveryCommand;
 import lhexanome.optimodlivraison.platform.models.Delivery;
+import lhexanome.optimodlivraison.platform.models.Intersection;
 import lhexanome.optimodlivraison.platform.models.RoadMap;
+import lhexanome.optimodlivraison.platform.models.TimeSlot;
 import lhexanome.optimodlivraison.platform.models.Tour;
 import lhexanome.optimodlivraison.ui.edition.EditionInvoker;
 import lhexanome.optimodlivraison.ui.panel.TourEditorPanel;
+import lhexanome.optimodlivraison.ui.popup.TimeSlotChooserPopup;
 
 import javax.swing.*;
 import java.util.logging.Logger;
@@ -130,8 +133,46 @@ public class TourEditorController implements ControllerInterface {
      * Add a delivery to the current tour.
      */
     public void addDelivery() {
-        // Ask for data
-        AddDeliveryCommand command = new AddDeliveryCommand(tour, null, 0);
+        // Ask for intersection
+        Intersection intersection = mainController.getSelectedIntersection();
+
+        if (intersection == null) {
+            mainController.notifyError("Vous devez d'abord seletionner une intersection sur la carte !");
+            return;
+        }
+
+        // Ask for the time slot
+        TimeSlotChooserPopup popup = new TimeSlotChooserPopup();
+        popup.setVisible(true);
+
+        // Here we have a response for the time slot.
+
+        if (popup.wasCanceled()) return;
+
+        // Will be null if does not want one
+        TimeSlot timeSlot = popup.getTimeSlot();
+
+
+        // Ask for the duration
+        int duration = -1;
+        while (duration == -1) {
+            try {
+                duration = Integer.parseInt(JOptionPane.showInputDialog(
+                        getContentPane(),
+                        "Durée de la livraison ?",
+                        "Ajout d'une livraison",
+                        JOptionPane.QUESTION_MESSAGE
+                ));
+                if (duration < 0) throw new Exception();
+            } catch (Exception e) {
+                LOGGER.warning("The provided input is not an int");
+                mainController.notifyError("La valeur entrée n'est pas un entier positif");
+            }
+        }
+
+        Delivery delivery = new Delivery(intersection, duration, timeSlot);
+
+        AddDeliveryCommand command = new AddDeliveryCommand(tour, delivery, 0);
         editionInvoker.storeAndExecute(command);
     }
 

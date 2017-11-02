@@ -84,10 +84,17 @@ public class TourEditorPanel extends AbstractPanel {
 
         // TODO Add select listener
         addDeliveryButton.addActionListener(e -> ((TourEditorController) controller).addDelivery());
-        removeDeliveryButton.addActionListener(e -> ((TourEditorController) controller).removeDelivery(deliveryList.getSelectedValue()));
+        removeDeliveryButton.addActionListener(e ->
+                ((TourEditorController) controller).removeDelivery(deliveryList.getSelectedValue()));
     }
 
 
+    /**
+     * Road map setter.
+     * Needed to find address of a delivery
+     *
+     * @param roadMap Road map
+     */
     public void setRoadMap(RoadMap roadMap) {
         this.roadMap = roadMap;
         this.cellRenderer.setRoadMap(roadMap);
