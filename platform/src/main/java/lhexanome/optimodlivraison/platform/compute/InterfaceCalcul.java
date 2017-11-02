@@ -23,7 +23,7 @@ public class InterfaceCalcul {
     /**
      * Temps maximum d'exécution de l'algorithme en millisecondes.
      */
-    public static final int TPS_LIMITE = 9999999;
+    public static final int TPS_LIMITE = 4000;
 
     /**
      * Génère le graphe des plus courts chemins entre les livraisons.
@@ -45,9 +45,10 @@ public class InterfaceCalcul {
      *
      * @param simplifiedMap La map simplifié calculée précédemment.
      * @param demande       La demande de livraison.
+     * @param type          le type d'heuristique utilisé.
      * @return La tournée calculée.
      */
-    public Tour computeTour(SimplifiedMap simplifiedMap, DeliveryOrder demande) {
+    public Tour computeTour(SimplifiedMap simplifiedMap, DeliveryOrder demande, TspTypes type) {
         Warehouse warehouse;
         Date start;
         int time;
@@ -67,7 +68,10 @@ public class InterfaceCalcul {
 
         int[] listeDurees = demandeToDurees(demande, nbSommets, listeSommets);
 
-        TSP tsp = new TSP2();
+        TSP tsp = new TSP1();
+        if (type == TspTypes.HEURISTICS_1) {
+            tsp = new TSP2();
+        }
         tsp.chercheSolution(TPS_LIMITE, nbSommets, matrix.getMatriceCouts(), listeDurees);
         time = tsp.getCoutMeilleureSolution();
 
