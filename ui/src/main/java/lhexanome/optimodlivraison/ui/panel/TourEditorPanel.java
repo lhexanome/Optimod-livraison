@@ -1,7 +1,6 @@
 package lhexanome.optimodlivraison.ui.panel;
 
 import lhexanome.optimodlivraison.platform.models.Delivery;
-import lhexanome.optimodlivraison.platform.models.Halt;
 import lhexanome.optimodlivraison.platform.models.RoadMap;
 import lhexanome.optimodlivraison.platform.models.Tour;
 import lhexanome.optimodlivraison.platform.models.Warehouse;
@@ -86,6 +85,9 @@ public class TourEditorPanel extends AbstractPanel {
         addDeliveryButton.addActionListener(e -> ((TourEditorController) controller).addDelivery());
         removeDeliveryButton.addActionListener(e ->
                 ((TourEditorController) controller).removeDelivery(deliveryList.getSelectedValue()));
+
+        changeTimeSlotButton.addActionListener(e ->
+                ((TourEditorController) controller).changeTimeSlot(deliveryList.getSelectedValue()));
     }
 
 
@@ -114,16 +116,10 @@ public class TourEditorPanel extends AbstractPanel {
             this.cellRenderer.setRoadMap(null);
         } else {
 
-            Vector<Halt> haltList = tour.getOrderedHaltVector();
+            Vector<Delivery> haltList = tour.getOrderedDeliveryVector();
+            Warehouse warehouse = tour.getWarehouse();
 
-            // Here we can force cast the expression because
-            // We removed the first element and there is only one warehouse
-            // The rest is only deliveries
-
-            Warehouse warehouse = (Warehouse) haltList.remove(0);
-
-            //noinspection unchecked
-            deliveryList.setListData((Vector<? extends Delivery>) haltList);
+            deliveryList.setListData(haltList);
         }
     }
 
@@ -175,6 +171,41 @@ public class TourEditorPanel extends AbstractPanel {
     private void $$$setupUI$$$() {
         contentPane = new JPanel();
         contentPane.setLayout(new GridBagLayout());
+        final JScrollPane scrollPane1 = new JScrollPane();
+        GridBagConstraints gbc;
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 2;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.insets = new Insets(5, 10, 5, 10);
+        contentPane.add(scrollPane1, gbc);
+        deliveryList = new JList();
+        scrollPane1.setViewportView(deliveryList);
+        changeTimeSlotButton = new JButton();
+        changeTimeSlotButton.setText("Changer la plage horaire");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(5, 5, 5, 5);
+        contentPane.add(changeTimeSlotButton, gbc);
+        addDeliveryButton = new JButton();
+        addDeliveryButton.setText("Ajouter une livraison");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(5, 5, 5, 5);
+        contentPane.add(addDeliveryButton, gbc);
+        removeDeliveryButton = new JButton();
+        removeDeliveryButton.setText("Supprimer la livraison");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(5, 5, 5, 5);
+        contentPane.add(removeDeliveryButton, gbc);
     }
 
     /**

@@ -112,6 +112,8 @@ public class MainController implements ControllerInterface {
         deliveryOrderController.clearDeliveryOrder();
         tourController.clearTour();
         tourEditorController.setRoadMap(roadMap);
+        tourEditorController.setTour(null);
+        deliveryOrderController.show();
     }
 
     /**

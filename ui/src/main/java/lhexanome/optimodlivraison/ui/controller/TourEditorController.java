@@ -1,6 +1,7 @@
 package lhexanome.optimodlivraison.ui.controller;
 
 import lhexanome.optimodlivraison.platform.command.sync.AddDeliveryCommand;
+import lhexanome.optimodlivraison.platform.command.sync.ChangeTimeSlotCommand;
 import lhexanome.optimodlivraison.platform.command.sync.RemoveDeliveryCommand;
 import lhexanome.optimodlivraison.platform.models.Delivery;
 import lhexanome.optimodlivraison.platform.models.Intersection;
@@ -88,7 +89,6 @@ public class TourEditorController implements ControllerInterface {
      */
     public void setTour(Tour tour) {
         this.tour = tour;
-        mainController.setTour(tour);
         tourEditorPanel.setTour(tour);
 
         if (tour == null) {
@@ -192,6 +192,28 @@ public class TourEditorController implements ControllerInterface {
      */
     public void removeDelivery(Delivery selectedValue) {
         RemoveDeliveryCommand command = new RemoveDeliveryCommand(tour, selectedValue);
+        editionInvoker.storeAndExecute(command);
+    }
+
+    /**
+     * Change the time slot of a tour.
+     *
+     * @param selectedValue Delivery to edit
+     */
+    public void changeTimeSlot(Delivery selectedValue) {
+
+        // Ask for the time slot
+        TimeSlotChooserPopup popup = new TimeSlotChooserPopup();
+        popup.setVisible(true);
+
+        // Here we have a response for the time slot.
+
+        if (popup.wasCanceled()) return;
+
+        // Will be null if does not want one
+        TimeSlot timeSlot = popup.getTimeSlot();
+        
+        ChangeTimeSlotCommand command = new ChangeTimeSlotCommand(tour, selectedValue, timeSlot);
         editionInvoker.storeAndExecute(command);
     }
 }

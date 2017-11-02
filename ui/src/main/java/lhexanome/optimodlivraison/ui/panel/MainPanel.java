@@ -80,13 +80,11 @@ public class MainPanel extends AbstractPanel {
         gbc.gridheight = 2;
         gbc.fill = GridBagConstraints.BOTH;
         gbc.anchor = GridBagConstraints.LINE_START;
-
         wrapperPanel.add(deliveryOrderPanel, gbc);
 
         gbc.weightx = 0.6;
         gbc.gridheight = 1;
         gbc.gridx = 1;
-
         wrapperPanel.add(roadMapPanel, gbc);
 
         gbc.gridy = 1;
@@ -96,6 +94,7 @@ public class MainPanel extends AbstractPanel {
         gbc.gridy = 0;
         gbc.gridx = 2;
         gbc.weightx = 0.4;
+        wrapperPanel.add(tourEditorPanel, gbc);
     }
 
     /**

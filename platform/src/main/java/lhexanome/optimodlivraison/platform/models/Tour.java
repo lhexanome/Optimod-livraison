@@ -3,6 +3,7 @@ package lhexanome.optimodlivraison.platform.models;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Vector;
 import java.util.stream.Collectors;
 
 /**
@@ -143,9 +144,11 @@ public class Tour {
      *
      * @return Ordered list of halt
      */
-    public java.util.Vector<Halt> getOrderedHaltVector() {
+    public java.util.Vector<Delivery> getOrderedDeliveryVector() {
         return paths.stream()
                 .map(Path::getStart)
-                .collect(Collectors.toCollection(java.util.Vector::new));
+                .filter(halt -> halt instanceof Delivery)
+                .map(halt -> (Delivery) halt)
+                .collect(Collectors.toCollection(Vector::new));
     }
 }
