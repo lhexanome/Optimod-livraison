@@ -113,9 +113,7 @@ public class TourEditorPanel extends AbstractPanel {
         if (tour == null) {
             // We create an empty model because removeAll() bug...
             deliveryList.setListData(new Vector<>(0));
-            this.cellRenderer.setRoadMap(null);
         } else {
-
             Vector<Delivery> haltList = tour.getOrderedDeliveryVector();
             Warehouse warehouse = tour.getWarehouse();
 
@@ -177,6 +175,7 @@ public class TourEditorPanel extends AbstractPanel {
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridwidth = 2;
+        gbc.weighty = 1.0;
         gbc.fill = GridBagConstraints.BOTH;
         gbc.insets = new Insets(5, 10, 5, 10);
         contentPane.add(scrollPane1, gbc);

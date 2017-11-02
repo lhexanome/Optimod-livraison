@@ -137,7 +137,7 @@ public class TourEditorController implements ControllerInterface {
         Intersection intersection = mainController.getSelectedIntersection();
 
         if (intersection == null) {
-            mainController.notifyError("Vous devez d'abord seletionner une intersection sur la carte !");
+            mainController.notifyError("Vous devez d'abord sélectionner une intersection sur la carte !");
             return;
         }
 
@@ -191,6 +191,11 @@ public class TourEditorController implements ControllerInterface {
      * @param selectedValue Delivery to remove
      */
     public void removeDelivery(Delivery selectedValue) {
+        if (selectedValue == null) {
+            mainController.notifyError("Vous devez d'abord sélectionner une livraison !");
+            return;
+        }
+
         RemoveDeliveryCommand command = new RemoveDeliveryCommand(tour, selectedValue);
         editionInvoker.storeAndExecute(command);
     }
@@ -201,6 +206,10 @@ public class TourEditorController implements ControllerInterface {
      * @param selectedValue Delivery to edit
      */
     public void changeTimeSlot(Delivery selectedValue) {
+        if (selectedValue == null) {
+            mainController.notifyError("Vous devez d'abord sélectionner une livraison !");
+            return;
+        }
 
         // Ask for the time slot
         TimeSlotChooserPopup popup = new TimeSlotChooserPopup();
@@ -212,7 +221,7 @@ public class TourEditorController implements ControllerInterface {
 
         // Will be null if does not want one
         TimeSlot timeSlot = popup.getTimeSlot();
-        
+
         ChangeTimeSlotCommand command = new ChangeTimeSlotCommand(tour, selectedValue, timeSlot);
         editionInvoker.storeAndExecute(command);
     }
