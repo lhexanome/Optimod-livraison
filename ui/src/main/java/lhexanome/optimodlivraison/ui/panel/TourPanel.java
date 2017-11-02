@@ -63,11 +63,11 @@ public class TourPanel extends AbstractPanel {
      * @param tour newTour
      */
     public void setTour(Tour tour) {
-        if (tour == null) {
+        /*if (tour == null) {
             //durationLabel.setText("");
         } else {
             // durationLabel.setText("Durée de la tournée : " + tour.getTime() / 60 + " minutes");
-        }
+        }*/
     }
 
     /**
@@ -130,8 +130,4 @@ public class TourPanel extends AbstractPanel {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
-
-    // Disable Checkstyle for generated code
-    //CHECKSTYLE:OFF
-
 }

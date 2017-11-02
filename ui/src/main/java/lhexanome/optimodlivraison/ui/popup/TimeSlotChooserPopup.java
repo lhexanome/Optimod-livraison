@@ -170,6 +170,7 @@ public class TimeSlotChooserPopup extends JDialog {
      */
     public TimeSlot getTimeSlot() {
         return timeSlot;
+        //CHECKSTYLE:OFF
     }
 
     {
