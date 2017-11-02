@@ -14,7 +14,10 @@ public abstract class UndoableCommand {
      */
     private UndoableCommandStatus status;
 
-
+    /**
+     * Constructor.
+     * Set the status to {@link UndoableCommandStatus#INITIALIZED}
+     */
     public UndoableCommand() {
         status = UndoableCommandStatus.INITIALIZED;
     }
