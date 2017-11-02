@@ -2,6 +2,7 @@ package lhexanome.optimodlivraison.ui.controller;
 
 import lhexanome.optimodlivraison.platform.models.Delivery;
 import lhexanome.optimodlivraison.platform.models.DeliveryOrder;
+import lhexanome.optimodlivraison.platform.models.Intersection;
 import lhexanome.optimodlivraison.platform.models.RoadMap;
 import lhexanome.optimodlivraison.platform.models.Tour;
 import lhexanome.optimodlivraison.ui.window.MainWindow;
@@ -37,18 +38,26 @@ public class MainController implements ControllerInterface {
 
 
     /**
+     * Tour editor controller.
+     */
+    private final TourEditorController tourEditorController;
+
+
+    /**
      * Constructor.
      */
     public MainController() {
         roadMapController = new RoadMapController(this);
         deliveryOrderController = new DeliveryOrderController(this);
         tourController = new TourController(this);
+        tourEditorController = new TourEditorController(this);
 
         mainWindow = new MainWindow(
                 this,
                 roadMapController.getContentPane(),
                 deliveryOrderController.getContentPane(),
-                tourController.getContentPane()
+                tourController.getContentPane(),
+                tourEditorController.getContentPane()
         );
     }
 
@@ -102,6 +111,9 @@ public class MainController implements ControllerInterface {
     public void setRoadMap(RoadMap roadMap) {
         deliveryOrderController.clearDeliveryOrder();
         tourController.clearTour();
+        tourEditorController.setRoadMap(roadMap);
+        tourEditorController.setTour(null);
+        deliveryOrderController.show();
     }
 
     /**
@@ -121,6 +133,8 @@ public class MainController implements ControllerInterface {
      */
     public void setTour(Tour tour) {
         roadMapController.setTour(tour);
+        tourEditorController.setTour(tour);
+        deliveryOrderController.hide();
     }
 
     /**
@@ -161,5 +175,14 @@ public class MainController implements ControllerInterface {
      */
     public void selectDeliveryFromMap(Delivery selectValue) {
         deliveryOrderController.selectDeliveryFromMap(selectValue);
+    }
+
+    /**
+     * Return the selected intersection in the road map controller.
+     *
+     * @return Selected intersection
+     */
+    public Intersection getSelectedIntersection() {
+        return roadMapController.getSelectedIntersection();
     }
 }

@@ -19,14 +19,22 @@ public class MainWindow extends Window {
      * @param roadMapPanel       Panel of the roadmap
      * @param deliveryOrderPanel Panel of the delivery order
      * @param tourPanel          Panel of the tour
+     * @param tourEditorPanel    Panel for the tour editor
      */
     public MainWindow(MainController controller,
                       JPanel roadMapPanel,
                       JPanel deliveryOrderPanel,
-                      JPanel tourPanel) {
+                      JPanel tourPanel,
+                      JPanel tourEditorPanel) {
         super(controller, "Optimod livraison - H4102");
 
-        MainPanel mainPanel = new MainPanel(controller, roadMapPanel, deliveryOrderPanel, tourPanel);
+        MainPanel mainPanel = new MainPanel(
+                controller,
+                roadMapPanel,
+                deliveryOrderPanel,
+                tourPanel,
+                tourEditorPanel
+        );
 
         jFrame.setLayout(new BorderLayout());
         jFrame.add(mainPanel.getContentPane(), BorderLayout.CENTER);

@@ -12,7 +12,7 @@ public interface ComputeTourListener {
      *
      * @param firstTour First tour computed
      */
-    void onTourFirstTourComputed(Tour firstTour);
+    void onFirstTourComputed(Tour firstTour);
 
     /**
      * Called when the tour was improved.

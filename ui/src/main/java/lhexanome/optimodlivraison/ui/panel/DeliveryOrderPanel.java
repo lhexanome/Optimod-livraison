@@ -164,6 +164,7 @@ public class DeliveryOrderPanel extends AbstractPanel {
         gbc.weightx = 0.1;
         gbc.weighty = 0.8;
         gbc.fill = GridBagConstraints.BOTH;
+        gbc.insets = new Insets(5, 10, 5, 10);
         contentPane.add(scrollPane1, gbc);
         deliveryList = new JList();
         deliveryList.setLayoutOrientation(0);
@@ -175,10 +176,11 @@ public class DeliveryOrderPanel extends AbstractPanel {
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.gridwidth = 2;
+        gbc.anchor = GridBagConstraints.WEST;
         gbc.fill = GridBagConstraints.VERTICAL;
         gbc.ipadx = 5;
         gbc.ipady = 5;
-        gbc.insets = new Insets(5, 0, 5, 0);
+        gbc.insets = new Insets(5, 10, 5, 0);
         contentPane.add(loadDeliveryOrderButton, gbc);
         final JPanel panel1 = new JPanel();
         panel1.setLayout(new BorderLayout(0, 0));

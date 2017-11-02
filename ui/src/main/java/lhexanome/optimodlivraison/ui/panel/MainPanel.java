@@ -25,17 +25,22 @@ public class MainPanel extends AbstractPanel {
     /**
      * Road map panel.
      */
-    private JPanel roadMapPanel;
+    private final JPanel roadMapPanel;
 
     /**
      * Delivery order panel.
      */
-    private JPanel deliveryOrderPanel;
+    private final JPanel deliveryOrderPanel;
 
     /**
      * Tour panel.
      */
-    private JPanel tourPanel;
+    private final JPanel tourPanel;
+
+    /**
+     * Tour editor panel.
+     */
+    private final JPanel tourEditorPanel;
 
     /**
      * Constructor.
@@ -44,15 +49,18 @@ public class MainPanel extends AbstractPanel {
      * @param roadMapPanel       Road map panel
      * @param deliveryOrderPanel Delivery order panel
      * @param tourPanel          Tour panel
+     * @param tourEditorPanel    Tour editor panel
      */
     public MainPanel(MainController controller,
                      JPanel roadMapPanel,
                      JPanel deliveryOrderPanel,
-                     JPanel tourPanel) {
+                     JPanel tourPanel,
+                     JPanel tourEditorPanel) {
         super(controller);
         this.roadMapPanel = roadMapPanel;
         this.deliveryOrderPanel = deliveryOrderPanel;
         this.tourPanel = tourPanel;
+        this.tourEditorPanel = tourEditorPanel;
         setup();
     }
 
@@ -67,19 +75,26 @@ public class MainPanel extends AbstractPanel {
 
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.weightx = 0.6;
-        gbc.weighty = 1;
-        gbc.fill = GridBagConstraints.BOTH;
-        wrapperPanel.add(roadMapPanel, gbc);
-
         gbc.weightx = 0.4;
-        gbc.weighty = 0;
-
-        gbc.gridx = 1;
+        gbc.weighty = 1;
+        gbc.gridheight = 2;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.anchor = GridBagConstraints.LINE_START;
         wrapperPanel.add(deliveryOrderPanel, gbc);
+
+        gbc.weightx = 0.6;
+        gbc.gridheight = 1;
+        gbc.gridx = 1;
+        wrapperPanel.add(roadMapPanel, gbc);
 
         gbc.gridy = 1;
         wrapperPanel.add(tourPanel, gbc);
+
+        gbc.gridheight = 2;
+        gbc.gridy = 0;
+        gbc.gridx = 2;
+        gbc.weightx = 0.4;
+        wrapperPanel.add(tourEditorPanel, gbc);
     }
 
     /**

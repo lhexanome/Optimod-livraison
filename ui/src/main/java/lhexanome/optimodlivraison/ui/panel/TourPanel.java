@@ -32,6 +32,12 @@ public class TourPanel extends AbstractPanel {
     private JButton cancelComputationButton;
 
     /**
+     * Progress bar showing the progress on the computation.
+     * Correspond at the time out duration.
+     */
+    private JProgressBar computeProgressBar;
+
+    /**
      * Constructor.
      *
      * @param controller Tour controller
@@ -57,11 +63,11 @@ public class TourPanel extends AbstractPanel {
      * @param tour newTour
      */
     public void setTour(Tour tour) {
-        if (tour == null) {
-            durationLabel.setText("");
+        /*if (tour == null) {
+            //durationLabel.setText("");
         } else {
-            durationLabel.setText("Durée de la tournée : " + tour.getTime() / 60 + " minutes");
-        }
+            // durationLabel.setText("Durée de la tournée : " + tour.getTime() / 60 + " minutes");
+        }*/
     }
 
     /**
@@ -95,24 +101,27 @@ public class TourPanel extends AbstractPanel {
         computeTourButton.setText("Calculer Tournée");
         GridBagConstraints gbc;
         gbc = new GridBagConstraints();
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        contentPane.add(computeTourButton, gbc);
-        durationLabel = new JLabel();
-        durationLabel.setText("");
-        gbc = new GridBagConstraints();
-        gbc.gridx = 2;
-        gbc.gridy = 0;
-        gbc.anchor = GridBagConstraints.WEST;
-        contentPane.add(durationLabel, gbc);
-        cancelComputationButton = new JButton();
-        cancelComputationButton.setText("Annuler calcul");
-        gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.anchor = GridBagConstraints.NORTHWEST;
+        contentPane.add(computeTourButton, gbc);
+        cancelComputationButton = new JButton();
+        cancelComputationButton.setText("Arrêter calcul");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.NORTHWEST;
+        gbc.insets = new Insets(0, 5, 0, 5);
         contentPane.add(cancelComputationButton, gbc);
+        computeProgressBar = new JProgressBar();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.gridwidth = 2;
+        gbc.anchor = GridBagConstraints.SOUTH;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(5, 0, 0, 0);
+        contentPane.add(computeProgressBar, gbc);
     }
 
     /**
@@ -121,8 +130,4 @@ public class TourPanel extends AbstractPanel {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
-
-    // Disable Checkstyle for generated code
-    //CHECKSTYLE:OFF
-
 }

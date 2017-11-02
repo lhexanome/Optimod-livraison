@@ -127,7 +127,7 @@ public class TourController implements ControllerInterface, ComputeTourListener 
      * @param firstTour First tour computed
      */
     @Override
-    public void onTourFirstTourComputed(Tour firstTour) {
+    public void onFirstTourComputed(Tour firstTour) {
         setTour(firstTour);
     }
 

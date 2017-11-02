@@ -3,6 +3,8 @@ package lhexanome.optimodlivraison.platform.models;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Vector;
+import java.util.stream.Collectors;
 
 /**
  * Suite de trajets qui part de l'entrepôt, passe par toutes les livraisons.
@@ -47,11 +49,11 @@ public class Tour {
     /**
      * Constructor.
      *
-     * @param warehouse  Intersection représentant l'entrepôt
-     * @param start      Moment de départ de la tournée
-     * @param time       Temps estimé pour compléter une tournée.
-     *                   En minutes
-     * @param paths Liste ordonnée de trajets.
+     * @param warehouse Intersection représentant l'entrepôt
+     * @param start     Moment de départ de la tournée
+     * @param time      Temps estimé pour compléter une tournée.
+     *                  En minutes
+     * @param paths     Liste ordonnée de trajets.
      * @see #warehouse
      * @see #start
      * @see #time
@@ -134,5 +136,19 @@ public class Tour {
      */
     public void setTime(int time) {
         this.time = time;
+    }
+
+    /**
+     * Return a list of all the halts made in the tour.
+     * Start by the Warehouse, and continue until the last delivery.
+     *
+     * @return Ordered list of halt
+     */
+    public java.util.Vector<Delivery> getOrderedDeliveryVector() {
+        return paths.stream()
+                .map(Path::getStart)
+                .filter(halt -> halt instanceof Delivery)
+                .map(halt -> (Delivery) halt)
+                .collect(Collectors.toCollection(Vector::new));
     }
 }
