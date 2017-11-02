@@ -7,6 +7,7 @@ import lhexanome.optimodlivraison.platform.models.Warehouse;
 import lhexanome.optimodlivraison.ui.component.DeliveryCellRenderer;
 import lhexanome.optimodlivraison.ui.controller.ControllerInterface;
 import lhexanome.optimodlivraison.ui.controller.TourEditorController;
+import lhexanome.optimodlivraison.ui.edition.DeliveryListTransferHandler;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,7 +16,7 @@ import java.util.Vector;
 /**
  * Panel used to edit a tour.
  */
-public class TourEditorPanel extends AbstractPanel {
+public class TourEditorPanel extends AbstractPanel implements DeliveryListTransferHandler.MoveDeliveryListener {
     /**
      * Content pane.
      */
@@ -80,6 +81,10 @@ public class TourEditorPanel extends AbstractPanel {
 
         cellRenderer = new DeliveryCellRenderer();
         deliveryList.setCellRenderer(cellRenderer);
+        deliveryList.setDragEnabled(true);
+        deliveryList.setDropMode(DropMode.INSERT);
+        deliveryList.setTransferHandler(new DeliveryListTransferHandler(this));
+        deliveryList.setModel(new DefaultListModel<>());
 
         // TODO Add select listener
         addDeliveryButton.addActionListener(e -> ((TourEditorController) controller).addDelivery());
@@ -110,15 +115,27 @@ public class TourEditorPanel extends AbstractPanel {
     public void setTour(Tour tour) {
         this.tour = tour;
 
-        if (tour == null) {
-            // We create an empty model because removeAll() bug...
-            deliveryList.setListData(new Vector<>(0));
-        } else {
+        DefaultListModel<Delivery> listModel = (DefaultListModel<Delivery>) deliveryList.getModel();
+        listModel.clear();
+
+        if (tour != null) {
             Vector<Delivery> haltList = tour.getOrderedDeliveryVector();
             Warehouse warehouse = tour.getWarehouse();
 
-            deliveryList.setListData(haltList);
+            haltList.forEach(listModel::addElement);
         }
+    }
+
+
+    /**
+     * Call when a delivery is moved in the list of delivery.
+     *
+     * @param delivery Delivery moved
+     * @param newIndex Destination index
+     */
+    @Override
+    public void onMove(Delivery delivery, int newIndex) {
+        ((TourEditorController) controller).moveDelivery(delivery, newIndex);
     }
 
     /**
@@ -213,4 +230,5 @@ public class TourEditorPanel extends AbstractPanel {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
+
 }
