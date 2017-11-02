@@ -11,12 +11,14 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Date;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 class InterfaceCalculTest {
     @Test
     void calculerRoadMapSimplifie() {
     }
 
-    @Test
+   @Test
     void calculerTour() {
         InterfaceCalcul ic = new InterfaceCalcul();
         RoadMap roadMap = new RoadMap();
@@ -57,9 +59,9 @@ class InterfaceCalculTest {
         demande.addDelivery(new Delivery(D, 0));
         demande.addDelivery(new Delivery(F, 0));
         SimplifiedMap simplifiedMap = ic.computeSimplifiedRoadMap(roadMap, demande);
-        Tour tour = ic.computeTour(simplifiedMap, demande);
-        Tour tourExpected = new Tour(e, new Date(), 0);
-
+        Tour tour = ic.computeTour(simplifiedMap, demande,TspTypes.HEURISTICS_1);
+        Tour tourExpected = ic.computeTour(simplifiedMap, demande,TspTypes.NO_HEURISTICS);
+        //assertEquals(tourExpected,tour);
     }
 
 }
