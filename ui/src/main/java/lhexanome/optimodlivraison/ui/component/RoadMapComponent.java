@@ -181,7 +181,7 @@ public class RoadMapComponent extends JComponent implements MouseListener {
         this.addMouseWheelListener(new MouseWheelListener() {
             @Override
             public void mouseWheelMoved(MouseWheelEvent e) {
-                if (e.getWheelRotation() < 0 && zoom < 7){
+                if (e.getWheelRotation() < 0 && zoom < 7) {
                     zoom++;
                 }
                 if (e.getWheelRotation() > 0 && zoom > 1) {
@@ -220,17 +220,17 @@ public class RoadMapComponent extends JComponent implements MouseListener {
 
         float windowsSize = Math.min(getWidth(), getHeight());
 
-        DefineZoom(recPlan,windowsSize);
+        DefineZoom(recPlan, windowsSize);
 
     }
 
     /**
      * Define the zoom of the map.
-     * @param recPlan
-     * @param windowsSize
+     * @param recPlan the plan.
+     * @param windowsSize the size of the window.
      */
     @SuppressWarnings("checkstyle:magicnumber")
-    private void DefineZoom (Rectangle recPlan, float windowsSize){
+    private void DefineZoom (Rectangle recPlan, float windowsSize) {
         if (zoom == 1) {
             scalX = windowsSize / (recPlan.width);
             scalY = windowsSize / (recPlan.height);
@@ -243,14 +243,12 @@ public class RoadMapComponent extends JComponent implements MouseListener {
                 scalY = windowsSize / (recPlan.height) * zoom;
                 offsetX = (recPlan.width / 2 - recPlan.x - recPlan.width - (xSouris - windowsSize / 2) * 25) * scalX;
                 offsetY = (recPlan.height / 2 - recPlan.y - recPlan.height + (ySouris - windowsSize / 2) * 25) * scalY;
-            }
-            else if (roadMap.getIntersectionCount() == 1909) {
+            } else if (roadMap.getIntersectionCount() == 1909) {
                 scalX = windowsSize / (recPlan.width) * zoom;
                 scalY = windowsSize / (recPlan.height) * zoom;
                 offsetX = (recPlan.width / 2 - recPlan.x - recPlan.width - (xSouris - windowsSize / 2) * 75) * scalX;
                 offsetY = (recPlan.height / 2 - recPlan.y - recPlan.height + (ySouris - windowsSize / 2) * 75) * scalY;
-            }
-            else {
+            } else {
                 scalX = windowsSize / (recPlan.width) * zoom;
                 scalY = windowsSize / (recPlan.height) * zoom;
                 offsetX = (recPlan.width / 2 - recPlan.x - recPlan.width - (xSouris - windowsSize / 2) * 250) * scalX;
