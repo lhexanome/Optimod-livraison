@@ -237,4 +237,8 @@ public class TourEditorController implements ControllerInterface {
         MoveDeliveryCommand command = new MoveDeliveryCommand(tour, delivery, newIndex);
         editionInvoker.storeAndExecute(command);
     }
+
+    public void selectDeliveryFromList(Delivery selectedValue) {
+        mainController.selectDeliveryFromList(selectedValue);
+    }
 }

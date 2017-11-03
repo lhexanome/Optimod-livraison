@@ -19,6 +19,7 @@ import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -27,6 +28,9 @@ import java.util.logging.Logger;
  */
 public class RoadMapComponent extends JComponent implements MouseListener {
 
+    public enum COLOR {
+        BLUE, GREEN, RED, ORANGE
+    }
     /**
      * A distance greater than any other one during execution.
      */
@@ -66,6 +70,10 @@ public class RoadMapComponent extends JComponent implements MouseListener {
      */
     private static final String RESOURCE_NAME_PLAN_MARKER_GREEN = "/plan/marker/planMarkerGreen.png";
     /**
+     * Green marker for deliveries.
+     */
+    private static final String RESOURCE_NAME_PLAN_MARKER_BLUE = "/plan/marker/planMarkerBlue.png";
+    /**
      * Compass image.
      */
     private static final String RESOURCE_NAME_PLAN_COMPASS = "/plan/compass/compass.png";
@@ -88,6 +96,11 @@ public class RoadMapComponent extends JComponent implements MouseListener {
      * Marker green image.
      */
     private BufferedImage markerGreen;
+
+    /**
+     * Marker blue image.
+     */
+    private BufferedImage markerBlue;
 
     /**
      * Compass image.
@@ -147,6 +160,7 @@ public class RoadMapComponent extends JComponent implements MouseListener {
                     ImageIO.read(getClass().getResource(RESOURCE_NAME_PLAN_MARKER_GREEN)),
                     IMAGE_SCALE
             );
+            markerBlue = ImageIO.read(getClass().getResource(RESOURCE_NAME_PLAN_MARKER_BLUE));
             compass = scaleImage(
                     ImageIO.read(getClass().getResource(RESOURCE_NAME_PLAN_COMPASS)),
                     IMAGE_SCALE
@@ -270,6 +284,9 @@ public class RoadMapComponent extends JComponent implements MouseListener {
         if (roadMapController.getSelectedIntersection() != null) {
             paintComponent(g2, roadMapController.getSelectedIntersection());
         }
+        if (roadMapController.getSelectedDelivery() != null) {
+            paintComponent(g2, roadMapController.getSelectedDelivery(), COLOR.BLUE);
+        }
     }
 
     /**
@@ -325,7 +342,7 @@ public class RoadMapComponent extends JComponent implements MouseListener {
 
         g2.drawImage(markerRed, x + MARKER_OFFSET_X, y + MARKER_OFFSET_Y, null);
 
-        order.getDeliveries().forEach(delivery -> paintComponent(g2, delivery));
+        order.getDeliveries().forEach(delivery -> paintComponent(g2, delivery, COLOR.ORANGE));
     }
 
     /**
@@ -334,13 +351,19 @@ public class RoadMapComponent extends JComponent implements MouseListener {
      * @param g2       Graphics
      * @param delivery Delivery
      */
-    private void paintComponent(Graphics2D g2, Delivery delivery) {
+    private void paintComponent(Graphics2D g2, Delivery delivery, COLOR color) {
         Intersection intersection = delivery.getIntersection();
 
         int x = (int) (this.offsetY + getSize().width / 2 + intersection.getY() * scalY);
         int y = (int) (-this.offsetX + getSize().height / 2 + -intersection.getX() * scalX);
-
-        g2.drawImage(markerOrange, x + MARKER_OFFSET_X, y + MARKER_OFFSET_Y, null);
+        switch (color) {
+            case ORANGE:
+                g2.drawImage(markerOrange, x + MARKER_OFFSET_X, y + MARKER_OFFSET_Y, null);
+                break;
+            case BLUE:
+                g2.drawImage(markerBlue, x + MARKER_ORANGE_OFFSET_X, y + MARKER_ORANGE_OFFSET_Y, null);
+                break;
+        }
     }
 
     /**
@@ -434,8 +457,11 @@ public class RoadMapComponent extends JComponent implements MouseListener {
     public void mouseClicked(MouseEvent mouseEvent) {
         int xMouse = mouseEvent.getX();
         int yMouse = mouseEvent.getY();
-        Intersection intersection = getClosestIntersection(xMouse, yMouse);
-        roadMapController.onIntersectionSelected(intersection);
+        Intersection closestIntersection = getClosestIntersection(xMouse, yMouse);
+        if (deliveryOrder != null) {
+//            Delivery closestDelivery = getClosestDelivery(xMouse, yMouse);
+        }
+        roadMapController.onIntersectionSelected(closestIntersection);
         repaint();
     }
 
@@ -505,6 +531,7 @@ public class RoadMapComponent extends JComponent implements MouseListener {
         double minimalDistance = MAX_DISTANCE;
         Intersection closestIntersection = null;
         Collection<Intersection> intersections = roadMap.getIntersections();
+
         for (Intersection intersection : intersections) {
             int xIntersection = getXFromIntersection(intersection);
             int yIntersection = getYFromIntersection(intersection);
@@ -518,4 +545,14 @@ public class RoadMapComponent extends JComponent implements MouseListener {
         }
         return closestIntersection;
     }
+//    private Delivery getClosestDelivery(int xMouse, int yMouse) {
+//        java.util.Vector<Delivery> deliveries;
+//        if (tour != null) {
+//            deliveries = tour.getOrderedDeliveryVector();
+//        } else {
+//            deliveries = (java.util.Vector<Delivery>) deliveryOrder.getDeliveries();
+//        }
+//        System.out.println("deliveries : \n"+deliveries);
+//        return null;
+//    }
 }
