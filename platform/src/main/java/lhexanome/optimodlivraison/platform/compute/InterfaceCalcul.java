@@ -31,7 +31,11 @@ public class InterfaceCalcul {
     /**
      * Temps maximum d'exécution de l'algorithme en millisecondes.
      */
-    public static final int TPS_LIMITE = 4000;
+    public static final int TPS_LIMITE = 30000;
+    /**
+     * conversion en secondes.
+     */
+    private static final int CONV_SEC_MIN = 60;
 
     /**
      * Génère le graphe des plus courts chemins entre les livraisons.
@@ -76,7 +80,7 @@ public class InterfaceCalcul {
         MatriceAdjacence matrix = grapheToMatrix(graphe, nbSommets, listeSommets, demande);
 
         int[] listeDurees = demandeToDurees(demande, nbSommets, listeSommets);
-
+        Date[] datesEstimees = new Date[nbSommets];
         if (withSlots) {
             TimeSlot[] plages = new TimeSlot[nbSommets];
             for (int i = 0; i < listeSommets.size(); i++) {
@@ -89,7 +93,7 @@ public class InterfaceCalcul {
             TSPwSlots tsp = new TSP2wSlots();
 
             tsp.chercheSolution(TPS_LIMITE, nbSommets, matrix.getMatriceCouts(),
-                    plages, demande.getStart(), listeDurees);
+                    plages, demande.getStart(), datesEstimees, listeDurees);
             time = tsp.getCoutMeilleureSolution();
             if (time == Integer.MAX_VALUE) {
                 LOGGER.warning("can't compute tour because of incompatible slots");
@@ -103,7 +107,12 @@ public class InterfaceCalcul {
                 Path trajet = matriceTrajets[indexSommet][(indexSommet + 1) % nbSommets];
                 deliveries.add(trajet);
             }
-
+            demande.getBeginning().setEstimateDate(datesEstimees[0]);
+            int i = 0;
+            for (Halt arret : graphe.keySet()) {
+                arret.setEstimateDate(datesEstimees[i]);
+                i++;
+            }
             return new Tour(warehouse, start, time, deliveries);
         } else {
             TSP tsp = new TSP1();
@@ -115,17 +124,17 @@ public class InterfaceCalcul {
 
             ArrayList<Path> deliveries = new ArrayList<>(nbSommets);
 
-        Path[][] matriceTrajets = matrix.getMatricePaths();
+            Path[][] matriceTrajets = matrix.getMatricePaths();
 
-        int indexDepart, indexArrivee;
-        indexDepart = tsp.getMeilleureSolution(0);
-        for (int i = 1; i < nbSommets; i++) {
-            indexArrivee = tsp.getMeilleureSolution(i);
-            Path trajet = matriceTrajets[indexDepart][indexArrivee];
-            deliveries.add(trajet);
-            indexDepart = indexArrivee;
-        }
-        deliveries.add(matriceTrajets[indexDepart][tsp.getMeilleureSolution(0)]); //retour entrepot
+            int indexDepart, indexArrivee;
+            indexDepart = tsp.getMeilleureSolution(0);
+            for (int i = 1; i < nbSommets; i++) {
+                indexArrivee = tsp.getMeilleureSolution(i);
+                Path trajet = matriceTrajets[indexDepart][indexArrivee];
+                deliveries.add(trajet);
+                indexDepart = indexArrivee;
+            }
+            deliveries.add(matriceTrajets[indexDepart][tsp.getMeilleureSolution(0)]); //retour entrepot
 
             return new Tour(warehouse, start, time, deliveries);
         }
