@@ -220,7 +220,7 @@ public class RoadMapComponent extends JComponent implements MouseListener {
 
         float windowsSize = Math.min(getWidth(), getHeight());
 
-        DefineZoom(recPlan, windowsSize);
+        defineZoom(recPlan, windowsSize);
 
     }
 
@@ -230,14 +230,13 @@ public class RoadMapComponent extends JComponent implements MouseListener {
      * @param windowsSize the size of the window.
      */
     @SuppressWarnings("checkstyle:magicnumber")
-    private void DefineZoom (Rectangle recPlan, float windowsSize) {
+    private void defineZoom(Rectangle recPlan, float windowsSize) {
         if (zoom == 1) {
             scalX = windowsSize / (recPlan.width);
             scalY = windowsSize / (recPlan.height);
             offsetX = (recPlan.width / 2 - recPlan.x - recPlan.width) * scalX;
             offsetY = (recPlan.height / 2 - recPlan.y - recPlan.height) * scalY;
-        }
-        else {
+        } else {
             if (roadMap.getIntersectionCount() == 217) {
                 scalX = windowsSize / (recPlan.width) * zoom;
                 scalY = windowsSize / (recPlan.height) * zoom;
