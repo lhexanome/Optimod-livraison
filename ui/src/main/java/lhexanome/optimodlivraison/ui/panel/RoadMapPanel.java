@@ -30,11 +30,6 @@ public class RoadMapPanel extends AbstractPanel {
     private JButton reloadRoadMapButton;
 
     /**
-     * The roadMapController assigned to the roadMapPanel.
-     */
-    private RoadMapController roadMapController;
-
-    /**
      * Loading label, the icon will be in it.
      */
     private JLabel loadingContainer;
@@ -46,8 +41,6 @@ public class RoadMapPanel extends AbstractPanel {
      */
     public RoadMapPanel(RoadMapController controller) {
         super(controller);
-        roadMapController = controller;
-        $$$setupUI$$$();
         setup();
     }
 
@@ -114,7 +107,7 @@ public class RoadMapPanel extends AbstractPanel {
      * Initialize custom UI.
      */
     private void createUIComponents() {
-        roadMapComponent = new RoadMapComponent(roadMapController);
+        roadMapComponent = new RoadMapComponent((RoadMapController) controller);
     }
 
     /**
