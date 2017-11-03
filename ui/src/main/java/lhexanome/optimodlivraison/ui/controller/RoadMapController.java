@@ -40,6 +40,11 @@ public class RoadMapController implements ControllerInterface, ParseMapListener 
     private RoadMap roadMap;
 
     /**
+     * Current selected intersection.
+     */
+    private Intersection currentIntersection;
+
+    /**
      * Constructor.
      *
      * @param mainController Main controller
@@ -48,6 +53,7 @@ public class RoadMapController implements ControllerInterface, ParseMapListener 
         this.mainController = mainController;
 
         this.roadMapPanel = new RoadMapPanel(this);
+        currentIntersection = null;
     }
 
     /**
@@ -185,7 +191,24 @@ public class RoadMapController implements ControllerInterface, ParseMapListener 
      * @return Selected intersection
      */
     public Intersection getSelectedIntersection() {
-        // TODO Return selected intersection
-        return null;
+        return currentIntersection;
+    }
+
+    /**
+     * updates the current selected intersection.
+     *
+     * @param intersection Selected intersection
+     */
+    public void onIntersectionSelected(Intersection intersection) {
+        currentIntersection = intersection;
+    }
+
+    /**
+     * Update the selected delivery.
+     *
+     * @param delivery Delivery selected on the map
+     */
+    public void onDeliverySelected(Delivery delivery) {
+        mainController.selectDeliveryFromMap(delivery);
     }
 }
