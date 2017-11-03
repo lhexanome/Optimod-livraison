@@ -162,6 +162,7 @@ public class RoadMapPanel extends AbstractPanel {
         gbc.ipady = 5;
         gbc.insets = new Insets(5, 0, 5, 0);
         contentPane.add(reloadRoadMapButton, gbc);
+        roadMapComponent.setEnabled(true);
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 1;

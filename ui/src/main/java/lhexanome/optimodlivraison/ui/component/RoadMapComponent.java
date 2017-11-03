@@ -139,8 +139,19 @@ public class RoadMapComponent extends JComponent implements MouseListener {
      */
     private static final double IMAGE_SCALE = 0.5;
 
+    /**
+     * degree of zoom
+     */
     private  int zoom=1;
+
+    /**
+     * x position of the mouse
+     */
     float xSouris;
+
+    /**
+     * y position of the mouse
+     */
     float ySouris;
 
 
@@ -169,7 +180,7 @@ public class RoadMapComponent extends JComponent implements MouseListener {
         this.addMouseWheelListener(new MouseWheelListener() {
             @Override
             public void mouseWheelMoved(MouseWheelEvent e) {
-                if (e.getWheelRotation()<0 && zoom<6){
+                if (e.getWheelRotation()<0 && zoom<7){
                     zoom++;
                 }
                 if(e.getWheelRotation()>0 && zoom>1){
@@ -204,23 +215,51 @@ public class RoadMapComponent extends JComponent implements MouseListener {
      * Compute the scale coefficients to use with the size of the component.
      */
     private void rescale() {
-        if ( zoom==1)
-        {
-            xSouris=0;
-            ySouris=0;
-        }
         Rectangle recPlan = getMapSize(this.roadMap);
 
         float windowsSize = Math.min(getWidth(), getHeight());
 
-        scalX = windowsSize / (recPlan.width)*zoom;
-        scalY = windowsSize / (recPlan.height)*zoom;
-        /*if (xSouris!=0 && ySouris!=0){
-            xSouris = xSouris*(9000/((windowsSize / (recPlan.width))*10000))-9000;
-            ySouris = ySouris*(9000/((windowsSize / (recPlan.height))*10000))-9000;
-        }*/
-        offsetX = (recPlan.width / 2 - recPlan.x - recPlan.width) * scalX - xSouris;
-        offsetY = (recPlan.height / 2 - recPlan.y - recPlan.height) * scalY + ySouris;
+        DefineZoom(recPlan,windowsSize);
+
+    }
+
+    /**
+     * Define the zoom of the map
+     * @param recPlan
+     * @param windowsSize
+     */
+    private void DefineZoom (Rectangle recPlan, float windowsSize){
+        if ( zoom==1) {
+            scalX = windowsSize / (recPlan.width);
+            scalY = windowsSize / (recPlan.height);
+            offsetX = (recPlan.width / 2 - recPlan.x - recPlan.width) * scalX;
+            offsetY = (recPlan.height / 2 - recPlan.y - recPlan.height) * scalY;
+        }
+        else {
+            if (roadMap.getIntersectionCount()==217) {
+                scalX = windowsSize / (recPlan.width) * zoom;
+                scalY = windowsSize / (recPlan.height) * zoom;
+                System.out.println(xSouris);
+                System.out.println(ySouris);
+                offsetX = (recPlan.width / 2 - recPlan.x - recPlan.width - (xSouris -windowsSize/2)*25)* scalX;
+                offsetY = (recPlan.height / 2 - recPlan.y - recPlan.height + (ySouris - windowsSize/2)*25)* scalY;
+            }
+            else if (roadMap.getIntersectionCount()==1909) {
+                scalX = windowsSize / (recPlan.width) * zoom;
+                scalY = windowsSize / (recPlan.height) * zoom;
+                System.out.println(recPlan.x);
+                offsetX = (recPlan.width / 2 - recPlan.x - recPlan.width - (xSouris -windowsSize/2)*75)* scalX;
+                offsetY = (recPlan.height / 2 - recPlan.y - recPlan.height + (ySouris - windowsSize/2)*75)* scalY;
+            }
+            else {
+                scalX = windowsSize / (recPlan.width) * zoom;
+                scalY = windowsSize / (recPlan.height) * zoom;
+                System.out.println(recPlan.x);
+                offsetX = (recPlan.width / 2 - recPlan.x - recPlan.width - (xSouris -windowsSize/2)*250)* scalX;
+                offsetY = (recPlan.height / 2 - recPlan.y - recPlan.height + (ySouris - windowsSize/2)*250)* scalY;
+            }
+        }
+
     }
 
     /**
