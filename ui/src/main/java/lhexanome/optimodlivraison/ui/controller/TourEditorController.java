@@ -2,6 +2,7 @@ package lhexanome.optimodlivraison.ui.controller;
 
 import lhexanome.optimodlivraison.platform.command.sync.AddDeliveryCommand;
 import lhexanome.optimodlivraison.platform.command.sync.ChangeTimeSlotCommand;
+import lhexanome.optimodlivraison.platform.command.sync.MoveDeliveryCommand;
 import lhexanome.optimodlivraison.platform.command.sync.RemoveDeliveryCommand;
 import lhexanome.optimodlivraison.platform.models.Delivery;
 import lhexanome.optimodlivraison.platform.models.Intersection;
@@ -223,6 +224,17 @@ public class TourEditorController implements ControllerInterface {
         TimeSlot timeSlot = popup.getTimeSlot();
 
         ChangeTimeSlotCommand command = new ChangeTimeSlotCommand(tour, selectedValue, timeSlot);
+        editionInvoker.storeAndExecute(command);
+    }
+
+    /**
+     * Move a delivery in the tour.
+     *
+     * @param delivery Delivery moved
+     * @param newIndex New index
+     */
+    public void moveDelivery(Delivery delivery, int newIndex) {
+        MoveDeliveryCommand command = new MoveDeliveryCommand(tour, delivery, newIndex);
         editionInvoker.storeAndExecute(command);
     }
 }
