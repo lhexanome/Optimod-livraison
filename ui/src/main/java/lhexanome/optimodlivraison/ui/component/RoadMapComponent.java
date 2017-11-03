@@ -142,17 +142,17 @@ public class RoadMapComponent extends JComponent implements MouseListener {
     /**
      * degree of zoom.
      */
-    private  int zoom=1;
+    private  int zoom = 1;
 
     /**
      * x position of the mouse.
      */
-    float xSouris;
+    private float xSouris;
 
     /**
      * y position of the mouse.
      */
-    float ySouris;
+    private float ySouris;
 
 
     /**
@@ -164,6 +164,7 @@ public class RoadMapComponent extends JComponent implements MouseListener {
      * Constructor.
      * @param roadMapController the roadMapController you assign to the RoadMapComponent.
      */
+    @SuppressWarnings("checkstyle:magicnumber")
     public RoadMapComponent(RoadMapController roadMapController) {
         super();
         try {
@@ -180,10 +181,10 @@ public class RoadMapComponent extends JComponent implements MouseListener {
         this.addMouseWheelListener(new MouseWheelListener() {
             @Override
             public void mouseWheelMoved(MouseWheelEvent e) {
-                if (e.getWheelRotation()<0 && zoom<7){
+                if (e.getWheelRotation() < 0 && zoom < 7){
                     zoom++;
                 }
-                if(e.getWheelRotation()>0 && zoom>1){
+                if (e.getWheelRotation() > 0 && zoom > 1) {
                     zoom--;
                 }
                 xSouris = e.getX();
@@ -228,21 +229,22 @@ public class RoadMapComponent extends JComponent implements MouseListener {
      * @param recPlan
      * @param windowsSize
      */
+    @SuppressWarnings("checkstyle:magicnumber")
     private void DefineZoom (Rectangle recPlan, float windowsSize){
-        if ( zoom==1) {
+        if (zoom == 1) {
             scalX = windowsSize / (recPlan.width);
             scalY = windowsSize / (recPlan.height);
             offsetX = (recPlan.width / 2 - recPlan.x - recPlan.width) * scalX;
             offsetY = (recPlan.height / 2 - recPlan.y - recPlan.height) * scalY;
         }
         else {
-            if (roadMap.getIntersectionCount()==217) {
+            if (roadMap.getIntersectionCount() == 217) {
                 scalX = windowsSize / (recPlan.width) * zoom;
                 scalY = windowsSize / (recPlan.height) * zoom;
                 offsetX = (recPlan.width / 2 - recPlan.x - recPlan.width - (xSouris - windowsSize / 2) * 25) * scalX;
                 offsetY = (recPlan.height / 2 - recPlan.y - recPlan.height + (ySouris - windowsSize / 2) * 25) * scalY;
             }
-            else if (roadMap.getIntersectionCount()==1909) {
+            else if (roadMap.getIntersectionCount() == 1909) {
                 scalX = windowsSize / (recPlan.width) * zoom;
                 scalY = windowsSize / (recPlan.height) * zoom;
                 offsetX = (recPlan.width / 2 - recPlan.x - recPlan.width - (xSouris - windowsSize / 2) * 75) * scalX;
