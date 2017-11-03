@@ -144,6 +144,7 @@ public class RoadMapComponent extends JComponent implements MouseListener {
 
     /**
      * Constructor.
+     *
      * @param roadMapController the roadMapController you assign to the RoadMapComponent.
      */
     public RoadMapComponent(RoadMapController roadMapController) {
@@ -163,6 +164,7 @@ public class RoadMapComponent extends JComponent implements MouseListener {
 
     /**
      * resizes an image.
+     *
      * @param markerOrangeBefore the image you want to resize.
      * @return the resized image.
      */
@@ -268,8 +270,8 @@ public class RoadMapComponent extends JComponent implements MouseListener {
         if (deliveryOrder != null) {
             paintComponent(g2, deliveryOrder);
         }
-        if (roadMapController.getCurrentIntersection() != null) {
-            paintComponent(g2, roadMapController.getCurrentIntersection());
+        if (roadMapController.getSelectedIntersection() != null) {
+            paintComponent(g2, roadMapController.getSelectedIntersection());
         }
     }
 
@@ -428,13 +430,15 @@ public class RoadMapComponent extends JComponent implements MouseListener {
 
     /**
      * updates the current selected intersection.
-     * @param mouseEvent
+     *
+     * @param mouseEvent Mouse event
      */
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
         int xMouse = mouseEvent.getX();
         int yMouse = mouseEvent.getY();
-        roadMapController.updateCurrentIntersection(xMouse, yMouse);
+        Intersection intersection = getClosestIntersection(xMouse, yMouse);
+        roadMapController.onIntersectionSelected(intersection);
         repaint();
     }
 
@@ -459,40 +463,48 @@ public class RoadMapComponent extends JComponent implements MouseListener {
     }
 
     /**
+     * Return the euclidean distance between two point.
+     *
      * @param x1 x1.
      * @param y1 y1.
      * @param x2 x2.
      * @param y2 y2.
-     * @return the euclidian distance between two points A(x1, y1) and B(x2, y2).
+     * @return the euclidean distance between two points A(x1, y1) and B(x2, y2).
      */
-    public double distance(int x1, int y1, int x2, int y2) {
+    private double distance(int x1, int y1, int x2, int y2) {
         return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
     }
 
     /**
+     * Return the screen x from an intersection.
+     *
      * @param intersection an intersection
      * @return the x coordinate on the screen
      */
-    public int getXFromIntersection(Intersection intersection) {
+    private int getXFromIntersection(Intersection intersection) {
         float vOffsetX = this.offsetX + getSize().width / 2;
         return (int) (intersection.getY() * scalY + vOffsetX);
     }
 
     /**
+     * Return the screen y from an intersection.
+     *
      * @param intersection an intersection
      * @return the y coordinate on the screen
      */
-    public int getYFromIntersection(Intersection intersection) {
+    private int getYFromIntersection(Intersection intersection) {
         float vOffsetY = -this.offsetY + getSize().height / 2;
         return (int) (-intersection.getX() * scalX + vOffsetY);
     }
 
     /**
+     * Return the closest intersection.
+     *
      * @param xMouse the x coordinate of the mouse on the screen.
      * @param yMouse the y coordinate of the mouse on the screen.
      * @return the closest intersection relatively to the mouse position (vous avez compris ? :p)
      */
-    public Intersection getClosestIntersection(int xMouse, int yMouse) {
+    private Intersection getClosestIntersection(int xMouse, int yMouse) {
         double minimalDistance = MAX_DISTANCE;
         Intersection closestIntersection = null;
         Collection<Intersection> intersections = roadMap.getIntersections();
@@ -501,7 +513,7 @@ public class RoadMapComponent extends JComponent implements MouseListener {
             int yIntersection = getYFromIntersection(intersection);
             // TODO use a common distance function
             double distanceIntersectionToMouse =
-                   distance(xIntersection, yIntersection, xMouse, yMouse);
+                    distance(xIntersection, yIntersection, xMouse, yMouse);
             if (distanceIntersectionToMouse <= minimalDistance) {
                 minimalDistance = distanceIntersectionToMouse;
                 closestIntersection = intersection;

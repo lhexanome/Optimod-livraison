@@ -12,7 +12,6 @@ import lhexanome.optimodlivraison.ui.popup.FileChooserPopup;
 
 import javax.swing.*;
 import java.io.File;
-import java.util.Collection;
 import java.util.logging.Logger;
 
 /**
@@ -47,6 +46,7 @@ public class RoadMapController implements ControllerInterface, ParseMapListener 
 
     /**
      * Constructor.
+     *
      * @param mainController Main controller
      */
     public RoadMapController(MainController mainController) {
@@ -191,23 +191,24 @@ public class RoadMapController implements ControllerInterface, ParseMapListener 
      * @return Selected intersection
      */
     public Intersection getSelectedIntersection() {
-        // TODO Return selected intersection
-        return null;
-    }
-
-     /** updates the current selected intersection.
-     * @param xMouse the x coordinate of the mouse on the screen.
-     * @param yMouse the y coordinate of the mouse on the screen.
-     */
-    public void updateCurrentIntersection(int xMouse, int yMouse) {
-        currentIntersection = roadMapPanel.getComponent().getClosestIntersection(xMouse, yMouse);
+        return currentIntersection;
     }
 
     /**
-     * Getter for currentIntersection.
-     * @return the current selected intersection
+     * updates the current selected intersection.
+     *
+     * @param intersection Selected intersection
      */
-    public Intersection getCurrentIntersection() {
-        return currentIntersection;
+    public void onIntersectionSelected(Intersection intersection) {
+        currentIntersection = intersection;
+    }
+
+    /**
+     * Update the selected delivery.
+     *
+     * @param delivery Delivery selected on the map
+     */
+    public void onDeliverySelected(Delivery delivery) {
+        mainController.selectDeliveryFromMap(delivery);
     }
 }

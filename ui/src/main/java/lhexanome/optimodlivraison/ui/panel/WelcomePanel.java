@@ -90,7 +90,8 @@ public class WelcomePanel extends AbstractPanel {
         final JLabel label1 = new JLabel();
         label1.setBackground(new Color(-1));
         label1.setEnabled(true);
-        label1.setFont(new Font(label1.getFont().getName(), label1.getFont().getStyle(), 24));
+        Font label1Font = this.$$$getFont$$$(null, -1, 24, label1.getFont());
+        if (label1Font != null) label1.setFont(label1Font);
         label1.setText("Bienvenue sur Optimod livraison");
         GridBagConstraints gbc;
         gbc = new GridBagConstraints();
