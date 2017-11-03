@@ -11,5 +11,9 @@ public enum TspTypes {
     /**
      * using tsp2.
      */
-    HEURISTICS_1
+    HEURISTICS_1,
+    /**
+     * using tsp3.
+     */
+    HEURISTICS_2
 }
