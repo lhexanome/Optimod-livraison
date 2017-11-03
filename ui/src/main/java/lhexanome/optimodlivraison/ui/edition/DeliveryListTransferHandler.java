@@ -106,7 +106,7 @@ public class DeliveryListTransferHandler extends TransferHandler {
             if (listener != null) listener.onMove(deliveryToMove, addIndex);
             return true;
         } catch (UnsupportedFlavorException | IOException e) {
-            LOGGER.warning(String.format("Error when drag and dropping delivery%s", e.getMessage()));
+            LOGGER.warning(String.format("Error when drag and dropping delivery: %s", e.getMessage()));
         }
 
         return false;
