@@ -3,23 +3,31 @@ package lhexanome.optimodlivraison.platform.compute;
 import lhexanome.optimodlivraison.platform.compute.tsp.TSP;
 import lhexanome.optimodlivraison.platform.compute.tsp.TSP1;
 import lhexanome.optimodlivraison.platform.compute.tsp.TSP2;
+import lhexanome.optimodlivraison.platform.compute.tsp.TSP2wSlots;
+import lhexanome.optimodlivraison.platform.compute.tsp.TSPwSlots;
 import lhexanome.optimodlivraison.platform.models.Delivery;
 import lhexanome.optimodlivraison.platform.models.DeliveryOrder;
 import lhexanome.optimodlivraison.platform.models.Halt;
 import lhexanome.optimodlivraison.platform.models.Path;
 import lhexanome.optimodlivraison.platform.models.RoadMap;
+import lhexanome.optimodlivraison.platform.models.TimeSlot;
 import lhexanome.optimodlivraison.platform.models.Tour;
 import lhexanome.optimodlivraison.platform.models.Warehouse;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
+import java.util.logging.Logger;
 
 /**
  * classe qui permet d'interagir avec le module compute.
  */
 public class InterfaceCalcul {
 
+    /**
+     * Logger.
+     */
+    private static final Logger LOGGER = Logger.getLogger(SimplifiedMap.class.getName());
     /**
      * Temps maximum d'exécution de l'algorithme en millisecondes.
      */
@@ -46,9 +54,10 @@ public class InterfaceCalcul {
      * @param simplifiedMap La map simplifié calculée précédemment.
      * @param demande       La demande de livraison.
      * @param type          le type d'heuristique utilisé.
+     * @param withSlots     si on utilise les plages horaires
      * @return La tournée calculée.
      */
-    public Tour computeTour(SimplifiedMap simplifiedMap, DeliveryOrder demande, TspTypes type) {
+    public Tour computeTour(SimplifiedMap simplifiedMap, DeliveryOrder demande, TspTypes type, boolean withSlots) {
         Warehouse warehouse;
         Date start;
         int time;
@@ -68,14 +77,43 @@ public class InterfaceCalcul {
 
         int[] listeDurees = demandeToDurees(demande, nbSommets, listeSommets);
 
-        TSP tsp = new TSP1();
-        if (type == TspTypes.HEURISTICS_1) {
-            tsp = new TSP2();
-        }
-        tsp.chercheSolution(TPS_LIMITE, nbSommets, matrix.getMatriceCouts(), listeDurees);
-        time = tsp.getCoutMeilleureSolution();
+        if (withSlots) {
+            TimeSlot[] plages = new TimeSlot[nbSommets];
+            for (int i = 0; i < listeSommets.size(); i++) {
+                if (listeSommets.get(i) instanceof Delivery) {
+                    plages[i] = ((Delivery) listeSommets.get(i)).getSlot();
+                } else {
+                    plages[i] = null;
+                }
+            }
+            TSPwSlots tsp = new TSP2wSlots();
 
-        ArrayList<Path> deliveries = new ArrayList<>(nbSommets);
+            tsp.chercheSolution(TPS_LIMITE, nbSommets, matrix.getMatriceCouts(),
+                    plages, demande.getStart(), listeDurees);
+            time = tsp.getCoutMeilleureSolution();
+            if (time == Integer.MAX_VALUE) {
+                LOGGER.warning("can't compute tour because of incompatible slots");
+                return null;
+            }
+            ArrayList<Path> deliveries = new ArrayList<>(nbSommets);
+
+            Path[][] matriceTrajets = matrix.getMatricePaths();
+            for (int i = 0; i < nbSommets; i++) {
+                int indexSommet = tsp.getMeilleureSolution(i);
+                Path trajet = matriceTrajets[indexSommet][(indexSommet + 1) % nbSommets];
+                deliveries.add(trajet);
+            }
+
+            return new Tour(warehouse, start, time, deliveries);
+        } else {
+            TSP tsp = new TSP1();
+            if (type == TspTypes.HEURISTICS_1) {
+                tsp = new TSP2();
+            }
+            tsp.chercheSolution(TPS_LIMITE, nbSommets, matrix.getMatriceCouts(), listeDurees);
+            time = tsp.getCoutMeilleureSolution();
+
+            ArrayList<Path> deliveries = new ArrayList<>(nbSommets);
 
         Path[][] matriceTrajets = matrix.getMatricePaths();
 
@@ -89,7 +127,8 @@ public class InterfaceCalcul {
         }
         deliveries.add(matriceTrajets[indexDepart][tsp.getMeilleureSolution(0)]); //retour entrepot
 
-        return new Tour(warehouse, start, time, deliveries);
+            return new Tour(warehouse, start, time, deliveries);
+        }
     }
 
     /**

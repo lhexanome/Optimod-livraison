@@ -10,6 +10,10 @@ import java.util.List;
 public class Path {
 
     /**
+     * conversion en secondes.
+     */
+    private static final int SEC_IN_MIN = 60;
+    /**
      * Liste des vectors.
      */
     private List<Vector> vectors;
@@ -17,6 +21,8 @@ public class Path {
 
     /**
      * Temps necessaire pour parcourir le trajet.
+     * en secondes.
+     * prend en compte le temps d'attente à la fin s'il y en a un.
      */
     private int timeToTravel;
 
@@ -38,7 +44,11 @@ public class Path {
      */
     public Path(Halt begin, Halt end) {
         vectors = new LinkedList<>();
-        this.timeToTravel = 0;
+        if (end instanceof Delivery) {
+            this.timeToTravel = ((Delivery) end).getDuration() * SEC_IN_MIN;
+        } else {
+            this.timeToTravel = 0;
+        }
         this.begin = begin;
         this.end = end;
     }

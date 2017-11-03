@@ -182,7 +182,7 @@ public class Vector {
     /**
      * Renvoie le temps nécessaire pour traverser le tronçon.
      *
-     * @return Time To Travel
+     * @return Time To Travel (s)
      */
     @SuppressWarnings("checkstyle:magicnumber")
     public int getTimeToTravel() {
