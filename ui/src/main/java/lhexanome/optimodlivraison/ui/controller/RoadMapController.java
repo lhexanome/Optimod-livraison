@@ -12,7 +12,6 @@ import lhexanome.optimodlivraison.ui.popup.FileChooserPopup;
 
 import javax.swing.*;
 import java.io.File;
-import java.util.Collection;
 import java.util.logging.Logger;
 
 /**
@@ -45,10 +44,6 @@ public class RoadMapController implements ControllerInterface, ParseMapListener 
      */
     private Intersection currentIntersection;
 
-    /**
-     * A distance greater than any other one during execution.
-     */
-    private static final double MAX_DISTANCE = Double.MAX_VALUE;
     /**
      * Constructor.
      * @param mainController Main controller

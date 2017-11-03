@@ -12,8 +12,6 @@ import lhexanome.optimodlivraison.ui.controller.RoadMapController;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseWheelEvent;
-import java.awt.event.MouseWheelListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.AffineTransform;
@@ -93,6 +91,17 @@ public class RoadMapComponent extends JComponent implements MouseListener {
     private static final Color TOUR_VECTOR_COLOR = new Color(245, 124, 0);
 
     /**
+     * RoadMap constructor.
+     * Load images from jar file.
+     */
+    private static final double IMAGE_SCALE = 0.5;
+
+    /**
+     * Max zoom level.
+     */
+    private static final int MAX_ZOOM_LEVEL = 7;
+
+    /**
      * Marker red image.
      */
     private BufferedImage markerRed;
@@ -133,26 +142,21 @@ public class RoadMapComponent extends JComponent implements MouseListener {
      */
     private Tour tour;
 
-    /**
-     * RoadMap constructor.
-     * Load images from jar file.
-     */
-    private static final double IMAGE_SCALE = 0.5;
 
     /**
-     * degree of zoom.
+     * Level of zoom.
      */
-    private  int zoom = 1;
+    private int zoom = 1;
 
     /**
-     * x position of the mouse.
+     * x position of the mouse when the user zoom or dezoom.
      */
-    private float xSouris;
+    private float zoomMouseX;
 
     /**
-     * y position of the mouse.
+     * y position of the mouse when the user zoom or dezoom.
      */
-    private float ySouris;
+    private float zoomMouseY;
 
 
     /**
@@ -162,9 +166,9 @@ public class RoadMapComponent extends JComponent implements MouseListener {
 
     /**
      * Constructor.
+     *
      * @param roadMapController the roadMapController you assign to the RoadMapComponent.
      */
-    @SuppressWarnings("checkstyle:magicnumber")
     public RoadMapComponent(RoadMapController roadMapController) {
         super();
         try {
@@ -178,19 +182,16 @@ public class RoadMapComponent extends JComponent implements MouseListener {
             LOGGER.log(Level.SEVERE, "Error while getting resources", e);
             System.exit(1);
         }
-        this.addMouseWheelListener(new MouseWheelListener() {
-            @Override
-            public void mouseWheelMoved(MouseWheelEvent e) {
-                if (e.getWheelRotation() < 0 && zoom < 7) {
-                    zoom++;
-                }
-                if (e.getWheelRotation() > 0 && zoom > 1) {
-                    zoom--;
-                }
-                xSouris = e.getX();
-                ySouris = e.getY();
-                repaint();
+        this.addMouseWheelListener(e -> {
+            if (e.getWheelRotation() < 0 && zoom < MAX_ZOOM_LEVEL) {
+                zoom++;
             }
+            if (e.getWheelRotation() > 0 && zoom > 1) {
+                zoom--;
+            }
+            zoomMouseX = e.getX();
+            zoomMouseY = e.getY();
+            repaint();
         });
 
     }
@@ -226,35 +227,25 @@ public class RoadMapComponent extends JComponent implements MouseListener {
 
     /**
      * Define the zoom of the map.
-     * @param recPlan the plan.
+     *
+     * @param recPlan     the plan.
      * @param windowsSize the size of the window.
      */
-    @SuppressWarnings("checkstyle:magicnumber")
     private void defineZoom(Rectangle recPlan, float windowsSize) {
-        if (zoom == 1) {
-            scalX = windowsSize / (recPlan.width);
-            scalY = windowsSize / (recPlan.height);
-            offsetX = (recPlan.width / 2 - recPlan.x - recPlan.width) * scalX;
-            offsetY = (recPlan.height / 2 - recPlan.y - recPlan.height) * scalY;
-        } else {
-            if (roadMap.getIntersectionCount() == 217) {
-                scalX = windowsSize / (recPlan.width) * zoom;
-                scalY = windowsSize / (recPlan.height) * zoom;
-                offsetX = (recPlan.width / 2 - recPlan.x - recPlan.width - (xSouris - windowsSize / 2) * 25) * scalX;
-                offsetY = (recPlan.height / 2 - recPlan.y - recPlan.height + (ySouris - windowsSize / 2) * 25) * scalY;
-            } else if (roadMap.getIntersectionCount() == 1909) {
-                scalX = windowsSize / (recPlan.width) * zoom;
-                scalY = windowsSize / (recPlan.height) * zoom;
-                offsetX = (recPlan.width / 2 - recPlan.x - recPlan.width - (xSouris - windowsSize / 2) * 75) * scalX;
-                offsetY = (recPlan.height / 2 - recPlan.y - recPlan.height + (ySouris - windowsSize / 2) * 75) * scalY;
-            } else {
-                scalX = windowsSize / (recPlan.width) * zoom;
-                scalY = windowsSize / (recPlan.height) * zoom;
-                offsetX = (recPlan.width / 2 - recPlan.x - recPlan.width - (xSouris - windowsSize / 2) * 250) * scalX;
-                offsetY = (recPlan.height / 2 - recPlan.y - recPlan.height + (ySouris - windowsSize / 2) * 250) * scalY;
-            }
-        }
+        scalX = windowsSize / (recPlan.width) * zoom;
+        scalY = windowsSize / (recPlan.height) * zoom;
 
+        offsetX = (recPlan.width / 2 - recPlan.x - recPlan.width) * scalX;
+        offsetY = (recPlan.height / 2 - recPlan.y - recPlan.height) * scalY;
+
+        // If no zoom, no need to center on the mouse
+        if (zoom == 1) return;
+
+        @SuppressWarnings("checkstyle:magicnumber")
+        int ratio = roadMap.getIntersectionCount() / 10;
+
+        offsetX -= ratio * (zoomMouseX - windowsSize / 2) * scalX;
+        offsetY += ratio * (zoomMouseY - windowsSize / 2) * scalY;
     }
 
     /**
@@ -305,7 +296,6 @@ public class RoadMapComponent extends JComponent implements MouseListener {
     public RoadMap getRoadMap() {
         return roadMap;
     }
-
 
 
     /**
@@ -389,8 +379,8 @@ public class RoadMapComponent extends JComponent implements MouseListener {
     private void paintComponent(Graphics2D g2, DeliveryOrder order) {
         Warehouse warehouse = order.getBeginning();
 
-        int x = (int) (this.offsetY + getSize().width / 2 + warehouse.getIntersection().getY() * scalY);
-        int y = (int) (-this.offsetX + getSize().height / 2 - warehouse.getIntersection().getX() * scalX);
+        int x = getXFromIntersection(warehouse.getIntersection());
+        int y = getYFromIntersection(warehouse.getIntersection());
 
         g2.drawImage(markerRed, x + MARKER_RED_OFFSET_X, y + MARKER_RED_OFFSET_Y, null);
 
@@ -406,8 +396,8 @@ public class RoadMapComponent extends JComponent implements MouseListener {
     private void paintComponent(Graphics2D g2, Delivery delivery) {
         Intersection intersection = delivery.getIntersection();
 
-        int x = (int) (this.offsetY + getSize().width / 2 + intersection.getY() * scalY);
-        int y = (int) (-this.offsetX + getSize().height / 2 + -intersection.getX() * scalX);
+        int x = getXFromIntersection(intersection);
+        int y = getYFromIntersection(intersection);
 
         g2.drawImage(markerOrange, x + MARKER_ORANGE_OFFSET_X, y + MARKER_ORANGE_OFFSET_Y, null);
     }
@@ -436,8 +426,8 @@ public class RoadMapComponent extends JComponent implements MouseListener {
      * @param intersection Vector
      */
     private void paintComponent(Graphics2D g2, Intersection intersection) {
-        int x = (int) (this.offsetY + getSize().width / 2 + intersection.getY() * scalY);
-        int y = (int) (-this.offsetX + getSize().height / 2 + -intersection.getX() * scalX);
+        int x = getXFromIntersection(intersection);
+        int y = getYFromIntersection(intersection);
         g2.drawImage(markerGreen, x + MARKER_GREEN_OFFSET_X, y + MARKER_GREEN_OFFSET_Y, null);
     }
 
