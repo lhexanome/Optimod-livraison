@@ -2,6 +2,7 @@ package lhexanome.optimodlivraison.platform.command;
 
 import lhexanome.optimodlivraison.platform.compute.InterfaceCalcul;
 import lhexanome.optimodlivraison.platform.compute.SimplifiedMap;
+import lhexanome.optimodlivraison.platform.compute.TspTypes;
 import lhexanome.optimodlivraison.platform.listeners.ComputeTourListener;
 import lhexanome.optimodlivraison.platform.models.DeliveryOrder;
 import lhexanome.optimodlivraison.platform.models.RoadMap;
@@ -77,7 +78,8 @@ public class ComputeTourCommand extends SwingWorker<Void, Tour> {
 
             LOGGER.info("Simplified roadMap computed");
 
-            Tour computedTour = interfaceCalcul.computeTour(simplifiedMap, deliveryOrder);
+            Tour computedTour = interfaceCalcul.computeTour(simplifiedMap,
+                    deliveryOrder, TspTypes.HEURISTICS_1, true);
             //Tour tour = simplifiedMap.generateFakeTour();
 
             // TODO Send multiple time tour updates.

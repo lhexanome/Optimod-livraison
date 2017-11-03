@@ -59,8 +59,8 @@ class InterfaceCalculTest {
         demande.addDelivery(new Delivery(D, 0));
         demande.addDelivery(new Delivery(F, 0));
         SimplifiedMap simplifiedMap = ic.computeSimplifiedRoadMap(roadMap, demande);
-        Tour tour = ic.computeTour(simplifiedMap, demande,TspTypes.HEURISTICS_1);
-        Tour tourExpected = ic.computeTour(simplifiedMap, demande,TspTypes.NO_HEURISTICS);
+        Tour tour = ic.computeTour(simplifiedMap, demande,TspTypes.HEURISTICS_1,false);
+        Tour tourExpected = ic.computeTour(simplifiedMap, demande,TspTypes.NO_HEURISTICS,false);
         //assertEquals(tourExpected,tour);
     }
 
