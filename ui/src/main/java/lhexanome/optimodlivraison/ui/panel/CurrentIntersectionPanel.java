@@ -56,7 +56,7 @@ public class CurrentIntersectionPanel extends AbstractPanel {
      * Called by the controller.
      *
      * @param intersectionToDisplay intersectionToDisplay
-     * @param roadMap roadMap
+     * @param roadMap               roadMap
      */
     public void setData(Intersection intersectionToDisplay, RoadMap roadMap) {
         displayedIntersection = intersectionToDisplay;
@@ -85,25 +85,6 @@ public class CurrentIntersectionPanel extends AbstractPanel {
         //CHECKSTYLE:OFF
     }
 
-    /**
-     * @noinspection ALL
-     */
-    private Font $$$getFont$$$(String fontName, int style, int size, Font currentFont) {
-        if (currentFont == null) return null;
-        String resultName;
-        if (fontName == null) {
-            resultName = currentFont.getName();
-        } else {
-            Font testFont = new Font(fontName, Font.PLAIN, 10);
-            if (testFont.canDisplay('a') && testFont.canDisplay('1')) {
-                resultName = fontName;
-            } else {
-                resultName = currentFont.getName();
-            }
-        }
-        return new Font(resultName, style >= 0 ? style : currentFont.getStyle(), size >= 0 ? size : currentFont.getSize());
-    }
-
     private void createUIComponents() {
         displayedInformations = new JLabel();
         displayedInformations.setText("");
@@ -130,6 +111,25 @@ public class CurrentIntersectionPanel extends AbstractPanel {
         gbc.weighty = 1.0;
         gbc.fill = GridBagConstraints.BOTH;
         contentPane.add(displayedInformations, gbc);
+    }
+
+    /**
+     * @noinspection ALL
+     */
+    private Font $$$getFont$$$(String fontName, int style, int size, Font currentFont) {
+        if (currentFont == null) return null;
+        String resultName;
+        if (fontName == null) {
+            resultName = currentFont.getName();
+        } else {
+            Font testFont = new Font(fontName, Font.PLAIN, 10);
+            if (testFont.canDisplay('a') && testFont.canDisplay('1')) {
+                resultName = fontName;
+            } else {
+                resultName = currentFont.getName();
+            }
+        }
+        return new Font(resultName, style >= 0 ? style : currentFont.getStyle(), size >= 0 ? size : currentFont.getSize());
     }
 
     /**
