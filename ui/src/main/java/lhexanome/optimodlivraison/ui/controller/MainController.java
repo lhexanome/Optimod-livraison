@@ -198,7 +198,7 @@ public class MainController implements ControllerInterface {
      * Select an intersection from the road map.
      *
      * @param selectedIntersection Selected intersection
-     * @param roadMap the roadMap
+     * @param roadMap              the roadMap
      */
     public void selectIntersectionFromMap(Intersection selectedIntersection, RoadMap roadMap) {
         currentIntersectionController.setData(selectedIntersection, roadMap);
@@ -206,6 +206,7 @@ public class MainController implements ControllerInterface {
 
     /**
      * Select a delivery from the road map.
+     *
      * @param delivery selected delivery.
      */
     public void setSelectedDelivery(Delivery delivery) {

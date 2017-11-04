@@ -240,6 +240,7 @@ public class TourEditorController implements ControllerInterface {
 
     /**
      * displays a selected delivery on the textual view.
+     *
      * @param selectValue the selected delivery
      */
     public void selectDeliveryFromMap(Delivery selectValue) {
@@ -248,6 +249,7 @@ public class TourEditorController implements ControllerInterface {
 
     /**
      * displays a selected delivery on the map.
+     *
      * @param selectedValue the selected delivery
      */
     public void selectDeliveryFromList(Delivery selectedValue) {

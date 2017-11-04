@@ -50,11 +50,11 @@ public class MainPanel extends AbstractPanel {
     /**
      * Constructor.
      *
-     * @param controller         Main controller
-     * @param roadMapPanel       Road map panel
-     * @param deliveryOrderPanel Delivery order panel
-     * @param tourPanel          Tour panel
-     * @param tourEditorPanel    Tour editor panel
+     * @param controller                     Main controller
+     * @param roadMapPanel                   Road map panel
+     * @param deliveryOrderPanel             Delivery order panel
+     * @param tourPanel                      Tour panel
+     * @param tourEditorPanel                Tour editor panel
      * @param currentInterectionDisplayPanel current interection display panel
      */
     public MainPanel(MainController controller,

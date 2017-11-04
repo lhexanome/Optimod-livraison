@@ -26,8 +26,9 @@ public abstract class TemplateTSP implements TSP {
     }
 
     public Integer getMeilleureSolution(int i) {
-        if ((meilleureSolution == null) || (i < 0) || (i >= meilleureSolution.length))
+        if ((meilleureSolution == null) || (i < 0) || (i >= meilleureSolution.length)) {
             return null;
+        }
         return meilleureSolution[i];
     }
 
