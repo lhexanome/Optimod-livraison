@@ -85,8 +85,9 @@ public class TourEditorPanel extends AbstractPanel implements DeliveryListTransf
         deliveryList.setDropMode(DropMode.INSERT);
         deliveryList.setTransferHandler(new DeliveryListTransferHandler(this));
         deliveryList.setModel(new DefaultListModel<>());
+        deliveryList.addListSelectionListener(e ->
+                ((TourEditorController) controller).selectDeliveryFromList(deliveryList.getSelectedValue()));
 
-        // TODO Add select listener
         addDeliveryButton.addActionListener(e -> ((TourEditorController) controller).addDelivery());
         removeDeliveryButton.addActionListener(e ->
                 ((TourEditorController) controller).removeDelivery(deliveryList.getSelectedValue()));
@@ -151,22 +152,16 @@ public class TourEditorPanel extends AbstractPanel implements DeliveryListTransf
     }
 
     /**
-     * @noinspection ALL
+     * selects an element in the list.
+     *
+     * @param selectValue the selected delivery.
      */
-    private Font $$$getFont$$$(String fontName, int style, int size, Font currentFont) {
-        if (currentFont == null) return null;
-        String resultName;
-        if (fontName == null) {
-            resultName = currentFont.getName();
+    public void selectDeliveryFromMap(Delivery selectValue) {
+        if (selectValue == null) {
+            deliveryList.clearSelection();
         } else {
-            Font testFont = new Font(fontName, Font.PLAIN, 10);
-            if (testFont.canDisplay('a') && testFont.canDisplay('1')) {
-                resultName = fontName;
-            } else {
-                resultName = currentFont.getName();
-            }
+            deliveryList.setSelectedValue(selectValue, true);
         }
-        return new Font(resultName, style >= 0 ? style : currentFont.getStyle(), size >= 0 ? size : currentFont.getSize());
     }
 
     {
@@ -227,8 +222,26 @@ public class TourEditorPanel extends AbstractPanel implements DeliveryListTransf
     /**
      * @noinspection ALL
      */
+    private Font $$$getFont$$$(String fontName, int style, int size, Font currentFont) {
+        if (currentFont == null) return null;
+        String resultName;
+        if (fontName == null) {
+            resultName = currentFont.getName();
+        } else {
+            Font testFont = new Font(fontName, Font.PLAIN, 10);
+            if (testFont.canDisplay('a') && testFont.canDisplay('1')) {
+                resultName = fontName;
+            } else {
+                resultName = currentFont.getName();
+            }
+        }
+        return new Font(resultName, style >= 0 ? style : currentFont.getStyle(), size >= 0 ? size : currentFont.getSize());
+    }
+
+    /**
+     * @noinspection ALL
+     */
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
-
 }
