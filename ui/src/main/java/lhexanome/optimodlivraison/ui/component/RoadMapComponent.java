@@ -40,27 +40,11 @@ public class RoadMapComponent extends JComponent implements MouseListener {
     /**
      * X offset marker red.
      */
-    public static final int MARKER_RED_OFFSET_X = -32;
+    public static final int MARKER_OFFSET_X = -16;
     /**
      * Y offset marker red.
      */
-    public static final int MARKER_RED_OFFSET_Y = -64;
-    /**
-     * X offset marker orange.
-     */
-    public static final int MARKER_ORANGE_OFFSET_X = -32;
-    /**
-     * Y offset marker orange.
-     */
-    public static final int MARKER_ORANGE_OFFSET_Y = -64;
-    /**
-     * X offset marker green.
-     */
-    public static final int MARKER_GREEN_OFFSET_X = -32;
-    /**
-     * Y offset marker green.
-     */
-    public static final int MARKER_GREEN_OFFSET_Y = -64;
+    public static final int MARKER_OFFSET_Y = -32;
     /**
      * X offset compass.
      */
@@ -151,10 +135,22 @@ public class RoadMapComponent extends JComponent implements MouseListener {
         super();
         try {
             this.roadMapController = roadMapController;
-            markerRed = ImageIO.read(getClass().getResource(RESOURCE_NAME_PLAN_MARKER_RED));
-            markerOrange = ImageIO.read(getClass().getResource(RESOURCE_NAME_PLAN_MARKER_ORANGE));
-            markerGreen = ImageIO.read(getClass().getResource(RESOURCE_NAME_PLAN_MARKER_GREEN));
-            compass = ImageIO.read(getClass().getResource(RESOURCE_NAME_PLAN_COMPASS));
+            markerRed = scaleImage(
+                    ImageIO.read(getClass().getResource(RESOURCE_NAME_PLAN_MARKER_RED)),
+                    IMAGE_SCALE
+            );
+            markerOrange = scaleImage(
+                    ImageIO.read(getClass().getResource(RESOURCE_NAME_PLAN_MARKER_ORANGE)),
+                    IMAGE_SCALE
+            );
+            markerGreen = scaleImage(
+                    ImageIO.read(getClass().getResource(RESOURCE_NAME_PLAN_MARKER_GREEN)),
+                    IMAGE_SCALE
+            );
+            compass = scaleImage(
+                    ImageIO.read(getClass().getResource(RESOURCE_NAME_PLAN_COMPASS)),
+                    IMAGE_SCALE
+            );
             addMouseListener(this);
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "Error while getting resources", e);
@@ -165,18 +161,19 @@ public class RoadMapComponent extends JComponent implements MouseListener {
     /**
      * resizes an image.
      *
-     * @param markerOrangeBefore the image you want to resize.
+     * @param markerBefore the image you want to resize.
+     * @param scale scale
      * @return the resized image.
      */
-    private BufferedImage scaleImage(BufferedImage markerOrangeBefore) {
-        int w = markerOrangeBefore.getWidth();
-        int h = markerOrangeBefore.getHeight();
-        markerOrange = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+    private BufferedImage scaleImage(BufferedImage markerBefore, double scale) {
+        int w = markerBefore.getWidth();
+        int h = markerBefore.getHeight();
+        BufferedImage marker = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
         AffineTransform at = new AffineTransform();
-        at.scale(IMAGE_SCALE, IMAGE_SCALE);
+        at.scale(scale, scale);
         AffineTransformOp scaleOp =
                 new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
-        return scaleOp.filter(markerOrangeBefore, markerOrange);
+        return scaleOp.filter(markerBefore, marker);
     }
 
     /**
@@ -326,7 +323,7 @@ public class RoadMapComponent extends JComponent implements MouseListener {
         int x = (int) (this.offsetY + getSize().width / 2 + warehouse.getIntersection().getY() * scalY);
         int y = (int) (-this.offsetX + getSize().height / 2 - warehouse.getIntersection().getX() * scalX);
 
-        g2.drawImage(markerRed, x + MARKER_RED_OFFSET_X, y + MARKER_RED_OFFSET_Y, null);
+        g2.drawImage(markerRed, x + MARKER_OFFSET_X, y + MARKER_OFFSET_Y, null);
 
         order.getDeliveries().forEach(delivery -> paintComponent(g2, delivery));
     }
@@ -343,7 +340,7 @@ public class RoadMapComponent extends JComponent implements MouseListener {
         int x = (int) (this.offsetY + getSize().width / 2 + intersection.getY() * scalY);
         int y = (int) (-this.offsetX + getSize().height / 2 + -intersection.getX() * scalX);
 
-        g2.drawImage(markerOrange, x + MARKER_ORANGE_OFFSET_X, y + MARKER_ORANGE_OFFSET_Y, null);
+        g2.drawImage(markerOrange, x + MARKER_OFFSET_X, y + MARKER_OFFSET_Y, null);
     }
 
     /**
@@ -372,7 +369,7 @@ public class RoadMapComponent extends JComponent implements MouseListener {
     private void paintComponent(Graphics2D g2, Intersection intersection) {
         int x = (int) (this.offsetY + getSize().width / 2 + intersection.getY() * scalY);
         int y = (int) (-this.offsetX + getSize().height / 2 + -intersection.getX() * scalX);
-        g2.drawImage(markerGreen, x + MARKER_GREEN_OFFSET_X, y + MARKER_GREEN_OFFSET_Y, null);
+        g2.drawImage(markerGreen, x + MARKER_OFFSET_X, y + MARKER_OFFSET_Y, null);
     }
 
     /**
