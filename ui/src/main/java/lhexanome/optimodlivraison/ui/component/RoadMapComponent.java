@@ -266,8 +266,8 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
             return;
         }
 
-        offsetX -= (zoomMouseX - windowSize / 2) + mouseOffsetX;
-        offsetY += (zoomMouseY - windowSize / 2) + mouseOffsetY;
+        offsetX -= (windowSize / 2 - zoomMouseX) + mouseOffsetX;
+        offsetY += (windowSize / 2 - zoomMouseX) + mouseOffsetY;
     }
 
     /**
@@ -365,7 +365,6 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
     private void paintComponent(Graphics2D g2, RoadMap map) {
         g2.setColor(Color.BLACK);
         g2.setStroke(new BasicStroke(1));
-        // TODO Set stroke with the zoom level
         map.getVectors().forEach(vector -> paintComponent(g2, vector));
     }
 
@@ -379,7 +378,6 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
 
         g2.setColor(TOUR_VECTOR_COLOR);
         g2.setStroke(new BasicStroke(2));
-        // TODO Set stroke with the zoom level
         tourToDraw.getPaths().forEach(path ->
                 path.getVectors().forEach(vector -> paintComponent(g2, vector))
         );
@@ -537,17 +535,10 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        if (e.getX() < panStartY) { //moving image to right
-            mouseOffsetY -= PAN_OFFSET;
-        } else if (e.getX() > panStartY) { //moving image to left
-            mouseOffsetY += PAN_OFFSET;
-        }
-
-        if (e.getY() < panStartX) { //moving image up
-            mouseOffsetX -= PAN_OFFSET;
-        } else if (e.getY() > panStartX) { //moving image to down
-            mouseOffsetX += PAN_OFFSET;
-        }
+        mouseOffsetY += e.getX() - panStartY;
+        mouseOffsetX += e.getY() - panStartX;
+        panStartY = e.getX();
+        panStartX = e.getY();
         repaint();
     }
 
