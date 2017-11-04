@@ -32,8 +32,9 @@ public class Path {
 
     /**
      * Constructor.
+     *
      * @param begin starting halt.
-     * @param end ending halt.
+     * @param end   ending halt.
      */
     public Path(Halt begin, Halt end) {
         vectors = new LinkedList<>();

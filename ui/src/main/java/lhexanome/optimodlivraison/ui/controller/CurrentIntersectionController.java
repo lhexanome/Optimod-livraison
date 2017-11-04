@@ -68,7 +68,7 @@ public class CurrentIntersectionController implements ControllerInterface {
      * intersection to display setter.
      *
      * @param intersectionToDisplay intersection to display
-     * @param roadMap the roadMap
+     * @param roadMap               the roadMap
      */
     public void setData(Intersection intersectionToDisplay, RoadMap roadMap) {
         currentIntersectionPanel.setData(intersectionToDisplay, roadMap);

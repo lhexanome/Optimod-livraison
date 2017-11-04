@@ -16,7 +16,6 @@ import java.util.logging.Logger;
 /**
  * Command to compute a tour.
  * It use {@link SwingWorker} to work, so the logic part is executed in another thread than the UI Thread.
- *
  */
 public class ComputeTourCommand extends SwingWorker<Void, Tour> {
 

@@ -76,6 +76,7 @@ public class TimeSlotChooserPopup extends JDialog {
 
         setContentPane(contentPane);
         setModal(true);
+        setLocationRelativeTo(null);
         getRootPane().setDefaultButton(buttonOK);
 
         timeSlotStartComboBox.setModel(new DefaultComboBoxModel<>(hours));
@@ -98,6 +99,8 @@ public class TimeSlotChooserPopup extends JDialog {
                 KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
                 JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
         buttonNone.addActionListener(e -> onNone());
+
+        pack();
     }
 
     /**
@@ -306,25 +309,6 @@ public class TimeSlotChooserPopup extends JDialog {
         panel2.add(spacer4, gbc);
         label2.setLabelFor(timeSlotEndComboBox);
         label3.setLabelFor(timeSlotStartComboBox);
-    }
-
-    /**
-     * @noinspection ALL
-     */
-    private Font $$$getFont$$$(String fontName, int style, int size, Font currentFont) {
-        if (currentFont == null) return null;
-        String resultName;
-        if (fontName == null) {
-            resultName = currentFont.getName();
-        } else {
-            Font testFont = new Font(fontName, Font.PLAIN, 10);
-            if (testFont.canDisplay('a') && testFont.canDisplay('1')) {
-                resultName = fontName;
-            } else {
-                resultName = currentFont.getName();
-            }
-        }
-        return new Font(resultName, style >= 0 ? style : currentFont.getStyle(), size >= 0 ? size : currentFont.getSize());
     }
 
     /**

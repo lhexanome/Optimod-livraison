@@ -164,7 +164,7 @@ public class RoadMapController implements ControllerInterface, ParseMapListener 
      */
     public void selectDeliveryFromList(Delivery selectedValue) {
         currentDelivery = selectedValue;
-        roadMapPanel.getComponent().repaint();
+        roadMapPanel.getContentPane().repaint();
     }
 
 
@@ -221,6 +221,7 @@ public class RoadMapController implements ControllerInterface, ParseMapListener 
 
     /**
      * getter for currentDelivery.
+     *
      * @return the current selected delivery
      */
     public Delivery getSelectedDelivery() {
@@ -229,6 +230,7 @@ public class RoadMapController implements ControllerInterface, ParseMapListener 
 
     /**
      * setter for currentDelivery.
+     *
      * @param delivery delivery
      */
     public void setSelectedDelivery(Delivery delivery) {

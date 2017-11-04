@@ -15,11 +15,11 @@ public class MainWindow extends Window {
      * Constructor.
      * Take the main controller and all the panel needed for displaying.
      *
-     * @param controller         Main controller
-     * @param roadMapPanel       Panel of the roadmap
-     * @param deliveryOrderPanel Panel of the delivery order
-     * @param tourPanel          Panel of the tour
-     * @param tourEditorPanel    Panel for the tour editor
+     * @param controller                     Main controller
+     * @param roadMapPanel                   Panel of the roadmap
+     * @param deliveryOrderPanel             Panel of the delivery order
+     * @param tourPanel                      Panel of the tour
+     * @param tourEditorPanel                Panel for the tour editor
      * @param currentInterectionDisplayPanel current interection display panel
      */
     public MainWindow(MainController controller,
