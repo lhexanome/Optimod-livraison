@@ -103,7 +103,11 @@ public class DeliveryOrderPanel extends AbstractPanel {
      * @param selectValue Selected delivery
      */
     public void selectDeliveryFromMap(Delivery selectValue) {
-        deliveryList.setSelectedValue(selectValue, true);
+        if (selectValue == null) {
+            deliveryList.clearSelection();
+        } else {
+            deliveryList.setSelectedValue(selectValue, true);
+        }
     }
 
     /**

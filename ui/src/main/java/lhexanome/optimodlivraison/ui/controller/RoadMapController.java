@@ -207,6 +207,7 @@ public class RoadMapController implements ControllerInterface, ParseMapListener 
      */
     public void onIntersectionSelected(Intersection intersection) {
         currentIntersection = intersection;
+        mainController.selectIntersectionFromMap(intersection, roadMap);
     }
 
     /**
@@ -220,9 +221,17 @@ public class RoadMapController implements ControllerInterface, ParseMapListener 
 
     /**
      * getter for currentDelivery.
-     * @return
+     * @return the current selected delivery
      */
     public Delivery getSelectedDelivery() {
         return currentDelivery;
+    }
+
+    /**
+     * setter for currentDelivery.
+     * @param delivery delivery
+     */
+    public void setSelectedDelivery(Delivery delivery) {
+        mainController.setSelectedDelivery(delivery);
     }
 }

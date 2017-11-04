@@ -14,12 +14,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Collection;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,8 +25,31 @@ import java.util.logging.Logger;
  */
 public class RoadMapComponent extends JComponent implements MouseListener {
 
+    /**
+     * max distance for delivery selection.
+     */
+    private static final double CLOSEST_DELIVERY_THRESHOLD = 30.0;
+
+    /**
+     * color of a marker.
+     */
     public enum COLOR {
-        BLUE, GREEN, RED, ORANGE
+        /**
+         * blue color.
+         */
+        BLUE,
+        /**
+         * green color.
+         */
+        GREEN,
+        /**
+         * red color.
+         */
+        RED,
+        /**
+         * orange color.
+         */
+        ORANGE
     }
     /**
      * A distance greater than any other one during execution.
@@ -350,6 +370,7 @@ public class RoadMapComponent extends JComponent implements MouseListener {
      *
      * @param g2       Graphics
      * @param delivery Delivery
+     * @param color the color of the marker
      */
     private void paintComponent(Graphics2D g2, Delivery delivery, COLOR color) {
         Intersection intersection = delivery.getIntersection();
@@ -362,6 +383,9 @@ public class RoadMapComponent extends JComponent implements MouseListener {
                 break;
             case BLUE:
                 g2.drawImage(markerBlue, x + MARKER_ORANGE_OFFSET_X, y + MARKER_ORANGE_OFFSET_Y, null);
+                break;
+            default:
+                g2.drawImage(markerOrange, x + MARKER_ORANGE_OFFSET_X, y + MARKER_ORANGE_OFFSET_Y, null);
                 break;
         }
     }
@@ -459,9 +483,19 @@ public class RoadMapComponent extends JComponent implements MouseListener {
         int yMouse = mouseEvent.getY();
         Intersection closestIntersection = getClosestIntersection(xMouse, yMouse);
         if (deliveryOrder != null) {
-//            Delivery closestDelivery = getClosestDelivery(xMouse, yMouse);
+            Delivery closestDelivery = getClosestDelivery(xMouse, yMouse);
+            int xClosestDeliveryOnScreen = getXFromIntersection(closestDelivery.getIntersection());
+            int yClosestDeliveryOnScreen = getYFromIntersection(closestDelivery.getIntersection());
+            double distanceToClosestDelivery =
+                    distance(xMouse, yMouse, xClosestDeliveryOnScreen, yClosestDeliveryOnScreen);
+            if (distanceToClosestDelivery <= CLOSEST_DELIVERY_THRESHOLD) {
+                roadMapController.setSelectedDelivery(closestDelivery);
+                roadMapController.onIntersectionSelected(null);
+            } else {
+                roadMapController.setSelectedDelivery(null);
+                roadMapController.onIntersectionSelected(closestIntersection);
+            }
         }
-        roadMapController.onIntersectionSelected(closestIntersection);
         repaint();
     }
 
@@ -545,14 +579,38 @@ public class RoadMapComponent extends JComponent implements MouseListener {
         }
         return closestIntersection;
     }
-//    private Delivery getClosestDelivery(int xMouse, int yMouse) {
-//        java.util.Vector<Delivery> deliveries;
-//        if (tour != null) {
-//            deliveries = tour.getOrderedDeliveryVector();
-//        } else {
-//            deliveries = (java.util.Vector<Delivery>) deliveryOrder.getDeliveries();
-//        }
-//        System.out.println("deliveries : \n"+deliveries);
-//        return null;
-//    }
+
+    /**
+     * Returns the closest Delivery.
+     * @param xMouse x position of the mouse on the screen
+     * @param yMouse y position of the mouse on the screen
+     * @return the closest delivery
+     */
+    private Delivery getClosestDelivery(int xMouse, int yMouse) {
+        double minimalDistance = MAX_DISTANCE;
+        Delivery closestDelivery = null;
+        java.util.Vector<Delivery> deliveries = new java.util.Vector<Delivery>();
+        if (tour != null) {
+            deliveries = tour.getOrderedDeliveryVector();
+        } else {
+            for (Delivery delivery : deliveryOrder.getDeliveries()) {
+                deliveries.add(delivery);
+            }
+        }
+        if (deliveries != null) {
+            for (Delivery delivery : deliveries) {
+                int xDelivery = getXFromIntersection(delivery.getIntersection());
+                int yDelivery = getYFromIntersection(delivery.getIntersection());
+                double distanceIntersectionToMouse =
+                        distance(xDelivery, yDelivery, xMouse, yMouse);
+                if (distanceIntersectionToMouse <= minimalDistance) {
+                    minimalDistance = distanceIntersectionToMouse;
+                    closestDelivery = delivery;
+                }
+            }
+        } else {
+            closestDelivery = null;
+        }
+        return closestDelivery;
+    }
 }
