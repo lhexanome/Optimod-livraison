@@ -41,7 +41,6 @@ public class RoadMapPanel extends AbstractPanel {
      */
     public RoadMapPanel(RoadMapController controller) {
         super(controller);
-        $$$setupUI$$$();
         setup();
     }
 
@@ -133,43 +132,33 @@ public class RoadMapPanel extends AbstractPanel {
         gbc.weighty = 1.0;
         gbc.fill = GridBagConstraints.BOTH;
         contentPane.add(roadMapComponent, gbc);
-        final JPanel spacer1 = new JPanel();
-        gbc = new GridBagConstraints();
-        gbc.gridx = 2;
-        gbc.gridy = 2;
-        gbc.weightx = 0.44;
-        gbc.weighty = 0.1;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        contentPane.add(spacer1, gbc);
         loadingContainer = new JLabel();
+        loadingContainer.setHorizontalAlignment(0);
         loadingContainer.setIcon(new ImageIcon(getClass().getResource("/loading/double_ring.gif")));
         loadingContainer.setText("");
         gbc = new GridBagConstraints();
-        gbc.gridx = 1;
+        gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridwidth = 2;
         gbc.weightx = 1.0;
-        gbc.weighty = 1.0;
         gbc.fill = GridBagConstraints.BOTH;
         contentPane.add(loadingContainer, gbc);
         reloadRoadMapButton = new JButton();
+        reloadRoadMapButton.setAlignmentY(0.0f);
+        reloadRoadMapButton.setContentAreaFilled(true);
+        reloadRoadMapButton.setFocusCycleRoot(false);
+        reloadRoadMapButton.setHideActionText(false);
+        reloadRoadMapButton.setHorizontalAlignment(0);
+        reloadRoadMapButton.setHorizontalTextPosition(0);
+        reloadRoadMapButton.setIconTextGap(0);
+        reloadRoadMapButton.setMargin(new Insets(0, 0, 0, 0));
         reloadRoadMapButton.setText("Recharger un plan");
         gbc = new GridBagConstraints();
-        gbc.gridx = 1;
-        gbc.gridy = 2;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.ipadx = 5;
-        gbc.ipady = 5;
-        gbc.insets = new Insets(5, 0, 5, 0);
-        contentPane.add(reloadRoadMapButton, gbc);
-        final JPanel spacer2 = new JPanel();
-        gbc = new GridBagConstraints();
         gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.gridheight = 3;
-        gbc.fill = GridBagConstraints.BOTH;
-        gbc.insets = new Insets(0, 10, 0, 0);
-        contentPane.add(spacer2, gbc);
+        gbc.gridy = 2;
+        gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        contentPane.add(reloadRoadMapButton, gbc);
     }
 
     /**

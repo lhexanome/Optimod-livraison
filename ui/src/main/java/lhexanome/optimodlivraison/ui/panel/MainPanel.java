@@ -43,6 +43,11 @@ public class MainPanel extends AbstractPanel {
     private final JPanel tourEditorPanel;
 
     /**
+     * Selected intersection panel.
+     */
+    private final JPanel currentInterectionDisplayPanel;
+
+    /**
      * Constructor.
      *
      * @param controller         Main controller
@@ -50,17 +55,20 @@ public class MainPanel extends AbstractPanel {
      * @param deliveryOrderPanel Delivery order panel
      * @param tourPanel          Tour panel
      * @param tourEditorPanel    Tour editor panel
+     * @param currentInterectionDisplayPanel current interection display panel
      */
     public MainPanel(MainController controller,
                      JPanel roadMapPanel,
                      JPanel deliveryOrderPanel,
                      JPanel tourPanel,
-                     JPanel tourEditorPanel) {
+                     JPanel tourEditorPanel,
+                     JPanel currentInterectionDisplayPanel) {
         super(controller);
         this.roadMapPanel = roadMapPanel;
         this.deliveryOrderPanel = deliveryOrderPanel;
         this.tourPanel = tourPanel;
         this.tourEditorPanel = tourEditorPanel;
+        this.currentInterectionDisplayPanel = currentInterectionDisplayPanel;
         setup();
     }
 
@@ -88,6 +96,9 @@ public class MainPanel extends AbstractPanel {
         wrapperPanel.add(roadMapPanel, gbc);
 
         gbc.gridy = 1;
+        wrapperPanel.add(currentInterectionDisplayPanel, gbc);
+
+        gbc.gridy = 2;
         wrapperPanel.add(tourPanel, gbc);
 
         gbc.gridheight = 2;

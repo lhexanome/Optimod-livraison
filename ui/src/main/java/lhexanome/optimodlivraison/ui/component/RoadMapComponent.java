@@ -29,6 +29,33 @@ import java.util.logging.Logger;
 public class RoadMapComponent extends JComponent implements MouseListener, MouseMotionListener {
 
     /**
+     * max distance for delivery selection.
+     */
+    private static final double CLOSEST_DELIVERY_THRESHOLD = 30.0;
+
+    /**
+     * color of a marker.
+     */
+    public enum MarkerColor {
+        /**
+         * blue color.
+         */
+        BLUE,
+        /**
+         * green color.
+         */
+        GREEN,
+        /**
+         * red color.
+         */
+        RED,
+        /**
+         * orange color.
+         */
+        ORANGE
+    }
+
+    /**
      * A distance greater than any other one during execution.
      */
     private static final double MAX_DISTANCE = Double.MAX_VALUE;
@@ -46,27 +73,11 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
     /**
      * X offset marker red.
      */
-    private static final int MARKER_RED_OFFSET_X = -32;
+    private static final int MARKER_OFFSET_X = -16;
     /**
      * Y offset marker red.
      */
-    private static final int MARKER_RED_OFFSET_Y = -64;
-    /**
-     * X offset marker orange.
-     */
-    private static final int MARKER_ORANGE_OFFSET_X = -32;
-    /**
-     * Y offset marker orange.
-     */
-    private static final int MARKER_ORANGE_OFFSET_Y = -64;
-    /**
-     * X offset marker green.
-     */
-    private static final int MARKER_GREEN_OFFSET_X = -32;
-    /**
-     * Y offset marker green.
-     */
-    private static final int MARKER_GREEN_OFFSET_Y = -64;
+    private static final int MARKER_OFFSET_Y = -32;
     /**
      * X offset compass.
      */
@@ -87,6 +98,10 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
      * Green marker for deliveries.
      */
     private static final String RESOURCE_NAME_PLAN_MARKER_GREEN = "/plan/marker/planMarkerGreen.png";
+    /**
+     * Green marker for deliveries.
+     */
+    private static final String RESOURCE_NAME_PLAN_MARKER_BLUE = "/plan/marker/planMarkerBlue.png";
     /**
      * Compass image.
      */
@@ -121,6 +136,11 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
      * Marker green image.
      */
     private BufferedImage markerGreen;
+
+    /**
+     * Marker blue image.
+     */
+    private BufferedImage markerBlue;
 
     /**
      * Compass image.
@@ -194,10 +214,26 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
         super();
         try {
             this.roadMapController = roadMapController;
-            markerRed = ImageIO.read(getClass().getResource(RESOURCE_NAME_PLAN_MARKER_RED));
-            markerOrange = ImageIO.read(getClass().getResource(RESOURCE_NAME_PLAN_MARKER_ORANGE));
-            markerGreen = ImageIO.read(getClass().getResource(RESOURCE_NAME_PLAN_MARKER_GREEN));
-            compass = ImageIO.read(getClass().getResource(RESOURCE_NAME_PLAN_COMPASS));
+            markerRed = scaleImage(
+                    ImageIO.read(getClass().getResource(RESOURCE_NAME_PLAN_MARKER_RED)),
+                    IMAGE_SCALE
+            );
+            markerOrange = scaleImage(
+                    ImageIO.read(getClass().getResource(RESOURCE_NAME_PLAN_MARKER_ORANGE)),
+                    IMAGE_SCALE
+            );
+            markerGreen = scaleImage(
+                    ImageIO.read(getClass().getResource(RESOURCE_NAME_PLAN_MARKER_GREEN)),
+                    IMAGE_SCALE
+            );
+            markerBlue = scaleImage(
+                    ImageIO.read(getClass().getResource(RESOURCE_NAME_PLAN_MARKER_BLUE)),
+                    IMAGE_SCALE
+            );
+            compass = scaleImage(
+                    ImageIO.read(getClass().getResource(RESOURCE_NAME_PLAN_COMPASS)),
+                    IMAGE_SCALE
+            );
             addMouseListener(this);
             addMouseMotionListener(this);
         } catch (IOException e) {
@@ -221,18 +257,19 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
     /**
      * resizes an image.
      *
-     * @param markerOrangeBefore the image you want to resize.
+     * @param markerBefore the image you want to resize.
+     * @param scale        scale
      * @return the resized image.
      */
-    private BufferedImage scaleImage(BufferedImage markerOrangeBefore) {
-        int w = markerOrangeBefore.getWidth();
-        int h = markerOrangeBefore.getHeight();
-        markerOrange = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+    private BufferedImage scaleImage(BufferedImage markerBefore, double scale) {
+        int w = markerBefore.getWidth();
+        int h = markerBefore.getHeight();
+        BufferedImage marker = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
         AffineTransform at = new AffineTransform();
-        at.scale(IMAGE_SCALE, IMAGE_SCALE);
+        at.scale(scale, scale);
         AffineTransformOp scaleOp =
                 new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
-        return scaleOp.filter(markerOrangeBefore, markerOrange);
+        return scaleOp.filter(markerBefore, marker);
     }
 
     /**
@@ -344,6 +381,9 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
         if (roadMapController.getSelectedIntersection() != null) {
             paintComponent(g2, roadMapController.getSelectedIntersection());
         }
+        if (roadMapController.getSelectedDelivery() != null) {
+            paintComponent(g2, roadMapController.getSelectedDelivery(), MarkerColor.BLUE);
+        }
     }
 
     /**
@@ -395,24 +435,45 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
         int x = getXFromIntersection(warehouse.getIntersection());
         int y = getYFromIntersection(warehouse.getIntersection());
 
-        g2.drawImage(markerRed, x + MARKER_RED_OFFSET_X, y + MARKER_RED_OFFSET_Y, null);
+        g2.drawImage(markerRed, x + MARKER_OFFSET_X, y + MARKER_OFFSET_Y, null);
 
-        order.getDeliveries().forEach(delivery -> paintComponent(g2, delivery));
+        order.getDeliveries().forEach(delivery -> paintComponent(g2, delivery, MarkerColor.ORANGE));
     }
 
     /**
      * Draw a delivery.
      *
-     * @param g2       Graphics
-     * @param delivery Delivery
+     * @param g2          Graphics
+     * @param delivery    Delivery
+     * @param markerColor the markerColor of the marker
      */
-    private void paintComponent(Graphics2D g2, Delivery delivery) {
+    private void paintComponent(Graphics2D g2, Delivery delivery, MarkerColor markerColor) {
         Intersection intersection = delivery.getIntersection();
 
         int x = getXFromIntersection(intersection);
         int y = getYFromIntersection(intersection);
 
-        g2.drawImage(markerOrange, x + MARKER_ORANGE_OFFSET_X, y + MARKER_ORANGE_OFFSET_Y, null);
+        BufferedImage marker;
+
+        switch (markerColor) {
+            case GREEN:
+                marker = markerGreen;
+                break;
+            case RED:
+                marker = markerRed;
+                break;
+            case ORANGE:
+                marker = markerOrange;
+                break;
+            case BLUE:
+                marker = markerBlue;
+                break;
+            default:
+                marker = markerOrange;
+                break;
+        }
+
+        g2.drawImage(marker, x + MARKER_OFFSET_X, y + MARKER_OFFSET_Y, null);
     }
 
     /**
@@ -441,7 +502,7 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
     private void paintComponent(Graphics2D g2, Intersection intersection) {
         int x = getXFromIntersection(intersection);
         int y = getYFromIntersection(intersection);
-        g2.drawImage(markerGreen, x + MARKER_GREEN_OFFSET_X, y + MARKER_GREEN_OFFSET_Y, null);
+        g2.drawImage(markerGreen, x + MARKER_OFFSET_X, y + MARKER_OFFSET_Y, null);
     }
 
     /**
@@ -506,8 +567,21 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
     public void mouseClicked(MouseEvent mouseEvent) {
         int xMouse = mouseEvent.getX();
         int yMouse = mouseEvent.getY();
-        Intersection intersection = getClosestIntersection(xMouse, yMouse);
-        roadMapController.onIntersectionSelected(intersection);
+        Intersection closestIntersection = getClosestIntersection(xMouse, yMouse);
+        if (deliveryOrder != null) {
+            Delivery closestDelivery = getClosestDelivery(xMouse, yMouse);
+            int xClosestDeliveryOnScreen = getXFromIntersection(closestDelivery.getIntersection());
+            int yClosestDeliveryOnScreen = getYFromIntersection(closestDelivery.getIntersection());
+            double distanceToClosestDelivery =
+                    distance(xMouse, yMouse, xClosestDeliveryOnScreen, yClosestDeliveryOnScreen);
+            if (distanceToClosestDelivery <= CLOSEST_DELIVERY_THRESHOLD) {
+                roadMapController.setSelectedDelivery(closestDelivery);
+                roadMapController.onIntersectionSelected(null);
+            } else {
+                roadMapController.setSelectedDelivery(null);
+                roadMapController.onIntersectionSelected(closestIntersection);
+            }
+        }
         repaint();
     }
 
@@ -600,6 +674,7 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
         double minimalDistance = MAX_DISTANCE;
         Intersection closestIntersection = null;
         Collection<Intersection> intersections = roadMap.getIntersections();
+
         for (Intersection intersection : intersections) {
             int xIntersection = getXFromIntersection(intersection);
             int yIntersection = getYFromIntersection(intersection);
@@ -614,4 +689,36 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
         return closestIntersection;
     }
 
+    /**
+     * Returns the closest Delivery.
+     *
+     * @param xMouse x position of the mouse on the screen
+     * @param yMouse y position of the mouse on the screen
+     * @return the closest delivery
+     */
+    private Delivery getClosestDelivery(int xMouse, int yMouse) {
+        double minimalDistance = MAX_DISTANCE;
+        Delivery closestDelivery = null;
+        java.util.Vector<Delivery> deliveries;
+        if (tour != null) {
+            deliveries = tour.getOrderedDeliveryVector();
+        } else {
+            deliveries = new java.util.Vector<>(deliveryOrder.getDeliveries());
+        }
+        if (deliveries != null) {
+            for (Delivery delivery : deliveries) {
+                int xDelivery = getXFromIntersection(delivery.getIntersection());
+                int yDelivery = getYFromIntersection(delivery.getIntersection());
+                double distanceIntersectionToMouse =
+                        distance(xDelivery, yDelivery, xMouse, yMouse);
+                if (distanceIntersectionToMouse <= minimalDistance) {
+                    minimalDistance = distanceIntersectionToMouse;
+                    closestDelivery = delivery;
+                }
+            }
+        } else {
+            closestDelivery = null;
+        }
+        return closestDelivery;
+    }
 }

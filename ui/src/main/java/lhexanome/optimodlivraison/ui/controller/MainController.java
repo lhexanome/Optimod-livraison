@@ -42,6 +42,11 @@ public class MainController implements ControllerInterface {
      */
     private final TourEditorController tourEditorController;
 
+    /**
+     * current displayed intersection controller.
+     */
+    private final CurrentIntersectionController currentIntersectionController;
+
 
     /**
      * Constructor.
@@ -51,13 +56,15 @@ public class MainController implements ControllerInterface {
         deliveryOrderController = new DeliveryOrderController(this);
         tourController = new TourController(this);
         tourEditorController = new TourEditorController(this);
+        currentIntersectionController = new CurrentIntersectionController(this);
 
         mainWindow = new MainWindow(
                 this,
                 roadMapController.getContentPane(),
                 deliveryOrderController.getContentPane(),
                 tourController.getContentPane(),
-                tourEditorController.getContentPane()
+                tourEditorController.getContentPane(),
+                currentIntersectionController.getContentPane()
         );
     }
 
@@ -175,6 +182,7 @@ public class MainController implements ControllerInterface {
      */
     public void selectDeliveryFromMap(Delivery selectValue) {
         deliveryOrderController.selectDeliveryFromMap(selectValue);
+        tourEditorController.selectDeliveryFromMap(selectValue);
     }
 
     /**
@@ -184,5 +192,23 @@ public class MainController implements ControllerInterface {
      */
     public Intersection getSelectedIntersection() {
         return roadMapController.getSelectedIntersection();
+    }
+
+    /**
+     * Select an intersection from the road map.
+     *
+     * @param selectedIntersection Selected intersection
+     * @param roadMap the roadMap
+     */
+    public void selectIntersectionFromMap(Intersection selectedIntersection, RoadMap roadMap) {
+        currentIntersectionController.setData(selectedIntersection, roadMap);
+    }
+
+    /**
+     * Select a delivery from the road map.
+     * @param delivery selected delivery.
+     */
+    public void setSelectedDelivery(Delivery delivery) {
+        roadMapController.onDeliverySelected(delivery);
     }
 }
