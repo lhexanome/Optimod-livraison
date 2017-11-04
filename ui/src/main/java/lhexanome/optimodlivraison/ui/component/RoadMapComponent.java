@@ -247,8 +247,8 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
             if (e.getWheelRotation() > 0 && zoom > 1) {
                 zoom--;
             }
-            zoomMouseX = e.getX();
-            zoomMouseY = e.getY();
+            zoomMouseX = e.getY();
+            zoomMouseY = e.getX();
             repaint();
         });
 
@@ -303,8 +303,8 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
             return;
         }
 
-        offsetX -= (windowSize / 2 - zoomMouseX) + mouseOffsetX;
-        offsetY += (windowSize / 2 - zoomMouseX) + mouseOffsetY;
+        offsetX -= zoomMouseX + mouseOffsetX;
+        offsetY += -zoomMouseY + mouseOffsetY;
     }
 
     /**
