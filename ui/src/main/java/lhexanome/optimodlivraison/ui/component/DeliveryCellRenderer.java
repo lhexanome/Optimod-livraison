@@ -8,6 +8,7 @@ import lhexanome.optimodlivraison.platform.models.Vector;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.font.TextAttribute;
+import java.util.Arrays;
 import java.util.Map;
 
 /**
@@ -20,6 +21,35 @@ public class DeliveryCellRenderer implements ListCellRenderer<Delivery> {
      */
     private RoadMap roadMap;
 
+    /**
+     * Current context.
+     */
+    private Context currentContext;
+
+    /**
+     * Context of the renderer.
+     * Needed to adapt the display
+     */
+    public enum Context {
+        /**
+         * Display only delivery order fields.
+         */
+        DELIVERY_ORDER,
+
+        /**
+         * Display only tour fields.
+         */
+        TOUR
+    }
+
+    /**
+     * Constructor.
+     *
+     * @param currentContext Current context.
+     */
+    public DeliveryCellRenderer(Context currentContext) {
+        this.currentContext = currentContext;
+    }
 
     /**
      * Return a component that has been configured to display the specified
@@ -51,95 +81,108 @@ public class DeliveryCellRenderer implements ListCellRenderer<Delivery> {
         layout.setAutoCreateContainerGaps(true);
         layout.setAutoCreateGaps(true);
 
-        // Index line
-
-        JLabel indexLabel = new JLabel("N° :");
-
-        Font font = indexLabel.getFont();
+        Font font = new JLabel().getFont();
         Map attributes = font.getAttributes();
         attributes.put(TextAttribute.WEIGHT, TextAttribute.WEIGHT_DEMIBOLD);
-        indexLabel.setFont(font.deriveFont(attributes));
 
-        JLabel indexValue = new JLabel(String.valueOf(index));
+        GroupLayout.ParallelGroup parallelGroup = layout.createParallelGroup();
+        GroupLayout.SequentialGroup sequentialGroup = layout.createSequentialGroup();
+
+
+        // Index line
+
+        if (hasContext(Context.TOUR)) {
+
+            JLabel indexLabel = new JLabel("N° :");
+            indexLabel.setFont(font.deriveFont(attributes));
+            JLabel indexValue = new JLabel(String.valueOf(index));
+
+            parallelGroup.addGroup(layout.createSequentialGroup()
+                    .addComponent(indexLabel)
+                    .addComponent(indexValue)
+            );
+
+            sequentialGroup.addGroup(layout.createParallelGroup()
+                    .addComponent(indexLabel)
+                    .addComponent(indexValue)
+            );
+        }
 
 
         // Time slot line
-
         TimeSlot timeSlot = value.getSlot();
-        GroupLayout.SequentialGroup timeSlotGroupSeq = layout.createSequentialGroup();
-        GroupLayout.ParallelGroup timeSlotGroupParallel = layout.createParallelGroup();
 
-        if (timeSlot != null) {
+        if (hasContext(Context.DELIVERY_ORDER, Context.TOUR) && timeSlot != null) {
+
             JLabel timeSlotLabel = new JLabel("Plage horaire :");
             timeSlotLabel.setFont(font.deriveFont(attributes));
 
             JLabel timeSlotValue = new JLabel(value.getSlot().toString());
 
-            timeSlotGroupSeq
+            parallelGroup.addGroup(layout.createSequentialGroup()
                     .addComponent(timeSlotLabel)
-                    .addComponent(timeSlotValue);
-            timeSlotGroupParallel
+                    .addComponent(timeSlotValue)
+            );
+
+            sequentialGroup.addGroup(layout.createParallelGroup()
                     .addComponent(timeSlotLabel)
-                    .addComponent(timeSlotValue);
+                    .addComponent(timeSlotValue)
+            );
+        }
+
+
+        // Duration label
+
+        if (hasContext(Context.DELIVERY_ORDER, Context.TOUR)) {
+            JLabel durationLabel = new JLabel("Durée de livraison :");
+            durationLabel.setFont(font.deriveFont(attributes));
+
+            JLabel durationValue = new JLabel(String.valueOf(value.getDuration() / 100) + " min");
+
+            parallelGroup.addGroup(layout.createSequentialGroup()
+                    .addComponent(durationLabel)
+                    .addComponent(durationValue)
+            );
+
+            sequentialGroup.addGroup(layout.createParallelGroup()
+                    .addComponent(durationLabel)
+                    .addComponent(durationValue)
+            );
         }
 
 
         // Address line
 
-        JLabel addressLabel = new JLabel("Adresses à proximitées :");
+        if (hasContext(Context.DELIVERY_ORDER, Context.TOUR)) {
+            JLabel addressLabel = new JLabel("Adresses à proximitées :");
 
-        addressLabel.setFont(font.deriveFont(attributes));
+            addressLabel.setFont(font.deriveFont(attributes));
 
-        GroupLayout.SequentialGroup addressGroupSeq = layout.createSequentialGroup();
-        GroupLayout.ParallelGroup addressGroupParallel = layout.createParallelGroup();
+            GroupLayout.SequentialGroup addressGroupSeq = layout.createSequentialGroup();
+            GroupLayout.ParallelGroup addressGroupParallel = layout.createParallelGroup();
 
-        for (Vector street : roadMap.getTronconsFromIntersection(value.getIntersection())) {
-            String streetName = street.getNameStreet();
-            if (streetName == null) streetName = "Rue sans nom";
+            for (Vector street : roadMap.getTronconsFromIntersection(value.getIntersection())) {
+                String streetName = street.getNameStreet();
+                if (streetName == null) streetName = "Rue sans nom";
 
-            JLabel line = new JLabel("- " + streetName);
+                JLabel line = new JLabel("- " + streetName);
 
-            addressGroupParallel.addComponent(line);
-            addressGroupSeq.addComponent(line);
+                addressGroupParallel.addComponent(line);
+                addressGroupSeq.addComponent(line);
+            }
+
+            parallelGroup
+                    .addComponent(addressLabel)
+                    .addGroup(addressGroupParallel);
+
+            sequentialGroup
+                    .addComponent(addressLabel)
+                    .addGroup(addressGroupSeq);
         }
 
-        // Duration label
 
-        JLabel durationLabel = new JLabel("Durée de livraison :");
-        durationLabel.setFont(font.deriveFont(attributes));
-
-        JLabel durationValue = new JLabel(String.valueOf(value.getDuration() / 100) + " min");
-
-
-        // Placement
-
-        layout.setHorizontalGroup(layout.createParallelGroup()
-                .addGroup(layout.createSequentialGroup()
-                        .addComponent(indexLabel)
-                        .addComponent(indexValue)
-                )
-                .addGroup(timeSlotGroupSeq)
-                .addGroup(layout.createSequentialGroup()
-                        .addComponent(durationLabel)
-                        .addComponent(durationValue)
-                )
-                .addComponent(addressLabel)
-                .addGroup(addressGroupParallel)
-        );
-
-        layout.setVerticalGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup()
-                        .addComponent(indexLabel)
-                        .addComponent(indexValue)
-                )
-                .addGroup(timeSlotGroupParallel)
-                .addGroup(layout.createParallelGroup()
-                        .addComponent(durationLabel)
-                        .addComponent(durationValue)
-                )
-                .addComponent(addressLabel)
-                .addGroup(addressGroupSeq)
-        );
+        layout.setVerticalGroup(sequentialGroup);
+        layout.setHorizontalGroup(parallelGroup);
 
         // Separator
 
@@ -156,6 +199,17 @@ public class DeliveryCellRenderer implements ListCellRenderer<Delivery> {
         }
 
         return panel;
+    }
+
+    /**
+     * Check if the cell has one of the provided contexts.
+     * Util method
+     *
+     * @param contexts Contexts to check
+     * @return True if the renderer has this context
+     */
+    public boolean hasContext(Context... contexts) {
+        return Arrays.stream(contexts).anyMatch(context -> context == currentContext);
     }
 
     /**

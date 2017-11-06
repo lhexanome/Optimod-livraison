@@ -79,7 +79,7 @@ public class TourEditorPanel extends AbstractPanel implements DeliveryListTransf
         // Do not show , controller will set it visible later
         contentPane.setVisible(false);
 
-        cellRenderer = new DeliveryCellRenderer();
+        cellRenderer = new DeliveryCellRenderer(DeliveryCellRenderer.Context.TOUR);
         deliveryList.setCellRenderer(cellRenderer);
         deliveryList.setDragEnabled(true);
         deliveryList.setDropMode(DropMode.INSERT);
