@@ -139,20 +139,16 @@ public class InterfaceCalcul {
                 }
                 deliveries.add(matriceTrajets[indexDepart][tsp.getMeilleureSolution(0)]); //retour entrepot
 
-                demande.getBeginning().setEstimateDate(datesEstimees[0]);
-                int i = 0;
-                for (Halt arret : graphe.keySet()) {
-                    arret.setEstimateDate(datesEstimees[i]);
-                    i++;
-                }
-
-                tour.setTime(time);
-                tour.setPaths(deliveries);
-
-                tour.forceNotifyObservers();
+            //demande.getBeginning().setEstimateDate(datesEstimees[0]);
+            int i = 0;
+            for (Halt arret : listeSommets) {
+                arret.setEstimateDate(datesEstimees[i]);
+                i++;
+            }
+            tour.setTime( time);
+                tour.setPaths( deliveries);tour.forceNotifyObservers();
 
             } while (tsp.getTempsLimiteAtteint());
-
         } else {
             TSP tsp = new TSP1();
             if (type == TspTypes.HEURISTICS_1) {
