@@ -90,7 +90,7 @@ public class MainPanel extends AbstractPanel {
         gbc.ipadx = 1;
 
         gbc.fill = GridBagConstraints.BOTH;
-        //gbc.anchor = GridBagConstraints.LINE_START;
+        gbc.anchor = GridBagConstraints.LINE_START;
 
         wrapperPanel.add(deliveryOrderPanel, gbc);
         wrapperPanel.add(tourEditorPanel, gbc);
