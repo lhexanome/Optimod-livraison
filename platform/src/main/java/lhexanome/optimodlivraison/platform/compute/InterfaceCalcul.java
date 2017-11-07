@@ -37,7 +37,7 @@ public class InterfaceCalcul {
     /**
      * Intervalle d'actualisation de l'affichage pendant le TSP.
      */
-    private static final int INTERVAL_NOTIFY = 1000;
+    private static final int INTERVAL_NOTIFY = 2500;
 
     /**
      * conversion en secondes.
