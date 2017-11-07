@@ -9,7 +9,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.font.TextAttribute;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Delivery celle renderer.
@@ -161,9 +163,14 @@ public class DeliveryCellRenderer implements ListCellRenderer<Delivery> {
             GroupLayout.SequentialGroup addressGroupSeq = layout.createSequentialGroup();
             GroupLayout.ParallelGroup addressGroupParallel = layout.createParallelGroup();
 
-            for (Vector street : roadMap.getTronconsFromIntersection(value.getIntersection())) {
-                String streetName = street.getNameStreet();
-                if (streetName == null) streetName = "Rue sans nom";
+            Set<String> streetNames = new HashSet<>();
+
+            for (Vector vector : roadMap.getTronconsFromIntersection(value.getIntersection())) {
+                streetNames.add(vector.getNameStreet());
+            }
+            for (String streetName : streetNames) {
+
+                if (streetName.isEmpty()) streetName = "Rue sans nom";
 
                 JLabel line = new JLabel("- " + streetName);
 
