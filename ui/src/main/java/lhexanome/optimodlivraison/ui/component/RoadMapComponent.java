@@ -32,6 +32,43 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
      * max distance for delivery selection.
      */
     private static final double CLOSEST_DELIVERY_THRESHOLD = 30.0;
+
+    /**
+     * delivery index color on the map.
+     */
+    private static final Color DELIVERY_INDEX_COLOR = Color.CYAN;
+
+    /**
+     * delivery index x display offset.
+     */
+    private static final int DELIVERY_INDEX_OFFSET_X = 5;
+    /**
+     * delivery index y display offset.
+     */
+    private static final int DELIVERY_INDEX_OFFSET_Y = 5;
+
+    /**
+     * color of a marker.
+     */
+    public enum MarkerColor {
+        /**
+         * blue color.
+         */
+        BLUE,
+        /**
+         * green color.
+         */
+        GREEN,
+        /**
+         * red color.
+         */
+        RED,
+        /**
+         * orange color.
+         */
+        ORANGE
+    }
+
     /**
      * A distance greater than any other one during execution.
      */
@@ -40,10 +77,6 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
      * Logger.
      */
     private static final Logger LOGGER = Logger.getLogger(RoadMapComponent.class.getName());
-    /**
-     * Offset when the user drag the map.
-     */
-    private static final int PAN_OFFSET = 2;
     /**
      * X offset marker red.
      */
@@ -80,10 +113,7 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
      * Compass image.
      */
     private static final String RESOURCE_NAME_PLAN_COMPASS = "/plan/compass/compass.png";
-    /**
-     * Tour vector color.
-     */
-    private static final Color TOUR_VECTOR_COLOR = new Color(245, 124, 0);
+
     /**
      * RoadMap constructor.
      * Load images from jar file.
@@ -317,7 +347,6 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
         rescale();
 
         Graphics2D g2 = (Graphics2D) g;
-
         // FIXME Paint gui after data ?
         paintGUI(g2);
 
@@ -327,7 +356,7 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
         if (tour != null) {
             paintComponent(g2, tour);
         }
-        if (deliveryOrder != null) {
+        if ((deliveryOrder != null) && (tour == null)) {
             paintComponent(g2, deliveryOrder);
         }
         if (roadMapController.getSelectedIntersection() != null) {
@@ -366,12 +395,37 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
      * @param tourToDraw Tour
      */
     private void paintComponent(Graphics2D g2, Tour tourToDraw) {
-
-        g2.setColor(TOUR_VECTOR_COLOR);
         g2.setStroke(new BasicStroke(2));
-        tourToDraw.getPaths().forEach(path ->
-                path.getVectors().forEach(vector -> paintComponent(g2, vector))
+        tourToDraw.getPaths().forEach(
+                path ->  {
+                    g2.setColor(path.getColor());
+                    path.getVectors().forEach(vector -> paintComponent(g2, vector));
+                }
         );
+        if (deliveryOrder != null) {
+            paintComponent(g2, deliveryOrder.getBeginning());
+        }
+        int index = 0;
+        for (Delivery delivery : tour.getOrderedDeliveryVector()) {
+            paintComponent(g2, delivery, MarkerColor.ORANGE);
+            int x = getXFromIntersection(delivery.getIntersection());
+            int y = getYFromIntersection(delivery.getIntersection());
+            g2.setColor(DELIVERY_INDEX_COLOR);
+            g2.drawString(Integer.toString(index), x + DELIVERY_INDEX_OFFSET_X, y + DELIVERY_INDEX_OFFSET_Y);
+            index += 1;
+        }
+    }
+
+    /**
+     * Draw the warehouse.
+     * @param g2        Graphics
+     * @param warehouse the warehouse
+     */
+    private void paintComponent(Graphics2D g2, Warehouse warehouse) {
+        int x = getXFromIntersection(warehouse.getIntersection());
+        int y = getYFromIntersection(warehouse.getIntersection());
+
+        g2.drawImage(markerRed, x + MARKER_OFFSET_X, y + MARKER_OFFSET_Y, null);
     }
 
     /**
@@ -381,14 +435,11 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
      * @param order DeliveryOrder
      */
     private void paintComponent(Graphics2D g2, DeliveryOrder order) {
-        Warehouse warehouse = order.getBeginning();
+        paintComponent(g2, order.getBeginning());
 
-        int x = getXFromIntersection(warehouse.getIntersection());
-        int y = getYFromIntersection(warehouse.getIntersection());
-
-        g2.drawImage(markerRed, x + MARKER_OFFSET_X, y + MARKER_OFFSET_Y, null);
-
-        order.getDeliveries().forEach(delivery -> paintComponent(g2, delivery, MarkerColor.ORANGE));
+        order.getDeliveries().forEach(delivery ->
+                paintComponent(g2, delivery, MarkerColor.ORANGE)
+        );
     }
 
     /**
@@ -671,27 +722,5 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
             closestDelivery = null;
         }
         return closestDelivery;
-    }
-
-    /**
-     * color of a marker.
-     */
-    public enum MarkerColor {
-        /**
-         * blue color.
-         */
-        BLUE,
-        /**
-         * green color.
-         */
-        GREEN,
-        /**
-         * red color.
-         */
-        RED,
-        /**
-         * orange color.
-         */
-        ORANGE
     }
 }
