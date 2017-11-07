@@ -116,13 +116,13 @@ public class InterfaceCalcul {
         }
         TSPwSlots tsp = new TSP2wSlots();
 
-        do {
-            tsp.chercheSolution(INTERVAL_NOTIFY, nbSommets, matrix.getMatriceCouts(),
-                    plages, demande.getStart(), listeDurees);
-            time = tsp.getCoutMeilleureSolution();
-            if (time == Integer.MAX_VALUE) {
-                throw new ComputeSlotsException("can't compute tour because of incompatible slots");
-            }
+          do {
+              tsp.chercheSolution(INTERVAL_NOTIFY, nbSommets, matrix.getMatriceCouts(),
+                      plages, demande.getStart(), listeDurees);
+              time = tsp.getCoutMeilleureSolution();
+              if (time == Integer.MAX_VALUE) {
+                  throw new ComputeSlotsException("can't compute tour because of incompatible slots");
+              }
 
 
             Path[][] matriceTrajets = matrix.getMatricePaths();
