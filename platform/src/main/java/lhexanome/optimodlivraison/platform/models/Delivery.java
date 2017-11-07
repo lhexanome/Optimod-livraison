@@ -2,31 +2,29 @@ package lhexanome.optimodlivraison.platform.models;
 
 
 /**
- * Représente une livraison.
- * Contient une durée de livraison, une intersection et une plage horaire.
- * Si la plage horaire est null alors la livraison peut s'efectuer a n'importe quelle heur
+ * Contains a duration for the delivery, an intersection and a time slot.
+ * If the time slot is null, then the delivery can be at any time.
  */
 public class Delivery extends Halt {
 
     /**
-     * Durée prise pour la livraison.
-     * En minutes
+     * Duration of the delivery
+     * In seconds.
      */
     private int duration;
 
 
     /**
-     * Plage horaire durant laquelle la livraison peut s'effectuer.
+     * Time slot during which the delivery can be done.
      */
     private TimeSlot slot;
 
 
     /**
-     * Constructeur de livraison.
+     * Delivery constructor.
      *
-     * @param intersection intersection de livraison
-     * @param duration     Durée prise pour la livraison
-     *                     En minutes
+     * @param intersection Intersection of the delivery
+     * @param duration     Delivery duration in seconds
      * @see #duration
      * @see #intersection
      * @see #slot
@@ -37,12 +35,11 @@ public class Delivery extends Halt {
     }
 
     /**
-     * Constructeur de livraison.
+     * Constructor.
      *
-     * @param intersection intersection de livraison
-     * @param duration     Durée prise pour la livraison
-     *                     En minutes
-     * @param slot         Plage horaire durant laquelle la livraison peut s'effectuer.
+     * @param intersection Intersection of the delivery
+     * @param duration     Delivery duration
+     * @param slot         Time slot during which the delivery can be done
      * @see #duration
      * @see #intersection
      * @see #slot
@@ -55,18 +52,18 @@ public class Delivery extends Halt {
     }
 
     /**
-     * Renvoie le temps de livraison en sec.
+     * Duration getter.
      *
-     * @return Durée
+     * @return Duration
      */
     public int getDuration() {
         return duration;
     }
 
     /**
-     * Définie la durée de la livraison.
+     * Duration setter.
      *
-     * @param duration Durée en sec
+     * @param duration Delivery duration
      */
     public void setDuration(int duration) {
         this.duration = duration;
@@ -74,18 +71,18 @@ public class Delivery extends Halt {
 
 
     /**
-     * Renvoie la plage horaire actuelle de la livraison.
+     * Time slot getter.
      *
-     * @return Plage horaire
+     * @return Time slot
      */
     public TimeSlot getSlot() {
         return slot;
     }
 
     /**
-     * Définie la plage horaire de la livraison.
+     * Time Slot setter.
      *
-     * @param slot Plage horaire
+     * @param slot Time slot
      */
     public void setSlot(TimeSlot slot) {
         this.slot = slot;
