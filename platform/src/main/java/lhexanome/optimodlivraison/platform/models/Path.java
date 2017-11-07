@@ -61,12 +61,14 @@ public class Path {
 
     /**
      * Creates and returns a random color.
+     *
      * @return a random-generated color.
      */
+    @SuppressWarnings("checkstyle:magicnumber")
     private Color randomColor() {
-        float r = randomColorGenerator.nextFloat();
-        float g = randomColorGenerator.nextFloat();
-        float b = randomColorGenerator.nextFloat();
+        float r = randomColorGenerator.nextFloat() /*+ 0.5f*/;
+        float g = randomColorGenerator.nextFloat() / 2f /*+ 0.5f*/;
+        float b = randomColorGenerator.nextFloat() / 2f /*+ 0.5f*/;
         return new Color(r, g, b);
     }
 
@@ -206,6 +208,7 @@ public class Path {
 
     /**
      * Getter for color.
+     *
      * @return the path's color.
      */
     public Color getColor() {

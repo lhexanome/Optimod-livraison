@@ -36,7 +36,7 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
     /**
      * delivery index color on the map.
      */
-    private static final Color DELIVERY_INDEX_COLOR = Color.CYAN;
+    private static final Color DELIVERY_INDEX_COLOR = Color.red;
 
     /**
      * delivery index x display offset.
@@ -383,7 +383,7 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
      * @param map RoadMap
      */
     private void paintComponent(Graphics2D g2, RoadMap map) {
-        g2.setColor(Color.BLACK);
+        g2.setColor(Color.GRAY);
         g2.setStroke(new BasicStroke(1));
         map.getVectors().forEach(vector -> paintComponent(g2, vector));
     }
@@ -397,7 +397,7 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
     private void paintComponent(Graphics2D g2, Tour tourToDraw) {
         g2.setStroke(new BasicStroke(2));
         tourToDraw.getPaths().forEach(
-                path ->  {
+                path -> {
                     g2.setColor(path.getColor());
                     path.getVectors().forEach(vector -> paintComponent(g2, vector));
                 }
@@ -411,6 +411,9 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
             int x = getXFromIntersection(delivery.getIntersection());
             int y = getYFromIntersection(delivery.getIntersection());
             g2.setColor(DELIVERY_INDEX_COLOR);
+            @SuppressWarnings("checkstyle:magicnumber")
+            Font font = g2.getFont().deriveFont(20.0f);
+            g2.setFont(font);
             g2.drawString(Integer.toString(index), x + DELIVERY_INDEX_OFFSET_X, y + DELIVERY_INDEX_OFFSET_Y);
             index += 1;
         }
@@ -418,6 +421,7 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
 
     /**
      * Draw the warehouse.
+     *
      * @param g2        Graphics
      * @param warehouse the warehouse
      */
