@@ -6,54 +6,52 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Suite de tronçons connectés reliant deux points
- * de livraison (ou entrepôt).
+ * Following of vectors connected linking two intersections.
  */
 public class Path {
 
     /**
-     * Liste des vectors.
+     * List of vectors.
      */
     private List<Vector> vectors;
 
-
     /**
-     * Temps necessaire pour parcourir le trajet.
-     * en secondes.
-     * prend en compte le temps d'attente à la fin s'il y en a un.
+     * Time needed to travel between two intersections.
+     * Including the waiting time if needed.
+     * In seconds
      */
     private int timeToTravel;
 
     /**
-     * starting halt of the path.
+     * Starting halt of the path.
      */
-    private Halt begin;
+    private Halt start;
 
     /**
-     * ending halt of the path.
+     * Ending halt of the path.
      */
     private Halt end;
 
     /**
-     * path color.
+     * Path color.
      */
     private Color color;
 
     /**
-     * random color generator.
+     * Random color generator.
      */
     private Random randomColorGenerator;
 
     /**
      * Constructor.
      *
-     * @param begin starting halt.
+     * @param start starting halt.
      * @param end   ending halt.
      */
-    public Path(Halt begin, Halt end) {
+    public Path(Halt start, Halt end) {
         vectors = new LinkedList<>();
         this.timeToTravel = 0;
-        this.begin = begin;
+        this.start = start;
         this.end = end;
         this.randomColorGenerator = new Random();
         this.color = randomColor();
@@ -73,10 +71,10 @@ public class Path {
     }
 
     /**
-     * fonction equals.
+     * Equals.
      *
-     * @param o objet a comparer
-     * @return resultat de la comparaison
+     * @param o object to compare
+     * @return If the two objects are equals
      */
     @Override
     public boolean equals(Object o) {
@@ -90,11 +88,10 @@ public class Path {
     }
 
     /**
-     * fonction hashCode.
+     * Hashcode.
      *
-     * @return hashcode de l'objet
+     * @return Object's hashcode
      */
-    @SuppressWarnings("checkstyle:magicnumber")
     @Override
     public int hashCode() {
         int result = vectors != null ? vectors.hashCode() : 0;
@@ -103,16 +100,19 @@ public class Path {
     }
 
     /**
-     * Renvoie le temps nécessaire pour effectuer le trajet.
+     * Time to travel getter.
      *
-     * @return Float
+     * @return Time to travel
+     * @see #timeToTravel
      */
     public int getTimeToTravel() {
         return timeToTravel;
     }
 
     /**
-     * Définie le temps nécessaire pour parcourir le trajet.
+     * Time to travel setter.
+     * <p>
+     * Use especially in tests.
      *
      * @param timeToTravel Time
      */
@@ -121,42 +121,41 @@ public class Path {
     }
 
     /**
-     * Renvoie la liste des tronçons.
+     * Vectors getter.
      *
-     * @return liste
+     * @return List of vector for this path
      */
     public List<Vector> getVectors() {
         return vectors;
     }
 
     /**
-     * Renvoie l'intersection de départ.
+     * Start getter.
      *
-     * @return Start
+     * @return Start halt
      */
     public Halt getStart() {
-        return begin;
+        return start;
     }
 
     /**
-     * Renvoie l'intersection d'arrivée.
+     * End getter.
      *
-     * @return End
+     * @return End halt
      */
     public Halt getEnd() {
         return end;
     }
 
     /**
-     * Ajout un vector a la fin du trajet.
-     * Cette operation met a jour le temp de parcour en lui ajoutent le temp de parcour du vector passer en paramétre.
+     * Add a vector at the end of a path.
+     * This operation updates the time to travel.
      *
-     * @param vector vector a ajouter au trajet
-     *               L'intersection origine du vector doit étre identique a l'intersection d'arrivée du trajet
-     * @throws RuntimeException si l'intersection origine du vector
-     *                          n'est pas identique a l'intersection d'arrivée du trajet
+     * @param vector Vector to add.
+     *               Vector's origin intersection must be the same as the last destination intersection.
+     * @throws RuntimeException If the origin of the vector is not the same as the current last destination.
      */
-    public void addTroncon(Vector vector) {
+    public void addVector(Vector vector) {
         if (vectors.size() == 0 || vectors.get(vectors.size() - 1).getDestination() == vector.getOrigin()) {
             vectors.add(vector);
             timeToTravel += vector.getTimeToTravel();
@@ -167,32 +166,30 @@ public class Path {
     }
 
     /**
-     * Ajout un vector a du debut du trajet.
-     * Cette operation met a jour le temp de parcour en lui ajoutent le temp de parcour du vector passer en paramétre.
+     * Add a vector at the beginning of a path.
+     * This operation updates the time to travel.
      *
-     * @param vector vector a ajouter au debut du trajet
-     *               L'intersection de destination du vector doit étre identique a l'intersection d'origine du trajet
-     * @throws RuntimeException si l'intersection origine du vector
-     *                          n'est pas identique a l'intersection d'arrivée du trajet
+     * @param vector Vector to add.
+     *               Vector's destination intersection must be the same as the first origin intersection.
+     * @throws RuntimeException If the destination of the vector is not the same as the current first origin.
      */
-    public void addTronconBefore(Vector vector) {
+    public void addVectorBefore(Vector vector) {
         if (vectors.size() == 0 || vectors.get(0).getOrigin() == vector.getDestination()) {
             vectors.add(0, vector);
             timeToTravel += vector.getTimeToTravel();
         } else {
-            throw new RuntimeException("The vector is not at the end of the trajet");
+            throw new RuntimeException("The vector is not at the beginning of the path");
         }
 
     }
 
     /**
-     * Ajout un path a la suit du path.
-     * Cette operation met a jour le temp de parcours en lui ajoutant le temp de parcours du path passe en parametre.
+     * Add an entire path to the current path.
+     * <p>
+     * Used especially for the tests.
      *
-     * @param path path a ajouter au path courant
-     *             Le depart du path doit étre identique a l'arrivée du path courant
-     * @throws RuntimeException si le depart du path passé en paramétre
-     *                          n'est pas identique a l'arrivée du path courant
+     * @param path Path to add
+     * @throws RuntimeException If the path provided is not compatible with the current path
      */
     public void addPath(Path path) {
         if (vectors.size() == 0 || getEnd() == path.getStart()) {
@@ -201,7 +198,7 @@ public class Path {
             timeToTravel += path.getTimeToTravel();
             end = path.getEnd();
         } else {
-            throw new RuntimeException("The troncon is not at the end of the path");
+            throw new RuntimeException("The vector is not at the end of the path");
         }
 
     }

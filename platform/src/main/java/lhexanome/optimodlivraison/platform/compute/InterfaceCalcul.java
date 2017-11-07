@@ -87,7 +87,7 @@ public class InterfaceCalcul {
 
         Map<Halt, ArrayList<Path>> graphe = simplifiedMap.getGraph();
 
-        warehouse = demande.getBeginning();
+        warehouse = demande.getWarehouse();
         start = demande.getStart();
 
         tour.setWarehouse(warehouse);
@@ -97,7 +97,7 @@ public class InterfaceCalcul {
 
         //sert à assigner chaque sommet à un index.
         ArrayList<Halt> listeSommets = new ArrayList<>();
-        listeSommets.add(demande.getBeginning());
+        listeSommets.add(demande.getWarehouse());
         listeSommets.addAll(demande.getDeliveries());
 
         MatriceAdjacence matrix = grapheToMatrix(graphe, nbSommets, listeSommets, demande);
@@ -170,7 +170,7 @@ public class InterfaceCalcul {
         Path[][] matriceTrajets = new Path[nbSommets][nbSommets];
 
         //entrepot
-        Halt entrepot = demande.getBeginning();
+        Halt entrepot = demande.getWarehouse();
         int inter1 = 0;
         for (Path trajet : graphe.get(entrepot)) {
             int inter2 = listeSommets.indexOf(trajet.getEnd());

@@ -109,8 +109,6 @@ public class DeliveryOrderController implements ControllerInterface {
                 mainController.notifyError(e.getMessage());
             }
         });
-
-        // TODO deliveryOrderPanel.setLoad(true);
         command.execute();
     }
 

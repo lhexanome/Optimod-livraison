@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 /**
- * Parser d'un document XML représentant une demande de livraison.
+ * Parse XML document representing a delivery order.
  */
 public class DeliveryOrderParser {
 
@@ -67,8 +67,8 @@ public class DeliveryOrderParser {
 
 
     /**
-     * Parse un document XML représentant une demande de livraison.
-     * Utilise le format suivant :
+     * Parse a document representing a road map.
+     * Use this following format :
      * {@code
      * <demandeDeLivraisons>
      * <entrepot adresse="1" heureDepart="8:0:0"/>
@@ -79,8 +79,8 @@ public class DeliveryOrderParser {
      *
      * @param rootElement Element racine
      * @param roadMap     RoadMap already initialized to bind X and Y
-     * @return Une demande de livraison
-     * @throws ParseDeliveryOrderException Si un problème a lieu lors du parsing
+     * @return A parsed delivery order
+     * @throws ParseDeliveryOrderException If unable to parse the delivery order
      */
     public DeliveryOrder parseDeliveryOrder(Element rootElement, RoadMap roadMap) throws ParseDeliveryOrderException {
         DeliveryOrder deliveryOrder = new DeliveryOrder();
@@ -119,12 +119,12 @@ public class DeliveryOrderParser {
     }
 
     /**
-     * Charge l'entrepôt et l'heure de départ.
+     * Load the warehouse with the starting time.
      *
-     * @param element       Element représentant l'entrepôt
-     * @param deliveryOrder Demande de livraison
+     * @param element       Warehouse XML element
+     * @param deliveryOrder Delivery order to complete
      * @param roadMap       RoadMap used to find intersection
-     * @throws ParseDeliveryOrderException Si la structure est mauvaise
+     * @throws ParseDeliveryOrderException If the XML is malformed
      */
     public void loadWarehouse(Element element, DeliveryOrder deliveryOrder, RoadMap roadMap)
             throws ParseDeliveryOrderException {
@@ -140,7 +140,7 @@ public class DeliveryOrderParser {
         try {
             Date date = DateUtil.parseDate("H:m:s", startTime);
 
-            deliveryOrder.setBeginning(warehouse);
+            deliveryOrder.setWarehouse(warehouse);
             deliveryOrder.setStart(date);
 
         } catch (ParseException e) {
@@ -149,12 +149,12 @@ public class DeliveryOrderParser {
     }
 
     /**
-     * Charge les livraisons.
+     * Load deliveries from XML.
      *
-     * @param deliveries    Liste d'élements représentant des livraisons
-     * @param deliveryOrder Demande de livraison
+     * @param deliveries    XML elements representing delivery
+     * @param deliveryOrder Delivery order to complete
      * @param roadMap       RoadMap used to find intersection
-     * @throws ParseDeliveryOrderException Si la structure est mauvaise
+     * @throws ParseDeliveryOrderException If the XML is malformed
      */
     public void loadDeliveries(List<Element> deliveries, DeliveryOrder deliveryOrder, RoadMap roadMap)
             throws ParseDeliveryOrderException {
