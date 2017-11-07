@@ -8,7 +8,6 @@ import lhexanome.optimodlivraison.platform.models.RoadMap;
 import lhexanome.optimodlivraison.platform.models.Tour;
 import lhexanome.optimodlivraison.platform.models.Vector;
 import lhexanome.optimodlivraison.platform.models.Warehouse;
-import lhexanome.optimodlivraison.platform.utils.DateUtil;
 import org.junit.jupiter.api.Test;
 
 import java.util.Date;
@@ -57,7 +56,7 @@ class InterfaceCalculTest {
         roadMap.addVector(t6);
         roadMap.addVector(t7);
         Warehouse e = new Warehouse(A);
-        demande.setBeginning(e);
+        demande.setWarehouse(e);
         demande.addDelivery(new Delivery(D, 0));
         demande.addDelivery(new Delivery(F, 0));
         demande.setStart(new Date());

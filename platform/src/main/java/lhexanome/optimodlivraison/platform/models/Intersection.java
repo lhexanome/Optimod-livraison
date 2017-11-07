@@ -5,23 +5,23 @@ import lhexanome.optimodlivraison.platform.compute.IntersectionWrapper;
 import java.util.ArrayList;
 
 /**
- * Représente un point ou noeud sur la carte (identifié).
+ * Represent a point on the map.
  */
 public class Intersection {
 
     /**
-     * Coordonnée X du point.
+     * X coordinate.
      */
     private int x;
 
     /**
-     * Coordonnée Y du point.
+     * Y coordinate.
      */
     private int y;
 
     /**
-     * Identifiant du point.
-     * Récupérer depuis le XML
+     * Id of the intersection.
+     * From the provided map
      */
     private Long id;
 
@@ -29,21 +29,21 @@ public class Intersection {
      * list of intersections where vectors leaving
      * this intersection arrive.
      */
-    private ArrayList<Intersection> successeurs = new ArrayList<>();
+    private ArrayList<Intersection> successors = new ArrayList<>();
 
 
     /**
-     * wrapper reference.
+     * Wrapper reference.
      * used to remove the need of O(n) researches in the compute module
      */
     private IntersectionWrapper wrapper = null;
 
     /**
-     * Intersection conctructeur.
+     * Constructor.
      *
-     * @param id Identifiant du point.
-     * @param x  Coordonnée X
-     * @param y  Coordonnée Y
+     * @param id Point id
+     * @param x  X coordinate
+     * @param y  Y coordinate
      * @see Intersection#id
      * @see Intersection#x
      * @see Intersection#y
@@ -55,16 +55,16 @@ public class Intersection {
     }
 
     /**
-     * Constructeur.
+     * Constructor.
      *
-     * @param id Identifiant du point
+     * @param id Point id
      */
     public Intersection(Long id) {
         this.id = id;
     }
 
     /**
-     * Renvoie X.
+     * X getter.
      *
      * @return X
      */
@@ -73,16 +73,16 @@ public class Intersection {
     }
 
     /**
-     * Définie X.
+     * X setter.
      *
-     * @param x Coordonnée X
+     * @param x X coordinate
      */
     public void setX(int x) {
         this.x = x;
     }
 
     /**
-     * Renvoie Y.
+     * Y getter.
      *
      * @return Y
      */
@@ -91,44 +91,44 @@ public class Intersection {
     }
 
     /**
-     * Définie Y.
+     * Y setter.
      *
-     * @param y Coordonnée Y
+     * @param y Y coordinate
      */
     public void setY(int y) {
         this.y = y;
     }
 
     /**
-     * Renvoie l'identifiant.
+     * ID getter.
      *
-     * @return un identifiant supposé unique
+     * @return A supposed unique ID
      */
     public long getId() {
         return id;
     }
 
     /**
-     * Définie l'identifiant.
+     * ID setter.
      *
-     * @param id Identifiant supposé unique
+     * @param id Supposed unique ID
      */
     public void setId(long id) {
         this.id = id;
     }
 
     /**
-     * function adding the end of a vector to the successeurs
+     * Function adding the end of a vector to the successors
      * when a vector is added to the roadmap.
      *
      * @param vector vector added
      */
     public void addTronconSortant(Vector vector) {
-        successeurs.add(vector.getDestination());
+        successors.add(vector.getDestination());
     }
 
     /**
-     * getter for wrapper.
+     * Getter for wrapper.
      *
      * @return wrapper
      */

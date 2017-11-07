@@ -49,10 +49,10 @@ public class VectorTest {
         //With
 
         //When
-        vectorTested.setNameStreet("Rue de la liberte");
+        vectorTested.setStreetName("Rue de la liberte");
 
         //Then
-        assertEquals("Rue de la liberte", vectorTested.getNameStreet());
+        assertEquals("Rue de la liberte", vectorTested.getStreetName());
 
     }
 

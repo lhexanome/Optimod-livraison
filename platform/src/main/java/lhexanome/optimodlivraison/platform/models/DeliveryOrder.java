@@ -23,7 +23,7 @@ public class DeliveryOrder {
      * Warehouse.
      * Start of a tour.
      */
-    private Warehouse beginning;
+    private Warehouse warehouse;
 
     /**
      * Default constructor.
@@ -51,38 +51,38 @@ public class DeliveryOrder {
     }
 
     /**
-     * Renvoie la date de départ du livreur.
+     * Start time getter.
      *
-     * @return Date de départ
+     * @return Departure time
      */
     public Date getStart() {
         return start;
     }
 
     /**
-     * Permet de régler la date des livraisons.
+     * Start time setter.
      *
-     * @param start Date de départ
+     * @param start Departure time
      */
     public void setStart(Date start) {
         this.start = start;
     }
 
     /**
-     * Renvoie l'entrepot de départ du livreur.
+     * Warehouse getter.
      *
-     * @return entrepot de départ
+     * @return Warehouse
      */
-    public Warehouse getBeginning() {
-        return beginning;
+    public Warehouse getWarehouse() {
+        return warehouse;
     }
 
     /**
-     * Règle la position de départ du livreur.
+     * Warehouse setter.
      *
-     * @param beginning entrepot de départ
+     * @param warehouse Warehouse
      */
-    public void setBeginning(Warehouse beginning) {
-        this.beginning = beginning;
+    public void setWarehouse(Warehouse warehouse) {
+        this.warehouse = warehouse;
     }
 }

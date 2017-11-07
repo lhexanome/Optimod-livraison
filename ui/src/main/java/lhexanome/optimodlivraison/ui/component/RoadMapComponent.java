@@ -347,7 +347,6 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
         rescale();
 
         Graphics2D g2 = (Graphics2D) g;
-        // FIXME Paint gui after data ?
         paintGUI(g2);
 
         if (roadMap != null) {
@@ -403,7 +402,7 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
                 }
         );
         if (deliveryOrder != null) {
-            paintComponent(g2, deliveryOrder.getBeginning());
+            paintComponent(g2, deliveryOrder.getWarehouse());
         }
         int index = 0;
         for (Delivery delivery : tour.getOrderedDeliveryVector()) {
@@ -439,7 +438,7 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
      * @param order DeliveryOrder
      */
     private void paintComponent(Graphics2D g2, DeliveryOrder order) {
-        paintComponent(g2, order.getBeginning());
+        paintComponent(g2, order.getWarehouse());
 
         order.getDeliveries().forEach(delivery ->
                 paintComponent(g2, delivery, MarkerColor.ORANGE)
@@ -518,16 +517,11 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
      * @param map RoadMap
      */
     public void setRoadMap(RoadMap map) {
-       /* if (map != null) {
-            //TODO remove wacher
-        }*/
-
         this.roadMap = map;
         this.tour = null;
         this.deliveryOrder = null;
         this.zoom = 1;
         repaint();
-        //TODO add wacher
     }
 
     /**
@@ -537,15 +531,9 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
      * @param deliveryOrder DeliveryOrder
      */
     public void setDeliveryOrder(DeliveryOrder deliveryOrder) {
-       /* if (deliveryOrder != null) {
-            //TODO remove wacher
-        }*/
-
         this.deliveryOrder = deliveryOrder;
         this.tour = null;
-
         repaint();
-        //TODO add wacher
     }
 
     /**
@@ -555,14 +543,8 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
      * @param tour Tour
      */
     public void setTour(Tour tour) {
-        /*if (tour != null) {
-            //TODO remove wacher
-        }*/
-
         this.tour = tour;
         repaint();
-
-        //TODO add wacher
     }
 
     /**
@@ -649,9 +631,6 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
     private int getXFromIntersection(Intersection intersection) {
         // Here we use Y because the map is reversed !
         return (int) (offsetY + intersection.getY() * scaleY);
-        /*
-        float vOffsetX = offsetX + getSize().width / 2;
-        return (int) (intersection.getY() * scaleY + vOffsetX);*/
     }
 
     /**
@@ -664,9 +643,6 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
         // Here we use X because the map is reversed !
         // We also need to invert the X axis
         return (int) (windowSize - (offsetX + intersection.getX() * scaleX));
-        /*
-        float vOffsetY = -this.offsetY + getSize().height / 2;
-        return (int) (-intersection.getX() * scaleX + vOffsetY);*/
     }
 
     /**
@@ -684,7 +660,6 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
         for (Intersection intersection : intersections) {
             int xIntersection = getXFromIntersection(intersection);
             int yIntersection = getYFromIntersection(intersection);
-            // TODO use a common distance function
             double distanceIntersectionToMouse =
                     distance(xIntersection, yIntersection, xMouse, yMouse);
             if (distanceIntersectionToMouse <= minimalDistance) {

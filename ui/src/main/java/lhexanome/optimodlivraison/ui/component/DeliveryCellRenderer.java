@@ -154,8 +154,8 @@ public class DeliveryCellRenderer implements ListCellRenderer<Delivery> {
 
             Set<String> streetNames = new HashSet<>();
 
-            for (Vector vector : roadMap.getTronconsFromIntersection(value.getIntersection())) {
-                streetNames.add(vector.getNameStreet());
+            for (Vector vector : roadMap.getVectorsFromIntersection(value.getIntersection())) {
+                streetNames.add(vector.getStreetName());
             }
             for (String streetName : streetNames) {
 
