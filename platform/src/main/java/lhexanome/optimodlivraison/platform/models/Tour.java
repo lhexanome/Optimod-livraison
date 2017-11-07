@@ -159,4 +159,14 @@ public class Tour extends Observable {
                 .map(halt -> (Delivery) halt)
                 .collect(Collectors.toCollection(Vector::new));
     }
+
+    /**
+     * Force the notifications to observers.
+     * Computing is made by an external class, so it doesn't have access to
+     * {@link Observable#setChanged()} method.
+     */
+    public void forceNotifyObservers() {
+        setChanged();
+        notifyObservers();
+    }
 }

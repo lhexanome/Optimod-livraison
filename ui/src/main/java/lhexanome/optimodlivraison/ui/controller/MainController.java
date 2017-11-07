@@ -212,4 +212,11 @@ public class MainController implements ControllerInterface {
     public void setSelectedDelivery(Delivery delivery) {
         roadMapController.onDeliverySelected(delivery);
     }
+
+    /**
+     * Repaint all components.
+     */
+    public void repaintAll() {
+        mainWindow.getFrame().repaint();
+    }
 }
