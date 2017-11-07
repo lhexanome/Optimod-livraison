@@ -120,7 +120,7 @@ public class InterfaceCalcul {
 
 
         LOGGER.info("TSP finished");
-        return new Tour(warehouse, start, time, deliveries);
+        return tour;
 
     }
 
