@@ -146,6 +146,21 @@ public class SimplifiedMap {
     }
 
     /**
+     * fonction qui renvoie le
+     * plus court chemin de start a end.
+     *
+     * @param start intersection de depart
+     * @param end  arrivee
+     * @return liste des plus courts chemins
+     */
+    public Path shortestPathList(Halt start, Halt end) {
+        Set<Halt> ends = new HashSet<>();
+        ArrayList<Path> sorties = shortestPathList(start, ends);
+        //il y a un seul trajet normalement
+        return sorties.get(0);
+    }
+
+    /**
      * function building path from the results of Dijkstra's algorithm.
      *
      * @param start       Path's starting point
