@@ -16,6 +16,10 @@ import java.util.logging.Logger;
  */
 public class AddDeliveryCommand extends UndoableCommand {
 
+    /**
+     * New delivery list.
+     * Contain all the added deliveries
+     */
     private List<Delivery> newDeliveryList;
 
     /**
@@ -53,7 +57,7 @@ public class AddDeliveryCommand extends UndoableCommand {
 
     private SimplifiedMap simplifiedMap;
     /**
-     *  removed path
+     * removed path
      */
 
     private Path removedPath;
@@ -63,6 +67,7 @@ public class AddDeliveryCommand extends UndoableCommand {
      * Constructor.
      *
      * @param tour          Tour
+     * @param roadMap       Road map
      * @param deliveryToAdd Delivery to add
      * @param index         Index where to add the delivery
      */
@@ -73,9 +78,7 @@ public class AddDeliveryCommand extends UndoableCommand {
         this.deliveryToAdd = deliveryToAdd;
         this.tour = tour;
         this.roadMap = roadMap;
-        SimplifiedMap simplifiedMap;
-
-        //this.interfaceCalcul = new InterfaceCalcul();
+        this.simplifiedMap = new SimplifiedMap(roadMap);
     }
 
     /**
@@ -86,9 +89,9 @@ public class AddDeliveryCommand extends UndoableCommand {
         Halt previousHalt = tour.getPaths().get(index).getStart();
         Halt afterHalt = tour.getPaths().get(index).getEnd();
         removedPath = tour.getPaths().remove(index);
-        tour.getPaths().add(index,simplifiedMap.shortestPathList(previousHalt, deliveryToAdd));
-        tour.getPaths().add(index+1,simplifiedMap.shortestPathList(deliveryToAdd, afterHalt));
-        //TODO tour.notifyObservers() à rajouter.
+        tour.getPaths().add(index, simplifiedMap.shortestPathList(previousHalt, deliveryToAdd));
+        tour.getPaths().add(index + 1, simplifiedMap.shortestPathList(deliveryToAdd, afterHalt));
+        tour.forceNotifyObservers();
     }
 
     /**
@@ -99,6 +102,7 @@ public class AddDeliveryCommand extends UndoableCommand {
         tour.getPaths().remove(index);
         tour.getPaths().remove(index);
         tour.getPaths().add(index, removedPath);
+        tour.forceNotifyObservers();
     }
 
     /**

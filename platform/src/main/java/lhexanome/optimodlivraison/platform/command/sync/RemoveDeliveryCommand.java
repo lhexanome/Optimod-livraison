@@ -3,10 +3,9 @@ package lhexanome.optimodlivraison.platform.command.sync;
 import lhexanome.optimodlivraison.platform.compute.SimplifiedMap;
 import lhexanome.optimodlivraison.platform.models.Delivery;
 import lhexanome.optimodlivraison.platform.models.Path;
+import lhexanome.optimodlivraison.platform.models.RoadMap;
 import lhexanome.optimodlivraison.platform.models.Tour;
 
-import javax.swing.text.html.HTMLDocument;
-import java.util.Iterator;
 import java.util.logging.Logger;
 
 /**
@@ -25,6 +24,11 @@ public class RemoveDeliveryCommand extends UndoableCommand {
     private final Tour tour;
 
     /**
+     * RoadMap.
+     */
+    private final RoadMap roadMap;
+
+    /**
      * Delivery to remove.
      */
     private final Delivery selectedValue;
@@ -41,11 +45,14 @@ public class RemoveDeliveryCommand extends UndoableCommand {
      * Constructor.
      *
      * @param tour          Tour
+     * @param roadMap       RoadMap
      * @param selectedValue Delivery to remove
      */
-    public RemoveDeliveryCommand(Tour tour, Delivery selectedValue) {
+    public RemoveDeliveryCommand(Tour tour, RoadMap roadMap, Delivery selectedValue) {
         this.tour = tour;
+        this.roadMap = roadMap;
         this.selectedValue = selectedValue;
+        this.simplifiedMap = new SimplifiedMap(roadMap);
     }
 
     /**
@@ -54,16 +61,18 @@ public class RemoveDeliveryCommand extends UndoableCommand {
     @Override
     protected void doExecute() {
 
-        for (Path p:tour.getPaths()) {
-            if(p.getEnd()==selectedValue){
+        for (Path p : tour.getPaths()) {
+            if (p.getEnd() == selectedValue) {
                 break;
             }
             compteur++;
         }
 
-        tour.getPaths().add(compteur, simplifiedMap.shortestPathList(tour.getPaths().get(compteur).getStart(), tour.getPaths().get(compteur+1).getEnd()));
-       previewRemovedPath =  tour.getPaths().remove(compteur+1);
-        afterRemovedPath = tour.getPaths().remove(compteur+1);
+        tour.getPaths().add(compteur, simplifiedMap.shortestPathList(tour.getPaths().get(compteur).getStart(), tour.getPaths().get(compteur + 1).getEnd()));
+        previewRemovedPath = tour.getPaths().remove(compteur + 1);
+        afterRemovedPath = tour.getPaths().remove(compteur + 1);
+
+        tour.forceNotifyObservers();
     }
 
     /**
@@ -73,7 +82,8 @@ public class RemoveDeliveryCommand extends UndoableCommand {
     protected void doUndo() {
         tour.getPaths().remove(compteur);
         tour.getPaths().add(compteur, previewRemovedPath);
-        tour.getPaths().add(compteur+1, afterRemovedPath);
+        tour.getPaths().add(compteur + 1, afterRemovedPath);
+        tour.forceNotifyObservers();
     }
 
     /**

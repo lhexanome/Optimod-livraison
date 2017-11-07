@@ -152,7 +152,7 @@ public class SimplifiedMap {
     }
 
     /**
-     * fonction statique qui renvoie le
+     * Fonction statique qui renvoie le
      * plus court chemin de start a end.
      *
      * @param start intersection de depart
@@ -161,21 +161,7 @@ public class SimplifiedMap {
      */
     public Path shortestPathList(Halt start, Halt end) {
         Set<Halt> ends = new HashSet<>();
-        ArrayList<Path> sorties = shortestPathList(start, ends);
-        //il y a un seul trajet normalement
-        return sorties.get(0);
-    }
-
-    /**
-     * fonction qui renvoie le
-     * plus court chemin de start a end.
-     *
-     * @param start intersection de depart
-     * @param end  arrivee
-     * @return liste des plus courts chemins
-     */
-    public Path shortestPathList(Halt start, Halt end) {
-        Set<Halt> ends = new HashSet<>();
+        ends.add(end);
         ArrayList<Path> sorties = shortestPathList(start, ends);
         //il y a un seul trajet normalement
         return sorties.get(0);

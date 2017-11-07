@@ -201,7 +201,7 @@ public class TourEditorController implements ControllerInterface {
             return;
         }
 
-        RemoveDeliveryCommand command = new RemoveDeliveryCommand(tour, selectedValue);
+        RemoveDeliveryCommand command = new RemoveDeliveryCommand(tour, roadMap, selectedValue);
         editionInvoker.storeAndExecute(command);
     }
 
@@ -238,7 +238,7 @@ public class TourEditorController implements ControllerInterface {
      * @param newIndex New index
      */
     public void moveDelivery(Delivery delivery, int newIndex) {
-        MoveDeliveryCommand command = new MoveDeliveryCommand(tour, delivery, newIndex);
+        MoveDeliveryCommand command = new MoveDeliveryCommand(tour, roadMap, delivery, newIndex);
         editionInvoker.storeAndExecute(command);
     }
 
