@@ -85,8 +85,7 @@ public class SimplifiedMap {
                 graph.put(s, listePaths);
             }
         } else {
-            LOGGER.warning(MessageFormat.format("can't compute simplified graph, no delivery order", ""));
-
+            LOGGER.warning("Can't compute simplified graph, no delivery order");
         }
     }
 
