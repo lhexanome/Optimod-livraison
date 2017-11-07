@@ -10,7 +10,7 @@
       <scrollpane id="7a346">
         <constraints>
           <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-          <gridbag top="5" left="10" bottom="5" right="10" weightx="0.1" weighty="0.8"/>
+          <gridbag top="5" left="10" bottom="5" right="10" weightx="1.0" weighty="1.0" ipadx="10"/>
         </constraints>
         <properties>
           <horizontalScrollBarPolicy value="30"/>
@@ -29,17 +29,19 @@
       </scrollpane>
       <component id="1e2bd" class="javax.swing.JButton" binding="loadDeliveryOrderButton">
         <constraints>
-          <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="8" fill="2" indent="0" use-parent-layout="false"/>
-          <gridbag top="5" left="10" bottom="5" right="0" weightx="0.0" weighty="0.0" ipadx="5" ipady="5"/>
+          <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+          <gridbag top="5" left="50" bottom="5" right="50" weightx="1.0" weighty="0.0" ipadx="5" ipady="5"/>
         </constraints>
         <properties>
+          <hideActionText value="false"/>
+          <horizontalTextPosition value="0"/>
           <text value="Charger demande de livraison"/>
         </properties>
       </component>
       <grid id="11aab" layout-manager="BorderLayout" hgap="0" vgap="0">
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-          <gridbag weightx="0.0" weighty="0.1"/>
+          <gridbag weightx="0.0" weighty="0.0"/>
         </constraints>
         <properties/>
         <border type="none"/>
