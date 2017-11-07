@@ -102,11 +102,16 @@ public class InterfaceCalcul {
             ArrayList<Path> deliveries = new ArrayList<>(nbSommets);
 
             Path[][] matriceTrajets = matrix.getMatricePaths();
-            for (int i = 0; i < nbSommets; i++) {
-                int indexSommet = tsp.getMeilleureSolution(i);
-                Path trajet = matriceTrajets[indexSommet][(indexSommet + 1) % nbSommets];
+            int indexDepart, indexArrivee;
+            indexDepart = tsp.getMeilleureSolution(0);
+            for (int i = 1; i < nbSommets; i++) {
+                indexArrivee = tsp.getMeilleureSolution(i);
+                Path trajet = matriceTrajets[indexDepart][indexArrivee];
                 deliveries.add(trajet);
+                indexDepart = indexArrivee;
             }
+            deliveries.add(matriceTrajets[indexDepart][tsp.getMeilleureSolution(0)]); //retour entrepot
+
             demande.getBeginning().setEstimateDate(datesEstimees[0]);
             int i = 0;
             for (Halt arret : graphe.keySet()) {

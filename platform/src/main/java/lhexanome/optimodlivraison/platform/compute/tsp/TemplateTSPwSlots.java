@@ -86,7 +86,7 @@ public abstract class TemplateTSPwSlots implements TSPwSlots {
             coutVus += cout[sommetCrt][0];
             Date prochainDepart = new Date();
             prochainDepart.setTime(depart.getTime() + cout[sommetCrt][0] * 1000);
-            datesEstimees[sommetCrt] = prochainDepart;
+            datesEstimees[0] = prochainDepart;
             if (coutVus < coutMeilleureSolution) { // on a trouve une solution meilleure que meilleureSolution
                 vus.toArray(meilleureSolution);
                 coutMeilleureSolution = coutVus;
