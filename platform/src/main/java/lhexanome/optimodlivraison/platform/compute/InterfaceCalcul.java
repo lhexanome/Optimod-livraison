@@ -63,7 +63,7 @@ public class InterfaceCalcul {
      * Empty constructor.
      */
     public InterfaceCalcul() {
-
+        this.tour = new Tour();
     }
 
     /**
