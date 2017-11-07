@@ -1,6 +1,8 @@
 package lhexanome.optimodlivraison.platform.compute.tsp;
 
+import lhexanome.optimodlivraison.platform.compute.MatriceAdjacence;
 import lhexanome.optimodlivraison.platform.models.TimeSlot;
+import lhexanome.optimodlivraison.platform.models.Tour;
 
 import java.util.Date;
 
@@ -12,9 +14,17 @@ public interface TSPwSlots {
      */
     public Boolean getTempsLimiteAtteint();
 
+
+    /**
+     * init the tsp data structures.
+     * @param nbSommets number of nodes
+     */
+    public void init(int nbSommets);
     /**
      * Cherche un circuit de duree minimale passant par chaque sommet (compris entre 0 et nbSommets-1)
      *
+     * @param tour tour to update
+     * @param matrix storage for the data used in the tsp, it's used to compute back the results
      * @param tpsLimite : limite (en millisecondes) sur le temps d'execution de chercheSolution
      * @param nbSommets : nombre de sommets du graphe
      * @param cout      : cout[i][j] = duree pour aller de i a j, avec 0 <= i < nbSommets et 0 <= j < nbSommets
@@ -22,7 +32,7 @@ public interface TSPwSlots {
      * @param depart     : date de depart de la recherche
      * @param duree     : duree[i] = duree pour visiter le sommet i, avec 0 <= i < nbSommets
      */
-    public void chercheSolution(int tpsLimite, int nbSommets, int[][] cout, TimeSlot[] plages, Date depart, int[] duree);
+    public void chercheSolution(Tour tour, MatriceAdjacence matrix, int tpsLimite, int nbSommets, int[][] cout, TimeSlot[] plages, Date depart, int[] duree);
 
     /**
      * @param i
