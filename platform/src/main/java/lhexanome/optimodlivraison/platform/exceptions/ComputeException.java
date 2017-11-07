@@ -1,7 +1,7 @@
 package lhexanome.optimodlivraison.platform.exceptions;
 
 /**
- * Exception lancée quand il y a un problème dans ComputeFacade.
+ * Exception thrown when a unable to compute a graph.
  */
 public class ComputeException extends Exception {
 

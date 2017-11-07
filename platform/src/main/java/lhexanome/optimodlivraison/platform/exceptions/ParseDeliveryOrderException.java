@@ -1,7 +1,7 @@
 package lhexanome.optimodlivraison.platform.exceptions;
 
 /**
- * Exception lancée lors du parsing d'une demande de livraison.
+ * Exception thrown when unable to parse a delivery order.
  */
 public class ParseDeliveryOrderException extends Exception {
     /**
