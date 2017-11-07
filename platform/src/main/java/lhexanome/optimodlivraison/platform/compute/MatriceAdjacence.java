@@ -4,6 +4,7 @@ import lhexanome.optimodlivraison.platform.models.Halt;
 import lhexanome.optimodlivraison.platform.models.Path;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Classe conteneur regroupant une matrice de coûts, une matrice de trajets,
@@ -61,5 +62,25 @@ public class MatriceAdjacence {
      */
     public int[][] getMatriceCouts() {
         return matriceCouts;
+    }
+
+
+
+    /**
+     * initialise matrix with the graph from SimplifiedMap.
+     *
+     * @param graph graph for the tsp.
+     */
+    public void initMatrix(Map<Halt, ArrayList<Path>> graph) {
+        int inter1;
+        for (Halt arret : graph.keySet()) {
+            inter1 = listeSommets.indexOf(arret);
+            for (Path trajet : graph.get(arret)) {
+                int inter2 = listeSommets.indexOf(trajet.getEnd());
+                int cout = trajet.getTimeToTravel();
+                matriceCouts[inter1][inter2] = cout;
+                matricePaths[inter1][inter2] = trajet;
+            }
+        }
     }
 }
