@@ -95,6 +95,8 @@ public class MainPanel extends AbstractPanel {
         gbc.gridx = 1;
         wrapperPanel.add(roadMapPanel, gbc);
 
+        gbc.weightx = 0;
+        gbc.weighty = 0;
         gbc.gridy = 1;
         wrapperPanel.add(currentInterectionDisplayPanel, gbc);
 
