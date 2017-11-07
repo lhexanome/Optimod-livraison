@@ -1,5 +1,6 @@
 package lhexanome.optimodlivraison.platform.compute;
 
+import lhexanome.optimodlivraison.platform.exceptions.ComputeSlotsException;
 import lhexanome.optimodlivraison.platform.models.Delivery;
 import lhexanome.optimodlivraison.platform.models.DeliveryOrder;
 import lhexanome.optimodlivraison.platform.models.Intersection;
@@ -7,6 +8,7 @@ import lhexanome.optimodlivraison.platform.models.RoadMap;
 import lhexanome.optimodlivraison.platform.models.Tour;
 import lhexanome.optimodlivraison.platform.models.Vector;
 import lhexanome.optimodlivraison.platform.models.Warehouse;
+import lhexanome.optimodlivraison.platform.utils.DateUtil;
 import org.junit.jupiter.api.Test;
 
 import java.util.Date;
@@ -58,9 +60,15 @@ class InterfaceCalculTest {
         demande.setBeginning(e);
         demande.addDelivery(new Delivery(D, 0));
         demande.addDelivery(new Delivery(F, 0));
+        demande.setStart(new Date());
         SimplifiedMap simplifiedMap = ic.computeSimplifiedRoadMap(roadMap, demande);
-        Tour tour = ic.computeTour(simplifiedMap, demande,TspTypes.HEURISTICS_1,false);
-        Tour tourExpected = ic.computeTour(simplifiedMap, demande,TspTypes.NO_HEURISTICS,false);
+       try {
+           Tour tour = ic.computeTour(simplifiedMap, demande,TspTypes.HEURISTICS_1);
+           Tour tourExpected = ic.computeTour(simplifiedMap, demande,TspTypes.NO_HEURISTICS);
+
+       } catch (ComputeSlotsException e1) {
+           e1.printStackTrace();
+       }
         //assertEquals(tourExpected,tour);
     }
 

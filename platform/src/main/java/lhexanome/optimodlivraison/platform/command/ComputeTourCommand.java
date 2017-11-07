@@ -89,7 +89,7 @@ public class ComputeTourCommand extends SwingWorker<Void, Tour> implements Obser
 
             LOGGER.info("Simplified roadMap computed");
 
-            interfaceCalcul.computeTour(simplifiedMap, deliveryOrder, TspTypes.HEURISTICS_1, true);
+            interfaceCalcul.computeTour(simplifiedMap, deliveryOrder, TspTypes.HEURISTICS_1);
 
             LOGGER.warning("Tour computed");
         } catch (Exception e) {
