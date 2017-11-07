@@ -32,44 +32,18 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
      * max distance for delivery selection.
      */
     private static final double CLOSEST_DELIVERY_THRESHOLD = 30.0;
-
-    /**
-     * color of a marker.
-     */
-    public enum MarkerColor {
-        /**
-         * blue color.
-         */
-        BLUE,
-        /**
-         * green color.
-         */
-        GREEN,
-        /**
-         * red color.
-         */
-        RED,
-        /**
-         * orange color.
-         */
-        ORANGE
-    }
-
     /**
      * A distance greater than any other one during execution.
      */
     private static final double MAX_DISTANCE = Double.MAX_VALUE;
-
     /**
      * Logger.
      */
     private static final Logger LOGGER = Logger.getLogger(RoadMapComponent.class.getName());
-
     /**
      * Offset when the user drag the map.
      */
     private static final int PAN_OFFSET = 2;
-
     /**
      * X offset marker red.
      */
@@ -110,96 +84,75 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
      * Tour vector color.
      */
     private static final Color TOUR_VECTOR_COLOR = new Color(245, 124, 0);
-
     /**
      * RoadMap constructor.
      * Load images from jar file.
      */
     private static final double IMAGE_SCALE = 0.5;
-
     /**
      * Max zoom level.
      */
     private static final int MAX_ZOOM_LEVEL = 7;
-
     /**
      * Marker red image.
      */
     private BufferedImage markerRed;
-
     /**
      * Marker orange image.
      */
     private BufferedImage markerOrange;
-
     /**
      * Marker green image.
      */
     private BufferedImage markerGreen;
-
     /**
      * Marker blue image.
      */
     private BufferedImage markerBlue;
-
     /**
      * Compass image.
      */
     private BufferedImage compass;
-
-
     /**
      * Offset values.
      */
     private float scaleX = 1f, scaleY = 1f, offsetX = 0, offsetY = 0, mouseOffsetX = 0, mouseOffsetY = 0;
-
     /**
      * RoadMap to display.
      */
     private RoadMap roadMap;
-
     /**
      * Delivery order to display.
      */
     private DeliveryOrder deliveryOrder;
-
     /**
      * Tour to display.
      */
     private Tour tour;
-
-
     /**
      * Level of zoom.
      */
     private int zoom = 1;
-
     /**
      * x position of the mouse when the user zoom or dezoom.
      */
     private float zoomMouseX;
-
     /**
      * y position of the mouse when the user zoom or dezoom.
      */
     private float zoomMouseY;
-
-
     /**
      * RoadMap controller.
      */
     private RoadMapController roadMapController;
-
     /**
      * Screen size.
      */
     private float windowSize;
-
     /**
      * X coordinate when the user pressed the mouse.
      */
     private int panStartX;
-
     /**
      * Y coordinate when the user pressed the mouse.
      */
@@ -349,7 +302,6 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
         return new Dimension(400, 400);
     }
 
-
     /**
      * Called by swing, repaint all the component.
      * <p>
@@ -394,7 +346,6 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
     private void paintGUI(Graphics2D g2) {
         g2.drawImage(compass, COMPASS_OFFSET_X, COMPASS_OFFSET_Y, null);
     }
-
 
     /**
      * Draw a map.
@@ -607,7 +558,6 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
 
     }
 
-
     @Override
     public void mouseDragged(MouseEvent e) {
         mouseOffsetY += e.getX() - panStartY;
@@ -721,5 +671,27 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
             closestDelivery = null;
         }
         return closestDelivery;
+    }
+
+    /**
+     * color of a marker.
+     */
+    public enum MarkerColor {
+        /**
+         * blue color.
+         */
+        BLUE,
+        /**
+         * green color.
+         */
+        GREEN,
+        /**
+         * red color.
+         */
+        RED,
+        /**
+         * orange color.
+         */
+        ORANGE
     }
 }

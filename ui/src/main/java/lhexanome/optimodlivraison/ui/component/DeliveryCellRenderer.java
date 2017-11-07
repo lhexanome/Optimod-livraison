@@ -29,22 +29,6 @@ public class DeliveryCellRenderer implements ListCellRenderer<Delivery> {
     private Context currentContext;
 
     /**
-     * Context of the renderer.
-     * Needed to adapt the display
-     */
-    public enum Context {
-        /**
-         * Display only delivery order fields.
-         */
-        DELIVERY_ORDER,
-
-        /**
-         * Display only tour fields.
-         */
-        TOUR
-    }
-
-    /**
      * Constructor.
      *
      * @param currentContext Current context.
@@ -226,5 +210,21 @@ public class DeliveryCellRenderer implements ListCellRenderer<Delivery> {
      */
     public void setRoadMap(RoadMap roadMap) {
         this.roadMap = roadMap;
+    }
+
+    /**
+     * Context of the renderer.
+     * Needed to adapt the display
+     */
+    public enum Context {
+        /**
+         * Display only delivery order fields.
+         */
+        DELIVERY_ORDER,
+
+        /**
+         * Display only tour fields.
+         */
+        TOUR
     }
 }

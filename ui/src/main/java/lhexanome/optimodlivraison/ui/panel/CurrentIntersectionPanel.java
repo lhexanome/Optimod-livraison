@@ -16,24 +16,21 @@ import java.util.Set;
 public class CurrentIntersectionPanel extends AbstractPanel {
 
     /**
+     * Presentation text for displayed informations.
+     */
+    private static final String PRESENTATION_TEXT = "Rues à proximité de l'intersection sélectionnée : ";
+    /**
      * Content panel.
      */
     private JPanel contentPane;
-
     /**
      * displayed intersection infos on the screen.
      */
     private JLabel displayedInformations;
-
     /**
      * Content panel.
      */
     private Intersection displayedIntersection;
-
-    /**
-     * Presentation text for displayed informations.
-     */
-    private static final String PRESENTATION_TEXT = "Rues à proximité de l'intersection sélectionnée : ";
 
     /**
      * Constructor.
