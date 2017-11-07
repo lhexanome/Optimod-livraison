@@ -1,6 +1,10 @@
 package lhexanome.optimodlivraison.ui.controller;
 
-import lhexanome.optimodlivraison.platform.models.*;
+import lhexanome.optimodlivraison.platform.models.Delivery;
+import lhexanome.optimodlivraison.platform.models.DeliveryOrder;
+import lhexanome.optimodlivraison.platform.models.Intersection;
+import lhexanome.optimodlivraison.platform.models.RoadMap;
+import lhexanome.optimodlivraison.platform.models.Tour;
 import lhexanome.optimodlivraison.ui.window.MainWindow;
 
 import javax.swing.*;
