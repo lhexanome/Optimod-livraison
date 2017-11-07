@@ -8,12 +8,14 @@ import lhexanome.optimodlivraison.platform.models.Tour;
 import lhexanome.optimodlivraison.ui.panel.TourPanel;
 
 import javax.swing.*;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.logging.Logger;
 
 /**
  * Tour controller.
  */
-public class TourController implements ControllerInterface, ComputeTourListener {
+public class TourController implements ControllerInterface, ComputeTourListener, Observer {
     /**
      * Logger.
      */
@@ -86,7 +88,7 @@ public class TourController implements ControllerInterface, ComputeTourListener 
             mainController.notifyError("Un calcul est déjà en cours !");
             return;
         }
-        computeTourCommand = new ComputeTourCommand(roadMap, deliveryOrder);
+        computeTourCommand = new ComputeTourCommand(roadMap, deliveryOrder, this);
         computeTourCommand.setListener(this);
         computeTourCommand.execute();
     }
@@ -132,15 +134,6 @@ public class TourController implements ControllerInterface, ComputeTourListener 
     }
 
     /**
-     * Called when the tour was improved.
-     * The listener must use the old reference.
-     */
-    @Override
-    public void onTourImproved() {
-        // TODO Update display
-    }
-
-    /**
      * Called at the end of the computing.
      */
     @Override
@@ -166,5 +159,21 @@ public class TourController implements ControllerInterface, ComputeTourListener 
     public void clearTour() {
         tour = null;
         tourPanel.setTour(null);
+    }
+
+    /**
+     * This method is called whenever the observed object is changed. An
+     * application calls an <tt>Observable</tt> object's
+     * <code>notifyObservers</code> method to have all the object's
+     * observers notified of the change.
+     *
+     * @param o   the observable object.
+     * @param arg an argument passed to the <code>notifyObservers</code>
+     */
+    @Override
+    public void update(Observable o, Object arg) {
+        if (o instanceof Tour) {
+            mainController.repaintAll();
+        }
     }
 }

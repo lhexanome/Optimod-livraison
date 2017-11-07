@@ -15,12 +15,6 @@ public interface ComputeTourListener {
     void onFirstTourComputed(Tour firstTour);
 
     /**
-     * Called when the tour was improved.
-     * The listener must use the old reference.
-     */
-    void onTourImproved();
-
-    /**
      * Called at the end of the computing.
      */
     void onComputingTourEnd();
