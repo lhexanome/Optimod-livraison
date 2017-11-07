@@ -9,7 +9,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.font.TextAttribute;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Delivery celle renderer.
@@ -25,22 +27,6 @@ public class DeliveryCellRenderer implements ListCellRenderer<Delivery> {
      * Current context.
      */
     private Context currentContext;
-
-    /**
-     * Context of the renderer.
-     * Needed to adapt the display
-     */
-    public enum Context {
-        /**
-         * Display only delivery order fields.
-         */
-        DELIVERY_ORDER,
-
-        /**
-         * Display only tour fields.
-         */
-        TOUR
-    }
 
     /**
      * Constructor.
@@ -161,9 +147,14 @@ public class DeliveryCellRenderer implements ListCellRenderer<Delivery> {
             GroupLayout.SequentialGroup addressGroupSeq = layout.createSequentialGroup();
             GroupLayout.ParallelGroup addressGroupParallel = layout.createParallelGroup();
 
-            for (Vector street : roadMap.getTronconsFromIntersection(value.getIntersection())) {
-                String streetName = street.getNameStreet();
-                if (streetName == null) streetName = "Rue sans nom";
+            Set<String> streetNames = new HashSet<>();
+
+            for (Vector vector : roadMap.getTronconsFromIntersection(value.getIntersection())) {
+                streetNames.add(vector.getNameStreet());
+            }
+            for (String streetName : streetNames) {
+
+                if (streetName.isEmpty()) streetName = "Rue sans nom";
 
                 JLabel line = new JLabel("- " + streetName);
 
@@ -219,5 +210,21 @@ public class DeliveryCellRenderer implements ListCellRenderer<Delivery> {
      */
     public void setRoadMap(RoadMap roadMap) {
         this.roadMap = roadMap;
+    }
+
+    /**
+     * Context of the renderer.
+     * Needed to adapt the display
+     */
+    public enum Context {
+        /**
+         * Display only delivery order fields.
+         */
+        DELIVERY_ORDER,
+
+        /**
+         * Display only tour fields.
+         */
+        TOUR
     }
 }

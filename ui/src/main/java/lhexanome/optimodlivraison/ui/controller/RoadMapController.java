@@ -86,18 +86,6 @@ public class RoadMapController implements ControllerInterface, ParseMapListener 
     }
 
     /**
-     * Road map setter.
-     * Called by the {@link #selectRoadMap(File)} function.
-     *
-     * @param roadMap new Road map
-     */
-    private void setRoadMap(RoadMap roadMap) {
-        this.roadMap = roadMap;
-        roadMapPanel.setRoadMap(roadMap);
-        mainController.setRoadMap(roadMap);
-    }
-
-    /**
      * Load a road map file.
      * Called by the main controller.
      *
@@ -145,6 +133,18 @@ public class RoadMapController implements ControllerInterface, ParseMapListener 
      */
     public RoadMap getRoadMap() {
         return roadMap;
+    }
+
+    /**
+     * Road map setter.
+     * Called by the {@link #selectRoadMap(File)} function.
+     *
+     * @param roadMap new Road map
+     */
+    private void setRoadMap(RoadMap roadMap) {
+        this.roadMap = roadMap;
+        roadMapPanel.setRoadMap(roadMap);
+        mainController.setRoadMap(roadMap);
     }
 
     /**
