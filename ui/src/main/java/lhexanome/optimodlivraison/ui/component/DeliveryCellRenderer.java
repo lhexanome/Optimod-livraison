@@ -4,11 +4,11 @@ import lhexanome.optimodlivraison.platform.models.Delivery;
 import lhexanome.optimodlivraison.platform.models.RoadMap;
 import lhexanome.optimodlivraison.platform.models.TimeSlot;
 import lhexanome.optimodlivraison.platform.models.Vector;
+import lhexanome.optimodlivraison.platform.utils.DateUtil;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.font.TextAttribute;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Map;
@@ -83,19 +83,19 @@ public class DeliveryCellRenderer implements ListCellRenderer<Delivery> {
             JLabel indexLabel = new JLabel("N° :");
             indexLabel.setFont(font.deriveFont(attributes));
             JLabel indexValue = new JLabel(String.valueOf(index));
-            SimpleDateFormat dateFormat = new SimpleDateFormat(" (HH:mm)");
-            JLabel passageValue = new JLabel(String.valueOf(dateFormat.format(value.getEstimateDate())));
+
+            JLabel estimateDateValue = new JLabel(DateUtil.formatDate(" (HH:mm)", value.getEstimateDate()));
 
             parallelGroup.addGroup(layout.createSequentialGroup()
                     .addComponent(indexLabel)
                     .addComponent(indexValue)
-                    .addComponent(passageValue)
+                    .addComponent(estimateDateValue)
             );
 
             sequentialGroup.addGroup(layout.createParallelGroup()
                     .addComponent(indexLabel)
                     .addComponent(indexValue)
-                    .addComponent(passageValue)
+                    .addComponent(estimateDateValue)
             );
         }
 
