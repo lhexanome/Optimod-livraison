@@ -1,7 +1,9 @@
 package lhexanome.optimodlivraison.platform.models;
 
+import java.awt.*;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Suite de tronçons connectés reliant deux points
@@ -33,6 +35,16 @@ public class Path {
     private Halt end;
 
     /**
+     * path color.
+     */
+    private Color color;
+
+    /**
+     * random color generator.
+     */
+    private Random randomColorGenerator;
+
+    /**
      * Constructor.
      *
      * @param begin starting halt.
@@ -43,6 +55,21 @@ public class Path {
         this.timeToTravel = 0;
         this.begin = begin;
         this.end = end;
+        this.randomColorGenerator = new Random();
+        this.color = randomColor();
+    }
+
+    /**
+     * Creates and returns a random color.
+     *
+     * @return a random-generated color.
+     */
+    @SuppressWarnings("checkstyle:magicnumber")
+    private Color randomColor() {
+        float r = randomColorGenerator.nextFloat() /*+ 0.5f*/;
+        float g = randomColorGenerator.nextFloat() / 2f /*+ 0.5f*/;
+        float b = randomColorGenerator.nextFloat() / 2f /*+ 0.5f*/;
+        return new Color(r, g, b);
     }
 
     /**
@@ -179,4 +206,12 @@ public class Path {
 
     }
 
+    /**
+     * Getter for color.
+     *
+     * @return the path's color.
+     */
+    public Color getColor() {
+        return color;
+    }
 }
