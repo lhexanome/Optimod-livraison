@@ -68,6 +68,13 @@ public class Tour extends Observable {
     }
 
     /**
+     * Empty constructor.
+     */
+    public Tour() {
+
+    }
+
+    /**
      * Renvoie la liste des livraisons.
      *
      * @return Deliveries

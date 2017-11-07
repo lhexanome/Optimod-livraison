@@ -1,7 +1,5 @@
 package lhexanome.optimodlivraison.platform.models;
 
-import java.util.Date;
-
 /**
  * Représente une livraison.
  * Contient une durée de livraison, une intersection et une plage horaire.
