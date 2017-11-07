@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
  */
 public class Tour extends Observable {
 
+
     /**
      * Ordered list of path.
      */

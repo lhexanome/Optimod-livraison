@@ -1,15 +1,22 @@
 package lhexanome.optimodlivraison.platform.command.sync;
 
 import lhexanome.optimodlivraison.platform.compute.InterfaceCalcul;
+import lhexanome.optimodlivraison.platform.compute.SimplifiedMap;
 import lhexanome.optimodlivraison.platform.models.Delivery;
+import lhexanome.optimodlivraison.platform.models.Halt;
+import lhexanome.optimodlivraison.platform.models.Path;
+import lhexanome.optimodlivraison.platform.models.RoadMap;
 import lhexanome.optimodlivraison.platform.models.Tour;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
  * Command to compute a tour.
  */
 public class AddDeliveryCommand extends UndoableCommand {
+
+    private List<Delivery> newDeliveryList;
 
     /**
      * Logger.
@@ -35,6 +42,21 @@ public class AddDeliveryCommand extends UndoableCommand {
      * Compute interface.
      */
     private InterfaceCalcul interfaceCalcul;
+    /**
+     * RoadMap
+     */
+
+    private RoadMap roadMap;
+    /**
+     * SimplifiedMap
+     */
+
+    private SimplifiedMap simplifiedMap;
+    /**
+     *  removed path
+     */
+
+    private Path removedPath;
 
 
     /**
@@ -44,12 +66,14 @@ public class AddDeliveryCommand extends UndoableCommand {
      * @param deliveryToAdd Delivery to add
      * @param index         Index where to add the delivery
      */
-    public AddDeliveryCommand(Tour tour, Delivery deliveryToAdd, int index) {
+    public AddDeliveryCommand(Tour tour, RoadMap roadMap, Delivery deliveryToAdd, int index) {
         super();
 
         this.index = index;
         this.deliveryToAdd = deliveryToAdd;
         this.tour = tour;
+        this.roadMap = roadMap;
+        SimplifiedMap simplifiedMap;
 
         //this.interfaceCalcul = new InterfaceCalcul();
     }
@@ -59,7 +83,12 @@ public class AddDeliveryCommand extends UndoableCommand {
      */
     @Override
     protected void doExecute() {
-
+        Halt previousHalt = tour.getPaths().get(index).getStart();
+        Halt afterHalt = tour.getPaths().get(index).getEnd();
+        removedPath = tour.getPaths().remove(index);
+        tour.getPaths().add(index,simplifiedMap.shortestPathList(previousHalt, deliveryToAdd));
+        tour.getPaths().add(index+1,simplifiedMap.shortestPathList(deliveryToAdd, afterHalt));
+        //TODO tour.notifyObservers() à rajouter.
     }
 
     /**
@@ -67,7 +96,9 @@ public class AddDeliveryCommand extends UndoableCommand {
      */
     @Override
     protected void doUndo() {
-
+        tour.getPaths().remove(index);
+        tour.getPaths().remove(index);
+        tour.getPaths().add(index, removedPath);
     }
 
     /**
@@ -75,6 +106,6 @@ public class AddDeliveryCommand extends UndoableCommand {
      */
     @Override
     protected void doRedo() {
-
+        doExecute();
     }
 }

@@ -44,6 +44,9 @@ public class TourEditorController implements ControllerInterface {
      * Edition invoker.
      * Take care of the history of modifications
      */
+
+    private RoadMap roadMap;
+
     private EditionInvoker editionInvoker;
 
     /**
@@ -171,7 +174,8 @@ public class TourEditorController implements ControllerInterface {
 
         Delivery delivery = new Delivery(intersection, duration, timeSlot);
 
-        AddDeliveryCommand command = new AddDeliveryCommand(tour, delivery, 0);
+        AddDeliveryCommand command = new AddDeliveryCommand(tour, roadMap, delivery, 0);
+        // TODO : Mettre l'index à la fin
         editionInvoker.storeAndExecute(command);
     }
 
@@ -181,6 +185,8 @@ public class TourEditorController implements ControllerInterface {
      * @param roadMap Road map
      */
     public void setRoadMap(RoadMap roadMap) {
+
+        this.roadMap = roadMap;
         tourEditorPanel.setRoadMap(roadMap);
     }
 
