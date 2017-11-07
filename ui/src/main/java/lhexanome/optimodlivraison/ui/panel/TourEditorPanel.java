@@ -292,14 +292,6 @@ public class TourEditorPanel extends AbstractPanel implements DeliveryListTransf
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.insets = new Insets(5, 5, 5, 10);
         contentPane.add(addDeliveryButton, gbc);
-        removeDeliveryButton = new JButton();
-        removeDeliveryButton.setText("Supprimer la livraison");
-        gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.insets = new Insets(5, 5, 5, 5);
-        contentPane.add(removeDeliveryButton, gbc);
     }
 
     /**

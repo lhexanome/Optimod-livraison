@@ -106,25 +106,24 @@ public class InterfaceCalcul {
 
         ArrayList<Path> deliveries = new ArrayList<>(nbSommets);
 
-       
-          TimeSlot[] plages = new TimeSlot[nbSommets];
-          for (int i = 0; i < listeSommets.size(); i++) {
-              if (listeSommets.get(i) instanceof Delivery) {
-                  plages[i] = ((Delivery) listeSommets.get(i)).getSlot();
-              } else {
-                  plages[i] = null;
-              }
-          }
-          TSPwSlots tsp = new TSP2wSlots();
 
-          do {
-              tsp.chercheSolution(INTERVAL_NOTIFY, nbSommets, matrix.getMatriceCouts(),
-                      plages, demande.getStart(), listeDurees);
-              time = tsp.getCoutMeilleureSolution();
-              if (time == Integer.MAX_VALUE) {
-                  throw new ComputeSlotsException("can't compute tour because of incompatible slots");
-              }
+        TimeSlot[] plages = new TimeSlot[nbSommets];
+        for (int i = 0; i < listeSommets.size(); i++) {
+            if (listeSommets.get(i) instanceof Delivery) {
+                plages[i] = ((Delivery) listeSommets.get(i)).getSlot();
+            } else {
+                plages[i] = null;
+            }
+        }
+        TSPwSlots tsp = new TSP2wSlots();
 
+        do {
+            tsp.chercheSolution(INTERVAL_NOTIFY, nbSommets, matrix.getMatriceCouts(),
+                    plages, demande.getStart(), listeDurees);
+            time = tsp.getCoutMeilleureSolution();
+            if (time == Integer.MAX_VALUE) {
+                throw new ComputeSlotsException("Can't compute tour because of incompatible slots");
+            }
 
             Path[][] matriceTrajets = matrix.getMatricePaths();
             int indexDepart, indexArrivee;
