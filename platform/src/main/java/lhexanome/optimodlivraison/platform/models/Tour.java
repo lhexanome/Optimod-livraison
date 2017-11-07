@@ -3,6 +3,7 @@ package lhexanome.optimodlivraison.platform.models;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Observable;
 import java.util.Vector;
 import java.util.stream.Collectors;
 
@@ -12,7 +13,7 @@ import java.util.stream.Collectors;
  * et la tournée doit avoir un temps minimal.
  * Doit finir à l'entrepôt.
  */
-public class Tour {
+public class Tour extends Observable {
 
     /**
      * Liste ordonnée de trajets.
@@ -64,6 +65,13 @@ public class Tour {
         this.warehouse = warehouse;
         this.time = time;
         this.paths = paths;
+    }
+
+    /**
+     * Empty constructor.
+     */
+    public Tour() {
+
     }
 
     /**

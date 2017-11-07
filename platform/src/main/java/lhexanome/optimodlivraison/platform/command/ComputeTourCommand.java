@@ -2,6 +2,7 @@ package lhexanome.optimodlivraison.platform.command;
 
 import lhexanome.optimodlivraison.platform.compute.InterfaceCalcul;
 import lhexanome.optimodlivraison.platform.compute.SimplifiedMap;
+import lhexanome.optimodlivraison.platform.compute.TspTypes;
 import lhexanome.optimodlivraison.platform.listeners.ComputeTourListener;
 import lhexanome.optimodlivraison.platform.models.DeliveryOrder;
 import lhexanome.optimodlivraison.platform.models.RoadMap;
@@ -10,6 +11,8 @@ import lhexanome.optimodlivraison.platform.models.Tour;
 import javax.swing.*;
 import java.text.MessageFormat;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Logger;
 
@@ -17,7 +20,7 @@ import java.util.logging.Logger;
  * Command to compute a tour.
  * It use {@link SwingWorker} to work, so the logic part is executed in another thread than the UI Thread.
  */
-public class ComputeTourCommand extends SwingWorker<Void, Tour> {
+public class ComputeTourCommand extends SwingWorker<Void, Tour> implements Observer {
 
     /**
      * Logger.
@@ -59,7 +62,7 @@ public class ComputeTourCommand extends SwingWorker<Void, Tour> {
         this.roadMap = roadMap;
         this.deliveryOrder = deliveryOrder;
 
-        this.interfaceCalcul = new InterfaceCalcul();
+        this.interfaceCalcul = new InterfaceCalcul(this);
     }
 
     /**
@@ -77,7 +80,8 @@ public class ComputeTourCommand extends SwingWorker<Void, Tour> {
 
             LOGGER.info("Simplified roadMap computed");
 
-            Tour computedTour = interfaceCalcul.computeTour(simplifiedMap, deliveryOrder);
+            Tour computedTour = interfaceCalcul.computeTour(simplifiedMap,
+                    deliveryOrder, TspTypes.HEURISTICS_1, true);
             //Tour tour = simplifiedMap.generateFakeTour();
 
             // TODO Send multiple time tour updates.
@@ -135,5 +139,21 @@ public class ComputeTourCommand extends SwingWorker<Void, Tour> {
      */
     public void setListener(ComputeTourListener listener) {
         this.listener = listener;
+    }
+
+    /**
+     * This method is called whenever the observed object is changed. An
+     * application calls an <tt>Observable</tt> object's
+     * <code>notifyObservers</code> method to have all the object's
+     * observers notified of the change.
+     *
+     * @param o   the observable object.
+     * @param arg an argument passed to the <code>notifyObservers</code>
+     */
+    @Override
+    public void update(Observable o, Object arg) {
+        if (o instanceof Tour) {
+            listener.onTourImproved();
+        }
     }
 }

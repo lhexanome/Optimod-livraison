@@ -19,6 +19,7 @@ public class Delivery extends Halt {
      */
     private TimeSlot slot;
 
+
     /**
      * Constructeur de livraison.
      *
@@ -53,7 +54,7 @@ public class Delivery extends Halt {
     }
 
     /**
-     * Renvoie le temps de livraison en minutes.
+     * Renvoie le temps de livraison en sec.
      *
      * @return Durée
      */
@@ -64,7 +65,7 @@ public class Delivery extends Halt {
     /**
      * Définie la durée de la livraison.
      *
-     * @param duration Durée en minutes
+     * @param duration Durée en sec
      */
     public void setDuration(int duration) {
         this.duration = duration;
@@ -88,4 +89,6 @@ public class Delivery extends Halt {
     public void setSlot(TimeSlot slot) {
         this.slot = slot;
     }
+
+
 }
