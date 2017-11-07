@@ -43,6 +43,11 @@ public class ComputeTourCommand extends SwingWorker<Void, Tour> implements Obser
     private DeliveryOrder deliveryOrder;
 
     /**
+     * Tour observer.
+     */
+    private Observer tourObserver;
+
+    /**
      * Tour.
      */
     private Tour tour;
@@ -57,12 +62,14 @@ public class ComputeTourCommand extends SwingWorker<Void, Tour> implements Obser
      *
      * @param roadMap       Road map
      * @param deliveryOrder Delivery order
+     * @param tourObserver  Tour observer
      */
-    public ComputeTourCommand(RoadMap roadMap, DeliveryOrder deliveryOrder) {
+    public ComputeTourCommand(RoadMap roadMap, DeliveryOrder deliveryOrder, Observer tourObserver) {
         this.roadMap = roadMap;
         this.deliveryOrder = deliveryOrder;
+        this.tourObserver = tourObserver;
 
-        this.interfaceCalcul = new InterfaceCalcul(this);
+        this.interfaceCalcul = new InterfaceCalcul();
     }
 
     /**
@@ -72,6 +79,8 @@ public class ComputeTourCommand extends SwingWorker<Void, Tour> implements Obser
     @Override
     protected Void doInBackground() throws Exception {
         try {
+            this.interfaceCalcul.addTourObserver(this);
+
             LOGGER.info("Compute tour");
             long start = System.currentTimeMillis();
 
@@ -80,13 +89,7 @@ public class ComputeTourCommand extends SwingWorker<Void, Tour> implements Obser
 
             LOGGER.info("Simplified roadMap computed");
 
-            Tour computedTour = interfaceCalcul.computeTour(simplifiedMap,
-                    deliveryOrder, TspTypes.HEURISTICS_1, true);
-            //Tour tour = simplifiedMap.generateFakeTour();
-
-            // TODO Send multiple time tour updates.
-            // TODO Set progress (by time)
-            publish(computedTour);
+            interfaceCalcul.computeTour(simplifiedMap, deliveryOrder, TspTypes.HEURISTICS_1, true);
 
             LOGGER.warning("Tour computed");
         } catch (Exception e) {
@@ -109,11 +112,14 @@ public class ComputeTourCommand extends SwingWorker<Void, Tour> implements Obser
         if (listener == null) return;
 
         if (tour == null) {
+            // The first time we have a tour object,
+            // we have to tell caller class that a new tour was computed.
             this.tour = chunks.get(0);
             listener.onFirstTourComputed(tour);
-        } else {
-            listener.onTourImproved();
+            tour.addObserver(tourObserver);
+            tour.notifyObservers(tourObserver);
         }
+        // Otherwise the listener is set so no problem
     }
 
     /**
@@ -122,7 +128,6 @@ public class ComputeTourCommand extends SwingWorker<Void, Tour> implements Obser
     @Override
     protected void done() {
         if (listener == null) return;
-
         try {
             get();
             listener.onComputingTourEnd();
@@ -153,7 +158,7 @@ public class ComputeTourCommand extends SwingWorker<Void, Tour> implements Obser
     @Override
     public void update(Observable o, Object arg) {
         if (o instanceof Tour) {
-            listener.onTourImproved();
+            publish((Tour) o);
         }
     }
 }

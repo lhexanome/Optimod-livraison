@@ -37,7 +37,7 @@ public class InterfaceCalcul {
     /**
      * Intervalle d'actualisation de l'affichage pendant le TSP.
      */
-    private static final int INTERVAL_NOTIFY = 100;
+    private static final int INTERVAL_NOTIFY = 1000;
 
     /**
      * conversion en secondes.
@@ -48,16 +48,6 @@ public class InterfaceCalcul {
      * Observed tour.
      */
     private Tour tour;
-
-    /**
-     * Constructor.
-     *
-     * @param tourObserver Tour observer.
-     */
-    public InterfaceCalcul(Observer tourObserver) {
-        this.tour = new Tour();
-        this.tour.addObserver(tourObserver);
-    }
 
     /**
      * Empty constructor.
@@ -159,7 +149,7 @@ public class InterfaceCalcul {
                 tour.setTime(time);
                 tour.setPaths(deliveries);
 
-                tour.notifyObservers();
+                tour.forceNotifyObservers();
 
             } while (tsp.getTempsLimiteAtteint());
 
@@ -188,7 +178,7 @@ public class InterfaceCalcul {
                 tour.setTime(time);
                 tour.setPaths(deliveries);
 
-                tour.notifyObservers();
+                tour.forceNotifyObservers();
             } while (tsp.getTempsLimiteAtteint());
 
         }
@@ -262,5 +252,14 @@ public class InterfaceCalcul {
         }
 
         return listeDurees;
+    }
+
+    /**
+     * Add a tour observer.
+     *
+     * @param o Observer
+     */
+    public void addTourObserver(Observer o) {
+        this.tour.addObserver(o);
     }
 }
