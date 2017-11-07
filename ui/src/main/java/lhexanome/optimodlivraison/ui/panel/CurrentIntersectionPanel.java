@@ -7,6 +7,8 @@ import lhexanome.optimodlivraison.ui.controller.CurrentIntersectionController;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Delivery order panel.
@@ -66,8 +68,13 @@ public class CurrentIntersectionPanel extends AbstractPanel {
         if (displayedIntersection != null) {
             s += "<html>";
             s += lineReturn + PRESENTATION_TEXT + lineReturn;
+            Set<String> streetNames = new HashSet<>();
+
             for (Vector vector : roadMap.getTronconsFromIntersection(intersectionToDisplay)) {
-                s += bulletedListHeader + " " + vector.getNameStreet() + "," + lineReturn;
+                streetNames.add(vector.getNameStreet());
+            }
+            for (String streetName : streetNames) {
+                s += bulletedListHeader + " " + (streetName.isEmpty() ? "rue sans nom":streetName) + "," + lineReturn;
             }
             s += "</html>";
         }

@@ -83,29 +83,44 @@ public class MainPanel extends AbstractPanel {
 
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.weightx = 0.4;
+        gbc.gridheight = 3;
+
+        gbc.weightx = 0;
         gbc.weighty = 1;
-        gbc.gridheight = 2;
+        gbc.ipadx = 100;
+
         gbc.fill = GridBagConstraints.BOTH;
         gbc.anchor = GridBagConstraints.LINE_START;
-        wrapperPanel.add(deliveryOrderPanel, gbc);
 
-        gbc.weightx = 0.6;
-        gbc.gridheight = 1;
+        wrapperPanel.add(deliveryOrderPanel, gbc);
+        wrapperPanel.add(tourEditorPanel, gbc);
+
         gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.gridheight = 1;
+
+        gbc.weighty = 1;
+        gbc.weightx = 1;
+        gbc.ipadx = 0;
+
         wrapperPanel.add(roadMapPanel, gbc);
 
+        gbc.gridx = 1;
         gbc.gridy = 1;
+
+        gbc.weighty = 0;
+        gbc.weightx = 0;
+
+        gbc.ipady = 20;
         wrapperPanel.add(currentInterectionDisplayPanel, gbc);
 
-        gbc.gridy = 2;
-        wrapperPanel.add(tourPanel, gbc);
 
-        gbc.gridheight = 2;
-        gbc.gridy = 0;
-        gbc.gridx = 2;
-        gbc.weightx = 0.4;
-        wrapperPanel.add(tourEditorPanel, gbc);
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+
+        gbc.ipady = 0;
+
+        wrapperPanel.add(tourPanel, gbc);
     }
 
     /**
