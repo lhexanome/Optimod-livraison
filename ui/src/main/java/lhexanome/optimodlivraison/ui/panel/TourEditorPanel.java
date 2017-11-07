@@ -41,7 +41,15 @@ public class TourEditorPanel extends AbstractPanel implements DeliveryListTransf
      * Button to change the time slot of the selected delivery.
      */
     private JButton changeTimeSlotButton;
+
+    /**
+     * Button to undo last action.
+     */
     private JButton undoButton;
+
+    /**
+     * Button to redo last action.
+     */
     private JButton redoButton;
 
     /**
