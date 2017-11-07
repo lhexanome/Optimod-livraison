@@ -83,7 +83,7 @@ public class InterfaceCalcul {
 
         Map<Halt, ArrayList<Path>> graphe = simplifiedMap.getGraph();
 
-        warehouse = demande.getBeginning();
+        warehouse = demande.getWarehouse();
         start = demande.getStart();
 
         tour.setWarehouse(warehouse);
@@ -93,7 +93,7 @@ public class InterfaceCalcul {
 
         //sert à assigner chaque sommet à un index.
         ArrayList<Halt> listeSommets = new ArrayList<>();
-        listeSommets.add(demande.getBeginning());
+        listeSommets.add(demande.getWarehouse());
         listeSommets.addAll(demande.getDeliveries());
 
         MatriceAdjacence matrix = grapheToMatrix(graphe, nbSommets, listeSommets, demande);

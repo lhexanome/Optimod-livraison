@@ -3,30 +3,30 @@ package lhexanome.optimodlivraison.platform.models;
 import java.util.Date;
 
 /**
- * classe mere representant un point important sur la carte.
+ * Represent a halt on the map.
  */
 public class Halt {
     /**
-     * Intersection représentant le lieu de la livraison.
+     * Intersection of the halt.
      */
     private Intersection intersection;
 
     /**
-     * date de passage estime.
+     * Estimated time of delivery.
      */
     private Date estimateDate = null;
 
     /**
-     * constructeur.
+     * Constructor.
      *
-     * @param intersection location de l'arret
+     * @param intersection Location of the halt
      */
     public Halt(Intersection intersection) {
         this.intersection = intersection;
     }
 
     /**
-     * Renvoie la position de l'arret.
+     * Intersection getter.
      *
      * @return Intersection
      */
@@ -36,7 +36,7 @@ public class Halt {
     }
 
     /**
-     * Définie l'intersection de la livraison.
+     * Intersection setter.
      *
      * @param intersection Intersection
      */
@@ -45,7 +45,7 @@ public class Halt {
     }
 
     /**
-     * return the estimate date.
+     * Estimated date getter.
      *
      * @return estimate date
      */
@@ -54,9 +54,9 @@ public class Halt {
     }
 
     /**
-     * set the estimateDate.
+     * Estimated date setter.
      *
-     * @param estimateDate date to set
+     * @param estimateDate Estimated date
      */
     public void setEstimateDate(Date estimateDate) {
         this.estimateDate = estimateDate;

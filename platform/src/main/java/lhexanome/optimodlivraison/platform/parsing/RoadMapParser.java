@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 /**
- * Parser d'un document XML représentant un plan.
+ * Parse a XML document representing a Road Map.
  */
 public class RoadMapParser {
 
@@ -70,8 +70,8 @@ public class RoadMapParser {
     public static final String XML_LENGTH_ATTRIBUTE = "longueur";
 
     /**
-     * Parse un document XML représentant un plan.
-     * Utilise le format suivant :
+     * Parse a XML document representing a road map.
+     * Use the following format:
      * {@code
      * <reseau>
      * <noeud id="1" x="0" y="0"/>
@@ -80,9 +80,9 @@ public class RoadMapParser {
      * </reseau>
      * }
      *
-     * @param rootElement Element racine
-     * @return Un plan
-     * @throws ParseMapException Si un problème a lieu lors du parsing
+     * @param rootElement Root element
+     * @return Parsed road map
+     * @throws ParseMapException If the XML document is malformed
      */
     public RoadMap parseMap(Element rootElement) throws ParseMapException {
         RoadMap roadMap = new RoadMap();
@@ -110,14 +110,14 @@ public class RoadMapParser {
     }
 
     /**
-     * Génère une roadMap pour faciliter la création d'un roadMap.
+     * Load nodes from the XML.
      *
-     * @param listNode Liste d'élément jdom
-     * @param roadMap  RoadMap
-     * @throws ParseMapException Si le document contient 2x le même id
+     * @param nodeList XML List of nodes
+     * @param roadMap  RoadMap to complete
+     * @throws ParseMapException If it found the same id twice
      */
-    public void loadNodes(List<Element> listNode, RoadMap roadMap) throws ParseMapException {
-        for (Element node : listNode) {
+    public void loadNodes(List<Element> nodeList, RoadMap roadMap) throws ParseMapException {
+        for (Element node : nodeList) {
             Long id = Long.parseLong(node.getAttributeValue(XML_ID_ATTRIBUTE));
 
             if (roadMap.findIntersectionById(id) != null) {
@@ -135,14 +135,14 @@ public class RoadMapParser {
     }
 
     /**
-     * Génère un roadMap depuis des tronçons et des intersections.
+     * Load vector from XML.
      *
-     * @param listTroncon Liste d'éléments jdom
-     * @param roadMap     RoadMap
-     * @throws ParseMapException Si un troncon a des intersections inconnues
+     * @param vectorList Vector list, with tag {@see XML_VECTOR_ELEMENT}
+     * @param roadMap     RoadMap to complete
+     * @throws ParseMapException If a vector has an unknown intersection
      */
-    public void loadTroncon(List<Element> listTroncon, RoadMap roadMap) throws ParseMapException {
-        for (Element node : listTroncon) {
+    public void loadTroncon(List<Element> vectorList, RoadMap roadMap) throws ParseMapException {
+        for (Element node : vectorList) {
             Intersection origin = roadMap.findIntersectionById(
                     Long.parseLong(node.getAttributeValue(XML_ORIGIN_ATTRIBUTE)));
 
@@ -157,7 +157,7 @@ public class RoadMapParser {
             Float length = Float.parseFloat(node.getAttributeValue(XML_LENGTH_ATTRIBUTE));
             String streetName = node.getAttributeValue(XML_STREET_NAME_ATTRIBUTE);
 
-            Vector similar = roadMap.getTronconsFromIntersection(origin)
+            Vector similar = roadMap.getVectorsFromIntersection(origin)
                     .stream()
                     .filter(troncon -> troncon.getDestination() == destination)
                     .findAny()
@@ -173,7 +173,7 @@ public class RoadMapParser {
                 ));
             } else if (similar.getLength() > length) {
                 similar.setLength(length);
-                similar.setNameStreet(streetName);
+                similar.setStreetName(streetName);
             }
         }
     }

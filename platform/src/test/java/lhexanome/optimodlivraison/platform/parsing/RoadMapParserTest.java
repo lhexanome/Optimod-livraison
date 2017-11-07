@@ -120,7 +120,7 @@ public class RoadMapParserTest {
         // Then
 
         assertThat(roadMap.getIntersectionCount()).isEqualTo(2);
-        assertThat(roadMap.getTronconsFromIntersection(intersection2))
+        assertThat(roadMap.getVectorsFromIntersection(intersection2))
                 .isNotNull()
                 .hasSize(1);
     }
@@ -144,10 +144,10 @@ public class RoadMapParserTest {
         // Then
 
         assertThat(roadMap.getIntersectionCount()).isEqualTo(2);
-        assertThat(roadMap.getTronconsFromIntersection(intersection2))
+        assertThat(roadMap.getVectorsFromIntersection(intersection2))
                 .isNotNull()
                 .hasSize(1)
-                .extractingResultOf("getNameStreet")
+                .extractingResultOf("getStreetName")
                 .doesNotContain("Boulevard de la villette");
     }
 
@@ -170,7 +170,7 @@ public class RoadMapParserTest {
         // Then
 
         assertThat(roadMap.getIntersectionCount()).isEqualTo(2);
-        assertThat(roadMap.getTronconsFromIntersection(intersection2))
+        assertThat(roadMap.getVectorsFromIntersection(intersection2))
                 .isNotNull()
                 .hasSize(1)
                 .extractingResultOf("getLength")
@@ -196,7 +196,7 @@ public class RoadMapParserTest {
         // Then
 
         assertThat(roadMap.getIntersectionCount()).isEqualTo(2);
-        assertThat(roadMap.getTronconsFromIntersection(intersection2))
+        assertThat(roadMap.getVectorsFromIntersection(intersection2))
                 .isNotNull()
                 .hasSize(1);
     }
@@ -257,11 +257,11 @@ public class RoadMapParserTest {
         // Then
 
         assertThat(roadMap.getIntersectionCount()).isEqualTo(2);
-        assertThat(roadMap.getTronconsFromIntersection(intersection))
+        assertThat(roadMap.getVectorsFromIntersection(intersection))
                 .isNotNull()
                 .hasSize(1);
 
-        Vector vector = roadMap.getTronconsFromIntersection(intersection)
+        Vector vector = roadMap.getVectorsFromIntersection(intersection)
                 .stream()
                 .findFirst()
                 .orElse(null);
@@ -290,7 +290,7 @@ public class RoadMapParserTest {
         // Then
 
         assertThat(roadMap.getIntersectionCount()).isEqualTo(3);
-        assertThat(roadMap.getTronconsFromIntersection(intersection2))
+        assertThat(roadMap.getVectorsFromIntersection(intersection2))
                 .isNotNull()
                 .hasSize(2)
                 .extractingResultOf("getOrigin")

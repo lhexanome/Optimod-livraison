@@ -5,85 +5,84 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
- * Cette classe représente une Demande de livraison,
- * Elle contient un ensemble de livraisons à faire,
- * Une date et une intersection de départ.
+ * This class represent a delivery order.
+ * It contains a set of delivery to do,
+ * A start time and a warehouse.
  */
 public class DeliveryOrder {
 
     /**
-     * Ensemble des livraisons à faire pour une demande.
+     * Set of delivery.
      */
     private Set<Delivery> deliveries;
     /**
-     * Date de début de la livraison.
+     * Start time of the delivery order.
      */
     private Date start;
     /**
-     * entrepot de depart de la demande de livraison.
-     * Point de départ et d'arriver de la livraison
+     * Warehouse.
+     * Start of a tour.
      */
-    private Warehouse beginning;
+    private Warehouse warehouse;
 
     /**
-     * Constructeur par défaut.
-     * Initialise un Set
+     * Default constructor.
      */
     public DeliveryOrder() {
         deliveries = new LinkedHashSet<>();
     }
 
     /**
-     * Ajoute une livraison à la demande.
+     * Add a delivery.
      *
-     * @param delivery Delivery à ajouter
+     * @param delivery Delivery to add
      */
     public void addDelivery(Delivery delivery) {
         this.deliveries.add(delivery);
     }
 
     /**
-     * Renvoie un ensemble de livraisons à faire.
+     * Deliveries getter.
      *
-     * @return La liste des livraisons
+     * @return Set of delivery
      */
     public Set<Delivery> getDeliveries() {
         return deliveries;
     }
 
     /**
-     * Renvoie la date de départ du livreur.
+     * Start time getter.
      *
-     * @return Date de départ
+     * @return Departure time
      */
     public Date getStart() {
         return start;
     }
 
     /**
-     * Permet de régler la date des livraisons.
+     * Start time setter.
      *
-     * @param start Date de départ
+     * @param start Departure time
      */
     public void setStart(Date start) {
         this.start = start;
     }
 
     /**
-     * Renvoie l'entrepot de départ du livreur.
+     * Warehouse getter.
      *
-     * @return entrepot de départ
+     * @return Warehouse
      */
-    public Warehouse getBeginning() {
-        return beginning;
+    public Warehouse getWarehouse() {
+        return warehouse;
     }
 
     /**
-     * Règle la position de départ du livreur.
+     * Warehouse setter.
      *
-     * @param beginning entrepot de départ
+     * @param warehouse Warehouse
      */
-    public void setBeginning(Warehouse beginning) {
-        this.beginning = beginning;
+    public void setWarehouse(Warehouse warehouse) {
+        this.warehouse = warehouse;
     }
 }

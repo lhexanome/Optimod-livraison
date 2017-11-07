@@ -111,7 +111,10 @@ public class TourController implements ControllerInterface, ComputeTourListener,
     private void setTour(Tour tour) {
         this.tour = tour;
         mainController.setTour(tour);
-        tourPanel.setTour(tour);
+        if (computeTourCommand != null) {
+            computeTourCommand.cancel(true);
+            computeTourCommand = null;
+        }
     }
 
     /**
@@ -138,7 +141,6 @@ public class TourController implements ControllerInterface, ComputeTourListener,
      */
     @Override
     public void onComputingTourEnd() {
-        // TODO End computation
         computeTourCommand = null;
     }
 
@@ -158,7 +160,10 @@ public class TourController implements ControllerInterface, ComputeTourListener,
      */
     public void clearTour() {
         tour = null;
-        tourPanel.setTour(null);
+        if (computeTourCommand != null) {
+            computeTourCommand.cancel(true);
+            computeTourCommand = null;
+        }
     }
 
     /**
