@@ -15,15 +15,15 @@ import java.util.logging.Logger;
 public final class HelloMars {
 
     /**
+     * Logger.
+     */
+    private static final Logger LOGGER = Logger.getLogger(HelloMars.class.getName());
+
+    /**
      * Disallow instantiation.
      */
     private HelloMars() {
     }
-
-    /**
-     * Logger.
-     */
-    private static final Logger LOGGER = Logger.getLogger(HelloMars.class.getName());
 
     /**
      * Main method.
