@@ -45,4 +45,17 @@ public final class DateUtil {
 
         return simpleDateFormat.parse(value);
     }
+
+    /**
+     * Format a date to a certain format.
+     *
+     * @param format Format of the string, {@see SimpleDateFormat}
+     * @param date   String to format
+     * @return A date object
+     */
+    public static String formatDate(String format, Date date) {
+        DateFormat simpleDateFormat = new SimpleDateFormat(format);
+
+        return simpleDateFormat.format(date);
+    }
 }

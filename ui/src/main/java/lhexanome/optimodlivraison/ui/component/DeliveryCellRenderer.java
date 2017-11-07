@@ -4,6 +4,7 @@ import lhexanome.optimodlivraison.platform.models.Delivery;
 import lhexanome.optimodlivraison.platform.models.RoadMap;
 import lhexanome.optimodlivraison.platform.models.TimeSlot;
 import lhexanome.optimodlivraison.platform.models.Vector;
+import lhexanome.optimodlivraison.platform.utils.DateUtil;
 
 import javax.swing.*;
 import java.awt.*;
@@ -83,14 +84,18 @@ public class DeliveryCellRenderer implements ListCellRenderer<Delivery> {
             indexLabel.setFont(font.deriveFont(attributes));
             JLabel indexValue = new JLabel(String.valueOf(index));
 
+            JLabel estimateDateValue = new JLabel(DateUtil.formatDate(" (HH:mm)", value.getEstimateDate()));
+
             parallelGroup.addGroup(layout.createSequentialGroup()
                     .addComponent(indexLabel)
                     .addComponent(indexValue)
+                    .addComponent(estimateDateValue)
             );
 
             sequentialGroup.addGroup(layout.createParallelGroup()
                     .addComponent(indexLabel)
                     .addComponent(indexValue)
+                    .addComponent(estimateDateValue)
             );
         }
 
