@@ -169,7 +169,7 @@ public class RoadMapTest {
 
         //When
 
-        Collection<Vector> toncons = roadMapTested.getTronconsFromIntersection(i1);
+        Collection<Vector> toncons = roadMapTested.getVectorsFromIntersection(i1);
 
         //Then
         assertEquals(4, toncons.size());
@@ -177,7 +177,7 @@ public class RoadMapTest {
 
         //When know intersection but without troncon
 
-        toncons = roadMapTested.getTronconsFromIntersection(i6);
+        toncons = roadMapTested.getVectorsFromIntersection(i6);
 
         //Then
         assertNotNull(toncons);
@@ -186,7 +186,7 @@ public class RoadMapTest {
 
         //When unknow intersection
 
-        toncons = roadMapTested.getTronconsFromIntersection(new Intersection(666L, 426, 684));
+        toncons = roadMapTested.getVectorsFromIntersection(new Intersection(666L, 426, 684));
 
         //Then
         assertNotNull(toncons);

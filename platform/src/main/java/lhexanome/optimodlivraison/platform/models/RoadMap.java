@@ -9,23 +9,23 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Ensemble d'intersection reliés par des tronçons.
+ * Set of intersections linked by vectors.
  */
 public class RoadMap {
 
     /**
-     * RoadMap contenant les différents tronçons d'une carte.
+     * Map containing all the vectors of a map.
+     * Accessible with an intersection.
      */
     private Map<Intersection, Collection<Vector>> map;
 
     /**
-     * RoadMap contenant les intersections indexées par leur id.
+     * Map containing all the intersections indexed by their ID.
      */
     private Map<Long, Intersection> intersectionMap;
 
     /**
-     * Constructeur par défaut.
-     * Initialise une RoadMap
+     * Default constructor.
      */
     public RoadMap() {
         map = new HashMap<>();
@@ -33,8 +33,8 @@ public class RoadMap {
     }
 
     /**
-     * Ajoute un tronçon à une intersection.
-     * Ajoute les intersections d'origine et de destination au plan si il n'y sont pas
+     * Add a vector to an intersection
+     * Also add the intersection if it does not exist yet.
      *
      * @param vector Vector
      */
@@ -47,10 +47,10 @@ public class RoadMap {
     }
 
     /**
-     * Ajoute une intersection.
-     * Ne fait rien si l'intersection existe deja;
+     * Add an intersection to the road map.
+     * Do nothing if it already exists.
      *
-     * @param intersection intersection a ajouter au plan
+     * @param intersection Intersection to add
      */
     public void addIntersection(Intersection intersection) {
         if (!this.map.containsKey(intersection)) {
@@ -60,22 +60,22 @@ public class RoadMap {
     }
 
     /**
-     * Renvoie une collection de troncon partant d'une intersection.
+     * Return a collection of vectors from an intersection.
      *
      * @param start intersection
-     * @return Liste de troncon
+     * @return Collection of vectors.
      */
-    public Collection<Vector> getTronconsFromIntersection(Intersection start) {
+    public Collection<Vector> getVectorsFromIntersection(Intersection start) {
         Collection<Vector> res = map.get(start);
         return res == null ? Collections.emptyList() : res;
     }
 
     /**
-     * Permet de recuperer tous les troncons du plan.
-     * Cette methode genére une nouvelle collection.
-     * Elle peut donc étre plutôt couteuse
+     * Return all the vectors of the road map.
+     * It create a new collection, so it has a
+     * performance cost.
      *
-     * @return Collection de tous les troncons du plan
+     * @return Collection containing all the vectors in the road map
      */
     public Collection<Vector> getVectors() {
         List<Vector> res = new ArrayList<>();
@@ -84,28 +84,28 @@ public class RoadMap {
     }
 
     /**
-     * Renvoie le nombre d'intersection de la carte.
+     * Intersection count getter.
      *
-     * @return Nombre d'intersection
+     * @return Count of intersection in the map
      */
     public int getIntersectionCount() {
         return intersectionMap.size();
     }
 
     /**
-     * Permet de recuperer tous les intersections du plan.
+     * Intersections getter.
      *
-     * @return Collection de tous les intersections
+     * @return Collection of all the intersections.
      */
     public Collection<Intersection> getIntersections() {
         return map.keySet();
     }
 
     /**
-     * Permet de recuperer une intersections du plan depuis sont id.
+     * Find an intersection with it's id.
      *
-     * @param id ID de l'intersection
-     * @return L'intersection corespondant a la recherche ou null si l'intersection chercher n'existe pas dans le plan
+     * @param id Intersection ID
+     * @return Intersection with the provided ID or null
      */
     public Intersection findIntersectionById(Long id) {
         return intersectionMap.get(id);

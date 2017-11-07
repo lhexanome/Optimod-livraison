@@ -8,40 +8,38 @@ import java.util.Vector;
 import java.util.stream.Collectors;
 
 /**
- * Suite de trajets qui part de l'entrepôt, passe par toutes les livraisons.
- * Les livraisons doivent-être aux bonnes plages horaires,
- * et la tournée doit avoir un temps minimal.
- * Doit finir à l'entrepôt.
+ * Following of path, starting from the warehouse, going through each delivery.
+ * Must end at the warehouse.
  */
 public class Tour extends Observable {
 
     /**
-     * Liste ordonnée de trajets.
+     * Ordered list of path.
      */
     private List<Path> paths;
 
     /**
-     * Moment de départ de la tournée.
+     * Start time of the tour.
      */
     private Date start;
 
     /**
-     * Intersection représentant l'entrepôt.
+     * Warehouse.
      */
     private Warehouse warehouse;
 
     /**
-     * Temps estimé pour compléter une tournée.
-     * En minutes
+     * Estimated time to complete the tour.
+     * In seconds
      */
     private int time;
 
     /**
      * Constructor.
      *
-     * @param warehouse Intersection représentant l'entrepôt
-     * @param start     Moment de départ de la tournée
-     * @param time      Temps estimé pour compléter une tournée. En minutes
+     * @param warehouse Warehouse
+     * @param start     Start date
+     * @param time      Initial estimated time
      */
     public Tour(Warehouse warehouse, Date start, int time) {
         this(warehouse, start, time, new ArrayList<>());
@@ -50,11 +48,10 @@ public class Tour extends Observable {
     /**
      * Constructor.
      *
-     * @param warehouse Intersection représentant l'entrepôt
-     * @param start     Moment de départ de la tournée
-     * @param time      Temps estimé pour compléter une tournée.
-     *                  En minutes
-     * @param paths     Liste ordonnée de trajets.
+     * @param warehouse Warehouse
+     * @param start     Start date
+     * @param time      Initial estimated time
+     * @param paths     Ordered list of paths
      * @see #warehouse
      * @see #start
      * @see #time
@@ -68,6 +65,16 @@ public class Tour extends Observable {
     }
 
     /**
+     * Constructor.
+     *
+     * @param warehouse Warehouse
+     * @param start     Start date
+     */
+    public Tour(Warehouse warehouse, Date start) {
+        this(warehouse, start, 0);
+    }
+
+    /**
      * Empty constructor.
      */
     public Tour() {
@@ -75,7 +82,7 @@ public class Tour extends Observable {
     }
 
     /**
-     * Renvoie la liste des livraisons.
+     * Path getter.
      *
      * @return Deliveries
      */
@@ -84,16 +91,16 @@ public class Tour extends Observable {
     }
 
     /**
-     * Définie la liste des livraisons.
+     * Path setter.
      *
-     * @param paths Deliveries
+     * @param paths Path
      */
     public void setPaths(List<Path> paths) {
         this.paths = paths;
     }
 
     /**
-     * Renvoie l'intersection de départ.
+     * Date getter.
      *
      * @return Start
      */
@@ -102,7 +109,7 @@ public class Tour extends Observable {
     }
 
     /**
-     * Définie l'intersection de départ.
+     * Start setter.
      *
      * @param start Start
      */
@@ -111,7 +118,7 @@ public class Tour extends Observable {
     }
 
     /**
-     * Renvoie l'interection correspondant à l'entrepôt.
+     * Warehouse getter.
      *
      * @return Warehouse
      */
@@ -120,7 +127,7 @@ public class Tour extends Observable {
     }
 
     /**
-     * Définie l'intersection correspondant à l'entrepôt.
+     * Warehouse setter.
      *
      * @param warehouse Warehouse
      */
@@ -129,16 +136,16 @@ public class Tour extends Observable {
     }
 
     /**
-     * Renvoie le temps nécessaire pour effectuer une tournée.
+     * Estimated time getter.
      *
-     * @return Time
+     * @return Time in seconds
      */
     public int getTime() {
         return time;
     }
 
     /**
-     * Définie le temps nécessaire pour effectuer une tournée.
+     * Estimated time setter.
      *
      * @param time Time
      */

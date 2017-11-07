@@ -1,6 +1,5 @@
 package lhexanome.optimodlivraison.platform.models;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -62,13 +61,13 @@ public class PathTest {
         Halt b = new Halt(i1);
         Halt e = new Halt(i2);
         pathTested = new Path(b,e);
-        pathTested.addTroncon(vector12);
+        pathTested.addVector(vector12);
 
         //Then
         assertEquals(b, pathTested.getStart());
 
         //When
-        pathTested.addTroncon(vector23);
+        pathTested.addVector(vector23);
 
         //Then
         assertEquals(b, pathTested.getStart());
@@ -89,13 +88,13 @@ public class PathTest {
         Halt b = new Halt(i1);
         Halt e = new Halt(i3);
         pathTested = new Path(b,e);
-        pathTested.addTroncon(vector12);
+        pathTested.addVector(vector12);
 
         //Then
         assertEquals(e, pathTested.getEnd());
 
         //When
-        pathTested.addTroncon(vector23);
+        pathTested.addVector(vector23);
 
         //Then
         assertEquals(e, pathTested.getEnd());
@@ -116,7 +115,7 @@ public class PathTest {
         Halt b = new Halt(i1);
         Halt e = new Halt(i3);
         pathTested = new Path(b,e);
-        pathTested.addTronconBefore(vector23);
+        pathTested.addVectorBefore(vector23);
 
         //Then
         assertEquals(1, pathTested.getVectors().size());
@@ -124,7 +123,7 @@ public class PathTest {
         assertEquals(vector23.getTimeToTravel(), pathTested.getTimeToTravel());
 
         //When
-        pathTested.addTronconBefore(vector12);
+        pathTested.addVectorBefore(vector12);
 
         //Then
         assertEquals(2, pathTested.getVectors().size());
@@ -146,12 +145,12 @@ public class PathTest {
         Halt b = new Halt(i1);
         Halt e = new Halt(i4);
         pathTested = new Path(b,e);
-        pathTested.addTroncon(vector12);
+        pathTested.addVector(vector12);
 
         //When
         try {
 
-            pathTested.addTronconBefore(vector34);
+            pathTested.addVectorBefore(vector34);
 
             //Then
             assertTrue(false);
@@ -177,7 +176,7 @@ public class PathTest {
         pathTested = new Path(b,e);
 
         //When
-        pathTested.addTroncon(vector12);
+        pathTested.addVector(vector12);
 
         //Then
         assertEquals(1, pathTested.getVectors().size());
@@ -185,7 +184,7 @@ public class PathTest {
         assertEquals(vector12.getTimeToTravel(), pathTested.getTimeToTravel());
 
         //When
-        pathTested.addTroncon(vector23);
+        pathTested.addVector(vector23);
 
         //Then
         assertEquals(2, pathTested.getVectors().size());
@@ -207,12 +206,12 @@ public class PathTest {
         Halt b = new Halt(i1);
         Halt e = new Halt(i4);
         pathTested = new Path(b,e);
-        pathTested.addTroncon(vector12);
+        pathTested.addVector(vector12);
 
         //When
         try {
 
-            pathTested.addTroncon(vector34);
+            pathTested.addVector(vector34);
 
             //Then
             assertTrue(false);
@@ -244,11 +243,11 @@ public class PathTest {
         pathTested = new Path(b1,e1);
 
         Path path13 = new Path(e1,e2);
-        path13.addTroncon(vector12);
-        path13.addTroncon(vector23);
+        path13.addVector(vector12);
+        path13.addVector(vector23);
         Path path35 = new Path(e2,e3);
-        path35.addTroncon(vector34);
-        path35.addTroncon(vector45);
+        path35.addVector(vector34);
+        path35.addVector(vector45);
 
 
         //When
@@ -291,11 +290,11 @@ public class PathTest {
         Halt e3 = new Halt(i5);
         pathTested = new Path(b1,e1);
         Path path35 = new Path(e2,e3);
-        path35.addTroncon(vector34);
+        path35.addVector(vector34);
         ;
-        path35.addTroncon(vector45);
+        path35.addVector(vector45);
 
-        pathTested.addTroncon(vector12);
+        pathTested.addVector(vector12);
 
         //When
         try {

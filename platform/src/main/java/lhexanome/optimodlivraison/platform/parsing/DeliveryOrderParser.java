@@ -140,7 +140,7 @@ public class DeliveryOrderParser {
         try {
             Date date = DateUtil.parseDate("H:m:s", startTime);
 
-            deliveryOrder.setBeginning(warehouse);
+            deliveryOrder.setWarehouse(warehouse);
             deliveryOrder.setStart(date);
 
         } catch (ParseException e) {

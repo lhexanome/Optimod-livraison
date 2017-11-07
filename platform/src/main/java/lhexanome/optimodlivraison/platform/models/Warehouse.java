@@ -1,14 +1,14 @@
 package lhexanome.optimodlivraison.platform.models;
 
 /**
- * point de depart d'une demande de livraison.
+ * Stating point of a tour.
  */
 public class Warehouse extends Halt {
 
     /**
-     * constructeur.
+     * Constructor.
      *
-     * @param intersection location de l'entrepot
+     * @param intersection Intersection of the warehouse
      */
     public Warehouse(Intersection intersection) {
         super(intersection);

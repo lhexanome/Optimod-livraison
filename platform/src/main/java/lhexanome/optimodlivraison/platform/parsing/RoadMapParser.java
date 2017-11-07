@@ -157,7 +157,7 @@ public class RoadMapParser {
             Float length = Float.parseFloat(node.getAttributeValue(XML_LENGTH_ATTRIBUTE));
             String streetName = node.getAttributeValue(XML_STREET_NAME_ATTRIBUTE);
 
-            Vector similar = roadMap.getTronconsFromIntersection(origin)
+            Vector similar = roadMap.getVectorsFromIntersection(origin)
                     .stream()
                     .filter(troncon -> troncon.getDestination() == destination)
                     .findAny()
@@ -173,7 +173,7 @@ public class RoadMapParser {
                 ));
             } else if (similar.getLength() > length) {
                 similar.setLength(length);
-                similar.setNameStreet(streetName);
+                similar.setStreetName(streetName);
             }
         }
     }

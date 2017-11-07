@@ -138,7 +138,6 @@ public class TourController implements ControllerInterface, ComputeTourListener,
      */
     @Override
     public void onComputingTourEnd() {
-        // TODO End computation
         computeTourCommand = null;
     }
 

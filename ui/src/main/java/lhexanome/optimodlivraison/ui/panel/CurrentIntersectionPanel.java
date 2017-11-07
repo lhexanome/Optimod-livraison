@@ -67,8 +67,8 @@ public class CurrentIntersectionPanel extends AbstractPanel {
             s += lineReturn + PRESENTATION_TEXT + lineReturn;
             Set<String> streetNames = new HashSet<>();
 
-            for (Vector vector : roadMap.getTronconsFromIntersection(intersectionToDisplay)) {
-                streetNames.add(vector.getNameStreet());
+            for (Vector vector : roadMap.getVectorsFromIntersection(intersectionToDisplay)) {
+                streetNames.add(vector.getStreetName());
             }
             for (String streetName : streetNames) {
                 s += bulletedListHeader + " " + (streetName.isEmpty() ? "rue sans nom" : streetName) + "," + lineReturn;

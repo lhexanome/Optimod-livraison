@@ -36,10 +36,10 @@ public class DeliveryOrderTest {
         Intersection intersection = new Intersection(10101L, 1254, 1265);
         Warehouse warehouse = new Warehouse(intersection);
         //When
-        deliveriesRequest.setBeginning(warehouse);
+        deliveriesRequest.setWarehouse(warehouse);
 
         //Then
-        assertEquals(warehouse, deliveriesRequest.getBeginning());
+        assertEquals(warehouse, deliveriesRequest.getWarehouse());
     }
 
     @Test

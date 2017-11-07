@@ -4,27 +4,27 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * Représente une plage horaire.
+ * Represent a time slot.
  */
 public class TimeSlot {
 
     /**
-     * Début de la plage horaire.
+     * Starting time of the slot.
      */
     private Date start;
 
     /**
-     * Fin de la plage horaire.
+     * Ending time of the slot.
      */
     private Date end;
 
     /**
-     * Constructeur par défaut.
-     * Prend une date de début et une date de fin
-     * Les deux dates seront inversées si le début est après la fin.
+     * Default constructor.
+     * Take two date in parameters.
+     * Will inverse the date if needed.
      *
-     * @param start Date de début
-     * @param end   Date de fin
+     * @param start Start time
+     * @param end   End time
      */
     public TimeSlot(Date start, Date end) {
         if (start.before(end)) {
@@ -37,19 +37,19 @@ public class TimeSlot {
     }
 
     /**
-     * Renvoie la date de début.
+     * Start getter.
      *
-     * @return Date de début
+     * @return Start time
      */
     public Date getStart() {
         return start;
     }
 
     /**
-     * Définie le début de la plage.
-     * Doit être avant la fin actuelle, si ce n'est pas le cas, on fait rien
+     * Start setter.
+     * Must be before the current end. Otherwise it will do nothing
      *
-     * @param start Date de début
+     * @param start Start time
      */
     public void setStart(Date start) {
         if (start.before(end)) {
@@ -58,19 +58,19 @@ public class TimeSlot {
     }
 
     /**
-     * Renvoie la date de fin.
+     * End getter.
      *
-     * @return Date de fin
+     * @return End time
      */
     public Date getEnd() {
         return end;
     }
 
     /**
-     * Définir le début de la plage.
-     * Doit être après le début, si ce n'est pas le cas, on fait rien
+     * End setter.
+     * Must be after the current start. Otherwise it will do nothing
      *
-     * @param end Date de fin
+     * @param end End time
      */
     public void setEnd(Date end) {
         if (end.after(start)) {
@@ -79,10 +79,10 @@ public class TimeSlot {
     }
 
     /**
-     * Permet de savoir si une date est incluse dans la plage horaire.
+     * Check if a date is included in the time slot.
      *
-     * @param date Date à tester
-     * @return true si la date est incluse, false sinon
+     * @param date Date to check
+     * @return True if the date is included
      */
     public boolean isIncluded(Date date) {
         return date.equals(start)
@@ -113,6 +113,7 @@ public class TimeSlot {
     public static long getTimescaleBetween(Date d1, Date d2) {
         return d2.getTime() - d1.getTime();
     }
+
     /**
      * get the time in millisecond between a date and a time.
      *

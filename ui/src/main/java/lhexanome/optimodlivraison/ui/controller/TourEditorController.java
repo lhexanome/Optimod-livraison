@@ -119,7 +119,6 @@ public class TourEditorController implements ControllerInterface {
      */
     public void undo() {
         editionInvoker.undoLastCommand();
-        // TODO firePropertyChange
     }
 
     /**
@@ -127,7 +126,6 @@ public class TourEditorController implements ControllerInterface {
      */
     public void redo() {
         editionInvoker.redoLastUndo();
-        // TODO Notify change
     }
 
     /**

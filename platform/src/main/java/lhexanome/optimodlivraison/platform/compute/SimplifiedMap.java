@@ -77,7 +77,7 @@ public class SimplifiedMap {
 
             HashSet<Halt> ptsHalt = new HashSet<>();
             ptsHalt.addAll(deliveryOrder.getDeliveries());
-            ptsHalt.add(deliveryOrder.getBeginning());
+            ptsHalt.add(deliveryOrder.getWarehouse());
             for (Halt s : ptsHalt) {
                 ArrayList<Path> listePaths =
                         shortestPathList(s, ptsHalt);
@@ -101,7 +101,7 @@ public class SimplifiedMap {
         boolean first = true;
         for (Halt s : graph.keySet()) {
             if (s instanceof Warehouse) {
-                sortie = new Tour((Warehouse) s, DateUtil.getDate(10, 10), 0);
+                sortie = new Tour((Warehouse) s, DateUtil.getDate(10, 10));
             }
             ArrayList<Path> list = graph.get(s);
             listPath.addAll(list);
@@ -189,9 +189,8 @@ public class SimplifiedMap {
                 }
                 //on remonte les prececesseurs pour obtenir tout les chemins
                 while (endWrapper != null && endWrapper.getPredecessor() != null) {
-                    //TODO ajouter le debut et la fin au path
                     Vector tr = endWrapper.getIncomingVector();
-                    t.addTronconBefore(tr);
+                    t.addVectorBefore(tr);
                     endWrapper = endWrapper.getPredecessor();
                 }
                 output.add(t);
@@ -281,7 +280,7 @@ public class SimplifiedMap {
                 // partant de cette intersection
                 courant = visits.get(indexNouvelleVisite);
                 Collection<Vector> cheminsPartants =
-                        roadMap.getTronconsFromIntersection(courant.getIntersection());
+                        roadMap.getVectorsFromIntersection(courant.getIntersection());
 
                 for (Vector t : cheminsPartants) {
                     Intersection successeur = t.getDestination();

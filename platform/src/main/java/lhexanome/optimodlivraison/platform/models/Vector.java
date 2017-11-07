@@ -1,50 +1,50 @@
 package lhexanome.optimodlivraison.platform.models;
 
 /**
- * Arc reliant 2 intersections, avec un nom de rue, une longueur.
+ * Arc connecting two intersections, with a street name and a length.
  */
 public class Vector {
 
     /**
-     * Vitesse à laquelle va le livreur durant tout la tournée.
-     * En km/h
+     * Average speed to use for computations.
+     * In km/h
      */
     public static final int SPEED = 15;
 
     /**
-     * L'une des intersections se situant au bout du tronçon.
+     * Start intersection.
      */
     private Intersection origin;
 
     /**
-     * L'autre intersection se situant au bout du tronçon.
+     * End intersection.
      */
     private Intersection destination;
 
     /**
-     * Nom du troncon d'après le plan fourni.
+     * Street name provided by the road map.
      */
-    private String nameStreet;
+    private String streetName;
 
     /**
-     * Longueur du tronçon.
-     * En décimètre
+     * Length of the vector.
+     * In decimetre.
      */
     private float length;
 
     /**
      * Vector Constructor.
      *
-     * @param origin      intersections se situant au debut du tronçon
-     * @param destination intersections se situant à la fin du tronçon
-     * @param nameStreet  Nom du troncon
+     * @param origin      Start intersection
+     * @param destination End intersection
+     * @param streetName  Street name of the vector
      * @see #Vector(Intersection, Intersection, String, float)
      */
-    public Vector(Intersection origin, Intersection destination, String nameStreet) {
+    public Vector(Intersection origin, Intersection destination, String streetName) {
         this(
                 origin,
                 destination,
-                nameStreet,
+                streetName,
                 (float) Math.sqrt(
                         Math.pow(origin.getX() - destination.getX(), 2)
                                 + Math.pow(origin.getY() - destination.getY(), 2)
@@ -52,12 +52,30 @@ public class Vector {
         );
     }
 
+    /**
+     * Vector Constructor.
+     *
+     * @param origin      Start intersection
+     * @param destination End intersections
+     * @param streetName  Street name of the vector
+     * @param length      Length of the vector in decimetre
+     * @see #origin
+     * @see #destination
+     * @see #streetName
+     * @see #length
+     */
+    public Vector(Intersection origin, Intersection destination, String streetName, float length) {
+        this.origin = origin;
+        this.destination = destination;
+        this.streetName = streetName;
+        this.length = length;
+    }
 
     /**
-     * fonction equals.
+     * Equals.
      *
-     * @param o objet a comparer
-     * @return resultat de la comparaison
+     * @param o object to compare
+     * @return Equals or not
      */
     @Override
     public boolean equals(Object o) {
@@ -69,55 +87,35 @@ public class Vector {
         if (Float.compare(vector.length, length) != 0) return false;
         if (!origin.equals(vector.origin)) return false;
         if (!destination.equals(vector.destination)) return false;
-        return nameStreet.equals(vector.nameStreet);
+        return streetName.equals(vector.streetName);
     }
 
     /**
-     * fonction hashCode.
+     * HashCode.
      *
-     * @return hashcode de l'objet
+     * @return Hashcode
      */
-    @SuppressWarnings("checkstyle:magicnumber")
     @Override
     public int hashCode() {
         int result = origin.hashCode();
         result = 31 * result + destination.hashCode();
-        result = 31 * result + nameStreet.hashCode();
+        result = 31 * result + streetName.hashCode();
         result = 31 * result + (length != +0.0f ? Float.floatToIntBits(length) : 0);
         return result;
     }
 
-    /**
-     * Vector Constructor.
-     *
-     * @param origin      intersections se situant au debut du tronçon
-     * @param destination intersections se situant à la fin du tronçon
-     * @param nameStreet  Nom du troncon
-     * @param length      Longueur du tronçon en m
-     * @see #origin
-     * @see #destination
-     * @see #nameStreet
-     * @see #length
-     */
-    public Vector(Intersection origin, Intersection destination, String nameStreet, float length) {
-        this.origin = origin;
-        this.destination = destination;
-        this.nameStreet = nameStreet;
-        this.length = length;
-    }
 
     /**
-     * Renvoie l'une des intersection du troncon.
+     * Destination getter.
      *
      * @return Destination
      */
     public Intersection getDestination() {
-
         return destination;
     }
 
     /**
-     * Définie l'une des intersections du tronçon.
+     * Destination setter.
      *
      * @param destination Destination
      */
@@ -126,25 +124,25 @@ public class Vector {
     }
 
     /**
-     * Renvoie le nom du tronçon.
+     * Street name getter.
      *
-     * @return Name street
+     * @return Street name
      */
-    public String getNameStreet() {
-        return nameStreet;
+    public String getStreetName() {
+        return streetName;
     }
 
     /**
-     * Définie le nom du tronçon.
+     * Street name setter.
      *
-     * @param nameStreet Name street
+     * @param streetName Street name
      */
-    public void setNameStreet(String nameStreet) {
-        this.nameStreet = nameStreet;
+    public void setStreetName(String streetName) {
+        this.streetName = streetName;
     }
 
     /**
-     * Renvoie la longueur du tronçon.
+     * Length getter.
      *
      * @return Length
      */
@@ -153,7 +151,7 @@ public class Vector {
     }
 
     /**
-     * Définie la longueur du tronçon.
+     * Length setter.
      *
      * @param length Length
      */
@@ -162,30 +160,31 @@ public class Vector {
     }
 
     /**
-     * Renvoie l'autre intersection du tronçon.
+     * Start intersection getter.
      *
-     * @return Origine
+     * @return Origin intersection
      */
     public Intersection getOrigin() {
         return origin;
     }
 
     /**
-     * Définie l'autre intersection du tronçon.
+     * Start intersection setter.
      *
-     * @param origin Origine
+     * @param origin Origin intersection
      */
     public void setOrigin(Intersection origin) {
         this.origin = origin;
     }
 
     /**
-     * Renvoie le temps nécessaire pour traverser le tronçon.
+     * Compute the time needed to go through the vector.
+     * In seconds
      *
      * @return Time To Travel (s)
      */
     @SuppressWarnings("checkstyle:magicnumber")
     public int getTimeToTravel() {
-        return (int) (((float) length) / ((float) (SPEED * (1000.0 / 3600.0)))); //TODO temps en float
+        return (int) (length / ((float) (SPEED * (1000.0 / 3600.0))));
     }
 }
