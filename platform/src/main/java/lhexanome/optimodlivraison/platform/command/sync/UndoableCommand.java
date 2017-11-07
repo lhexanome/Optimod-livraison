@@ -44,7 +44,8 @@ public abstract class UndoableCommand {
      * Called when the action must be undoed.
      */
     public void undo() {
-        if (this.status != UndoableCommandStatus.EXECUTED) {
+        if (this.status != UndoableCommandStatus.EXECUTED
+                && this.status != UndoableCommandStatus.REDOED) {
             throw new RuntimeException("Tried to undo before executing the action !");
         }
 

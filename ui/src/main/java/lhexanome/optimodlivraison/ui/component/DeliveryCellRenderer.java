@@ -82,7 +82,7 @@ public class DeliveryCellRenderer implements ListCellRenderer<Delivery> {
 
             JLabel indexLabel = new JLabel("N° :");
             indexLabel.setFont(font.deriveFont(attributes));
-            JLabel indexValue = new JLabel(String.valueOf(index));
+            JLabel indexValue = new JLabel(String.valueOf(index + 1));
 
             JLabel estimateDateValue = new JLabel(DateUtil.formatDate(" (HH:mm)", value.getEstimateDate()));
 
