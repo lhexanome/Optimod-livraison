@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * Classe pour avoir une date facilement.
+ * Util class to read date.
  */
 public final class DateUtil {
 

@@ -1,7 +1,7 @@
 package lhexanome.optimodlivraison.platform.exceptions;
 
 /**
- * Exception lancée lors du parsing d'un plan.
+ * Exception thrown when unable to parse a map.
  */
 public class ParseMapException extends Exception {
     /**

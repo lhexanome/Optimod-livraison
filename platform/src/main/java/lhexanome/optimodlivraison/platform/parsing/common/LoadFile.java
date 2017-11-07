@@ -11,23 +11,23 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * Methodes pour parser un fichier XML.
+ * Util function to load a XML File.
  */
 public final class LoadFile {
 
     /**
-     * Constructeur par défaut non disponible.
+     * Prevent instantiation.
      */
     private LoadFile() {
     }
 
     /**
-     * Charge un fichier XML.
+     * Load a XML file.
      *
-     * @param inputFile Fichier à charger
-     * @return Element racine du XML
-     * @throws JDOMException Si le contenu du fichier n'est pas du XML
-     * @throws IOException   S'il y a un problème I/O
+     * @param inputFile File to load
+     * @return Root element
+     * @throws JDOMException If the file is not a correct XML file.
+     * @throws IOException   If unable to read the file
      */
     public static Element loadFromFile(File inputFile) throws JDOMException, IOException {
 
@@ -35,12 +35,12 @@ public final class LoadFile {
     }
 
     /**
-     * Charge une input au format XML.
+     * Load XML from an input stream.
      *
-     * @param inputStream InputStream à lire
-     * @return Element racine du XML
-     * @throws JDOMException Si le contenu du stream n'est pas du XML
-     * @throws IOException   S'il y a un problème I/O
+     * @param inputStream InputStream to read
+     * @return Root element of the XML
+     * @throws JDOMException If the file is not a correct XML file
+     * @throws IOException   If unable to read the file
      */
     public static Element load(InputStream inputStream) throws JDOMException, IOException {
         SAXBuilder saxBuilder = new SAXBuilder();
