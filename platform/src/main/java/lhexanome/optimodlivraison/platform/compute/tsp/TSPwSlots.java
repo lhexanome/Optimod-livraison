@@ -20,10 +20,9 @@ public interface TSPwSlots {
      * @param cout      : cout[i][j] = duree pour aller de i a j, avec 0 <= i < nbSommets et 0 <= j < nbSommets
      * @param plages     : plages horaires des sommets
      * @param depart     : date de depart de la recherche
-     * @param datesEstimees     : date de passage estimee pour chaque livraison
      * @param duree     : duree[i] = duree pour visiter le sommet i, avec 0 <= i < nbSommets
      */
-    public void chercheSolution(int tpsLimite, int nbSommets, int[][] cout, TimeSlot[] plages, Date depart,Date[] datesEstimees, int[] duree);
+    public void chercheSolution(int tpsLimite, int nbSommets, int[][] cout, TimeSlot[] plages, Date depart, int[] duree);
 
     /**
      * @param i
@@ -35,4 +34,6 @@ public interface TSPwSlots {
      * @return la duree de la solution calculee par chercheSolution
      */
     public int getCoutMeilleureSolution();
+
+    public Date getDateEstimee(int i);
 }

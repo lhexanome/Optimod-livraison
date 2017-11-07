@@ -44,13 +44,15 @@ public class SimplifiedMap {
      */
     private Map<Halt, ArrayList<Path>> graph;
 
-    /***
-     * constructeur par defaut.
+
+    /**
+     * Constructor used to do the computing without generating a graph.
+     *
+     * @param roadMap roadmap to compute from.
      */
-    public SimplifiedMap() {
-        roadMap = new RoadMap();
-        deliveryOrder = new DeliveryOrder();
-        graph = new HashMap<>();
+    public SimplifiedMap(RoadMap roadMap) {
+        this.roadMap = roadMap;
+
     }
 
     /**
@@ -70,16 +72,20 @@ public class SimplifiedMap {
      * fonction qui calcule le graph simplifié à partir du roadMap.
      */
     public void computeGraph() {
-        LOGGER.info(MessageFormat.format("compute simplified graph", ""));
+        if (deliveryOrder != null) {
+            LOGGER.info(MessageFormat.format("compute simplified graph", ""));
 
-        HashSet<Halt> ptsHalt = new HashSet<>();
-        ptsHalt.addAll(deliveryOrder.getDeliveries());
-        ptsHalt.add(deliveryOrder.getBeginning());
-        for (Halt s : ptsHalt) {
-            ArrayList<Path> listePaths =
-                    shortestPathList(s, ptsHalt);
+            HashSet<Halt> ptsHalt = new HashSet<>();
+            ptsHalt.addAll(deliveryOrder.getDeliveries());
+            ptsHalt.add(deliveryOrder.getBeginning());
+            for (Halt s : ptsHalt) {
+                ArrayList<Path> listePaths =
+                        shortestPathList(s, ptsHalt);
 
-            graph.put(s, listePaths);
+                graph.put(s, listePaths);
+            }
+        } else {
+            LOGGER.warning("Can't compute simplified graph, no delivery order");
         }
     }
 
@@ -143,6 +149,21 @@ public class SimplifiedMap {
             reconstitutePathFromDijkstra(start, ends, endWrappers, sortie);
         }
         return sortie;
+    }
+
+    /**
+     * fonction statique qui renvoie le
+     * plus court chemin de start a end.
+     *
+     * @param start intersection de depart
+     * @param end   arrivee
+     * @return liste des plus courts chemins
+     */
+    public Path shortestPathList(Halt start, Halt end) {
+        Set<Halt> ends = new HashSet<>();
+        ArrayList<Path> sorties = shortestPathList(start, ends);
+        //il y a un seul trajet normalement
+        return sorties.get(0);
     }
 
     /**

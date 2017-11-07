@@ -10,6 +10,7 @@ import java.util.Iterator;
 public abstract class TemplateTSPwSlots implements TSPwSlots {
 
     private Integer[] meilleureSolution;
+    private Date[] datesEstimees;
     private int coutMeilleureSolution = 0;
     private Boolean tempsLimiteAtteint;
 
@@ -17,21 +18,28 @@ public abstract class TemplateTSPwSlots implements TSPwSlots {
         return tempsLimiteAtteint;
     }
 
-    public void chercheSolution(int tpsLimite, int nbSommets, int[][] cout, TimeSlot[] plages, Date depart, Date[] datesEstimees, int[] duree) {
+    public void chercheSolution(int tpsLimite, int nbSommets, int[][] cout, TimeSlot[] plages, Date depart, int[] duree) {
         tempsLimiteAtteint = false;
         coutMeilleureSolution = Integer.MAX_VALUE;
         meilleureSolution = new Integer[nbSommets];
+        this.datesEstimees=new Date[nbSommets];
+        Date[] tempDates=new Date[nbSommets];
         ArrayList<Integer> nonVus = new ArrayList<Integer>();
         for (int i = 1; i < nbSommets; i++) nonVus.add(i);
         ArrayList<Integer> vus = new ArrayList<Integer>(nbSommets);
         vus.add(0); // le premier sommet visite est 0
-        branchAndBound(0, nonVus, vus, 0, cout, plages, depart, datesEstimees, duree, System.currentTimeMillis(), tpsLimite);
+        branchAndBound(0, nonVus, vus, 0, cout, plages, depart, tempDates, duree, System.currentTimeMillis(), tpsLimite);
     }
 
     public Integer getMeilleureSolution(int i) {
         if ((meilleureSolution == null) || (i < 0) || (i >= meilleureSolution.length))
             return null;
         return meilleureSolution[i];
+    }
+    public Date getDateEstimee(int i) {
+        if ((datesEstimees == null) || (i < 0) || (i >= datesEstimees.length))
+            return null;
+        return datesEstimees[i];
     }
 
     public int getCoutMeilleureSolution() {
@@ -76,7 +84,7 @@ public abstract class TemplateTSPwSlots implements TSPwSlots {
      * @param tpsLimite : limite de temps pour la resolution
      */
     void branchAndBound(int sommetCrt, ArrayList<Integer> nonVus, ArrayList<Integer> vus, int coutVus, int[][] cout,
-                        TimeSlot[] plages, Date depart, Date[] datesEstimees, int[] duree, long tpsDebut, int tpsLimite) {
+                        TimeSlot[] plages, Date depart, Date[] tempDates, int[] duree, long tpsDebut, int tpsLimite) {
         if (System.currentTimeMillis() - tpsDebut > tpsLimite) {
             tempsLimiteAtteint = true;
             return;
@@ -86,9 +94,13 @@ public abstract class TemplateTSPwSlots implements TSPwSlots {
             coutVus += cout[sommetCrt][0];
             Date prochainDepart = new Date();
             prochainDepart.setTime(depart.getTime() + cout[sommetCrt][0] * 1000);
-            datesEstimees[0] = prochainDepart;
+            tempDates[0] = prochainDepart;
             if (coutVus < coutMeilleureSolution) { // on a trouve une solution meilleure que meilleureSolution
                 vus.toArray(meilleureSolution);
+                datesEstimees=new Date[tempDates.length];
+                for(int i = 0;i<tempDates.length;i++){
+                    datesEstimees[i]=tempDates[i];
+                }
                 coutMeilleureSolution = coutVus;
             }
         } else if (coutVus + bound(sommetCrt, nonVus, cout, duree) < coutMeilleureSolution) {
@@ -118,9 +130,9 @@ public abstract class TemplateTSPwSlots implements TSPwSlots {
                     nonVus.remove(prochainSommet);
                     Date prochainDepart = new Date();
                     prochainDepart.setTime(depart.getTime() + cout[sommetCrt][prochainSommet] * 1000 + duree[prochainSommet] * 1000 + tempsAttente);
-                    datesEstimees[prochainSommet] = prochainDepart;
+                    tempDates[prochainSommet] = prochainDepart;
                     branchAndBound(prochainSommet, nonVus, vus, coutVus + cout[sommetCrt][prochainSommet] + duree[prochainSommet] + (int) (tempsAttente / 1000.0),
-                            cout, plages, prochainDepart, datesEstimees, duree, tpsDebut, tpsLimite);
+                            cout, plages, prochainDepart, tempDates, duree, tpsDebut, tpsLimite);
                     vus.remove(prochainSommet);
                     nonVus.add(prochainSommet);
                 }
