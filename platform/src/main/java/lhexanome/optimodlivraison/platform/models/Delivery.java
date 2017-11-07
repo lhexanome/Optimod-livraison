@@ -1,5 +1,6 @@
 package lhexanome.optimodlivraison.platform.models;
 
+
 /**
  * Représente une livraison.
  * Contient une durée de livraison, une intersection et une plage horaire.

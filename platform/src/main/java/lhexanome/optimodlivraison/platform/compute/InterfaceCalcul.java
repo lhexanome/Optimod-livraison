@@ -1,10 +1,9 @@
 package lhexanome.optimodlivraison.platform.compute;
 
-import lhexanome.optimodlivraison.platform.compute.tsp.TSP;
-import lhexanome.optimodlivraison.platform.compute.tsp.TSP1;
-import lhexanome.optimodlivraison.platform.compute.tsp.TSP2;
+
 import lhexanome.optimodlivraison.platform.compute.tsp.TSP2wSlots;
 import lhexanome.optimodlivraison.platform.compute.tsp.TSPwSlots;
+import lhexanome.optimodlivraison.platform.exceptions.ComputeSlotsException;
 import lhexanome.optimodlivraison.platform.models.Delivery;
 import lhexanome.optimodlivraison.platform.models.DeliveryOrder;
 import lhexanome.optimodlivraison.platform.models.Halt;
@@ -77,10 +76,11 @@ public class InterfaceCalcul {
      * @param simplifiedMap La map simplifié calculée précédemment.
      * @param demande       La demande de livraison.
      * @param type          le type d'heuristique utilisé.
-     * @param withSlots     si on utilise les plages horaires
      * @return La tournée calculée.
+     * @throws ComputeSlotsException if the slots asked are incompatible
      */
-    public Tour computeTour(SimplifiedMap simplifiedMap, DeliveryOrder demande, TspTypes type, boolean withSlots) {
+    public Tour computeTour(SimplifiedMap simplifiedMap,
+                            DeliveryOrder demande, TspTypes type) throws ComputeSlotsException {
         Warehouse warehouse;
         Date start;
         int time;
@@ -103,84 +103,51 @@ public class InterfaceCalcul {
         MatriceAdjacence matrix = grapheToMatrix(graphe, nbSommets, listeSommets, demande);
 
         int[] listeDurees = demandeToDurees(demande, nbSommets, listeSommets);
-        Date[] datesEstimees = new Date[nbSommets];
 
         ArrayList<Path> deliveries = new ArrayList<>(nbSommets);
 
-        if (withSlots) {
-            TimeSlot[] plages = new TimeSlot[nbSommets];
-            for (int i = 0; i < listeSommets.size(); i++) {
-                if (listeSommets.get(i) instanceof Delivery) {
-                    plages[i] = ((Delivery) listeSommets.get(i)).getSlot();
-                } else {
-                    plages[i] = null;
-                }
+        TimeSlot[] plages = new TimeSlot[nbSommets];
+        for (int i = 0; i < listeSommets.size(); i++) {
+            if (listeSommets.get(i) instanceof Delivery) {
+                plages[i] = ((Delivery) listeSommets.get(i)).getSlot();
+            } else {
+                plages[i] = null;
             }
-            TSPwSlots tsp = new TSP2wSlots();
-
-            do {
-
-                tsp.chercheSolution(INTERVAL_NOTIFY, nbSommets, matrix.getMatriceCouts(),
-                        plages, demande.getStart(), datesEstimees, listeDurees);
-                time = tsp.getCoutMeilleureSolution();
-                if (time == Integer.MAX_VALUE) {
-                    LOGGER.warning("can't compute tour because of incompatible slots");
-                    return null;
-                }
-
-                Path[][] matriceTrajets = matrix.getMatricePaths();
-                int indexDepart, indexArrivee;
-                indexDepart = tsp.getMeilleureSolution(0);
-                for (int i = 1; i < nbSommets; i++) {
-                    indexArrivee = tsp.getMeilleureSolution(i);
-                    Path trajet = matriceTrajets[indexDepart][indexArrivee];
-                    deliveries.add(trajet);
-                    indexDepart = indexArrivee;
-                }
-                deliveries.add(matriceTrajets[indexDepart][tsp.getMeilleureSolution(0)]); //retour entrepot
-
-            //demande.getBeginning().setEstimateDate(datesEstimees[0]);
-            int i = 0;
-            for (Halt arret : listeSommets) {
-                arret.setEstimateDate(datesEstimees[i]);
-                i++;
-            }
-            tour.setTime( time);
-                tour.setPaths( deliveries);tour.forceNotifyObservers();
-
-            } while (tsp.getTempsLimiteAtteint());
-        } else {
-            TSP tsp = new TSP1();
-            if (type == TspTypes.HEURISTICS_1) {
-                tsp = new TSP2();
-            }
-
-            do {
-                tsp.chercheSolution(INTERVAL_NOTIFY, nbSommets, matrix.getMatriceCouts(), listeDurees);
-                time = tsp.getCoutMeilleureSolution();
-
-                Path[][] matriceTrajets = matrix.getMatricePaths();
-
-                int indexDepart, indexArrivee;
-                indexDepart = tsp.getMeilleureSolution(0);
-                for (int i = 1; i < nbSommets; i++) {
-                    indexArrivee = tsp.getMeilleureSolution(i);
-                    Path trajet = matriceTrajets[indexDepart][indexArrivee];
-                    deliveries.add(trajet);
-                    indexDepart = indexArrivee;
-                }
-                deliveries.add(matriceTrajets[indexDepart][tsp.getMeilleureSolution(0)]); //retour entrepot
-
-                tour.setTime(time);
-                tour.setPaths(deliveries);
-
-                tour.forceNotifyObservers();
-            } while (tsp.getTempsLimiteAtteint());
-
         }
+        TSPwSlots tsp = new TSP2wSlots();
+
+        do {
+            tsp.chercheSolution(INTERVAL_NOTIFY, nbSommets, matrix.getMatriceCouts(),
+                    plages, demande.getStart(), listeDurees);
+            time = tsp.getCoutMeilleureSolution();
+            if (time == Integer.MAX_VALUE) {
+                throw new ComputeSlotsException("can't compute tour because of incompatible slots");
+            }
 
 
-        return tour;
+            Path[][] matriceTrajets = matrix.getMatricePaths();
+            int indexDepart, indexArrivee;
+            indexDepart = tsp.getMeilleureSolution(0);
+            for (int i = 1; i < nbSommets; i++) {
+                indexArrivee = tsp.getMeilleureSolution(i);
+                Path trajet = matriceTrajets[indexDepart][indexArrivee];
+                trajet.getEnd().setEstimateDate(tsp.getDateEstimee(indexArrivee));
+                deliveries.add(trajet);
+                indexDepart = indexArrivee;
+            }
+            Path trajet = matriceTrajets[indexDepart][0];
+            trajet.getEnd().setEstimateDate(tsp.getDateEstimee(0));
+            deliveries.add(trajet); //retour entrepot
+
+            tour.setTime(time);
+            tour.setPaths(deliveries);
+
+            tour.forceNotifyObservers();
+
+        } while (tsp.getTempsLimiteAtteint());
+
+        return new Tour(warehouse, start, time, deliveries);
+
     }
 
     /**
@@ -195,6 +162,7 @@ public class InterfaceCalcul {
      * La matrice des couts de trajets d'un sommet x à un sommet y,
      * La matrice des trajets d'un sommet x à un sommet y.
      */
+
     private MatriceAdjacence grapheToMatrix(Map<Halt, ArrayList<Path>> graphe, int nbSommets,
                                             ArrayList<Halt> listeSommets, DeliveryOrder demande) {
 
