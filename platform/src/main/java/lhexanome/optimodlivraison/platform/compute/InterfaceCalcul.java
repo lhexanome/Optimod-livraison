@@ -2,17 +2,23 @@ package lhexanome.optimodlivraison.platform.compute;
 
 import lhexanome.optimodlivraison.platform.compute.tsp.TSP;
 import lhexanome.optimodlivraison.platform.compute.tsp.TSP1;
+import lhexanome.optimodlivraison.platform.compute.tsp.TSP2;
+import lhexanome.optimodlivraison.platform.compute.tsp.TSP2wSlots;
+import lhexanome.optimodlivraison.platform.compute.tsp.TSPwSlots;
 import lhexanome.optimodlivraison.platform.models.Delivery;
 import lhexanome.optimodlivraison.platform.models.DeliveryOrder;
 import lhexanome.optimodlivraison.platform.models.Halt;
 import lhexanome.optimodlivraison.platform.models.Path;
 import lhexanome.optimodlivraison.platform.models.RoadMap;
+import lhexanome.optimodlivraison.platform.models.TimeSlot;
 import lhexanome.optimodlivraison.platform.models.Tour;
 import lhexanome.optimodlivraison.platform.models.Warehouse;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
+import java.util.Observer;
+import java.util.logging.Logger;
 
 /**
  * classe qui permet d'interagir avec le module compute.
@@ -20,9 +26,45 @@ import java.util.Map;
 public class InterfaceCalcul {
 
     /**
+     * Logger.
+     */
+    private static final Logger LOGGER = Logger.getLogger(SimplifiedMap.class.getName());
+    /**
      * Temps maximum d'exécution de l'algorithme en millisecondes.
      */
-    public static final int TPS_LIMITE = 9999999;
+    public static final int TPS_LIMITE = 30000;
+
+    /**
+     * Intervalle d'actualisation de l'affichage pendant le TSP.
+     */
+    private static final int INTERVAL_NOTIFY = 100;
+
+    /**
+     * conversion en secondes.
+     */
+    private static final int CONV_SEC_MIN = 60;
+
+    /**
+     * Observed tour.
+     */
+    private Tour tour;
+
+    /**
+     * Constructor.
+     *
+     * @param tourObserver Tour observer.
+     */
+    public InterfaceCalcul(Observer tourObserver) {
+        this.tour = new Tour();
+        this.tour.addObserver(tourObserver);
+    }
+
+    /**
+     * Empty constructor.
+     */
+    public InterfaceCalcul() {
+        this.tour = new Tour();
+    }
 
     /**
      * Génère le graphe des plus courts chemins entre les livraisons.
@@ -44,9 +86,11 @@ public class InterfaceCalcul {
      *
      * @param simplifiedMap La map simplifié calculée précédemment.
      * @param demande       La demande de livraison.
+     * @param type          le type d'heuristique utilisé.
+     * @param withSlots     si on utilise les plages horaires
      * @return La tournée calculée.
      */
-    public Tour computeTour(SimplifiedMap simplifiedMap, DeliveryOrder demande) {
+    public Tour computeTour(SimplifiedMap simplifiedMap, DeliveryOrder demande, TspTypes type, boolean withSlots) {
         Warehouse warehouse;
         Date start;
         int time;
@@ -55,6 +99,10 @@ public class InterfaceCalcul {
 
         warehouse = demande.getBeginning();
         start = demande.getStart();
+
+        tour.setWarehouse(warehouse);
+        tour.setStart(start);
+
         int nbSommets = demande.getDeliveries().size() + 1;
 
         //sert à assigner chaque sommet à un index.
@@ -65,26 +113,88 @@ public class InterfaceCalcul {
         MatriceAdjacence matrix = grapheToMatrix(graphe, nbSommets, listeSommets, demande);
 
         int[] listeDurees = demandeToDurees(demande, nbSommets, listeSommets);
-
-        TSP tsp = new TSP1();
-        tsp.chercheSolution(TPS_LIMITE, nbSommets, matrix.getMatriceCouts(), listeDurees);
-        time = tsp.getCoutMeilleureSolution();
+        Date[] datesEstimees = new Date[nbSommets];
 
         ArrayList<Path> deliveries = new ArrayList<>(nbSommets);
 
-        Path[][] matriceTrajets = matrix.getMatricePaths();
+        if (withSlots) {
+            TimeSlot[] plages = new TimeSlot[nbSommets];
+            for (int i = 0; i < listeSommets.size(); i++) {
+                if (listeSommets.get(i) instanceof Delivery) {
+                    plages[i] = ((Delivery) listeSommets.get(i)).getSlot();
+                } else {
+                    plages[i] = null;
+                }
+            }
+            TSPwSlots tsp = new TSP2wSlots();
 
-        int indexDepart, indexArrivee;
-        indexDepart = tsp.getMeilleureSolution(0);
-        for (int i = 1; i < nbSommets; i++) {
-            indexArrivee = tsp.getMeilleureSolution(i);
-            Path trajet = matriceTrajets[indexDepart][indexArrivee];
-            deliveries.add(trajet);
-            indexDepart = indexArrivee;
+            do {
+
+                tsp.chercheSolution(INTERVAL_NOTIFY, nbSommets, matrix.getMatriceCouts(),
+                        plages, demande.getStart(), datesEstimees, listeDurees);
+                time = tsp.getCoutMeilleureSolution();
+                if (time == Integer.MAX_VALUE) {
+                    LOGGER.warning("can't compute tour because of incompatible slots");
+                    return null;
+                }
+
+                Path[][] matriceTrajets = matrix.getMatricePaths();
+                int indexDepart, indexArrivee;
+                indexDepart = tsp.getMeilleureSolution(0);
+                for (int i = 1; i < nbSommets; i++) {
+                    indexArrivee = tsp.getMeilleureSolution(i);
+                    Path trajet = matriceTrajets[indexDepart][indexArrivee];
+                    deliveries.add(trajet);
+                    indexDepart = indexArrivee;
+                }
+                deliveries.add(matriceTrajets[indexDepart][tsp.getMeilleureSolution(0)]); //retour entrepot
+
+                demande.getBeginning().setEstimateDate(datesEstimees[0]);
+                int i = 0;
+                for (Halt arret : graphe.keySet()) {
+                    arret.setEstimateDate(datesEstimees[i]);
+                    i++;
+                }
+
+                tour.setTime(time);
+                tour.setPaths(deliveries);
+
+                tour.notifyObservers();
+
+            } while (tsp.getTempsLimiteAtteint());
+
+        } else {
+            TSP tsp = new TSP1();
+            if (type == TspTypes.HEURISTICS_1) {
+                tsp = new TSP2();
+            }
+
+            do {
+                tsp.chercheSolution(INTERVAL_NOTIFY, nbSommets, matrix.getMatriceCouts(), listeDurees);
+                time = tsp.getCoutMeilleureSolution();
+
+                Path[][] matriceTrajets = matrix.getMatricePaths();
+
+                int indexDepart, indexArrivee;
+                indexDepart = tsp.getMeilleureSolution(0);
+                for (int i = 1; i < nbSommets; i++) {
+                    indexArrivee = tsp.getMeilleureSolution(i);
+                    Path trajet = matriceTrajets[indexDepart][indexArrivee];
+                    deliveries.add(trajet);
+                    indexDepart = indexArrivee;
+                }
+                deliveries.add(matriceTrajets[indexDepart][tsp.getMeilleureSolution(0)]); //retour entrepot
+
+                tour.setTime(time);
+                tour.setPaths(deliveries);
+
+                tour.notifyObservers();
+            } while (tsp.getTempsLimiteAtteint());
+
         }
-        deliveries.add(matriceTrajets[indexDepart][tsp.getMeilleureSolution(0)]); //retour entrepot
 
-        return new Tour(warehouse, start, time, deliveries);
+
+        return tour;
     }
 
     /**

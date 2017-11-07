@@ -102,4 +102,25 @@ public class TimeSlot {
 
         return "De " + simpleDateFormat.format(start) + " à " + simpleDateFormat.format(end);
     }
+
+    /**
+     * get the time in millisecond between two dates.
+     *
+     * @param d1 first date
+     * @param d2 second date
+     * @return time returned
+     */
+    public static long getTimescaleBetween(Date d1, Date d2) {
+        return d2.getTime() - d1.getTime();
+    }
+    /**
+     * get the time in millisecond between a date and a time.
+     *
+     * @param t1 first time
+     * @param d2 second date
+     * @return time returned
+     */
+    public static long getTimescaleBetween(long t1, Date d2) {
+        return d2.getTime() - t1;
+    }
 }

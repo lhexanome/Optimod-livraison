@@ -51,7 +51,7 @@ public class AddDeliveryCommand extends UndoableCommand {
         this.deliveryToAdd = deliveryToAdd;
         this.tour = tour;
 
-        this.interfaceCalcul = new InterfaceCalcul();
+        //this.interfaceCalcul = new InterfaceCalcul();
     }
 
     /**

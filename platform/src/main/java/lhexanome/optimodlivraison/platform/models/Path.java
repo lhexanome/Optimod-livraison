@@ -17,6 +17,8 @@ public class Path {
 
     /**
      * Temps necessaire pour parcourir le trajet.
+     * en secondes.
+     * prend en compte le temps d'attente à la fin s'il y en a un.
      */
     private int timeToTravel;
 
