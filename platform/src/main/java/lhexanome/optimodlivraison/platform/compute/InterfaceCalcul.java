@@ -17,6 +17,7 @@ import lhexanome.optimodlivraison.platform.models.Warehouse;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
+import java.util.Observer;
 import java.util.logging.Logger;
 
 /**
@@ -36,6 +37,15 @@ public class InterfaceCalcul {
      * conversion en secondes.
      */
     private static final int CONV_SEC_MIN = 60;
+
+    /**
+     * Constructor.
+     *
+     * @param tourObserver Tour observer.
+     */
+    public InterfaceCalcul(Observer tourObserver) {
+
+    }
 
     /**
      * Génère le graphe des plus courts chemins entre les livraisons.
