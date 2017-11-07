@@ -157,7 +157,11 @@ public class MainController implements ControllerInterface {
      * Compute a tour.
      */
     public void computeTour() {
-        // TODO Check if available otherwise send an error message ?
+        if (deliveryOrderController.getDeliveryOrder() == null
+                || roadMapController.getRoadMap() == null) {
+            notifyError("Vous devez d'abord charger une carte et une demande de livraison.");
+            return;
+        }
         tourController.computeTour(
                 roadMapController.getRoadMap(),
                 deliveryOrderController.getDeliveryOrder()

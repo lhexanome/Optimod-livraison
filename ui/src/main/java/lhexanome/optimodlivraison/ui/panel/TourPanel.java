@@ -1,6 +1,5 @@
 package lhexanome.optimodlivraison.ui.panel;
 
-import lhexanome.optimodlivraison.platform.models.Tour;
 import lhexanome.optimodlivraison.ui.controller.TourController;
 
 import javax.swing.*;
@@ -20,11 +19,6 @@ public class TourPanel extends AbstractPanel {
      * Button to compute a tour.
      */
     private JButton computeTourButton;
-
-    /**
-     * Label indicating the current Tour duration.
-     */
-    private JLabel durationLabel;
 
     /**
      * Button to cancel a computation.
@@ -54,20 +48,6 @@ public class TourPanel extends AbstractPanel {
     public void setup() {
         computeTourButton.addActionListener(e -> ((TourController) controller).newComputation());
         cancelComputationButton.addActionListener(e -> ((TourController) controller).cancelComputeTour());
-    }
-
-    /**
-     * Tour setter.
-     * Update the JLabel containing the tour duration
-     *
-     * @param tour newTour
-     */
-    public void setTour(Tour tour) {
-        /*if (tour == null) {
-            //durationLabel.setText("");
-        } else {
-            // durationLabel.setText("Durée de la tournée : " + tour.getTime() / 60 + " minutes");
-        }*/
     }
 
     /**
