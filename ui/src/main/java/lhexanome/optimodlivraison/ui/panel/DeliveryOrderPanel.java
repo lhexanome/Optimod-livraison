@@ -61,7 +61,7 @@ public class DeliveryOrderPanel extends AbstractPanel {
      */
     @Override
     public void setup() {
-        cellRenderer = new DeliveryCellRenderer();
+        cellRenderer = new DeliveryCellRenderer(DeliveryCellRenderer.Context.DELIVERY_ORDER);
         deliveryList.setCellRenderer(cellRenderer);
 
         deliveryList.addListSelectionListener(e ->

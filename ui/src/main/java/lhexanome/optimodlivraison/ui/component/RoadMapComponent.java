@@ -519,6 +519,7 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
         this.roadMap = map;
         this.tour = null;
         this.deliveryOrder = null;
+        this.zoom = 1;
         repaint();
         //TODO add wacher
     }
