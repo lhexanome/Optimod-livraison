@@ -32,6 +32,9 @@ subprojects {
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
 
+    compileJava.options.encoding = "UTF-8"
+    compileTestJava.options.encoding = "UTF-8"
+
     dependencies {
         testCompile 'org.junit.jupiter:junit-jupiter-api:5.0.1'
         testCompile 'org.assertj:assertj-core:3.8.0'
