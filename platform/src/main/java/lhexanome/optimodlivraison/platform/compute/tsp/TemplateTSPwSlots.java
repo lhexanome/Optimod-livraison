@@ -23,6 +23,7 @@ public abstract class TemplateTSPwSlots implements TSPwSlots {
     private Date[] datesEstimees;
     private int coutMeilleureSolution = 0;
     private Boolean tempsLimiteAtteint;
+
     public Boolean getTempsLimiteAtteint() {
         return tempsLimiteAtteint;
     }
@@ -31,30 +32,31 @@ public abstract class TemplateTSPwSlots implements TSPwSlots {
     public void init(int nbSommets) {
         coutMeilleureSolution = Integer.MAX_VALUE;
         meilleureSolution = new Integer[nbSommets];
-        this.datesEstimees=new Date[nbSommets];
+        this.datesEstimees = new Date[nbSommets];
     }
 
 
     @Override
-    public void chercheSolution(Tour tour,MatriceAdjacence matrix, int tpsLimite, int nbSommets, int[][] cout, TimeSlot[] plages, Date depart, int[] duree) {
+    public void chercheSolution(Tour tour, MatriceAdjacence matrix, int tpsLimite, int nbSommets, int[][] cout, TimeSlot[] plages, Date depart, int[] duree) {
 
         tempsLimiteAtteint = false;
         init(nbSommets);
-        Date[] tempDates=new Date[nbSommets];
-        ArrayList<Integer> nonVus = new ArrayList<Integer>();
+        Date[] tempDates = new Date[nbSommets];
+        ArrayList<Integer> nonVus = new ArrayList<>();
         for (int i = 1; i < nbSommets; i++) nonVus.add(i);
-        ArrayList<Integer> vus = new ArrayList<Integer>(nbSommets);
+        ArrayList<Integer> vus = new ArrayList<>(nbSommets);
         vus.add(0); // le premier sommet visite est 0
-        branchAndBound(tour,matrix,0, nonVus, vus, 0, cout, plages, depart, tempDates, duree, System.currentTimeMillis(), tpsLimite);
+        branchAndBound(tour, matrix, 0, nonVus, vus, 0, cout, plages, depart, tempDates, duree, System.currentTimeMillis(), tpsLimite);
     }
 
     /**
      * compute back the results to the tour.
-     * @param tour tour to obtain
+     *
+     * @param tour   tour to obtain
      * @param matrix storage for the correspondence between indexes and objects
      * @throws ComputeSlotsException when the time slots are incompatible.
      */
-    private void computeResults(Tour tour, MatriceAdjacence matrix) throws ComputeSlotsException{
+    private void computeResults(Tour tour, MatriceAdjacence matrix) throws ComputeSlotsException {
         if (coutMeilleureSolution == Integer.MAX_VALUE) {
             throw new ComputeSlotsException("Can't compute tour because of incompatible slots");
         }
@@ -84,14 +86,17 @@ public abstract class TemplateTSPwSlots implements TSPwSlots {
 
     @Override
     public Integer getMeilleureSolution(int i) {
-        if ((meilleureSolution == null) || (i < 0) || (i >= meilleureSolution.length))
+        if ((meilleureSolution == null) || (i < 0) || (i >= meilleureSolution.length)) {
             return null;
+        }
         return meilleureSolution[i];
     }
+
     @Override
     public Date getDateEstimee(int i) {
-        if ((datesEstimees == null) || (i < 0) || (i >= datesEstimees.length))
+        if ((datesEstimees == null) || (i < 0) || (i >= datesEstimees.length)) {
             return null;
+        }
         return datesEstimees[i];
     }
 
@@ -137,36 +142,35 @@ public abstract class TemplateTSPwSlots implements TSPwSlots {
      * @param tpsDebut  : moment ou la resolution a commence
      * @param tpsLimite : limite de temps pour la resolution
      */
-    void branchAndBound(Tour tour,MatriceAdjacence matrix,int sommetCrt, ArrayList<Integer> nonVus, ArrayList<Integer> vus, int coutVus, int[][] cout,
+    void branchAndBound(Tour tour, MatriceAdjacence matrix, int sommetCrt, ArrayList<Integer> nonVus, ArrayList<Integer> vus, int coutVus, int[][] cout,
                         TimeSlot[] plages, Date depart, Date[] tempDates, int[] duree, long tpsDebut, int tpsLimite) {
         if (System.currentTimeMillis() - tpsDebut > tpsLimite) {
             tempsLimiteAtteint = true;
-            LOGGER.info("timeout");
+            LOGGER.info("Timeout");
             try {
-                computeResults(tour,matrix);
+                computeResults(tour, matrix);
             } catch (ComputeSlotsException e) {
                 e.printStackTrace();
             }
-            return ;
+            return;
         }
 
         if (nonVus.size() == 0) { // tous les sommets ont ete visites
             coutVus += cout[sommetCrt][0];
             Date prochainDepart = new Date();
-            prochainDepart.setTime(depart.getTime() + cout[sommetCrt][0] * 1000+duree[sommetCrt]*1000);
+            prochainDepart.setTime(depart.getTime() + cout[sommetCrt][0] * 1000 + duree[sommetCrt] * 1000);
             tempDates[0] = prochainDepart;
             if (coutVus < coutMeilleureSolution) { // on a trouve une solution meilleure que meilleureSolution
                 vus.toArray(meilleureSolution);
-                datesEstimees=new Date[tempDates.length];
-                for(int i = 0;i<tempDates.length;i++){
-                    datesEstimees[i]=tempDates[i];
-                }
+                datesEstimees = new Date[tempDates.length];
+
+                System.arraycopy(tempDates, 0, datesEstimees, 0, tempDates.length);
+
                 coutMeilleureSolution = coutVus;
                 try {
-                    computeResults(tour,matrix);
+                    computeResults(tour, matrix);
                 } catch (ComputeSlotsException e) {
                     e.printStackTrace();
-                    return;
                 }
             }
         } else if (coutVus + bound(sommetCrt, nonVus, cout, duree) < coutMeilleureSolution) {
@@ -189,7 +193,7 @@ public abstract class TemplateTSPwSlots implements TSPwSlots {
                         //cette fois on prend le temps minimal et on le minore à 0
                         //on ne compte plus l'attente sur place
                         //ca permet d'obtenir le temps d'attente avant l'ouverture de la plage s'il y en a
-                        tempsAttente = Math.max(0, TimeSlot.getTimescaleBetween(depart.getTime() + cout[sommetCrt][prochainSommet] * 1000 , plages[prochainSommet].getStart()));
+                        tempsAttente = Math.max(0, TimeSlot.getTimescaleBetween(depart.getTime() + cout[sommetCrt][prochainSommet] * 1000, plages[prochainSommet].getStart()));
 
                     }
                 }
@@ -199,7 +203,7 @@ public abstract class TemplateTSPwSlots implements TSPwSlots {
                     Date prochainDepart = new Date();
                     prochainDepart.setTime(depart.getTime() + cout[sommetCrt][prochainSommet] * 1000 + duree[sommetCrt] * 1000 + tempsAttente);
                     tempDates[prochainSommet] = prochainDepart;
-                    branchAndBound(tour,matrix,prochainSommet, nonVus, vus, coutVus + cout[sommetCrt][prochainSommet] + duree[sommetCrt] + (int) (tempsAttente / 1000.0),
+                    branchAndBound(tour, matrix, prochainSommet, nonVus, vus, coutVus + cout[sommetCrt][prochainSommet] + duree[sommetCrt] + (int) (tempsAttente / 1000.0),
                             cout, plages, prochainDepart, tempDates, duree, tpsDebut, tpsLimite);
                     vus.remove(prochainSommet);
                     nonVus.add(prochainSommet);

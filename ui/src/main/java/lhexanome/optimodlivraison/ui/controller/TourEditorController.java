@@ -253,4 +253,5 @@ public class TourEditorController implements ControllerInterface {
     public void selectDeliveryFromList(Delivery selectedValue) {
         mainController.selectDeliveryFromList(selectedValue);
     }
+
 }

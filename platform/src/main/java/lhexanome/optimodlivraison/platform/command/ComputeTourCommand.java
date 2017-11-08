@@ -2,7 +2,6 @@ package lhexanome.optimodlivraison.platform.command;
 
 import lhexanome.optimodlivraison.platform.compute.InterfaceCalcul;
 import lhexanome.optimodlivraison.platform.compute.SimplifiedMap;
-import lhexanome.optimodlivraison.platform.compute.TspTypes;
 import lhexanome.optimodlivraison.platform.listeners.ComputeTourListener;
 import lhexanome.optimodlivraison.platform.models.DeliveryOrder;
 import lhexanome.optimodlivraison.platform.models.RoadMap;
@@ -13,6 +12,7 @@ import java.text.MessageFormat;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Logger;
 
@@ -89,7 +89,7 @@ public class ComputeTourCommand extends SwingWorker<Void, Tour> implements Obser
 
             LOGGER.info("Simplified roadMap computed");
 
-            interfaceCalcul.computeTour(simplifiedMap, deliveryOrder, TspTypes.HEURISTICS_1);
+            interfaceCalcul.computeTour(simplifiedMap, deliveryOrder);
 
             LOGGER.warning("Tour computed");
         } catch (Exception e) {
@@ -129,7 +129,13 @@ public class ComputeTourCommand extends SwingWorker<Void, Tour> implements Obser
     protected void done() {
         if (listener == null) return;
         try {
-            get();
+            try {
+                get();
+            } catch (CancellationException ignored) {
+                // Do nothing with this,
+                // just catch it so it doesn't
+                // skip the call to onComputingTourEnd()
+            }
             listener.onComputingTourEnd();
         } catch (InterruptedException | ExecutionException e) {
             listener.onTourComputingFail(e);
