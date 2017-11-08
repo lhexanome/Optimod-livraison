@@ -3,7 +3,6 @@ package lhexanome.optimodlivraison.platform.compute;
 
 import lhexanome.optimodlivraison.platform.compute.tsp.TSP2wSlots;
 import lhexanome.optimodlivraison.platform.compute.tsp.TSPwSlots;
-import lhexanome.optimodlivraison.platform.exceptions.ComputeSlotsException;
 import lhexanome.optimodlivraison.platform.models.Delivery;
 import lhexanome.optimodlivraison.platform.models.DeliveryOrder;
 import lhexanome.optimodlivraison.platform.models.Halt;
@@ -71,15 +70,12 @@ public class InterfaceCalcul {
      *
      * @param simplifiedMap La map simplifié calculée précédemment.
      * @param demande       La demande de livraison.
-     * @param type          le type d'heuristique utilisé.
      * @return La tournée calculée.
-     * @throws ComputeSlotsException if the slots asked are incompatible
      */
     public Tour computeTour(SimplifiedMap simplifiedMap,
-                            DeliveryOrder demande, TspTypes type) throws ComputeSlotsException {
+                            DeliveryOrder demande) {
         Warehouse warehouse;
         Date start;
-        int time;
 
         Map<Halt, ArrayList<Path>> graphe = simplifiedMap.getGraph();
 
@@ -100,8 +96,6 @@ public class InterfaceCalcul {
 
         int[] listeDurees = demandeToDurees(demande, nbSommets, listeSommets);
 
-        ArrayList<Path> deliveries = new ArrayList<>(nbSommets);
-
 
         TimeSlot[] plages = new TimeSlot[nbSommets];
         for (int i = 0; i < listeSommets.size(); i++) {
@@ -116,8 +110,6 @@ public class InterfaceCalcul {
 
         tsp.chercheSolution(tour, matrix, TIMEOUT, nbSommets, matrix.getMatriceCouts(),
                 plages, demande.getStart(), listeDurees);
-        time = tsp.getCoutMeilleureSolution();
-
 
         LOGGER.info("TSP finished");
         return tour;

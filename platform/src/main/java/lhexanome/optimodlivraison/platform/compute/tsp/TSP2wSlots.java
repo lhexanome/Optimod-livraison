@@ -34,7 +34,7 @@ public class TSP2wSlots extends TemplateTSPwSlots {
     @Override
     public int bound(Integer sommetCourant, ArrayList<Integer> nonVus, int[][] cout, int[] duree) {
         int coutMin = Integer.MAX_VALUE;
-        int coutCurrent = 0;
+        int coutCurrent;
         for (int i = 0; i < nonVus.size(); i++) {
             coutCurrent = cout[sommetCourant][i] + duree[i];
             if (coutMin > coutCurrent) {

@@ -8,6 +8,7 @@ import lhexanome.optimodlivraison.platform.models.Tour;
 import lhexanome.optimodlivraison.ui.panel.TourPanel;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.logging.Logger;
@@ -91,6 +92,7 @@ public class TourController implements ControllerInterface, ComputeTourListener,
         computeTourCommand = new ComputeTourCommand(roadMap, deliveryOrder, this);
         computeTourCommand.setListener(this);
         computeTourCommand.execute();
+        tourPanel.toggleProgressBar(true);
     }
 
     /**
@@ -99,6 +101,7 @@ public class TourController implements ControllerInterface, ComputeTourListener,
     public void cancelComputeTour() {
         if (computeTourCommand != null && !computeTourCommand.isCancelled()) {
             computeTourCommand.cancel(true);
+            computeTourCommand = null;
         }
     }
 
@@ -111,10 +114,6 @@ public class TourController implements ControllerInterface, ComputeTourListener,
     private void setTour(Tour tour) {
         this.tour = tour;
         mainController.setTour(tour);
-        if (computeTourCommand != null) {
-            computeTourCommand.cancel(true);
-            computeTourCommand = null;
-        }
     }
 
     /**
@@ -132,6 +131,7 @@ public class TourController implements ControllerInterface, ComputeTourListener,
      * @param firstTour First tour computed
      */
     @Override
+    @SuppressWarnings("checkstyle:magicnumber")
     public void onFirstTourComputed(Tour firstTour) {
         setTour(firstTour);
     }
@@ -140,8 +140,11 @@ public class TourController implements ControllerInterface, ComputeTourListener,
      * Called at the end of the computing.
      */
     @Override
+    @SuppressWarnings("checkstyle:magicnumber")
     public void onComputingTourEnd() {
         computeTourCommand = null;
+        tourPanel.toggleProgressBar(false);
+        mainController.getContentPane().setCursor(Cursor.getDefaultCursor());
     }
 
     /**
@@ -160,6 +163,7 @@ public class TourController implements ControllerInterface, ComputeTourListener,
      */
     public void clearTour() {
         tour = null;
+        tourPanel.toggleProgressBar(false);
         if (computeTourCommand != null) {
             computeTourCommand.cancel(true);
             computeTourCommand = null;

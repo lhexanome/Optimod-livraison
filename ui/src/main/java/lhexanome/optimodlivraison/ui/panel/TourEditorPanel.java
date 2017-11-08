@@ -131,13 +131,33 @@ public class TourEditorPanel extends AbstractPanel implements DeliveryListTransf
      */
     public void setTour(Tour tour) {
         DefaultListModel<Delivery> listModel = (DefaultListModel<Delivery>) deliveryList.getModel();
-        listModel.clear();
 
         if (tour == null) {
+            listModel.clear();
             tourStartLabel.setText("");
             tourEndLabel.setText("");
             return;
         }
+
+        tour.addObserver((o, arg) -> {
+            if (o instanceof Tour) {
+                updateTourList(tour, listModel);
+            }
+        });
+
+        updateTourList(tour, listModel);
+    }
+
+    /**
+     * Just update the display with new data.
+     * <p>
+     * Call when Tour is updated
+     *
+     * @param tour      Tour to display
+     * @param listModel List model of the JList
+     */
+    private void updateTourList(Tour tour, DefaultListModel<Delivery> listModel) {
+        listModel.clear();
 
         Vector<Delivery> haltList = tour.getOrderedDeliveryVector();
         Warehouse warehouse = tour.getWarehouse();

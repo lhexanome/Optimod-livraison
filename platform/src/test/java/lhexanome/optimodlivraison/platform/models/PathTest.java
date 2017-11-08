@@ -291,7 +291,7 @@ public class PathTest {
         pathTested = new Path(b1,e1);
         Path path35 = new Path(e2,e3);
         path35.addVector(vector34);
-        ;
+
         path35.addVector(vector45);
 
         pathTested.addVector(vector12);
