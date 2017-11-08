@@ -12,14 +12,14 @@ public interface TSPwSlots {
     /**
      * @return true si chercheSolution() s'est terminee parce que la limite de temps avait ete atteinte, avant d'avoir pu explorer tout l'espace de recherche,
      */
-    public Boolean getTempsLimiteAtteint();
+    Boolean getTempsLimiteAtteint();
 
 
     /**
      * init the tsp data structures.
      * @param nbSommets number of nodes
      */
-    public void init(int nbSommets);
+    void init(int nbSommets);
     /**
      * Cherche un circuit de duree minimale passant par chaque sommet (compris entre 0 et nbSommets-1)
      *
@@ -32,18 +32,18 @@ public interface TSPwSlots {
      * @param depart     : date de depart de la recherche
      * @param duree     : duree[i] = duree pour visiter le sommet i, avec 0 <= i < nbSommets
      */
-    public void chercheSolution(Tour tour, MatriceAdjacence matrix, int tpsLimite, int nbSommets, int[][] cout, TimeSlot[] plages, Date depart, int[] duree);
+    void chercheSolution(Tour tour, MatriceAdjacence matrix, int tpsLimite, int nbSommets, int[][] cout, TimeSlot[] plages, Date depart, int[] duree);
 
     /**
      * @param i
      * @return le sommet visite en i-eme position dans la solution calculee par chercheSolution
      */
-    public Integer getMeilleureSolution(int i);
+    Integer getMeilleureSolution(int i);
 
     /**
      * @return la duree de la solution calculee par chercheSolution
      */
-    public int getCoutMeilleureSolution();
+    int getCoutMeilleureSolution();
 
-    public Date getDateEstimee(int i);
+    Date getDateEstimee(int i);
 }

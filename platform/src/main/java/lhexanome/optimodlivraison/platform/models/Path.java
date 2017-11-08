@@ -76,6 +76,7 @@ public class Path {
      * @param o object to compare
      * @return If the two objects are equals
      */
+    @SuppressWarnings("SimplifiableIfStatement")
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
