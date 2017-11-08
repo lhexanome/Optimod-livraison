@@ -1,6 +1,7 @@
 package lhexanome.optimodlivraison.ui.component;
 
 import lhexanome.optimodlivraison.platform.models.Delivery;
+import lhexanome.optimodlivraison.platform.models.Halt;
 import lhexanome.optimodlivraison.platform.models.RoadMap;
 import lhexanome.optimodlivraison.platform.models.TimeSlot;
 import lhexanome.optimodlivraison.platform.models.Vector;
@@ -10,6 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.font.TextAttribute;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -28,6 +30,21 @@ public class DeliveryCellRenderer implements ListCellRenderer<Delivery> {
      * Current context.
      */
     private Context currentContext;
+
+    /**
+     * used for scaling a displayed integer.
+     */
+    private static final long SCALE_DELIVERY = 100;
+
+    /**
+     * used for scaling a displayed integer.
+     */
+    private static final long MILLISECONDS_TO_SECONDS = 60000;
+
+    /**
+     * waiting time text color.
+     */
+    private static final Color WAITING_TIME_COLOR = Color.ORANGE;
 
     /**
      * Constructor.
@@ -77,103 +94,34 @@ public class DeliveryCellRenderer implements ListCellRenderer<Delivery> {
 
 
         // Index line
-
         if (hasContext(Context.TOUR)) {
-
-            JLabel indexLabel = new JLabel("N° :");
-            indexLabel.setFont(font.deriveFont(attributes));
-            JLabel indexValue = new JLabel(String.valueOf(index));
-
-            JLabel estimateDateValue = new JLabel(DateUtil.formatDate(" (HH:mm)", value.getEstimateDate()));
-
-            parallelGroup.addGroup(layout.createSequentialGroup()
-                    .addComponent(indexLabel)
-                    .addComponent(indexValue)
-                    .addComponent(estimateDateValue)
-            );
-
-            sequentialGroup.addGroup(layout.createParallelGroup()
-                    .addComponent(indexLabel)
-                    .addComponent(indexValue)
-                    .addComponent(estimateDateValue)
-            );
+            setIndexLine(font, attributes, index, parallelGroup, layout, sequentialGroup, value);
         }
 
 
         // Time slot line
         TimeSlot timeSlot = value.getSlot();
-
         if (hasContext(Context.DELIVERY_ORDER, Context.TOUR) && timeSlot != null) {
 
-            JLabel timeSlotLabel = new JLabel("Plage horaire :");
-            timeSlotLabel.setFont(font.deriveFont(attributes));
-
-            JLabel timeSlotValue = new JLabel(value.getSlot().toString());
-
-            parallelGroup.addGroup(layout.createSequentialGroup()
-                    .addComponent(timeSlotLabel)
-                    .addComponent(timeSlotValue)
-            );
-
-            sequentialGroup.addGroup(layout.createParallelGroup()
-                    .addComponent(timeSlotLabel)
-                    .addComponent(timeSlotValue)
-            );
+            setTimeSlotLine(font, attributes, parallelGroup, layout, sequentialGroup, value);
         }
 
 
         // Duration label
-
         if (hasContext(Context.DELIVERY_ORDER, Context.TOUR)) {
-            JLabel durationLabel = new JLabel("Durée de livraison :");
-            durationLabel.setFont(font.deriveFont(attributes));
-
-            JLabel durationValue = new JLabel(String.valueOf(value.getDuration() / 100) + " min");
-
-            parallelGroup.addGroup(layout.createSequentialGroup()
-                    .addComponent(durationLabel)
-                    .addComponent(durationValue)
-            );
-
-            sequentialGroup.addGroup(layout.createParallelGroup()
-                    .addComponent(durationLabel)
-                    .addComponent(durationValue)
-            );
+            setDurationLabel(font, attributes, parallelGroup, layout, sequentialGroup, value);
         }
 
+        // Waiting time label
+        if (hasContext(Context.DELIVERY_ORDER, Context.TOUR) &&  value.getSlot() != null
+                && value.getEstimateDate() != null) {
+
+            setWaitingTime(value, font, attributes, parallelGroup, layout, sequentialGroup);
+        }
 
         // Address line
-
         if (hasContext(Context.DELIVERY_ORDER, Context.TOUR)) {
-            JLabel addressLabel = new JLabel("Adresses à proximitées :");
-
-            addressLabel.setFont(font.deriveFont(attributes));
-
-            GroupLayout.SequentialGroup addressGroupSeq = layout.createSequentialGroup();
-            GroupLayout.ParallelGroup addressGroupParallel = layout.createParallelGroup();
-
-            Set<String> streetNames = new HashSet<>();
-
-            for (Vector vector : roadMap.getVectorsFromIntersection(value.getIntersection())) {
-                streetNames.add(vector.getStreetName());
-            }
-            for (String streetName : streetNames) {
-
-                if (streetName.isEmpty()) streetName = "Rue sans nom";
-
-                JLabel line = new JLabel("- " + streetName);
-
-                addressGroupParallel.addComponent(line);
-                addressGroupSeq.addComponent(line);
-            }
-
-            parallelGroup
-                    .addComponent(addressLabel)
-                    .addGroup(addressGroupParallel);
-
-            sequentialGroup
-                    .addComponent(addressLabel)
-                    .addGroup(addressGroupSeq);
+            setAddressLine(font, attributes, layout, value, parallelGroup, sequentialGroup);
         }
 
 
@@ -195,6 +143,170 @@ public class DeliveryCellRenderer implements ListCellRenderer<Delivery> {
         }
 
         return panel;
+    }
+
+    /**
+     * Renders the time slot line of a cell.
+     * @param value value
+     * @param font font
+     * @param attributes attributes
+     * @param parallelGroup parallelGroup
+     * @param layout layout
+     * @param sequentialGroup sequentialGroup
+     */
+    private void setTimeSlotLine(Font font, Map attributes, GroupLayout.Group parallelGroup,
+                                 GroupLayout layout, GroupLayout.Group sequentialGroup, Delivery value) {
+        JLabel timeSlotLabel = new JLabel("Plage horaire :");
+        timeSlotLabel.setFont(font.deriveFont(attributes));
+
+        JLabel timeSlotValue = new JLabel(value.getSlot().toString());
+
+        parallelGroup.addGroup(layout.createSequentialGroup()
+                .addComponent(timeSlotLabel)
+                .addComponent(timeSlotValue)
+        );
+
+        sequentialGroup.addGroup(layout.createParallelGroup()
+                .addComponent(timeSlotLabel)
+                .addComponent(timeSlotValue)
+        );
+    }
+
+    /**
+     * Renders the address line of a delivery cell.
+     * @param value value
+     * @param font font
+     * @param attributes attributes
+     * @param parallelGroup parallelGroup
+     * @param layout layout
+     * @param sequentialGroup sequentialGroup
+     */
+    private void setAddressLine(Font font, Map attributes, GroupLayout layout, Halt value,
+                                GroupLayout.Group parallelGroup, GroupLayout.Group sequentialGroup) {
+        JLabel addressLabel = new JLabel("Adresses à proximitées :");
+
+        addressLabel.setFont(font.deriveFont(attributes));
+
+        GroupLayout.SequentialGroup addressGroupSeq = layout.createSequentialGroup();
+        GroupLayout.ParallelGroup addressGroupParallel = layout.createParallelGroup();
+
+        Set<String> streetNames = new HashSet<>();
+
+        for (Vector vector : roadMap.getVectorsFromIntersection(value.getIntersection())) {
+            streetNames.add(vector.getStreetName());
+        }
+        for (String streetName : streetNames) {
+
+            if (streetName.isEmpty()) streetName = "Rue sans nom";
+
+            JLabel line = new JLabel("- " + streetName);
+
+            addressGroupParallel.addComponent(line);
+            addressGroupSeq.addComponent(line);
+        }
+
+        parallelGroup
+                .addComponent(addressLabel)
+                .addGroup(addressGroupParallel);
+
+        sequentialGroup
+                .addComponent(addressLabel)
+                .addGroup(addressGroupSeq);
+    }
+
+    /**
+     * Renders the delivery index on the cell.
+     * @param value value
+     * @param font font
+     * @param attributes attributes
+     * @param parallelGroup parallelGroup
+     * @param layout layout
+     * @param sequentialGroup sequentialGroup
+     * @param index index
+     */
+    private void setIndexLine(Font font, Map attributes, int index, GroupLayout.Group parallelGroup,
+                              GroupLayout layout, GroupLayout.Group sequentialGroup, Halt value) {
+        JLabel indexLabel = new JLabel("N° :");
+        indexLabel.setFont(font.deriveFont(attributes));
+        JLabel indexValue = new JLabel(String.valueOf(index));
+
+        JLabel estimateDateValue = new JLabel(DateUtil.formatDate(" (HH:mm)", value.getEstimateDate()));
+
+        parallelGroup.addGroup(layout.createSequentialGroup()
+                .addComponent(indexLabel)
+                .addComponent(indexValue)
+                .addComponent(estimateDateValue)
+        );
+
+        sequentialGroup.addGroup(layout.createParallelGroup()
+                .addComponent(indexLabel)
+                .addComponent(indexValue)
+                .addComponent(estimateDateValue)
+        );
+    }
+
+    /**
+     * Renders the duration label on the cell.
+     * @param value value
+     * @param font font
+     * @param attributes attributes
+     * @param parallelGroup parallelGroup
+     * @param layout layout
+     * @param sequentialGroup sequentialGroup
+     */
+    private void setDurationLabel(Font font, Map attributes, GroupLayout.Group parallelGroup,
+                                  GroupLayout layout, GroupLayout.Group sequentialGroup, Delivery value) {
+        JLabel durationLabel = new JLabel("Durée de livraison :");
+        durationLabel.setFont(font.deriveFont(attributes));
+
+        JLabel durationValue = new JLabel(String.valueOf(value.getDuration() / SCALE_DELIVERY) + " min");
+
+        parallelGroup.addGroup(layout.createSequentialGroup()
+                .addComponent(durationLabel)
+                .addComponent(durationValue)
+        );
+
+        sequentialGroup.addGroup(layout.createParallelGroup()
+                .addComponent(durationLabel)
+                .addComponent(durationValue)
+        );
+    }
+
+    /**
+     * Renders the waiting time on the cell.
+     * @param value value
+     * @param font font
+     * @param attributes attributes
+     * @param parallelGroup parallelGroup
+     * @param layout layout
+     * @param sequentialGroup sequentialGroup
+     */
+    private void setWaitingTime(Delivery value, Font font, Map attributes,
+                                GroupLayout.Group parallelGroup, GroupLayout layout,
+                                GroupLayout.Group sequentialGroup) {
+        Date arrival = value.getEstimateDate();
+        Date minimalArrival = value.getSlot().getStart();
+        double waitingTime = -(value.getSlot().getTimescaleBetween(arrival, minimalArrival)
+                / (double) MILLISECONDS_TO_SECONDS);
+
+        long minutes = (long) Math.floor(waitingTime);
+        long seconds = (long) Math.floor((waitingTime - minutes) * 60);
+
+        JLabel waitingTimeLabel = new JLabel("Temps d'attente :");
+        waitingTimeLabel.setFont(font.deriveFont(attributes));
+        waitingTimeLabel.setForeground(WAITING_TIME_COLOR);
+
+        JLabel waitingTimeValue = new JLabel(String.valueOf(minutes) + " min " + String.valueOf(seconds) + " s");
+        waitingTimeValue.setForeground(WAITING_TIME_COLOR);
+        parallelGroup.addGroup(layout.createSequentialGroup()
+                .addComponent(waitingTimeLabel)
+                .addComponent(waitingTimeValue)
+        );
+
+        sequentialGroup.addGroup(layout.createParallelGroup()
+                .addComponent(waitingTimeLabel)
+                .addComponent(waitingTimeValue)
+        );
     }
 
     /**
