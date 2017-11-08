@@ -46,8 +46,23 @@ public class TourPanel extends AbstractPanel {
      */
     @Override
     public void setup() {
+
         computeTourButton.addActionListener(e -> ((TourController) controller).newComputation());
         cancelComputationButton.addActionListener(e -> ((TourController) controller).cancelComputeTour());
+    }
+
+    /**
+     * Toggle the progress bar.
+     * Use the indeterminate mode.
+     *
+     * @param enable Activate or deactivate the indeterminate mode
+     */
+    public void toggleProgressBar(boolean enable) {
+        if (enable) {
+            computeProgressBar.setIndeterminate(true);
+        } else {
+            computeProgressBar.setIndeterminate(false);
+        }
     }
 
     /**

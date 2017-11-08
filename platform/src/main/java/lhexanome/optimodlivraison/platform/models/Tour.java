@@ -92,10 +92,13 @@ public class Tour extends Observable {
 
     /**
      * Path setter.
+     * <p>
+     * This function is synchronised to prevent data corruption
+     * when reading the paths variable from other threads.
      *
      * @param paths Path
      */
-    public void setPaths(List<Path> paths) {
+    public synchronized void setPaths(List<Path> paths) {
         this.paths = paths;
     }
 
@@ -156,10 +159,13 @@ public class Tour extends Observable {
     /**
      * Return a list of all the halts made in the tour.
      * Start by the Warehouse, and continue until the last delivery.
+     * <p>
+     * This function is synchronised to prevent a modification of the
+     * {@link Tour#paths} list while streaming it.
      *
      * @return Ordered list of halt
      */
-    public java.util.Vector<Delivery> getOrderedDeliveryVector() {
+    public synchronized java.util.Vector<Delivery> getOrderedDeliveryVector() {
         return paths.stream()
                 .map(Path::getStart)
                 .filter(halt -> halt instanceof Delivery)
