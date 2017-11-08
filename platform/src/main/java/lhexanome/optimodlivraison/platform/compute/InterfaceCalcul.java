@@ -3,7 +3,6 @@ package lhexanome.optimodlivraison.platform.compute;
 
 import lhexanome.optimodlivraison.platform.compute.tsp.TSP2wSlots;
 import lhexanome.optimodlivraison.platform.compute.tsp.TSPwSlots;
-import lhexanome.optimodlivraison.platform.exceptions.ComputeSlotsException;
 import lhexanome.optimodlivraison.platform.models.Delivery;
 import lhexanome.optimodlivraison.platform.models.DeliveryOrder;
 import lhexanome.optimodlivraison.platform.models.Halt;
@@ -72,7 +71,6 @@ public class InterfaceCalcul {
      * @param simplifiedMap La map simplifié calculée précédemment.
      * @param demande       La demande de livraison.
      * @return La tournée calculée.
-     * @throws ComputeSlotsException if the slots asked are incompatible
      */
     public Tour computeTour(SimplifiedMap simplifiedMap,
                             DeliveryOrder demande) {
