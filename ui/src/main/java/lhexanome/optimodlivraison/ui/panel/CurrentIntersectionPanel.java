@@ -61,21 +61,25 @@ public class CurrentIntersectionPanel extends AbstractPanel {
         displayedIntersection = intersectionToDisplay;
         String lineReturn = "<br>";
         String bulletedListHeader = "-";
-        String s = "";
+        StringBuilder s = new StringBuilder();
         if (displayedIntersection != null) {
-            s += "<html>";
-            s += lineReturn + PRESENTATION_TEXT + lineReturn;
+            s.append("<html>");
+            s.append(lineReturn).append(PRESENTATION_TEXT).append(lineReturn);
             Set<String> streetNames = new HashSet<>();
 
             for (Vector vector : roadMap.getVectorsFromIntersection(intersectionToDisplay)) {
                 streetNames.add(vector.getStreetName());
             }
             for (String streetName : streetNames) {
-                s += bulletedListHeader + " " + (streetName.isEmpty() ? "rue sans nom" : streetName) + "," + lineReturn;
+                s
+                        .append(bulletedListHeader)
+                        .append(" ")
+                        .append(streetName.isEmpty() ? "Rue sans nom" : streetName)
+                        .append(lineReturn);
             }
-            s += "</html>";
+            s.append("</html>");
         }
-        displayedInformations.setText(s);
+        displayedInformations.setText(s.toString());
     }
 
     /**

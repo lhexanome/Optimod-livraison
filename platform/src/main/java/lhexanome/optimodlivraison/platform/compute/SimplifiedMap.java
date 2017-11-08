@@ -75,8 +75,8 @@ public class SimplifiedMap {
         if (deliveryOrder != null) {
             LOGGER.info(MessageFormat.format("compute simplified graph", ""));
 
-            HashSet<Halt> ptsHalt = new HashSet<>();
-            ptsHalt.addAll(deliveryOrder.getDeliveries());
+            HashSet<Halt> ptsHalt = new HashSet<>(deliveryOrder.getDeliveries());
+
             ptsHalt.add(deliveryOrder.getWarehouse());
             for (Halt s : ptsHalt) {
                 ArrayList<Path> listePaths =
@@ -129,7 +129,7 @@ public class SimplifiedMap {
          * tableau les elements visites par dijkstra (les gris)
          */
         ArrayList<IntersectionWrapper> visites = new ArrayList<>();
-        /**
+        /*
          * list containing wrappers for ends
          * it's used to accelerate the research of wrappers when rebuilding path
          */
@@ -253,7 +253,7 @@ public class SimplifiedMap {
         boolean continueDijkstra = true;
         boolean firstTime = true;
         int indexNouvelleVisite = 0;
-        IntersectionWrapper courant = visits.get(visits.size() - 1);
+        IntersectionWrapper courant;
         while (continueDijkstra) {
             //recherche du sommet de plus petit temps et non visite
             float tempsMin = Float.MAX_VALUE;
