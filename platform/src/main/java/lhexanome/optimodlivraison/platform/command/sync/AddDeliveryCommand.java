@@ -1,6 +1,5 @@
 package lhexanome.optimodlivraison.platform.command.sync;
 
-import lhexanome.optimodlivraison.platform.compute.InterfaceCalcul;
 import lhexanome.optimodlivraison.platform.compute.SimplifiedMap;
 import lhexanome.optimodlivraison.platform.models.Delivery;
 import lhexanome.optimodlivraison.platform.models.Halt;
@@ -15,12 +14,6 @@ import java.util.logging.Logger;
  * Command to compute a tour.
  */
 public class AddDeliveryCommand extends UndoableCommand {
-
-    /**
-     * New delivery list.
-     * Contain all the added deliveries
-     */
-    private List<Delivery> newDeliveryList;
 
     /**
      * Logger.
@@ -43,21 +36,12 @@ public class AddDeliveryCommand extends UndoableCommand {
     private Tour tour;
 
     /**
-     * Compute interface.
-     */
-    private InterfaceCalcul interfaceCalcul;
-    /**
-     * RoadMap
-     */
-
-    private RoadMap roadMap;
-    /**
-     * SimplifiedMap
+     * SimplifiedMap.
      */
 
     private SimplifiedMap simplifiedMap;
     /**
-     * removed path
+     * removed path.
      */
 
     private Path removedPath;
@@ -77,8 +61,7 @@ public class AddDeliveryCommand extends UndoableCommand {
         this.index = index;
         this.deliveryToAdd = deliveryToAdd;
         this.tour = tour;
-        this.roadMap = roadMap;
-        //this.simplifiedMap = new SimplifiedMap(roadMap);
+        this.simplifiedMap = new SimplifiedMap(roadMap);
     }
 
     /**
@@ -86,11 +69,15 @@ public class AddDeliveryCommand extends UndoableCommand {
      */
     @Override
     protected void doExecute() {
-        Halt previousHalt = tour.getPaths().get(index).getStart();
-        Halt afterHalt = tour.getPaths().get(index).getEnd();
-        removedPath = tour.getPaths().remove(index);
-        tour.getPaths().add(index, simplifiedMap.shortestPathList(previousHalt, deliveryToAdd));
-        tour.getPaths().add(index + 1, simplifiedMap.shortestPathList(deliveryToAdd, afterHalt));
+        List<Path> tourPaths = tour.getPaths();
+
+        Halt previousHalt = tourPaths.get(index).getStart();
+        Halt afterHalt = tourPaths.get(index).getEnd();
+
+        removedPath = tourPaths.remove(index);
+        tourPaths.add(index, simplifiedMap.shortestPathList(previousHalt, deliveryToAdd));
+        tourPaths.add(index + 1, simplifiedMap.shortestPathList(deliveryToAdd, afterHalt));
+
         tour.forceNotifyObservers();
     }
 
@@ -102,6 +89,7 @@ public class AddDeliveryCommand extends UndoableCommand {
         tour.getPaths().remove(index);
         tour.getPaths().remove(index);
         tour.getPaths().add(index, removedPath);
+
         tour.forceNotifyObservers();
     }
 

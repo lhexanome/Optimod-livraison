@@ -58,8 +58,6 @@ public class ComputeTourCommand extends SwingWorker<Void, Tour> implements Obser
      */
     private ComputeTourListener listener;
 
-    private static final int TIME_LIMIT = 20;
-
     /**
      * Command constructor.
      *
