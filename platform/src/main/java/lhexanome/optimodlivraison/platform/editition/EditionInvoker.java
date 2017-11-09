@@ -66,4 +66,22 @@ public class EditionInvoker {
             command.redo();
         }
     }
+
+    /**
+     * Command stack getter.
+     *
+     * @return Stack of commands
+     */
+    public Stack<UndoableCommand> getCommands() {
+        return commands;
+    }
+
+    /**
+     * Redo command stack getter.
+     *
+     * @return Stack of commands
+     */
+    public Stack<UndoableCommand> getRedoCommands() {
+        return redoCommands;
+    }
 }
