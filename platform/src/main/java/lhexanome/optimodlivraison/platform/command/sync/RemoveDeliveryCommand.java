@@ -51,7 +51,7 @@ public class RemoveDeliveryCommand extends UndoableCommand {
     /**
      * counter
      */
-    private int counter = 0;
+    private int compteur = 0;
 
     /**
      * Constructor.
@@ -72,18 +72,18 @@ public class RemoveDeliveryCommand extends UndoableCommand {
      */
     @Override
     protected void doExecute() {
-        counter = 0;
+        compteur = 0;
 
         for (Path p : tour.getPaths()) {
             if (p.getEnd() == selectedValue) {
                 break;
             }
-            counter++;
+            compteur++;
         }
         tour.getPaths().size();
-        tour.getPaths().add(counter, simplifiedMap.shortestPathList(tour.getPaths().get(counter).getStart(), tour.getPaths().get(counter + 1).getEnd()));
-        previewRemovedPath = tour.getPaths().remove(counter + 1);
-        afterRemovedPath = tour.getPaths().remove(counter + 1);
+        tour.getPaths().add(compteur, simplifiedMap.shortestPathList(tour.getPaths().get(compteur).getStart(), tour.getPaths().get(compteur + 1).getEnd()));
+        previewRemovedPath = tour.getPaths().remove(compteur + 1);
+        afterRemovedPath = tour.getPaths().remove(compteur + 1);
 
         tour.forceNotifyObservers();
     }
@@ -93,9 +93,9 @@ public class RemoveDeliveryCommand extends UndoableCommand {
      */
     @Override
     protected void doUndo() {
-        tour.getPaths().remove(counter);
-        tour.getPaths().add(counter, previewRemovedPath);
-        tour.getPaths().add(counter + 1, afterRemovedPath);
+        tour.getPaths().remove(compteur);
+        tour.getPaths().add(compteur, previewRemovedPath);
+        tour.getPaths().add(compteur + 1, afterRemovedPath);
 
 
 

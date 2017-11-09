@@ -95,15 +95,29 @@ public class MoveDeliveryCommand extends UndoableCommand {
             counter++;
         }
         tour.getPaths().add(counter, simplifiedMap.shortestPathList(tour.getPaths().get(counter).getStart(), tour.getPaths().get(counter + 1).getEnd()));
-        previewRemovedPath = tour.getPaths().remove(counter + 1);
-        afterRemovedPath = tour.getPaths().remove(counter + 1);
 
+        if (counter < newIndex){
+            previewRemovedPath = tour.getPaths().remove(counter + 1);
+            afterRemovedPath = tour.getPaths().remove(counter + 1);
 
-        Halt previousHalt = tour.getPaths().get(newIndex).getStart();
-        Halt afterHalt = tour.getPaths().get(newIndex).getEnd();
-        removedPath = tour.getPaths().remove(newIndex);
-        tour.getPaths().add(newIndex, simplifiedMap.shortestPathList(previousHalt, selectedValue));
-        tour.getPaths().add(newIndex + 1, simplifiedMap.shortestPathList(selectedValue, afterHalt));
+            Halt previousHalt = tour.getPaths().get(newIndex-1).getStart();
+            Halt afterHalt = tour.getPaths().get(newIndex-1).getEnd();
+            removedPath = tour.getPaths().remove(newIndex-1);
+            tour.getPaths().add(newIndex-1, simplifiedMap.shortestPathList(previousHalt, selectedValue));
+            tour.getPaths().add(newIndex , simplifiedMap.shortestPathList(selectedValue, afterHalt));
+
+        }
+        else  {
+            previewRemovedPath = tour.getPaths().remove(counter -1);
+            afterRemovedPath = tour.getPaths().remove(counter -1);
+
+            Halt previousHalt = tour.getPaths().get(newIndex).getStart();
+            Halt afterHalt = tour.getPaths().get(newIndex).getEnd();
+            removedPath = tour.getPaths().remove(newIndex);
+            tour.getPaths().add(newIndex, simplifiedMap.shortestPathList(previousHalt, selectedValue));
+            tour.getPaths().add(newIndex + 1, simplifiedMap.shortestPathList(selectedValue, afterHalt));
+
+        }
 
         tour.forceNotifyObservers();
 
