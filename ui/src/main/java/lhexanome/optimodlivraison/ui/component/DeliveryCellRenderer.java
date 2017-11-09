@@ -271,9 +271,12 @@ public class DeliveryCellRenderer implements ListCellRenderer<Delivery> {
                               GroupLayout.Group sequentialGroup, Halt value) {
         JLabel indexLabel = new JLabel("N° :");
         indexLabel.setFont(getDerivedFont());
-        JLabel indexValue = new JLabel(String.valueOf(index));
+        JLabel indexValue = new JLabel(String.valueOf(index + 1));
 
-        JLabel estimateDateValue = new JLabel(DateUtil.formatDate(" (HH:mm)", value.getEstimateDate()));
+        JLabel estimateDateLabel = new JLabel(" - Heure de passage estimée :");
+        estimateDateLabel.setFont(getDerivedFont());
+
+        JLabel estimateDateValue = new JLabel(DateUtil.formatDate(" HH:mm", value.getEstimateDate()));
 
         parallelGroup.addGroup(layout.createSequentialGroup()
                 .addComponent(indexLabel)

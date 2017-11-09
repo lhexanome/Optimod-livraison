@@ -232,4 +232,13 @@ public class MainController implements ControllerInterface {
     public boolean isComputationRunning() {
         return tourController.isComputationRunning();
     }
+
+    /**
+     * Return whether a tour is edited or not.
+     *
+     * @return boolean
+     */
+    public boolean isTourEdited() {
+        return tourEditorController.isEdited();
+    }
 }
