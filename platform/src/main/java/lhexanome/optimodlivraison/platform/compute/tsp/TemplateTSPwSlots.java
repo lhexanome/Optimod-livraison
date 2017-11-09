@@ -2,7 +2,6 @@ package lhexanome.optimodlivraison.platform.compute.tsp;
 
 import lhexanome.optimodlivraison.platform.compute.MatriceAdjacence;
 import lhexanome.optimodlivraison.platform.compute.SimplifiedMap;
-import lhexanome.optimodlivraison.platform.exceptions.ComputeSlotsException;
 import lhexanome.optimodlivraison.platform.models.Path;
 import lhexanome.optimodlivraison.platform.models.TimeSlot;
 import lhexanome.optimodlivraison.platform.models.Tour;
@@ -54,12 +53,8 @@ public abstract class TemplateTSPwSlots implements TSPwSlots {
      *
      * @param tour   tour to obtain
      * @param matrix storage for the correspondence between indexes and objects
-     * @throws ComputeSlotsException when the time slots are incompatible.
      */
-    private void computeResults(Tour tour, MatriceAdjacence matrix) throws ComputeSlotsException {
-        if (coutMeilleureSolution == Integer.MAX_VALUE) {
-            throw new ComputeSlotsException("Can't compute tour because of incompatible slots");
-        }
+    private void computeResults(Tour tour, MatriceAdjacence matrix) {
 
         Path[][] matriceTrajets = matrix.getMatricePaths();
         int indexDepart, indexArrivee;
