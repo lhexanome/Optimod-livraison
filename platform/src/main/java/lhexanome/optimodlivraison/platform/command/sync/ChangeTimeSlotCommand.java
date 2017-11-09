@@ -51,6 +51,8 @@ public class ChangeTimeSlotCommand extends UndoableCommand {
     @Override
     protected void doExecute() {
 
+
+
     }
 
     /**

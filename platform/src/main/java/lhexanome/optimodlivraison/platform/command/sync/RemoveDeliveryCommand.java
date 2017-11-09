@@ -60,6 +60,7 @@ public class RemoveDeliveryCommand extends UndoableCommand {
      */
     @Override
     protected void doExecute() {
+        compteur = 0;
 
         for (Path p : tour.getPaths()) {
             if (p.getEnd() == selectedValue) {
@@ -67,7 +68,7 @@ public class RemoveDeliveryCommand extends UndoableCommand {
             }
             compteur++;
         }
-
+        tour.getPaths().size();
         tour.getPaths().add(compteur, simplifiedMap.shortestPathList(tour.getPaths().get(compteur).getStart(), tour.getPaths().get(compteur + 1).getEnd()));
         previewRemovedPath = tour.getPaths().remove(compteur + 1);
         afterRemovedPath = tour.getPaths().remove(compteur + 1);
@@ -83,6 +84,10 @@ public class RemoveDeliveryCommand extends UndoableCommand {
         tour.getPaths().remove(compteur);
         tour.getPaths().add(compteur, previewRemovedPath);
         tour.getPaths().add(compteur + 1, afterRemovedPath);
+
+
+
+
         tour.forceNotifyObservers();
     }
 

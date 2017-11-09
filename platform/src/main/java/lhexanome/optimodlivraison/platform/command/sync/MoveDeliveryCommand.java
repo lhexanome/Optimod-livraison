@@ -76,6 +76,8 @@ public class MoveDeliveryCommand extends UndoableCommand {
      */
     @Override
     protected void doExecute() {
+        compteur= 0;
+
         for (Path p : tour.getPaths()) {
             if (p.getEnd() == selectedValue) {
                 break;

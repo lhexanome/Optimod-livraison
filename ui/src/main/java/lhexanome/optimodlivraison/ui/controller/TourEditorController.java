@@ -174,8 +174,7 @@ public class TourEditorController implements ControllerInterface {
 
         Delivery delivery = new Delivery(intersection, duration, timeSlot);
 
-        AddDeliveryCommand command = new AddDeliveryCommand(tour, roadMap, delivery, 0);
-        // TODO : Mettre l'index à la fin
+        AddDeliveryCommand command = new AddDeliveryCommand(tour, roadMap, delivery, tour.getPaths().size()-1);
         editionInvoker.storeAndExecute(command);
     }
 
