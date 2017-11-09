@@ -29,7 +29,12 @@ public class ChangeTimeSlotCommand extends UndoableCommand {
     /**
      * New time slot.
      */
-    private final TimeSlot timeSlot;
+    private final TimeSlot newTimeSlot;
+
+    /**
+     * Old time slot.
+     */
+    private TimeSlot oldTimeSlot;
 
 
     /**
@@ -42,7 +47,7 @@ public class ChangeTimeSlotCommand extends UndoableCommand {
     public ChangeTimeSlotCommand(Tour tour, Delivery selectedValue, TimeSlot timeSlot) {
         this.tour = tour;
         this.selectedValue = selectedValue;
-        this.timeSlot = timeSlot;
+        this.newTimeSlot = timeSlot;
     }
 
     /**
@@ -50,7 +55,9 @@ public class ChangeTimeSlotCommand extends UndoableCommand {
      */
     @Override
     protected void doExecute() {
-
+        oldTimeSlot = selectedValue.getSlot();
+        selectedValue.setSlot(newTimeSlot);
+        tour.forceNotifyObservers();
     }
 
     /**
@@ -58,7 +65,8 @@ public class ChangeTimeSlotCommand extends UndoableCommand {
      */
     @Override
     protected void doUndo() {
-
+        selectedValue.setSlot(oldTimeSlot);
+        tour.forceNotifyObservers();
     }
 
     /**
@@ -66,6 +74,6 @@ public class ChangeTimeSlotCommand extends UndoableCommand {
      */
     @Override
     protected void doRedo() {
-
+        doExecute();
     }
 }
