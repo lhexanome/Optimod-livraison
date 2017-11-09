@@ -71,7 +71,7 @@ task codeCoverageReport(type: JacocoReport, dependsOn: 'waitForSubProject') {
                     // No coverage for the UI,
                     // Testing this part is really hard,
                     // and quite useless.
-                    '/ui/**',
+                    '**/ui/**',
             ])
         })
     }
