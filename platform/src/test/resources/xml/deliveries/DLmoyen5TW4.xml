@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<demandeDeLivraisons>
+<entrepot adresse="891129803" heureDepart="8:0:0"/>
+<livraison adresse="191134601" debutPlage="8:0:0" duree="600" finPlage="10:0:0"/>
+<livraison adresse="868438829" debutPlage="9:0:0" duree="900" finPlage="11:0:0"/>
+<livraison adresse="21717953" debutPlage="12:0:0" duree="900" finPlage="14:0:0"/>
+<livraison adresse="251069553" debutPlage="11:0:0" duree="600" finPlage="13:0:0"/>
+</demandeDeLivraisons>
