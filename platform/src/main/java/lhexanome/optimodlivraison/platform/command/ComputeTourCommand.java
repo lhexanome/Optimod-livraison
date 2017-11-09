@@ -2,6 +2,7 @@ package lhexanome.optimodlivraison.platform.command;
 
 import lhexanome.optimodlivraison.platform.compute.InterfaceCalcul;
 import lhexanome.optimodlivraison.platform.compute.SimplifiedMap;
+import lhexanome.optimodlivraison.platform.exceptions.ComputeSlotsException;
 import lhexanome.optimodlivraison.platform.listeners.ComputeTourListener;
 import lhexanome.optimodlivraison.platform.models.DeliveryOrder;
 import lhexanome.optimodlivraison.platform.models.RoadMap;
@@ -92,6 +93,8 @@ public class ComputeTourCommand extends SwingWorker<Void, Tour> implements Obser
             interfaceCalcul.computeTour(simplifiedMap, deliveryOrder);
 
             LOGGER.warning("Tour computed");
+        } catch (ComputeSlotsException e) {
+            LOGGER.warning("Can't compute with incompatible slots");
         } catch (Exception e) {
             LOGGER.warning(MessageFormat.format("Unknown error", e.getCause()));
             throw e;
