@@ -130,12 +130,23 @@ public class MoveDeliveryCommand extends UndoableCommand {
      */
     @Override
     protected void doUndo() {
-        tour.getPaths().remove(newIndex);
-        tour.getPaths().remove(newIndex);
-        tour.getPaths().add(newIndex, removedPath);
-        tour.getPaths().remove(counter);
-        tour.getPaths().add(counter, previewRemovedPath);
-        tour.getPaths().add(counter + 1, afterRemovedPath);
+        if (counter < newIndex){
+            tour.getPaths().remove(newIndex);
+            tour.getPaths().remove(newIndex);
+            tour.getPaths().add(newIndex, removedPath);
+            tour.getPaths().remove(counter);
+            tour.getPaths().add(counter-1, previewRemovedPath);
+            tour.getPaths().add(counter, afterRemovedPath);
+
+        }else{
+            tour.getPaths().remove(newIndex);
+            tour.getPaths().remove(newIndex);
+            tour.getPaths().add(newIndex, removedPath);
+            tour.getPaths().remove(counter);
+            tour.getPaths().add(counter, previewRemovedPath);
+            tour.getPaths().add(counter+1, afterRemovedPath);
+        }
+
         tour.forceNotifyObservers();
     }
 

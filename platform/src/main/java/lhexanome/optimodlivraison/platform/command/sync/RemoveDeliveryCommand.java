@@ -94,6 +94,7 @@ public class RemoveDeliveryCommand extends UndoableCommand {
      */
     @Override
     protected void doUndo() {
+
         tour.getPaths().remove(compteur);
         tour.getPaths().add(compteur, previewRemovedPath);
         tour.getPaths().add(compteur + 1, afterRemovedPath);
