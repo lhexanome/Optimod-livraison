@@ -2,6 +2,7 @@ package lhexanome.optimodlivraison.platform.command;
 
 import lhexanome.optimodlivraison.platform.compute.InterfaceCalcul;
 import lhexanome.optimodlivraison.platform.compute.SimplifiedMap;
+import lhexanome.optimodlivraison.platform.exceptions.ComputeSlotsException;
 import lhexanome.optimodlivraison.platform.listeners.ComputeTourListener;
 import lhexanome.optimodlivraison.platform.models.DeliveryOrder;
 import lhexanome.optimodlivraison.platform.models.RoadMap;
@@ -79,7 +80,7 @@ public class ComputeTourCommand extends SwingWorker<Void, Tour> implements Obser
      * Progressive solution. Use publish at least one time.
      */
     @Override
-    protected Void doInBackground() {
+    protected Void doInBackground() throws ComputeSlotsException {
         try {
             this.interfaceCalcul.addTourObserver(this);
 

@@ -1,5 +1,7 @@
 package lhexanome.optimodlivraison.platform.command.sync;
+import lhexanome.optimodlivraison.platform.command.ParseMapCommand;
 import lhexanome.optimodlivraison.platform.compute.SimplifiedMap;
+import lhexanome.optimodlivraison.platform.listeners.ParseMapListener;
 import lhexanome.optimodlivraison.platform.models.Delivery;
 import lhexanome.optimodlivraison.platform.models.Intersection;
 import lhexanome.optimodlivraison.platform.models.Path;
@@ -9,22 +11,27 @@ import lhexanome.optimodlivraison.platform.models.Tour;
 import lhexanome.optimodlivraison.platform.models.Halt;
 import lhexanome.optimodlivraison.platform.models.Vector;
 import lhexanome.optimodlivraison.platform.models.Warehouse;
+import lhexanome.optimodlivraison.platform.utils.DateUtil;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 class AddDeliveryCommandTest {
 
 
     @Test
-    void doExecute() {
-        RoadMap roadMap = new RoadMap();
-        SimplifiedMap simplifiedMap = new SimplifiedMap(roadMap);
-        Date start = new Date(2017,12,22, 8, 22);
+    void doExecute() throws ParseException {
+
+
+        DateUtil.parseDate("yyyy/MM/dd HH:mm", "2017/12/22 08:22");
         Intersection intersection = new Intersection((long)124,128,242);
         Intersection intersection1 = new Intersection((long)741,591,316);
         Intersection intersection2 = new Intersection((long)16,1679,2036);
@@ -51,19 +58,21 @@ class AddDeliveryCommandTest {
         paths.add(path2);
         paths.add(path3);
 
-        Tour tour = new Tour(warehouse, start,3600,paths );
+        Tour tour = new Tour(warehouse, DateUtil.parseDate("yyyy/MM/dd HH:mm", "2017/12/22 08:22"),3600,paths );
         int index = tour.getPaths().size()-1;
 
         Halt previousHalt = tour.getPaths().get(index).getStart();
-        assertEquals(previousHalt, halt3);
+        assertThat(previousHalt).isEqualTo(halt3);
 
         Halt afterHalt = tour.getPaths().get(index).getEnd();
-        assertEquals(afterHalt, halt4);
+        assertThat(afterHalt).isEqualTo(halt4);
 
         removedPath = tour.getPaths().remove(index);
-        assertEquals(removedPath, path3);
+        assertThat(removedPath).isEqualTo(path3);
 
-        tour.getPaths().add(index, simplifiedMap.shortestPathList(previousHalt, deliveryToAdd));
+        Path path4 = new Path(previousHalt, deliveryToAdd);
+        tour.getPaths().add(index, path4);
+        assertThat(path4).isEqualTo(tour.getPaths().get(index));
 
 
 
@@ -72,11 +81,7 @@ class AddDeliveryCommandTest {
     @Test
     void doUndo() {
 
-    }
 
-    @Test
-    void doRedo() {
-        doExecute();
     }
 
 }
