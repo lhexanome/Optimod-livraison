@@ -78,7 +78,7 @@ public class AddDeliveryCommand extends UndoableCommand {
         this.deliveryToAdd = deliveryToAdd;
         this.tour = tour;
         this.roadMap = roadMap;
-        this.simplifiedMap = new SimplifiedMap(roadMap);
+        //this.simplifiedMap = new SimplifiedMap(roadMap);
     }
 
     /**

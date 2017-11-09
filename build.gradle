@@ -64,6 +64,17 @@ task codeCoverageReport(type: JacocoReport, dependsOn: 'waitForSubProject') {
         html.destination file("$buildDir/coverage_report")
         csv.enabled false
     }
+
+    afterEvaluate {
+        classDirectories = files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                    // No coverage for the UI,
+                    // Testing this part is really hard,
+                    // and quite useless.
+                    '**/ui/**',
+            ])
+        })
+    }
 }
 
 task waitForSubProject {

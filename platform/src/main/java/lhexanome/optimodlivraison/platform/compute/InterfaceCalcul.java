@@ -66,6 +66,7 @@ public class InterfaceCalcul {
      *
      * @param simplifiedMap La map simplifié calculée précédemment.
      * @param demande       La demande de livraison.
+     * @throws ComputeSlotsException when the slots are incompatible
      * @return La tournée calculée.
      * @throws ComputeSlotsException when the slots are incompatible
      */
