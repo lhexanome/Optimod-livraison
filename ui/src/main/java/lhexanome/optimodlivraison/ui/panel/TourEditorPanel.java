@@ -62,6 +62,10 @@ public class TourEditorPanel extends AbstractPanel implements DeliveryListTransf
      * Label displaying the end date and the total time for a tour.
      */
     private JLabel tourEndLabel;
+
+    /**
+     * Button to reload a delivery order.
+     */
     private JButton loadDeliveryOrderButton;
 
     /**
