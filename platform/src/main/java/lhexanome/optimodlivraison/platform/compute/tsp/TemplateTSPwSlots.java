@@ -2,7 +2,6 @@ package lhexanome.optimodlivraison.platform.compute.tsp;
 
 import lhexanome.optimodlivraison.platform.compute.MatriceAdjacence;
 import lhexanome.optimodlivraison.platform.compute.SimplifiedMap;
-import lhexanome.optimodlivraison.platform.exceptions.ComputeSlotsException;
 import lhexanome.optimodlivraison.platform.models.Path;
 import lhexanome.optimodlivraison.platform.models.TimeSlot;
 import lhexanome.optimodlivraison.platform.models.Tour;
@@ -192,6 +191,8 @@ public abstract class TemplateTSPwSlots implements TSPwSlots {
                     vus.add(prochainSommet);
                     nonVus.remove(prochainSommet);
                     Date prochainDepart = new Date();
+                    Date dateEstimee = new Date();
+
                     int newCout = 0;
                     if (tempsAttente > 0) {
                         //on doit attendre, donc on arrive au debut de la plage horaire
@@ -203,7 +204,9 @@ public abstract class TemplateTSPwSlots implements TSPwSlots {
                         prochainDepart.setTime(depart.getTime() + cout[sommetCrt][prochainSommet] * 1000 + duree[sommetCrt] * 1000);
                         newCout = cout[sommetCrt][prochainSommet] + duree[sommetCrt];
                     }
-                    tempDates[prochainSommet] = prochainDepart;
+                    //la date estimee differe du prochainDepart uniquement lorsqu'on doit attendre pour une plage horaire
+                    dateEstimee.setTime(depart.getTime() + cout[sommetCrt][prochainSommet] * 1000 + duree[sommetCrt] * 1000);
+                    tempDates[prochainSommet] = dateEstimee;
                     branchAndBound(tour, matrix, prochainSommet, nonVus, vus, coutVus + newCout,
                             cout, plages, prochainDepart, tempDates, duree, tpsDebut, tpsLimite);
                     vus.remove(prochainSommet);
