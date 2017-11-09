@@ -38,21 +38,31 @@ public class MoveDeliveryCommand extends UndoableCommand {
      * RoadMap
      */
     private RoadMap roadMap;
+
     /**
      * SimplifiedMap
      */
-
     private SimplifiedMap simplifiedMap;
+
     /**
      * Removed path
      */
     private Path removedPath;
 
+    /**
+     *  first removed path
+     */
     private Path previewRemovedPath;
 
+    /**
+     * second removed path
+     */
     private Path afterRemovedPath;
 
-    private int compteur = 0;
+    /**
+      * counter
+     */
+    private int counter = 0;
 
 
     /**
@@ -76,17 +86,18 @@ public class MoveDeliveryCommand extends UndoableCommand {
      */
     @Override
     protected void doExecute() {
-        compteur= 0;
+        counter = 0;
 
         for (Path p : tour.getPaths()) {
             if (p.getEnd() == selectedValue) {
                 break;
             }
-            compteur++;
+            counter++;
         }
-        tour.getPaths().add(compteur, simplifiedMap.shortestPathList(tour.getPaths().get(compteur).getStart(), tour.getPaths().get(compteur + 1).getEnd()));
-        previewRemovedPath = tour.getPaths().remove(compteur + 1);
-        afterRemovedPath = tour.getPaths().remove(compteur + 1);
+        tour.getPaths().add(counter, simplifiedMap.shortestPathList(tour.getPaths().get(counter).getStart(), tour.getPaths().get(counter + 1).getEnd()));
+        previewRemovedPath = tour.getPaths().remove(counter + 1);
+        afterRemovedPath = tour.getPaths().remove(counter + 1);
+
 
         Halt previousHalt = tour.getPaths().get(newIndex).getStart();
         Halt afterHalt = tour.getPaths().get(newIndex).getEnd();
@@ -106,9 +117,9 @@ public class MoveDeliveryCommand extends UndoableCommand {
         tour.getPaths().remove(newIndex);
         tour.getPaths().remove(newIndex);
         tour.getPaths().add(newIndex, removedPath);
-        tour.getPaths().remove(compteur);
-        tour.getPaths().add(compteur, previewRemovedPath);
-        tour.getPaths().add(compteur + 1, afterRemovedPath);
+        tour.getPaths().remove(counter);
+        tour.getPaths().add(counter, previewRemovedPath);
+        tour.getPaths().add(counter + 1, afterRemovedPath);
         tour.forceNotifyObservers();
     }
 

@@ -38,12 +38,11 @@ public class AddDeliveryCommand extends UndoableCommand {
     /**
      * SimplifiedMap.
      */
-
     private SimplifiedMap simplifiedMap;
+
     /**
      * removed path.
      */
-
     private Path removedPath;
 
 

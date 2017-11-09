@@ -32,14 +32,26 @@ public class RemoveDeliveryCommand extends UndoableCommand {
      * Delivery to remove.
      */
     private final Delivery selectedValue;
-
+    
+    /**
+     * first removed path
+     */
     private Path previewRemovedPath;
-
+    
+    /**
+     * second removed path
+     */
     private Path afterRemovedPath;
-
+    
+    /**
+     * simplified map
+     */
     private SimplifiedMap simplifiedMap;
-
-    private int compteur = 0;
+    
+    /**
+     * counter
+     */
+    private int counter = 0;
 
     /**
      * Constructor.
@@ -60,18 +72,18 @@ public class RemoveDeliveryCommand extends UndoableCommand {
      */
     @Override
     protected void doExecute() {
-        compteur = 0;
+        counter = 0;
 
         for (Path p : tour.getPaths()) {
             if (p.getEnd() == selectedValue) {
                 break;
             }
-            compteur++;
+            counter++;
         }
         tour.getPaths().size();
-        tour.getPaths().add(compteur, simplifiedMap.shortestPathList(tour.getPaths().get(compteur).getStart(), tour.getPaths().get(compteur + 1).getEnd()));
-        previewRemovedPath = tour.getPaths().remove(compteur + 1);
-        afterRemovedPath = tour.getPaths().remove(compteur + 1);
+        tour.getPaths().add(counter, simplifiedMap.shortestPathList(tour.getPaths().get(counter).getStart(), tour.getPaths().get(counter + 1).getEnd()));
+        previewRemovedPath = tour.getPaths().remove(counter + 1);
+        afterRemovedPath = tour.getPaths().remove(counter + 1);
 
         tour.forceNotifyObservers();
     }
@@ -81,9 +93,9 @@ public class RemoveDeliveryCommand extends UndoableCommand {
      */
     @Override
     protected void doUndo() {
-        tour.getPaths().remove(compteur);
-        tour.getPaths().add(compteur, previewRemovedPath);
-        tour.getPaths().add(compteur + 1, afterRemovedPath);
+        tour.getPaths().remove(counter);
+        tour.getPaths().add(counter, previewRemovedPath);
+        tour.getPaths().add(counter + 1, afterRemovedPath);
 
 
 
