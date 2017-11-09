@@ -3,6 +3,7 @@ package lhexanome.optimodlivraison.platform.compute;
 
 import lhexanome.optimodlivraison.platform.compute.tsp.TSP2wSlots;
 import lhexanome.optimodlivraison.platform.compute.tsp.TSPwSlots;
+import lhexanome.optimodlivraison.platform.exceptions.ComputeSlotsException;
 import lhexanome.optimodlivraison.platform.models.Delivery;
 import lhexanome.optimodlivraison.platform.models.DeliveryOrder;
 import lhexanome.optimodlivraison.platform.models.Halt;
@@ -30,17 +31,8 @@ public class InterfaceCalcul {
     /**
      * Temps maximum d'exécution de l'algorithme en millisecondes.
      */
-    public static final int TPS_LIMITE = 30000;
+    public static final int TIMEOUT = Integer.MAX_VALUE;
 
-    /**
-     * Intervalle d'actualisation de l'affichage pendant le TSP.
-     */
-    private static final int INTERVAL_NOTIFY = 2500;
-
-    /**
-     * conversion en secondes.
-     */
-    private static final int CONV_SEC_MIN = 60;
 
     /**
      * Observed tour.
@@ -74,14 +66,13 @@ public class InterfaceCalcul {
      *
      * @param simplifiedMap La map simplifié calculée précédemment.
      * @param demande       La demande de livraison.
-     * @param type          le type d'heuristique utilisé.
      * @return La tournée calculée.
+     * @throws ComputeSlotsException when the slots are incompatible
      */
     public Tour computeTour(SimplifiedMap simplifiedMap,
-                            DeliveryOrder demande, TspTypes type) throws ComputeSlotsException {
+                            DeliveryOrder demande) throws ComputeSlotsException {
         Warehouse warehouse;
         Date start;
-        int time;
 
         Map<Halt, ArrayList<Path>> graphe = simplifiedMap.getGraph();
 
@@ -98,11 +89,9 @@ public class InterfaceCalcul {
         listeSommets.add(demande.getWarehouse());
         listeSommets.addAll(demande.getDeliveries());
 
-        MatriceAdjacence matrix = grapheToMatrix(graphe, nbSommets, listeSommets, demande);
+        MatriceAdjacence matrix = grapheToMatrix(graphe, nbSommets, listeSommets);
 
         int[] listeDurees = demandeToDurees(demande, nbSommets, listeSommets);
-
-        ArrayList<Path> deliveries = new ArrayList<>(nbSommets);
 
 
         TimeSlot[] plages = new TimeSlot[nbSommets];
@@ -115,36 +104,16 @@ public class InterfaceCalcul {
         }
         TSPwSlots tsp = new TSP2wSlots();
 
-        do {
-            tsp.chercheSolution(INTERVAL_NOTIFY, nbSommets, matrix.getMatriceCouts(),
-                    plages, demande.getStart(), listeDurees);
-            time = tsp.getCoutMeilleureSolution();
-            if (time == Integer.MAX_VALUE) {
-                throw new ComputeSlotsException("Can't compute tour because of incompatible slots");
-            }
 
-            Path[][] matriceTrajets = matrix.getMatricePaths();
-            int indexDepart, indexArrivee;
-            indexDepart = tsp.getMeilleureSolution(0);
-            for (int i = 1; i < nbSommets; i++) {
-                indexArrivee = tsp.getMeilleureSolution(i);
-                Path trajet = matriceTrajets[indexDepart][indexArrivee];
-                trajet.getEnd().setEstimateDate(tsp.getDateEstimee(indexArrivee));
-                deliveries.add(trajet);
-                indexDepart = indexArrivee;
-            }
-            Path trajet = matriceTrajets[indexDepart][0];
-            trajet.getEnd().setEstimateDate(tsp.getDateEstimee(0));
-            deliveries.add(trajet); //retour entrepot
+        tsp.chercheSolution(tour, matrix, TIMEOUT, nbSommets, matrix.getMatriceCouts(),
+                plages, demande.getStart(), listeDurees);
 
-            tour.setTime(time);
-            tour.setPaths(deliveries);
+        if (tour.getPaths() == null) {
+            throw new ComputeSlotsException("Can't compute tour because of incompatible slots");
 
-            tour.forceNotifyObservers();
-
-        } while (tsp.getTempsLimiteAtteint());
-
-        return new Tour(warehouse, start, time, deliveries);
+        }
+        LOGGER.info("TSP finished");
+        return tour;
 
     }
 
@@ -155,40 +124,20 @@ public class InterfaceCalcul {
      * @param graphe       Graphe devant être traité.
      * @param nbSommets    Nombre de sommets du graphe.
      * @param listeSommets Liste attribuant chaque sommet à un index.
-     * @param demande      La demande de livraison.
      * @return La MatriceAdjacence contenant :
      * La matrice des couts de trajets d'un sommet x à un sommet y,
      * La matrice des trajets d'un sommet x à un sommet y.
      */
 
     private MatriceAdjacence grapheToMatrix(Map<Halt, ArrayList<Path>> graphe, int nbSommets,
-                                            ArrayList<Halt> listeSommets, DeliveryOrder demande) {
+                                            ArrayList<Halt> listeSommets) {
 
         int[][] matriceCouts = new int[nbSommets][nbSommets];
         Path[][] matriceTrajets = new Path[nbSommets][nbSommets];
 
-        //entrepot
-        Halt entrepot = demande.getWarehouse();
-        int inter1 = 0;
-        for (Path trajet : graphe.get(entrepot)) {
-            int inter2 = listeSommets.indexOf(trajet.getEnd());
-            int cout = trajet.getTimeToTravel();
-            matriceCouts[inter1][inter2] = cout;
-            matriceTrajets[inter1][inter2] = trajet;
-        }
-
-        //le reste
-        for (Halt arret : graphe.keySet()) {
-            inter1 = listeSommets.indexOf(arret);
-            for (Path trajet : graphe.get(arret)) {
-                int inter2 = listeSommets.indexOf(trajet.getEnd());
-                int cout = trajet.getTimeToTravel();
-                matriceCouts[inter1][inter2] = cout;
-                matriceTrajets[inter1][inter2] = trajet;
-            }
-        }
-
-        return new MatriceAdjacence(listeSommets, matriceTrajets, matriceCouts);
+        MatriceAdjacence matrix = new MatriceAdjacence(listeSommets, matriceTrajets, matriceCouts);
+        matrix.initMatrix(graphe);
+        return matrix;
     }
 
     /**
