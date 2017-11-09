@@ -3,6 +3,7 @@ package lhexanome.optimodlivraison.platform.compute;
 
 import lhexanome.optimodlivraison.platform.compute.tsp.TSP2wSlots;
 import lhexanome.optimodlivraison.platform.compute.tsp.TSPwSlots;
+import lhexanome.optimodlivraison.platform.exceptions.ComputeSlotsException;
 import lhexanome.optimodlivraison.platform.models.Delivery;
 import lhexanome.optimodlivraison.platform.models.DeliveryOrder;
 import lhexanome.optimodlivraison.platform.models.Halt;
@@ -70,10 +71,11 @@ public class InterfaceCalcul {
      *
      * @param simplifiedMap La map simplifié calculée précédemment.
      * @param demande       La demande de livraison.
+     * @throws ComputeSlotsException when the slots are incompatible
      * @return La tournée calculée.
      */
     public Tour computeTour(SimplifiedMap simplifiedMap,
-                            DeliveryOrder demande) {
+                            DeliveryOrder demande) throws ComputeSlotsException {
         Warehouse warehouse;
         Date start;
 
@@ -111,6 +113,10 @@ public class InterfaceCalcul {
         tsp.chercheSolution(tour, matrix, TIMEOUT, nbSommets, matrix.getMatriceCouts(),
                 plages, demande.getStart(), listeDurees);
 
+        if (tour.getPaths() == null) {
+            throw new ComputeSlotsException("Can't compute tour because of incompatible slots");
+
+        }
         LOGGER.info("TSP finished");
         return tour;
 
