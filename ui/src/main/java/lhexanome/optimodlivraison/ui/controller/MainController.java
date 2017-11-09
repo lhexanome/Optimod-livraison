@@ -223,4 +223,13 @@ public class MainController implements ControllerInterface {
     public void repaintAll() {
         mainWindow.getFrame().repaint();
     }
+
+    /**
+     * Return true if a computation is running.
+     *
+     * @return true or false
+     */
+    public boolean isComputationRunning() {
+        return tourController.isComputationRunning();
+    }
 }

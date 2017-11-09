@@ -34,12 +34,12 @@ public class FileTypeFilter extends FileFilter {
     }
 
     /**
-     * Return the description (here nothing).
+     * Return the description.
      *
-     * @return null
+     * @return Description
      */
     @Override
     public String getDescription() {
-        return null;
+        return "Fichier XML";
     }
 }

@@ -157,6 +157,30 @@ public class Tour extends Observable {
     }
 
     /**
+     * refreshes estimateDate for all deliveries
+     * use it after editing a Tour.
+     */
+    public void refreshEstimateDates() {
+        long timeTravel = start.getTime();
+        for (Path p : paths) {
+            if (p.getStart() instanceof Delivery) {
+                Delivery delivery = (Delivery) p.getStart();
+                timeTravel += delivery.getDuration() * 1000;
+                long tempsAttente = 0;
+                if (delivery.getSlot() != null) {
+                    //case where the slots are incompatible need to be dealt with before
+                    tempsAttente = TimeSlot.getTimescaleBetween(timeTravel, delivery.getSlot().getStart());
+                    //if it's negative, there is no waiting time
+                    tempsAttente = Math.max(0, tempsAttente);
+                }
+                timeTravel += tempsAttente;
+            }
+            timeTravel += p.getTimeToTravel() * 1000;
+            p.getEnd().getEstimateDate().setTime(timeTravel);
+        }
+    }
+
+    /**
      * Return a list of all the halts made in the tour.
      * Start by the Warehouse, and continue until the last delivery.
      * <p>

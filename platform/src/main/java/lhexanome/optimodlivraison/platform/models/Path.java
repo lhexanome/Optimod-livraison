@@ -203,7 +203,6 @@ public class Path {
         }
 
     }
-
     /**
      * Getter for color.
      *

@@ -8,7 +8,6 @@ import lhexanome.optimodlivraison.platform.models.Tour;
 import lhexanome.optimodlivraison.ui.panel.TourPanel;
 
 import javax.swing.*;
-import java.awt.*;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.logging.Logger;
@@ -85,7 +84,7 @@ public class TourController implements ControllerInterface, ComputeTourListener,
      * @param deliveryOrder Delivery order
      */
     public void computeTour(RoadMap roadMap, DeliveryOrder deliveryOrder) {
-        if (computeTourCommand != null && !computeTourCommand.isCancelled()) {
+        if (isComputationRunning()) {
             mainController.notifyError("Un calcul est déjà en cours !");
             return;
         }
@@ -99,7 +98,7 @@ public class TourController implements ControllerInterface, ComputeTourListener,
      * Cancel a tour computation.
      */
     public void cancelComputeTour() {
-        if (computeTourCommand != null && !computeTourCommand.isCancelled()) {
+        if (isComputationRunning()) {
             computeTourCommand.cancel(true);
             computeTourCommand = null;
         }
@@ -144,7 +143,6 @@ public class TourController implements ControllerInterface, ComputeTourListener,
     public void onComputingTourEnd() {
         computeTourCommand = null;
         tourPanel.toggleProgressBar(false);
-        mainController.getContentPane().setCursor(Cursor.getDefaultCursor());
     }
 
     /**
@@ -184,5 +182,14 @@ public class TourController implements ControllerInterface, ComputeTourListener,
         if (o instanceof Tour) {
             mainController.repaintAll();
         }
+    }
+
+    /**
+     * Return true if there is a tour being calculated.
+     *
+     * @return true or false
+     */
+    public boolean isComputationRunning() {
+        return computeTourCommand != null && !computeTourCommand.isCancelled();
     }
 }
