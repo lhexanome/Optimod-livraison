@@ -1,5 +1,6 @@
 package lhexanome.optimodlivraison.platform.compute;
 
+import lhexanome.optimodlivraison.platform.exceptions.ComputeSlotsException;
 import lhexanome.optimodlivraison.platform.models.Delivery;
 import lhexanome.optimodlivraison.platform.models.DeliveryOrder;
 import lhexanome.optimodlivraison.platform.models.Intersection;
@@ -17,7 +18,7 @@ class InterfaceCalculTest {
     }
 
    @Test
-    void calculerTour() {
+    void calculerTour() throws ComputeSlotsException {
         InterfaceCalcul ic = new InterfaceCalcul();
         RoadMap roadMap = new RoadMap();
         DeliveryOrder demande = new DeliveryOrder();

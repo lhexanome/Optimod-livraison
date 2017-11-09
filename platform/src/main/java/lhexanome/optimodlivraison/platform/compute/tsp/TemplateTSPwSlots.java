@@ -2,7 +2,6 @@ package lhexanome.optimodlivraison.platform.compute.tsp;
 
 import lhexanome.optimodlivraison.platform.compute.MatriceAdjacence;
 import lhexanome.optimodlivraison.platform.compute.SimplifiedMap;
-import lhexanome.optimodlivraison.platform.exceptions.ComputeSlotsException;
 import lhexanome.optimodlivraison.platform.models.Path;
 import lhexanome.optimodlivraison.platform.models.TimeSlot;
 import lhexanome.optimodlivraison.platform.models.Tour;
