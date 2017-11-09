@@ -85,6 +85,7 @@ public class RemoveDeliveryCommand extends UndoableCommand {
         previewRemovedPath = tour.getPaths().remove(compteur + 1);
         afterRemovedPath = tour.getPaths().remove(compteur + 1);
 
+        tour.refreshEstimateDates();
         tour.forceNotifyObservers();
     }
 

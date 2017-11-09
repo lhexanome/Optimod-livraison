@@ -7,6 +7,7 @@ import lhexanome.optimodlivraison.platform.models.Path;
 import lhexanome.optimodlivraison.platform.models.RoadMap;
 import lhexanome.optimodlivraison.platform.models.Tour;
 
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -61,6 +62,10 @@ public class AddDeliveryCommand extends UndoableCommand {
         this.deliveryToAdd = deliveryToAdd;
         this.tour = tour;
         this.simplifiedMap = new SimplifiedMap(roadMap);
+
+        // not already initialized
+        deliveryToAdd.setEstimateDate(new Date());
+
     }
 
     /**
@@ -77,6 +82,7 @@ public class AddDeliveryCommand extends UndoableCommand {
         tourPaths.add(index, simplifiedMap.shortestPathList(previousHalt, deliveryToAdd));
         tourPaths.add(index + 1, simplifiedMap.shortestPathList(deliveryToAdd, afterHalt));
 
+        tour.refreshEstimateDates();
         tour.forceNotifyObservers();
     }
 

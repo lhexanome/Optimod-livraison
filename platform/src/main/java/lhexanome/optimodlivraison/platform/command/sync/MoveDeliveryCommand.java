@@ -79,6 +79,7 @@ public class MoveDeliveryCommand extends UndoableCommand {
         this.selectedValue = selectedValue;
         this.newIndex = newIndex;
         this.simplifiedMap = new SimplifiedMap(roadMap);
+
     }
 
     /**
@@ -119,6 +120,7 @@ public class MoveDeliveryCommand extends UndoableCommand {
 
         }
 
+        tour.refreshEstimateDates();
         tour.forceNotifyObservers();
 
     }
