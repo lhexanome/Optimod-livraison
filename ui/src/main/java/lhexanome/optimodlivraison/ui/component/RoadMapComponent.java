@@ -4,6 +4,7 @@ import lhexanome.optimodlivraison.platform.models.Delivery;
 import lhexanome.optimodlivraison.platform.models.DeliveryOrder;
 import lhexanome.optimodlivraison.platform.models.Intersection;
 import lhexanome.optimodlivraison.platform.models.RoadMap;
+import lhexanome.optimodlivraison.platform.models.TimeSlot;
 import lhexanome.optimodlivraison.platform.models.Tour;
 import lhexanome.optimodlivraison.platform.models.Vector;
 import lhexanome.optimodlivraison.platform.models.Warehouse;
@@ -16,6 +17,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Ellipse2D;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -36,7 +38,7 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
     /**
      * delivery index color on the map.
      */
-    private static final Color DELIVERY_INDEX_COLOR = Color.red;
+    private static final Color DELIVERY_INDEX_COLOR = Color.green;
 
     /**
      * delivery index x display offset.
@@ -46,6 +48,11 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
      * delivery index y display offset.
      */
     private static final int DELIVERY_INDEX_OFFSET_Y = 5;
+
+    /**
+     * Diameter of the notification dot.
+     */
+    private static final double NOTIFICATION_DOT_DIAMETER = 12;
 
     /**
      * color of a marker.
@@ -479,6 +486,34 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
         }
 
         g2.drawImage(marker, x + MARKER_OFFSET_X, y + MARKER_OFFSET_Y, null);
+
+
+        TimeSlot timeSlot = delivery.getSlot();
+
+        if (timeSlot == null
+                || delivery.getEstimateDate() == null
+                || timeSlot.isIncluded(delivery.getEstimateDate())) {
+            return;
+        }
+
+        // Display problems if needed
+
+        Ellipse2D.Double notificationDot = new Ellipse2D.Double(
+                x + MARKER_OFFSET_X,
+                y + MARKER_OFFSET_Y,
+                NOTIFICATION_DOT_DIAMETER,
+                NOTIFICATION_DOT_DIAMETER
+        );
+
+
+        if (timeSlot.getEnd().getTime() < delivery.getEstimateDate().getTime()) {
+            g2.setColor(Color.RED);
+        } else if (timeSlot.getStart().getTime() > delivery.getEstimateDate().getTime()) {
+            g2.setColor(Color.ORANGE);
+        }
+
+        g2.fill(notificationDot);
+
     }
 
     /**

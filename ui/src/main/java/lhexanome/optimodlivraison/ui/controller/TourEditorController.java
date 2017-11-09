@@ -4,12 +4,12 @@ import lhexanome.optimodlivraison.platform.command.sync.AddDeliveryCommand;
 import lhexanome.optimodlivraison.platform.command.sync.ChangeTimeSlotCommand;
 import lhexanome.optimodlivraison.platform.command.sync.MoveDeliveryCommand;
 import lhexanome.optimodlivraison.platform.command.sync.RemoveDeliveryCommand;
+import lhexanome.optimodlivraison.platform.editition.EditionInvoker;
 import lhexanome.optimodlivraison.platform.models.Delivery;
 import lhexanome.optimodlivraison.platform.models.Intersection;
 import lhexanome.optimodlivraison.platform.models.RoadMap;
 import lhexanome.optimodlivraison.platform.models.TimeSlot;
 import lhexanome.optimodlivraison.platform.models.Tour;
-import lhexanome.optimodlivraison.platform.editition.EditionInvoker;
 import lhexanome.optimodlivraison.ui.panel.TourEditorPanel;
 import lhexanome.optimodlivraison.ui.popup.TimeSlotChooserPopup;
 
@@ -132,6 +132,8 @@ public class TourEditorController implements ControllerInterface {
      * Add a delivery to the current tour.
      */
     public void addDelivery() {
+        if (checkIfEditionIsUnavailable()) return;
+
         // Ask for intersection
         Intersection intersection = mainController.getSelectedIntersection();
 
@@ -190,6 +192,7 @@ public class TourEditorController implements ControllerInterface {
      * @param selectedValue Delivery to remove
      */
     public void removeDelivery(Delivery selectedValue) {
+        if (checkIfEditionIsUnavailable()) return;
         if (selectedValue == null) {
             mainController.notifyError("Vous devez d'abord sélectionner une livraison !");
             return;
@@ -205,6 +208,7 @@ public class TourEditorController implements ControllerInterface {
      * @param selectedValue Delivery to edit
      */
     public void changeTimeSlot(Delivery selectedValue) {
+        if (checkIfEditionIsUnavailable()) return;
         if (selectedValue == null) {
             mainController.notifyError("Vous devez d'abord sélectionner une livraison !");
             return;
@@ -232,6 +236,8 @@ public class TourEditorController implements ControllerInterface {
      * @param newIndex New index
      */
     public void moveDelivery(Delivery delivery, int newIndex) {
+        if (checkIfEditionIsUnavailable()) return;
+
         MoveDeliveryCommand command = new MoveDeliveryCommand(tour, delivery, newIndex);
         editionInvoker.storeAndExecute(command);
     }
@@ -254,4 +260,16 @@ public class TourEditorController implements ControllerInterface {
         mainController.selectDeliveryFromList(selectedValue);
     }
 
+
+    /**
+     * Check if edition is unavailable and notify the user.
+     *
+     * @return true if edition is unavailable false if there is no problem
+     */
+    private boolean checkIfEditionIsUnavailable() {
+        if (!mainController.isComputationRunning()) return false;
+
+        mainController.notifyError("Vous ne pouvez pas éditer une tournée pendant son calcul.");
+        return true;
+    }
 }
