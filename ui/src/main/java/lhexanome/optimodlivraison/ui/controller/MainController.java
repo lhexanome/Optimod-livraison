@@ -241,4 +241,11 @@ public class MainController implements ControllerInterface {
     public boolean isTourEdited() {
         return tourEditorController.isEdited();
     }
+
+    /**
+     * Ask for a new delivery order.
+     */
+    public void reloadDeliveryOrder() {
+        deliveryOrderController.reloadDeliveryOrder();
+    }
 }

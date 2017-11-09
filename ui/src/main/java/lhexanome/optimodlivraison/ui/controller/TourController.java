@@ -195,6 +195,6 @@ public class TourController implements ControllerInterface, ComputeTourListener,
      * @return true or false
      */
     public boolean isComputationRunning() {
-        return computeTourCommand != null && !computeTourCommand.isCancelled();
+        return computeTourCommand != null && !computeTourCommand.isDone();
     }
 }

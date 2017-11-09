@@ -295,4 +295,11 @@ public class TourEditorController implements ControllerInterface {
     public boolean isEdited() {
         return edited;
     }
+
+    /**
+     * Ask for a ne delivery order.
+     */
+    public void reloadDeliveryOrder() {
+        mainController.reloadDeliveryOrder();
+    }
 }

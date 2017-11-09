@@ -166,7 +166,7 @@ public class DeliveryCellRenderer implements ListCellRenderer<Delivery> {
     private void setTimeSlotWarning(Delivery value, GroupLayout.ParallelGroup parallelGroup, GroupLayout layout,
                                     GroupLayout.SequentialGroup sequentialGroup) {
 
-        JLabel timeSlotLabel = new JLabel("Plage horaire non respectée.");
+        JLabel timeSlotLabel = new JLabel("Plage horaire non respectée : ");
         timeSlotLabel.setFont(getDerivedFont());
         timeSlotLabel.setForeground(WARNING_COLOR);
 
@@ -178,6 +178,8 @@ public class DeliveryCellRenderer implements ListCellRenderer<Delivery> {
             JLabel timeSlotValue = new JLabel(
                     "Retard de " + String.valueOf(minutes) + " min " + String.valueOf(seconds) + "s"
             );
+
+            timeSlotValue.setForeground(WARNING_COLOR);
 
             parallelGroup.addGroup(layout.createSequentialGroup()
                     .addComponent(timeSlotLabel)
@@ -334,7 +336,7 @@ public class DeliveryCellRenderer implements ListCellRenderer<Delivery> {
         long seconds = getSeconds(waitingTime);
 
         if (waitingTime > 0) {
-            JLabel waitingTimeLabel = new JLabel("Temps d'attente :");
+            JLabel waitingTimeLabel = new JLabel("Temps d'attente estimé du livreur :");
             waitingTimeLabel.setFont(getDerivedFont());
             waitingTimeLabel.setForeground(WAITING_TIME_COLOR);
 
