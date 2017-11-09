@@ -68,10 +68,10 @@ task codeCoverageReport(type: JacocoReport, dependsOn: 'waitForSubProject') {
     afterEvaluate {
         classDirectories = files(classDirectories.files.collect {
             fileTree(dir: it, exclude: [
-                    '**/ui/component/**',
-                    '**/ui/panel/**',
-                    '**/ui/popup/**',
-                    '**/ui/window/**',
+                    // No coverage for the UI,
+                    // Testing this part is really hard,
+                    // and quite useless.
+                    '/ui/**',
             ])
         })
     }
