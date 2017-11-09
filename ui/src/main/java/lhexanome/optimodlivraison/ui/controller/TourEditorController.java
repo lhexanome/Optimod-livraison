@@ -9,7 +9,7 @@ import lhexanome.optimodlivraison.platform.models.Intersection;
 import lhexanome.optimodlivraison.platform.models.RoadMap;
 import lhexanome.optimodlivraison.platform.models.TimeSlot;
 import lhexanome.optimodlivraison.platform.models.Tour;
-import lhexanome.optimodlivraison.ui.edition.EditionInvoker;
+import lhexanome.optimodlivraison.platform.editition.EditionInvoker;
 import lhexanome.optimodlivraison.ui.panel.TourEditorPanel;
 import lhexanome.optimodlivraison.ui.popup.TimeSlotChooserPopup;
 

@@ -1,11 +1,9 @@
 package lhexanome.optimodlivraison.ui;
 
-import lhexanome.optimodlivraison.platform.HelloWorld;
 import lhexanome.optimodlivraison.ui.controller.MainController;
 import lhexanome.optimodlivraison.ui.controller.WelcomeController;
 
 import javax.swing.*;
-import java.io.PrintStream;
 import java.util.logging.Logger;
 
 /**
@@ -46,16 +44,4 @@ public final class HelloMars {
 
         welcomeController.start();
     }
-
-
-    /**
-     * Test case.
-     *
-     * @param out Stream
-     */
-    public static void print(PrintStream out) {
-        out.print("Hello, Mars! and ");
-        HelloWorld.print(out);
-    }
-
 }

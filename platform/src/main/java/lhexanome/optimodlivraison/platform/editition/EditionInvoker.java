@@ -1,4 +1,4 @@
-package lhexanome.optimodlivraison.ui.edition;
+package lhexanome.optimodlivraison.platform.editition;
 
 import lhexanome.optimodlivraison.platform.command.sync.UndoableCommand;
 
@@ -65,5 +65,23 @@ public class EditionInvoker {
             commands.push(command);
             command.redo();
         }
+    }
+
+    /**
+     * Command stack getter.
+     *
+     * @return Stack of commands
+     */
+    public Stack<UndoableCommand> getCommands() {
+        return commands;
+    }
+
+    /**
+     * Redo command stack getter.
+     *
+     * @return Stack of commands
+     */
+    public Stack<UndoableCommand> getRedoCommands() {
+        return redoCommands;
     }
 }
