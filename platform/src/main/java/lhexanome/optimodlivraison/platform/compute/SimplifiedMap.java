@@ -46,6 +46,11 @@ public class SimplifiedMap {
 
 
     /**
+     * id compute iteration.
+     */
+    private static long idIteration = -1;
+
+    /**
      * Constructor used to do the computing without generating a graph.
      *
      * @param roadMap roadmap to compute from.
@@ -124,7 +129,7 @@ public class SimplifiedMap {
         ArrayList<Path> sortie = new ArrayList<>();
         LOGGER.info(MessageFormat.format("start compute shortest path for:", start.toString()));
 
-
+        idIteration++;
         /*
          * tableau les elements visites par dijkstra (les gris)
          */
@@ -139,7 +144,7 @@ public class SimplifiedMap {
 
 
             //initialisation
-            IntersectionWrapper startW = new IntersectionWrapper(start.getIntersection(), start);
+            IntersectionWrapper startW = new IntersectionWrapper(start.getIntersection(), idIteration);
             startW.setAsStart();
             visites.add(startW);
             //calcul
@@ -163,7 +168,7 @@ public class SimplifiedMap {
         Set<Halt> ends = new HashSet<>();
         ends.add(end);
         start.getIntersection().resetWrapper();
-        end.getIntersection().resetWrapper();
+        //end.getIntersection().resetWrapper();
 
         ArrayList<Path> sorties = shortestPathList(start, ends);
         //il y a un seul trajet normalement
@@ -288,7 +293,7 @@ public class SimplifiedMap {
 
                 for (Vector t : cheminsPartants) {
                     Intersection successeur = t.getDestination();
-                    if (successeur.getWrapper() != null && successeur.getWrapper().getStart() == start) {
+                    if (successeur.getWrapper() != null && successeur.getWrapper().getIdIteration() == idIteration) {
                         //cas ou l'intersection a deja ete visitee pendant cette execution
                         IntersectionWrapper successeurWrapper = successeur.getWrapper();
 
@@ -312,7 +317,7 @@ public class SimplifiedMap {
                         //cas ou l'intersection n'a pas ete visitee
 
                         //on cree le wrapper, et on l'ajoute a la liste des visites
-                        IntersectionWrapper successeurWrapper = new IntersectionWrapper(successeur, start);
+                        IntersectionWrapper successeurWrapper = new IntersectionWrapper(successeur, idIteration);
                         visits.add(successeurWrapper);
                         if (isInEnd(ends, successeurWrapper)) {
                             endWrappers.add(successeurWrapper);
