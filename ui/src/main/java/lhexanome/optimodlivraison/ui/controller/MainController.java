@@ -250,4 +250,18 @@ public class MainController implements ControllerInterface {
     public void reloadDeliveryOrder() {
         deliveryOrderController.reloadDeliveryOrder();
     }
+
+    /**
+     * Undo the last action.
+     */
+    public void undo() {
+        tourEditorController.undo();
+    }
+
+    /**
+     * Redo the last undo command.
+     */
+    public void redo() {
+        tourEditorController.redo();
+    }
 }

@@ -4,6 +4,13 @@ import lhexanome.optimodlivraison.ui.controller.MainController;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 /**
  * Main panel of the application.
@@ -115,6 +122,26 @@ public class MainPanel extends AbstractPanel {
         gbc.ipady = 0;
 
         wrapperPanel.add(tourPanel, gbc);
+
+        contentPane.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_Z, InputEvent.CTRL_DOWN_MASK), "undoMapKey");
+        contentPane.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_Z, InputEvent.CTRL_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK), "redoMapKey");
+        contentPane.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_Y, InputEvent.CTRL_DOWN_MASK), "redoMapKey");
+
+        Action undoAction = new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ((MainController) controller).undo();
+            }
+        };
+        Action redoAction = new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ((MainController) controller).redo();
+            }
+        };
+        contentPane.getActionMap().put("undoMapKey", undoAction);
+        contentPane.getActionMap().put("redoMapKey", redoAction);
+
     }
 
     /**
