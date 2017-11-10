@@ -217,6 +217,11 @@ public class TourEditorController implements ControllerInterface {
             return;
         }
 
+        if (tour.getPaths().size() <= 2) {
+            mainController.notifyError("Vous ne pouvez pas enlever la dernière livraison.");
+            return;
+        }
+
         RemoveDeliveryCommand command = new RemoveDeliveryCommand(tour, roadMap, selectedValue);
         editionInvoker.storeAndExecute(command);
         edited = true;
