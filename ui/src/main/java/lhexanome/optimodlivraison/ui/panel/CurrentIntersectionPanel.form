@@ -9,7 +9,7 @@
     <children>
       <component id="f68b9" class="javax.swing.JLabel" binding="displayedInformations" custom-create="true">
         <constraints>
-          <grid row="0" column="1" row-span="2" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="0" column="2" row-span="2" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
           <gridbag top="0" left="40" bottom="0" right="0" weightx="0.0" weighty="0.0"/>
         </constraints>
         <properties>
@@ -19,7 +19,7 @@
       <component id="cb2aa" class="javax.swing.JLabel">
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-          <gridbag top="0" left="0" bottom="4" right="0" weightx="0.0" weighty="0.0"/>
+          <gridbag top="0" left="0" bottom="4" right="8" weightx="0.0" weighty="0.0"/>
         </constraints>
         <properties>
           <icon value="plan/marker/planMarkerOrange_little.png"/>
@@ -29,31 +29,31 @@
       <component id="a71c3" class="javax.swing.JLabel">
         <constraints>
           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-          <gridbag top="0" left="0" bottom="10" right="0" weightx="0.0" weighty="0.0"/>
+          <gridbag top="0" left="0" bottom="4" right="8" weightx="0.0" weighty="0.0"/>
         </constraints>
         <properties>
           <icon value="plan/marker/planMarkerRed_little.png"/>
           <text value="Entrepôt"/>
         </properties>
       </component>
-      <component id="aff98" class="javax.swing.JLabel">
-        <constraints>
-          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-          <gridbag top="0" left="0" bottom="10" right="0" weightx="0.0" weighty="0.0"/>
-        </constraints>
-        <properties>
-          <icon value="plan/marker/planMarkerGreen_little.png"/>
-          <text value="Intersection sélectionnée"/>
-        </properties>
-      </component>
       <component id="dbea7" class="javax.swing.JLabel">
         <constraints>
-          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-          <gridbag weightx="0.0" weighty="0.0"/>
+          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <gridbag top="0" left="0" bottom="4" right="0" weightx="0.0" weighty="0.0"/>
         </constraints>
         <properties>
           <icon value="plan/marker/planMarkerBlue_little.png"/>
           <text value="Livraison sélectionnée"/>
+        </properties>
+      </component>
+      <component id="aff98" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <gridbag top="0" left="0" bottom="4" right="0" weightx="0.0" weighty="0.0"/>
+        </constraints>
+        <properties>
+          <icon value="plan/marker/planMarkerGreen_little.png"/>
+          <text value="Intersection sélectionnée"/>
         </properties>
       </component>
     </children>

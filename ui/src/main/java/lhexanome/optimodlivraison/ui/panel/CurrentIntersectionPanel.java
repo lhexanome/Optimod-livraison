@@ -132,7 +132,7 @@ public class CurrentIntersectionPanel extends AbstractPanel {
         displayedInformations.setText("");
         GridBagConstraints gbc;
         gbc = new GridBagConstraints();
-        gbc.gridx = 1;
+        gbc.gridx = 2;
         gbc.gridy = 0;
         gbc.gridheight = 2;
         gbc.fill = GridBagConstraints.BOTH;
@@ -140,21 +140,40 @@ public class CurrentIntersectionPanel extends AbstractPanel {
         contentPane.add(displayedInformations, gbc);
         final JLabel label1 = new JLabel();
         label1.setIcon(new ImageIcon(getClass().getResource("/plan/marker/planMarkerOrange_little.png")));
-        label1.setText("Marker représentant une livraison");
+        label1.setText("Livraison");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.anchor = GridBagConstraints.WEST;
-        gbc.insets = new Insets(0, 0, 4, 0);
+        gbc.insets = new Insets(0, 0, 4, 8);
         contentPane.add(label1, gbc);
         final JLabel label2 = new JLabel();
         label2.setIcon(new ImageIcon(getClass().getResource("/plan/marker/planMarkerRed_little.png")));
-        label2.setText("Marker représentant un entrepôt");
+        label2.setText("Entrepôt");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.anchor = GridBagConstraints.WEST;
+        gbc.insets = new Insets(0, 0, 4, 8);
         contentPane.add(label2, gbc);
+        final JLabel label3 = new JLabel();
+        label3.setIcon(new ImageIcon(getClass().getResource("/plan/marker/planMarkerBlue_little.png")));
+        label3.setText("Livraison sélectionnée");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.insets = new Insets(0, 0, 4, 0);
+        contentPane.add(label3, gbc);
+        final JLabel label4 = new JLabel();
+        label4.setIcon(new ImageIcon(getClass().getResource("/plan/marker/planMarkerGreen_little.png")));
+        label4.setText("Intersection sélectionnée");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.insets = new Insets(0, 0, 4, 0);
+        contentPane.add(label4, gbc);
     }
 
     /**
