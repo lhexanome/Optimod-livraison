@@ -9,6 +9,7 @@ import lhexanome.optimodlivraison.platform.models.Tour;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.concurrent.CancellationException;
 import java.util.logging.Logger;
 
 //CHECKSTYLE:OFF
@@ -78,6 +79,7 @@ public abstract class TemplateTSPwSlots implements TSPwSlots {
         tour.forceNotifyObservers();
         LOGGER.info("TSP solution found");
 
+        if (Thread.interrupted()) throw new CancellationException("Task was cancelled");
     }
 
     @Override
