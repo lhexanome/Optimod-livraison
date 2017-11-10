@@ -6,6 +6,7 @@ import lhexanome.optimodlivraison.platform.models.Path;
 import lhexanome.optimodlivraison.platform.models.RoadMap;
 import lhexanome.optimodlivraison.platform.models.Tour;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -47,11 +48,12 @@ public class RemoveDeliveryCommand extends UndoableCommand {
      * simplified map
      */
     private SimplifiedMap simplifiedMap;
-    
+
+
     /**
-     * counter
+     * Index to remove.
      */
-    private int compteur = 0;
+    private int index;
 
     /**
      * Constructor.
@@ -64,6 +66,7 @@ public class RemoveDeliveryCommand extends UndoableCommand {
         this.tour = tour;
         this.roadMap = roadMap;
         this.selectedValue = selectedValue;
+        this.index = tour.getOrderedDeliveryVector().indexOf(selectedValue);
         this.simplifiedMap = new SimplifiedMap(roadMap);
     }
 
@@ -72,18 +75,37 @@ public class RemoveDeliveryCommand extends UndoableCommand {
      */
     @Override
     protected void doExecute() {
-        compteur = 0;
+        List<Path> paths = tour.getPaths();
 
-        for (Path p : tour.getPaths()) {
-            if (p.getEnd() == selectedValue) {
-                break;
-            }
-            compteur++;
+        // Create the link between the two neighbour of the delivery
+        Path neighbours;
+
+        if (index == 0) {
+            neighbours = simplifiedMap.shortestPathList(
+                    tour.getWarehouse(),
+                    paths.get(index + 2).getStart()
+            );
+        } else if (index == paths.size() - 2) {
+            neighbours = simplifiedMap.shortestPathList(
+                    paths.get(index).getStart(),
+                    tour.getWarehouse()
+            );
+        } else {
+            neighbours = simplifiedMap.shortestPathList(
+                    paths.get(index).getStart(),
+                    paths.get(index + 2).getStart()
+            );
         }
-        tour.getPaths().size();
-        tour.getPaths().add(compteur, simplifiedMap.shortestPathList(tour.getPaths().get(compteur).getStart(), tour.getPaths().get(compteur + 1).getEnd()));
-        previewRemovedPath = tour.getPaths().remove(compteur + 1);
-        afterRemovedPath = tour.getPaths().remove(compteur + 1);
+
+        // Remove the path
+
+        paths.remove(index);
+        paths.remove(index);
+
+        // Add shortcut
+
+        paths.add(index, neighbours);
+
 
         tour.refreshEstimateDates();
         tour.forceNotifyObservers();
@@ -94,13 +116,6 @@ public class RemoveDeliveryCommand extends UndoableCommand {
      */
     @Override
     protected void doUndo() {
-
-        tour.getPaths().remove(compteur);
-        tour.getPaths().add(compteur, previewRemovedPath);
-        tour.getPaths().add(compteur + 1, afterRemovedPath);
-
-
-
 
         tour.forceNotifyObservers();
     }

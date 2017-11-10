@@ -2,11 +2,11 @@ package lhexanome.optimodlivraison.platform.command.sync;
 
 import lhexanome.optimodlivraison.platform.compute.SimplifiedMap;
 import lhexanome.optimodlivraison.platform.models.Delivery;
-import lhexanome.optimodlivraison.platform.models.Halt;
 import lhexanome.optimodlivraison.platform.models.Path;
 import lhexanome.optimodlivraison.platform.models.RoadMap;
 import lhexanome.optimodlivraison.platform.models.Tour;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -35,6 +35,11 @@ public class MoveDeliveryCommand extends UndoableCommand {
     private final int newIndex;
 
     /**
+     * Old index.
+     */
+    private int oldIndex;
+
+    /**
      * RoadMap
      */
     private RoadMap roadMap;
@@ -50,7 +55,7 @@ public class MoveDeliveryCommand extends UndoableCommand {
     private Path removedPath;
 
     /**
-     *  first removed path
+     * first removed path
      */
     private Path previewRemovedPath;
 
@@ -60,7 +65,7 @@ public class MoveDeliveryCommand extends UndoableCommand {
     private Path afterRemovedPath;
 
     /**
-      * counter
+     * counter
      */
     private int counter = 0;
 
@@ -78,6 +83,7 @@ public class MoveDeliveryCommand extends UndoableCommand {
         this.roadMap = roadMap;
         this.selectedValue = selectedValue;
         this.newIndex = newIndex;
+        this.oldIndex = tour.getOrderedDeliveryVector().indexOf(selectedValue);
         this.simplifiedMap = new SimplifiedMap(roadMap);
 
     }
@@ -87,38 +93,82 @@ public class MoveDeliveryCommand extends UndoableCommand {
      */
     @Override
     protected void doExecute() {
-        counter = 0;
+        List<Path> paths = tour.getPaths();
 
-        for (Path p : tour.getPaths()) {
-            if (p.getEnd() == selectedValue) {
-                break;
-            }
-            counter++;
+
+        // Create the link between the two neighbour of the delivery
+        Path oldNeighbours;
+
+        if (oldIndex == 0) {
+            oldNeighbours = simplifiedMap.shortestPathList(
+                    tour.getWarehouse(),
+                    paths.get(oldIndex + 2).getStart()
+            );
+        } else if (oldIndex == paths.size() - 2) {
+            oldNeighbours = simplifiedMap.shortestPathList(
+                    paths.get(oldIndex).getStart(),
+                    tour.getWarehouse()
+            );
+        } else {
+            oldNeighbours = simplifiedMap.shortestPathList(
+                    paths.get(oldIndex).getStart(),
+                    paths.get(oldIndex + 2).getStart()
+            );
         }
-        tour.getPaths().add(counter, simplifiedMap.shortestPathList(tour.getPaths().get(counter).getStart(), tour.getPaths().get(counter + 1).getEnd()));
 
-        if (counter < newIndex){
-            previewRemovedPath = tour.getPaths().remove(counter + 1);
-            afterRemovedPath = tour.getPaths().remove(counter + 1);
+        // Remove the path
 
-            Halt previousHalt = tour.getPaths().get(newIndex-1).getStart();
-            Halt afterHalt = tour.getPaths().get(newIndex-1).getEnd();
-            removedPath = tour.getPaths().remove(newIndex-1);
-            tour.getPaths().add(newIndex-1, simplifiedMap.shortestPathList(previousHalt, selectedValue));
-            tour.getPaths().add(newIndex , simplifiedMap.shortestPathList(selectedValue, afterHalt));
+        paths.remove(oldIndex);
+        paths.remove(oldIndex);
 
+        // Add shortcut
+
+        paths.add(oldIndex, oldNeighbours);
+
+        // Compute new paths
+
+        Path newPathToDelivery;
+        Path newPathFromDelivery;
+
+        if (newIndex == 0) {
+            newPathFromDelivery = simplifiedMap.shortestPathList(
+                    selectedValue,
+                    paths.get(newIndex + 1).getStart()
+            );
+            newPathToDelivery = simplifiedMap.shortestPathList(
+                    tour.getWarehouse(),
+                    selectedValue
+            );
+        } else if (newIndex == paths.size() - 1) {
+            newPathFromDelivery = simplifiedMap.shortestPathList(
+                    selectedValue,
+                    tour.getWarehouse()
+            );
+            newPathToDelivery = simplifiedMap.shortestPathList(
+                    paths.get(newIndex).getStart(),
+                    selectedValue
+            );
+        } else {
+            newPathFromDelivery = simplifiedMap.shortestPathList(
+                    selectedValue,
+                    paths.get(newIndex).getEnd()
+            );
+            newPathToDelivery = simplifiedMap.shortestPathList(
+                    paths.get(newIndex).getStart(),
+                    selectedValue
+            );
         }
-        else  {
-            previewRemovedPath = tour.getPaths().remove(counter -1);
-            afterRemovedPath = tour.getPaths().remove(counter -1);
 
-            Halt previousHalt = tour.getPaths().get(newIndex).getStart();
-            Halt afterHalt = tour.getPaths().get(newIndex).getEnd();
-            removedPath = tour.getPaths().remove(newIndex);
-            tour.getPaths().add(newIndex, simplifiedMap.shortestPathList(previousHalt, selectedValue));
-            tour.getPaths().add(newIndex + 1, simplifiedMap.shortestPathList(selectedValue, afterHalt));
+        // Remove new index shortcut
 
-        }
+        paths.remove(newIndex);
+
+        // Add detour
+
+        paths.add(newIndex, newPathFromDelivery);
+        paths.add(newIndex, newPathToDelivery);
+
+        // Send updates
 
         tour.refreshEstimateDates();
         tour.forceNotifyObservers();
@@ -130,21 +180,21 @@ public class MoveDeliveryCommand extends UndoableCommand {
      */
     @Override
     protected void doUndo() {
-        if (counter < newIndex){
+        if (counter < newIndex) {
             tour.getPaths().remove(newIndex);
             tour.getPaths().remove(newIndex);
             tour.getPaths().add(newIndex, removedPath);
             tour.getPaths().remove(counter);
-            tour.getPaths().add(counter-1, previewRemovedPath);
+            tour.getPaths().add(counter - 1, previewRemovedPath);
             tour.getPaths().add(counter, afterRemovedPath);
 
-        }else{
+        } else {
             tour.getPaths().remove(newIndex);
             tour.getPaths().remove(newIndex);
             tour.getPaths().add(newIndex, removedPath);
             tour.getPaths().remove(counter);
             tour.getPaths().add(counter, previewRemovedPath);
-            tour.getPaths().add(counter+1, afterRemovedPath);
+            tour.getPaths().add(counter + 1, afterRemovedPath);
         }
 
         tour.forceNotifyObservers();
