@@ -1,4 +1,4 @@
-package lhexanome.optimodlivraison.platform.editition;
+package lhexanome.optimodlivraison.platform.edition;
 
 import lhexanome.optimodlivraison.platform.command.sync.UndoableCommand;
 
