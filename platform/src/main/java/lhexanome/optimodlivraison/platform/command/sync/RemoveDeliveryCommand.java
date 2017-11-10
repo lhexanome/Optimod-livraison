@@ -2,7 +2,10 @@ package lhexanome.optimodlivraison.platform.command.sync;
 
 
 import lhexanome.optimodlivraison.platform.compute.SimplifiedMap;
-import lhexanome.optimodlivraison.platform.models.*;
+import lhexanome.optimodlivraison.platform.models.Delivery;
+import lhexanome.optimodlivraison.platform.models.Path;
+import lhexanome.optimodlivraison.platform.models.RoadMap;
+import lhexanome.optimodlivraison.platform.models.Tour;
 
 import java.util.List;
 import java.util.logging.Logger;

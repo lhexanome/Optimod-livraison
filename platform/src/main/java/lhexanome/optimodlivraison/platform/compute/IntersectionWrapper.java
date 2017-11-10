@@ -1,6 +1,5 @@
 package lhexanome.optimodlivraison.platform.compute;
 
-import lhexanome.optimodlivraison.platform.models.Halt;
 import lhexanome.optimodlivraison.platform.models.Intersection;
 import lhexanome.optimodlivraison.platform.models.Vector;
 
@@ -44,7 +43,7 @@ public class IntersectionWrapper {
     /**
      * constructor.
      *
-     * @param i     intersection wrapped by the object.
+     * @param i           intersection wrapped by the object.
      * @param idIteration iteration id for Dijkstra
      */
     public IntersectionWrapper(Intersection i, long idIteration) {

@@ -1,6 +1,4 @@
 package lhexanome.optimodlivraison.platform.compute.tsp;
-import lhexanome.optimodlivraison.platform.compute.tsp.IteratorSeq;
-import lhexanome.optimodlivraison.platform.compute.tsp.TemplateTSPwSlots;
 
 import java.util.ArrayList;
 import java.util.Iterator;

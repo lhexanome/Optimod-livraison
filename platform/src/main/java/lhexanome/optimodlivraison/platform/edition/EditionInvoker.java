@@ -46,6 +46,8 @@ public class EditionInvoker {
      * Undo the last command.
      * Add it to redo list.
      * If none was found, does nothing
+     *
+     * @return Boolean
      */
     public boolean undoLastCommand() {
         if (!commands.isEmpty()) {
@@ -60,6 +62,8 @@ public class EditionInvoker {
     /**
      * Redo the last command to be undoed.
      * If none was found, does nothing
+     *
+     * @return Boolean
      */
     public boolean redoLastUndo() {
         if (!redoCommands.isEmpty()) {
