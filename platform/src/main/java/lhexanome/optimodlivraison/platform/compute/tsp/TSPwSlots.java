@@ -6,46 +6,54 @@ import lhexanome.optimodlivraison.platform.models.Tour;
 
 import java.util.Date;
 
-//CHECKSTYLE:OFF
+/**
+ * abstract interface for the TSP.
+ */
 public interface TSPwSlots {
-
-    /**
-     * @return true si searchSolution() s'est terminee parce que la limite de temps avait ete atteinte, avant d'avoir pu explorer tout l'espace de recherche,
-     */
-    Boolean getTempsLimiteAtteint();
 
 
     /**
      * init the tsp data structures.
      *
-     * @param nbSommets number of nodes
+     * @param nbNodes number of nodes
      */
-    void init(int nbSommets);
+    void init(int nbNodes);
 
     /**
-     * Cherche un circuit de duree minimale passant par chaque sommet (compris entre 0 et nbSommets-1)
+     * Search for a minimal duration circuit going through all nodes.
      *
-     * @param tour      tour to update
-     * @param matrix    storage for the data used in the tsp, it's used to compute back the results
-     * @param tpsLimite : limite (en millisecondes) sur le temps d'execution de searchSolution
-     * @param nbSommets : nombre de sommets du graphe
-     * @param cout      : cout[i][j] = duree pour aller de i a j, avec 0 <= i < nbSommets et 0 <= j < nbSommets
-     * @param plages    : plages horaires des sommets
-     * @param depart    : date de depart de la recherche
-     * @param duree     : duree[i] = duree pour visiter le sommet i, avec 0 <= i < nbSommets
+     * @param tour     global tour that needs to be computed by the TSP.
+     * @param matrix   matrix storing data giving links between indexes and nodes.
+     * @param cost     : cost[i][j] = duration from i to j, with 0 <= i < nbNodes et 0 <= j < nbNodes
+     * @param slots    slots to respect at each node
+     * @param duration : duration[i] = duration pour visiter le sommet i, avec 0 <= i < nbSommets
+     * @param start    : date de start du dernier sommet
+     * @param tpsLimit : timeout for resolution
+     * @param nbNodes  number of nodes concerned
      */
-    void searchSolution(Tour tour, AdjacencyMatrix matrix, int tpsLimite, int nbSommets, int[][] cout, TimeSlot[] plages, Date depart, int[] duree);
+    @SuppressWarnings("checkstyle:parameternumber")
+    void searchSolution(Tour tour, AdjacencyMatrix matrix, int tpsLimit, int nbNodes, int[][] cost,
+                        TimeSlot[] slots, Date start, int[] duration);
 
     /**
-     * @param i
-     * @return le sommet visite en i-eme position dans la solution calculee par searchSolution
+     * get the result of the solution.
+     * @param i index
+     * @return node number i in the solution found.
      */
     Integer getMeilleureSolution(int i);
 
     /**
-     * @return la duree de la solution calculee par searchSolution
+     * Gives the duration of the best solution.
+     *
+     * @return duration of the solution found.
      */
-    int getCoutMeilleureSolution();
+    int getCostBestSolution();
 
-    Date getDateEstimee(int i);
+    /**
+     * Get date estimated for the node i.
+     *
+     * @param i index
+     * @return the date
+     */
+    Date getEstimatedDate(int i);
 }

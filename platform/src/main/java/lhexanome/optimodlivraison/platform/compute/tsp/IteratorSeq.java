@@ -3,34 +3,42 @@ package lhexanome.optimodlivraison.platform.compute.tsp;
 import java.util.Collection;
 import java.util.Iterator;
 
-//CHECKSTYLE:OFF
+/**
+ * Iterator used in TSP.
+ */
 public class IteratorSeq implements Iterator<Integer> {
 
-    private Integer[] candidats;
-    private int nbCandidats;
+    /**
+     * candidates to be iterated upon.
+     */
+    private Integer[] candidates;
+    /**
+     * number of candidates.
+     */
+    private int nbCandidates;
 
     /**
-     * Cree un iterateur pour iterer sur l'ensemble des sommets de nonVus
+     * Create an iterator to go through all notViewed nodes.
      *
-     * @param nonVus
-     * @param sommetCrt
+     * @param notViewed nodes that haven't been visited yet.
+     * @param currentNode current node.
      */
-    public IteratorSeq(Collection<Integer> nonVus, int sommetCrt) {
-        this.candidats = new Integer[nonVus.size()];
-        nbCandidats = 0;
-        for (Integer s : nonVus) {
-            candidats[nbCandidats++] = s;
+    public IteratorSeq(Collection<Integer> notViewed, int currentNode) {
+        this.candidates = new Integer[notViewed.size()];
+        nbCandidates = 0;
+        for (Integer s : notViewed) {
+            candidates[nbCandidates++] = s;
         }
     }
 
     @Override
     public boolean hasNext() {
-        return nbCandidats > 0;
+        return nbCandidates > 0;
     }
 
     @Override
     public Integer next() {
-        return candidats[--nbCandidats];
+        return candidates[--nbCandidates];
     }
 
     @Override

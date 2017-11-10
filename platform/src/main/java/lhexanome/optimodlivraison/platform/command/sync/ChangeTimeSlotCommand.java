@@ -57,7 +57,9 @@ public class ChangeTimeSlotCommand extends UndoableCommand {
     protected void doExecute() {
 oldTimeSlot = selectedValue.getSlot();
         selectedValue.setSlot(newTimeSlot);
+        tour.refreshEstimateDates();
         tour.forceNotifyObservers();
+
     }
 
     /**
@@ -66,6 +68,7 @@ oldTimeSlot = selectedValue.getSlot();
     @Override
     protected void doUndo() {
         selectedValue.setSlot(oldTimeSlot);
+        tour.refreshEstimateDates();
         tour.forceNotifyObservers();
     }
 

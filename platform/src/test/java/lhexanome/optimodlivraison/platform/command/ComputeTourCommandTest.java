@@ -178,7 +178,7 @@ public class ComputeTourCommandTest {
     void failComputeIncompatibleSlot() throws ParseException, InterruptedException {
         CountDownLatch lock = new CountDownLatch(1);
 
-        Date startedDated10 = DateUtil.getDate(10, 00);;
+        Date startedDated10 = DateUtil.getDate(10, 00);
         Date endDated10 = DateUtil.getDate(10, 10);
         d10.setSlot(new TimeSlot(startedDated10, endDated10));
 
