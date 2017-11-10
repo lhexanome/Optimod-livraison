@@ -12,14 +12,14 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Date;
 
-class InterfaceCalculTest {
+class ComputeInterfaceTest {
     @Test
     void calculerRoadMapSimplifie() {
     }
 
    @Test
     void calculerTour() throws ComputeSlotsException {
-        InterfaceCalcul ic = new InterfaceCalcul();
+        ComputeInterface ic = new ComputeInterface();
         RoadMap roadMap = new RoadMap();
         DeliveryOrder demande = new DeliveryOrder();
         Intersection A = new Intersection(0L, 0, 0);

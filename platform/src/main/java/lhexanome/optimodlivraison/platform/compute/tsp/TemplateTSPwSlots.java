@@ -1,6 +1,6 @@
 package lhexanome.optimodlivraison.platform.compute.tsp;
 
-import lhexanome.optimodlivraison.platform.compute.MatriceAdjacence;
+import lhexanome.optimodlivraison.platform.compute.AdjacencyMatrix;
 import lhexanome.optimodlivraison.platform.compute.SimplifiedMap;
 import lhexanome.optimodlivraison.platform.models.Path;
 import lhexanome.optimodlivraison.platform.models.TimeSlot;
@@ -38,7 +38,7 @@ public abstract class TemplateTSPwSlots implements TSPwSlots {
 
 
     @Override
-    public void chercheSolution(Tour tour, MatriceAdjacence matrix, int tpsLimite, int nbSommets, int[][] cout, TimeSlot[] plages, Date depart, int[] duree) {
+    public void searchSolution(Tour tour, AdjacencyMatrix matrix, int tpsLimite, int nbSommets, int[][] cout, TimeSlot[] plages, Date depart, int[] duree) {
 
         tempsLimiteAtteint = false;
         init(nbSommets);
@@ -56,9 +56,9 @@ public abstract class TemplateTSPwSlots implements TSPwSlots {
      * @param tour   tour to obtain
      * @param matrix storage for the correspondence between indexes and objects
      */
-    private void computeResults(Tour tour, MatriceAdjacence matrix) {
+    private void computeResults(Tour tour, AdjacencyMatrix matrix) {
 
-        Path[][] matriceTrajets = matrix.getMatricePaths();
+        Path[][] matriceTrajets = matrix.getPathMatrix();
         int indexDepart, indexArrivee;
         indexDepart = this.getMeilleureSolution(0);
         ArrayList<Path> deliveries = new ArrayList<>(meilleureSolution.length);
@@ -141,7 +141,7 @@ public abstract class TemplateTSPwSlots implements TSPwSlots {
      * @param tpsDebut  : moment ou la resolution a commence
      * @param tpsLimite : limite de temps pour la resolution
      */
-    void branchAndBound(Tour tour, MatriceAdjacence matrix, int sommetCrt, ArrayList<Integer> nonVus, ArrayList<Integer> vus, int coutVus, int[][] cout,
+    void branchAndBound(Tour tour, AdjacencyMatrix matrix, int sommetCrt, ArrayList<Integer> nonVus, ArrayList<Integer> vus, int coutVus, int[][] cout,
                         TimeSlot[] plages, Date depart, Date[] tempDates, int[] duree, long tpsDebut, int tpsLimite) {
         if (System.currentTimeMillis() - tpsDebut > tpsLimite) {
             tempsLimiteAtteint = true;
