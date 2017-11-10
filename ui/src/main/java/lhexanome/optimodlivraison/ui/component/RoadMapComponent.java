@@ -410,6 +410,7 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
      * @param g2         Graphics
      * @param tourToDraw Tour
      */
+    @SuppressWarnings("checkstyle:magicnumber")
     private void paintComponent(Graphics2D g2, Tour tourToDraw) {
         g2.setStroke(new BasicStroke(2));
 
@@ -417,7 +418,7 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
         colorStep = (int) (MAX_COLOR / (double) tourToDraw.getOrderedDeliveryVector().size());
         for (Path path : tourToDraw.getPaths()) {
             intensity += colorStep;
-            if (intensity >= MAX_COLOR) {
+            if (intensity >= MAX_COLOR - 70) {
                 intensity = 0;
             }
 
