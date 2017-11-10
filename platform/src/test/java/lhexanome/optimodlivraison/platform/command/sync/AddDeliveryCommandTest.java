@@ -31,50 +31,81 @@ class AddDeliveryCommandTest {
     void doExecute() throws ParseException {
 
 
-        DateUtil.parseDate("yyyy/MM/dd HH:mm", "2017/12/22 08:22");
+        Date d1 = DateUtil.parseDate("yyyy/MM/dd HH:mm", "2017/12/22 08:22");
+        Date d2 = DateUtil.parseDate("yyyy/MM/dd HH:mm", "2017/12/22 08:24");
+        Date d3 = DateUtil.parseDate("yyyy/MM/dd HH:mm", "2017/12/22 08:26");
+        //Given
         Intersection intersection = new Intersection((long)124,128,242);
         Intersection intersection1 = new Intersection((long)741,591,316);
-        Intersection intersection2 = new Intersection((long)16,1679,2036);
-        Intersection intersection3 = new Intersection((long)56,87,96);
-        Intersection intersection4 = new Intersection((long)84,45,76);
-        Intersection intersection5 = new Intersection((long)78,156,301);
-        Intersection intersection6 = new Intersection((long)84, 564, 159);
-        Halt halt = new Halt(intersection);
-        Halt halt1 = new Halt(intersection1);
-        Halt halt2 = new Halt(intersection2);
-        Halt halt3 = new Halt(intersection3);
-        Halt halt4 = new Halt(intersection4);
-        Warehouse warehouse = new Warehouse(intersection5);
-        Path removedPath;
-        Delivery deliveryToAdd = new Delivery(intersection6, 8);
+        Intersection intersection2 = new Intersection((long)741,1000,316);
+        Intersection intersection3 = new Intersection((long)200,1000,316);
+        Intersection intersection4 = new Intersection((long)1,5000,5000);
 
-        Path path = new Path(halt, halt1);
-        Path path1 = new Path(halt1, halt2);
-        Path path2 = new Path(halt2, halt3);
-        Path path3 = new Path(halt3,halt4);
+        Halt halt = new Halt(intersection);
+        halt.setEstimateDate(d1);
+        Halt halt1 = new Halt(intersection1);
+        halt1.setEstimateDate(d2);
+
+        Warehouse warehouse = new Warehouse(intersection2);
+        warehouse.setEstimateDate(d3);
+
+        Delivery deliveryToAdd = new Delivery(intersection3, 8);
+
+        //warehouse to halt1
+        Vector v1 = new Vector(intersection2, intersection4, "rue v1");
+        Vector v2 = new Vector(intersection4, intersection, "rue v2");
+
+        Vector v3 = new Vector(intersection, intersection4, "rue v3");
+        Vector v4 = new Vector(intersection4, intersection1, "rue v4");
+
+        Vector v5 = new Vector(intersection1, intersection4, "rue v5");
+        Vector v6 = new Vector(intersection4, intersection2, "rue v6");
+
+        Path path = new Path(warehouse, halt);
+        path.setTimeToTravel(2);
+        path.addVector(v1);
+        path.addVector(v2);
+
+        Path path1 = new Path(halt, halt1);
+        path1.setTimeToTravel(2);
+        path1.addVector(v3);
+        path1.addVector(v4);
+
+        Path path2 = new Path(halt1, warehouse);
+        path2.setTimeToTravel(2);
+        path2.addVector(v5);
+        path2.addVector(v6);
+
         List<Path> paths = new ArrayList<>();
         paths.add(path);
         paths.add(path1);
         paths.add(path2);
-        paths.add(path3);
 
-        Tour tour = new Tour(warehouse, DateUtil.parseDate("yyyy/MM/dd HH:mm", "2017/12/22 08:22"),3600,paths );
+        Tour tour = new Tour(warehouse, DateUtil.parseDate("yyyy/MM/dd HH:mm", "2017/12/22 08:22"),3600, paths);
         int index = tour.getPaths().size()-1;
 
-        Halt previousHalt = tour.getPaths().get(index).getStart();
-        assertThat(previousHalt).isEqualTo(halt3);
+        RoadMap roadMap = new RoadMap();
+        roadMap.addIntersection(intersection);
+        roadMap.addIntersection(intersection1);
+        roadMap.addIntersection(intersection2);
+        roadMap.addIntersection(intersection3);
+        roadMap.addIntersection(intersection4);
+        roadMap.addVector(v1);
+        roadMap.addVector(v2);
+        roadMap.addVector(v3);
+        roadMap.addVector(v4);
+        roadMap.addVector(v5);
+        roadMap.addVector(v6);
+        AddDeliveryCommand c = new AddDeliveryCommand(tour, roadMap, deliveryToAdd, index);
 
-        Halt afterHalt = tour.getPaths().get(index).getEnd();
-        assertThat(afterHalt).isEqualTo(halt4);
+        // When
+        c.execute();
 
-        removedPath = tour.getPaths().remove(index);
-        assertThat(removedPath).isEqualTo(path3);
+        // Given
+        assertThat(paths.size()).isEqualTo(4);
 
-        Path path4 = new Path(previousHalt, deliveryToAdd);
-        tour.getPaths().add(index, path4);
-        assertThat(path4).isEqualTo(tour.getPaths().get(index));
-
-
+        //When
+        //Then
 
     }
 
