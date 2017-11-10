@@ -3,6 +3,7 @@ package lhexanome.optimodlivraison.ui.component;
 import lhexanome.optimodlivraison.platform.models.Delivery;
 import lhexanome.optimodlivraison.platform.models.DeliveryOrder;
 import lhexanome.optimodlivraison.platform.models.Intersection;
+import lhexanome.optimodlivraison.platform.models.Path;
 import lhexanome.optimodlivraison.platform.models.RoadMap;
 import lhexanome.optimodlivraison.platform.models.TimeSlot;
 import lhexanome.optimodlivraison.platform.models.Tour;
@@ -53,6 +54,15 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
      * Diameter of the notification dot.
      */
     private static final double NOTIFICATION_DOT_DIAMETER = 12;
+    /**
+     * max value of a color.
+     */
+    private static final int MAX_COLOR = 255;
+
+    /**
+     * gradient color step.
+     */
+    private static final int COLOR_STEP = 10;
 
     /**
      * color of a marker.
@@ -402,12 +412,19 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
      */
     private void paintComponent(Graphics2D g2, Tour tourToDraw) {
         g2.setStroke(new BasicStroke(2));
-        tourToDraw.getPaths().forEach(
-                path -> {
-                    g2.setColor(path.getColor());
-                    path.getVectors().forEach(vector -> paintComponent(g2, vector));
-                }
-        );
+
+        int intensity = 0;
+        for (Path path : tourToDraw.getPaths()) {
+            intensity += COLOR_STEP;
+            if (intensity >= MAX_COLOR) {
+                intensity = 0;
+            }
+
+            g2.setColor(new Color(intensity, intensity, MAX_COLOR));
+            path.getVectors().forEach(vector -> paintComponent(g2, vector));
+
+        }
+
         if (deliveryOrder != null) {
             paintComponent(g2, deliveryOrder.getWarehouse());
         }
