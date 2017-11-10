@@ -47,24 +47,28 @@ public class EditionInvoker {
      * Add it to redo list.
      * If none was found, does nothing
      */
-    public void undoLastCommand() {
+    public boolean undoLastCommand() {
         if (!commands.isEmpty()) {
             UndoableCommand command = commands.pop();
             redoCommands.push(command);
             command.undo();
+            return true;
         }
+        return false;
     }
 
     /**
      * Redo the last command to be undoed.
      * If none was found, does nothing
      */
-    public void redoLastUndo() {
+    public boolean redoLastUndo() {
         if (!redoCommands.isEmpty()) {
             UndoableCommand command = redoCommands.pop();
             commands.push(command);
             command.redo();
+            return true;
         }
+        return false;
     }
 
     /**

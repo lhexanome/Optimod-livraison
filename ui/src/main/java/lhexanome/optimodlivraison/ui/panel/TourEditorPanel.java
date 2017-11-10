@@ -273,7 +273,7 @@ public class TourEditorPanel extends AbstractPanel implements DeliveryListTransf
         gbc.insets = new Insets(5, 10, 5, 5);
         contentPane.add(removeDeliveryButton, gbc);
         redoButton = new JButton();
-        redoButton.setText("Redo");
+        redoButton.setText("Rétablir");
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
         gbc.gridy = 1;
@@ -281,7 +281,7 @@ public class TourEditorPanel extends AbstractPanel implements DeliveryListTransf
         gbc.insets = new Insets(5, 5, 5, 5);
         contentPane.add(redoButton, gbc);
         undoButton = new JButton();
-        undoButton.setText("Undo");
+        undoButton.setText("Annuler");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 1;

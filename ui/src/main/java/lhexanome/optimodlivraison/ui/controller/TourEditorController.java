@@ -131,14 +131,18 @@ public class TourEditorController implements ControllerInterface {
      * Undo the last action.
      */
     public void undo() {
-        editionInvoker.undoLastCommand();
+        if (!editionInvoker.undoLastCommand()) {
+            mainController.notifyError("Il n'y a rien à annuler");
+        }
     }
 
     /**
      * Redo the last undo command.
      */
     public void redo() {
-        editionInvoker.redoLastUndo();
+        if (!editionInvoker.redoLastUndo()) {
+            mainController.notifyError("Il n'y a rien à rétablir.");
+        }
     }
 
     /**
