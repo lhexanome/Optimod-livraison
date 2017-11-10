@@ -1,6 +1,5 @@
 package lhexanome.optimodlivraison.platform.compute;
 
-import lhexanome.optimodlivraison.platform.models.Halt;
 import lhexanome.optimodlivraison.platform.models.Intersection;
 import lhexanome.optimodlivraison.platform.models.Vector;
 
@@ -35,21 +34,21 @@ public class IntersectionWrapper {
 
 
     /**
-     * reference to the start point of the Dijkstra algorithm.
+     * reference to the iteration id of the Dijkstra algorithm.
      * it's used to know on which row of the path findings we are,
      * so there is no need to reset all intersections after each.
      */
-    private Halt start;
+    private long idIteration;
 
     /**
      * constructor.
      *
      * @param i     intersection wrapped by the object.
-     * @param start starting Halt for Dijkstra
+     * @param idIteration iteration id for Dijkstra
      */
-    public IntersectionWrapper(Intersection i, Halt start) {
+    public IntersectionWrapper(Intersection i, long idIteration) {
         intersection = i;
-        this.start = start;
+        this.idIteration = idIteration;
         i.setWrapper(this);
     }
 
@@ -156,11 +155,20 @@ public class IntersectionWrapper {
     }
 
     /**
-     * getter for start.
+     * getter for idIteration.
      *
-     * @return start.
+     * @return idIteration.
      */
-    public Halt getStart() {
-        return start;
+    public long getIdIteration() {
+        return idIteration;
+    }
+
+    /**
+     * setter for idIteration.
+     *
+     * @param idIteration idIteration to set.
+     */
+    public void setIdIteration(long idIteration) {
+        this.idIteration = idIteration;
     }
 }

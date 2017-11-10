@@ -176,5 +176,6 @@ public class Intersection {
      */
     public void resetWrapper() {
         wrapper = null;
+
     }
 }
