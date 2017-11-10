@@ -102,6 +102,7 @@ public class TourEditorController implements ControllerInterface {
     public void setTour(Tour tour) {
         this.tour = tour;
         tourEditorPanel.setTour(tour);
+        editionInvoker.reset();
 
         if (tour == null) {
             hide();

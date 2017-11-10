@@ -84,4 +84,12 @@ public class EditionInvoker {
     public Stack<UndoableCommand> getRedoCommands() {
         return redoCommands;
     }
+
+    /**
+     * Clear the history.
+     */
+    public void reset() {
+        this.commands.clear();
+        this.redoCommands.clear();
+    }
 }
