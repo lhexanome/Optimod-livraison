@@ -12,6 +12,7 @@ import lhexanome.optimodlivraison.platform.models.TimeSlot;
 import lhexanome.optimodlivraison.platform.models.Tour;
 import lhexanome.optimodlivraison.platform.models.Vector;
 import lhexanome.optimodlivraison.platform.models.Warehouse;
+import lhexanome.optimodlivraison.platform.utils.DateUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -138,14 +139,13 @@ public class ComputeTourCommandTest {
 
     @Test
     void failComputeUnrichable() throws ParseException, InterruptedException {
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
         CountDownLatch lock = new CountDownLatch(1);
 
         DeliveryOrder deliveryOrder = new DeliveryOrder();
         deliveryOrder.setWarehouse(e7);
         deliveryOrder.addDelivery(d13);
         deliveryOrder.addDelivery(d11);
-        Date startedDate = sdf.parse("10:12");
+        Date startedDate = DateUtil.getDate(10, 12);
         deliveryOrder.setStart(startedDate);
         Observer emptyObserver = (o, arg) -> {
         };
@@ -176,18 +176,17 @@ public class ComputeTourCommandTest {
 
     @Test
     void failComputeIncompatibleSlot() throws ParseException, InterruptedException {
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
         CountDownLatch lock = new CountDownLatch(1);
 
-        Date startedDated10 = sdf.parse("10:00");
-        Date endDated10 = sdf.parse("10:10");
+        Date startedDated10 = DateUtil.getDate(10, 00);;
+        Date endDated10 = DateUtil.getDate(10, 10);
         d10.setSlot(new TimeSlot(startedDated10, endDated10));
 
         DeliveryOrder deliveryOrder = new DeliveryOrder();
         deliveryOrder.setWarehouse(e7);
         deliveryOrder.addDelivery(d10);
         deliveryOrder.addDelivery(d11);
-        Date startedDate = sdf.parse("10:12");
+        Date startedDate = DateUtil.getDate(10, 12);
         deliveryOrder.setStart(startedDate);
         Observer emptyObserver = (o, arg) -> {
         };
