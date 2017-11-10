@@ -103,7 +103,7 @@ public class TourController implements ControllerInterface, ComputeTourListener,
      * Cancel a tour computation.
      */
     public void cancelComputeTour() {
-        if (isComputationRunning()) {
+        if (computeTourCommand != null) {
             computeTourCommand.cancel(true);
             computeTourCommand = null;
         }
@@ -159,6 +159,7 @@ public class TourController implements ControllerInterface, ComputeTourListener,
     public void onTourComputingFail(Exception e) {
         LOGGER.warning(String.format("Error while computing a tour error : %s", e.getMessage()));
         mainController.notifyError(e.getMessage());
+        clearTour();
     }
 
     /**
