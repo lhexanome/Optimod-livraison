@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<reseau>
+<noeud id="1" x="1" y="0"/>
+<noeud id="2" x="0" y="2"/>
+<noeud id="3" x="1" y="2"/>
+<noeud id="4" x="2" y="2"/>
+<noeud id="5" x="1" y="4"/>
+<noeud id="6" x="3" y="4"/>
+<noeud id="7" x="7" y="4"/>
+<noeud id="8" x="4" y="5"/>
+<noeud id="9" x="6" y="5"/>
+<noeud id="10" x="1" y="6"/>
+<noeud id="11" x="4" y="7"/>
+<noeud id="12" x="6" y="7"/>
+<noeud id="13" x="8" y="7"/>
+<troncon origine="1" destination="2" longueur="224.0" nomRue=""/>
+<troncon origine="1" destination="3" longueur="200.0" nomRue=""/>
+<troncon origine="2" destination="1" longueur="224.0" nomRue=""/>
+<troncon origine="2" destination="3" longueur="100.0" nomRue=""/>
+<troncon origine="3" destination="1" longueur="200.0" nomRue=""/>
+<troncon origine="3" destination="2" longueur="100.0" nomRue=""/>
+<troncon origine="3" destination="4" longueur="100.0" nomRue=""/>
+<troncon origine="5" destination="6" longueur="200.0" nomRue=""/>
+<troncon origine="5" destination="10" longueur="200.0" nomRue=""/>
+<troncon origine="6" destination="2" longueur="282.0" nomRue=""/>
+<troncon origine="6" destination="5" longueur="200.0" nomRue=""/>
+<troncon origine="6" destination="7" longueur="400.0" nomRue=""/>
+<troncon origine="6" destination="10" longueur="282.0" nomRue=""/>
+<troncon origine="7" destination="6" longueur="400.0" nomRue=""/>
+<troncon origine="7" destination="9" longueur="141.0" nomRue=""/>
+<troncon origine="8" destination="6" longueur="141.0" nomRue=""/>
+<troncon origine="8" destination="9" longueur="200.0" nomRue=""/>
+<troncon origine="9" destination="7" longueur="141.0" nomRue=""/>
+<troncon origine="9" destination="8" longueur="200.0" nomRue=""/>
+<troncon origine="9" destination="11" longueur="282.0" nomRue=""/>
+<troncon origine="10" destination="2" longueur="412.0" nomRue=""/>
+<troncon origine="10" destination="5" longueur="200.0" nomRue=""/>
+<troncon origine="10" destination="6" longueur="282.0" nomRue=""/>
+<troncon origine="10" destination="8" longueur="316.0" nomRue=""/>
+<troncon origine="10" destination="11" longueur="316.0" nomRue=""/>
+<troncon origine="11" destination="10" longueur="316.0" nomRue=""/>
+<troncon origine="11" destination="12" longueur="200.0" nomRue=""/>
+<troncon origine="12" destination="11" longueur="200.0" nomRue=""/>
+</reseau>
+

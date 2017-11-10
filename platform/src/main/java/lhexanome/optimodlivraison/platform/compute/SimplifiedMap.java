@@ -6,10 +6,7 @@ import lhexanome.optimodlivraison.platform.models.Halt;
 import lhexanome.optimodlivraison.platform.models.Intersection;
 import lhexanome.optimodlivraison.platform.models.Path;
 import lhexanome.optimodlivraison.platform.models.RoadMap;
-import lhexanome.optimodlivraison.platform.models.Tour;
 import lhexanome.optimodlivraison.platform.models.Vector;
-import lhexanome.optimodlivraison.platform.models.Warehouse;
-import lhexanome.optimodlivraison.platform.utils.DateUtil;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -94,28 +91,8 @@ public class SimplifiedMap {
             }
         } else {
             LOGGER.warning("Can't compute simplified graph, no delivery order");
+            throw new RuntimeException("Can't compute simplified graph, no delivery order");
         }
-    }
-
-    /**
-     * Creates tour from all paths in the graph.
-     *
-     * @return Generated tour.
-     */
-    @SuppressWarnings("checkstyle:magicnumber")
-    public Tour generateFakeTour() {
-        ArrayList<Path> listPath = new ArrayList<>();
-        Tour sortie = null;
-        boolean first = true;
-        for (Halt s : graph.keySet()) {
-            if (s instanceof Warehouse) {
-                sortie = new Tour((Warehouse) s, DateUtil.getDate(10, 10));
-            }
-            ArrayList<Path> list = graph.get(s);
-            listPath.addAll(list);
-        }
-        sortie.setPaths(listPath);
-        return sortie;
     }
 
     /**
@@ -129,7 +106,7 @@ public class SimplifiedMap {
     public ArrayList<Path> shortestPathList(
             Halt start, Set<? extends Halt> ends) {
         ArrayList<Path> sortie = new ArrayList<>();
-        LOGGER.info(MessageFormat.format("start compute shortest path for: %s", start.toString()));
+        LOGGER.info(MessageFormat.format("start compute shortest path for:", start.toString()));
 
         idIteration++;
         /*
@@ -196,6 +173,8 @@ public class SimplifiedMap {
                 if (endWrapper == null) {
                     LOGGER.warning(MessageFormat.format("no path found for: %s",
                             start.toString() + " and " + end.toString()));
+                    throw new RuntimeException("no path found for:"
+                            + start.toString() + " and " + end.toString());
                 }
                 // we climb back predecessors to get all the paths.
                 while (endWrapper != null && endWrapper.getPredecessor() != null) {
