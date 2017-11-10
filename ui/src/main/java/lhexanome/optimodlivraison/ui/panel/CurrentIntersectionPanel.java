@@ -132,10 +132,29 @@ public class CurrentIntersectionPanel extends AbstractPanel {
         displayedInformations.setText("");
         GridBagConstraints gbc;
         gbc = new GridBagConstraints();
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.gridheight = 2;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.insets = new Insets(0, 40, 0, 0);
+        contentPane.add(displayedInformations, gbc);
+        final JLabel label1 = new JLabel();
+        label1.setIcon(new ImageIcon(getClass().getResource("/source/plan/pointer/planMarkerOrange_little.png")));
+        label1.setText("Marker représentant une livraison");
+        gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.fill = GridBagConstraints.BOTH;
-        contentPane.add(displayedInformations, gbc);
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.insets = new Insets(0, 0, 4, 0);
+        contentPane.add(label1, gbc);
+        final JLabel label2 = new JLabel();
+        label2.setIcon(new ImageIcon(getClass().getResource("/source/plan/pointer/planMarkerRed_little.png")));
+        label2.setText("Marker représentant un entrepôt");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.anchor = GridBagConstraints.WEST;
+        contentPane.add(label2, gbc);
     }
 
     /**
