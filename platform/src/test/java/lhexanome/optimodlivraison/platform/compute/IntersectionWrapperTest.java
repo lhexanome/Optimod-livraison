@@ -30,7 +30,7 @@ class IntersectionWrapperTest {
         //When
         intersectionWrapper.setAsStart();
         //Then
-        assertThat(intersectionWrapper.getTempsDijkstra()).isEqualTo(0);
+        assertThat(intersectionWrapper.getDijkstraTime()).isEqualTo(0);
         assertThat(intersectionWrapper.isBlack()).isEqualTo(true);
     }
 
@@ -58,9 +58,9 @@ class IntersectionWrapperTest {
         IntersectionWrapper intersectionWrapper = new IntersectionWrapper(i,s);
         float temps = 1;
         //When
-        intersectionWrapper.setTempsDijkstra(temps);
+        intersectionWrapper.setDijkstraTime(temps);
         //Then
-        assertThat(intersectionWrapper.getTempsDijkstra()).isEqualTo(temps);
+        assertThat(intersectionWrapper.getDijkstraTime()).isEqualTo(temps);
     }
 
     @Test
