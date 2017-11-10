@@ -1,10 +1,7 @@
 package lhexanome.optimodlivraison.platform.command.sync;
 
 import lhexanome.optimodlivraison.platform.compute.SimplifiedMap;
-import lhexanome.optimodlivraison.platform.models.Delivery;
-import lhexanome.optimodlivraison.platform.models.Path;
-import lhexanome.optimodlivraison.platform.models.RoadMap;
-import lhexanome.optimodlivraison.platform.models.Tour;
+import lhexanome.optimodlivraison.platform.models.*;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -116,6 +113,17 @@ public class RemoveDeliveryCommand extends UndoableCommand {
      */
     @Override
     protected void doUndo() {
+        List<Path> tourPaths = tour.getPaths();
+
+        Halt previousHalt = tourPaths.get(index).getStart();
+        Halt afterHalt = tourPaths.get(index).getEnd();
+
+        tourPaths.remove(index);
+        tourPaths.add(index, simplifiedMap.shortestPathList(previousHalt, selectedValue));
+        tourPaths.add(index + 1, simplifiedMap.shortestPathList(selectedValue, afterHalt));
+
+        tour.refreshEstimateDates();
+        tour.forceNotifyObservers();
 
         tour.forceNotifyObservers();
     }
