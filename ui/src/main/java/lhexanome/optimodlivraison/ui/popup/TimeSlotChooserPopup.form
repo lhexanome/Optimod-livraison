@@ -2,7 +2,7 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="lhexanome.optimodlivraison.ui.popup.TimeSlotChooserPopup">
   <grid id="cbd77" binding="contentPane" layout-manager="GridBagLayout">
     <constraints>
-      <xy x="48" y="54" width="360" height="297"/>
+      <xy x="48" y="54" width="627" height="297"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -15,15 +15,6 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="e7465" class="javax.swing.JButton" binding="buttonOK">
-            <constraints>
-              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-              <gridbag top="0" left="10" bottom="0" right="10" weightx="1.0" weighty="1.0"/>
-            </constraints>
-            <properties>
-              <text value="Valider"/>
-            </properties>
-          </component>
           <component id="5723f" class="javax.swing.JButton" binding="buttonCancel">
             <constraints>
               <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
@@ -33,27 +24,30 @@
               <text value="Annuler"/>
             </properties>
           </component>
-          <component id="3eb3e" class="javax.swing.JButton" binding="buttonNone">
+          <vspacer id="e0630">
             <constraints>
-              <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="0" row-span="1" col-span="4" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+          </vspacer>
+          <component id="e7465" class="javax.swing.JButton" binding="buttonOK">
+            <constraints>
+              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
               <gridbag top="0" left="10" bottom="0" right="10" weightx="1.0" weighty="1.0"/>
             </constraints>
             <properties>
               <text value="Pas de plage horaire"/>
             </properties>
           </component>
-          <hspacer id="f6fe5">
+          <component id="3eb3e" class="javax.swing.JButton" binding="buttonNone">
             <constraints>
-              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="0.0" weighty="0.0"/>
+              <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag top="0" left="10" bottom="0" right="10" weightx="1.0" weighty="1.0"/>
             </constraints>
-          </hspacer>
-          <vspacer id="e0630">
-            <constraints>
-              <grid row="0" column="1" row-span="1" col-span="3" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="0.0" weighty="0.0"/>
-            </constraints>
-          </vspacer>
+            <properties>
+              <text value="Valider"/>
+            </properties>
+          </component>
         </children>
       </grid>
       <grid id="e3588" layout-manager="GridBagLayout">
@@ -76,7 +70,7 @@
           <component id="8419f" class="javax.swing.JLabel">
             <constraints>
               <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="1.0" weighty="0.0"/>
+              <gridbag top="0" left="10" bottom="0" right="0" weightx="1.0" weighty="0.0"/>
             </constraints>
             <properties>
               <labelFor value="27fad"/>
@@ -86,7 +80,7 @@
           <component id="28995" class="javax.swing.JLabel">
             <constraints>
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="1.0" weighty="0.0"/>
+              <gridbag top="0" left="10" bottom="0" right="0" weightx="1.0" weighty="0.0"/>
             </constraints>
             <properties>
               <labelFor value="e555c"/>
@@ -95,14 +89,14 @@
           </component>
           <component id="27fad" class="javax.swing.JComboBox" binding="timeSlotEndComboBox">
             <constraints>
-              <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
               <gridbag weightx="1.0" weighty="0.0"/>
             </constraints>
             <properties/>
           </component>
           <component id="e555c" class="javax.swing.JComboBox" binding="timeSlotStartComboBox">
             <constraints>
-              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
               <gridbag weightx="1.0" weighty="0.0"/>
             </constraints>
             <properties/>

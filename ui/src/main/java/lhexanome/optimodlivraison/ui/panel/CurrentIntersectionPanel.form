@@ -22,18 +22,38 @@
           <gridbag top="0" left="0" bottom="4" right="0" weightx="0.0" weighty="0.0"/>
         </constraints>
         <properties>
-          <icon value="source/plan/pointer/planMarkerOrange_little.png"/>
-          <text value="Marker représentant une livraison"/>
+          <icon value="plan/marker/planMarkerOrange_little.png"/>
+          <text value="Livraison"/>
         </properties>
       </component>
       <component id="a71c3" class="javax.swing.JLabel">
         <constraints>
           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <gridbag top="0" left="0" bottom="10" right="0" weightx="0.0" weighty="0.0"/>
+        </constraints>
+        <properties>
+          <icon value="plan/marker/planMarkerRed_little.png"/>
+          <text value="Entrepôt"/>
+        </properties>
+      </component>
+      <component id="aff98" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <gridbag top="0" left="0" bottom="10" right="0" weightx="0.0" weighty="0.0"/>
+        </constraints>
+        <properties>
+          <icon value="plan/marker/planMarkerGreen_little.png"/>
+          <text value="Intersection sélectionnée"/>
+        </properties>
+      </component>
+      <component id="dbea7" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
           <gridbag weightx="0.0" weighty="0.0"/>
         </constraints>
         <properties>
-          <icon value="source/plan/pointer/planMarkerRed_little.png"/>
-          <text value="Marker représentant un entrepôt"/>
+          <icon value="plan/marker/planMarkerBlue_little.png"/>
+          <text value="Livraison sélectionnée"/>
         </properties>
       </component>
     </children>

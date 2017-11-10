@@ -171,11 +171,14 @@ public class TourEditorController implements ControllerInterface {
         int duration = -1;
         while (duration == -1) {
             try {
-                String durationS = JOptionPane.showInputDialog(
+                String durationS = (String) JOptionPane.showInputDialog(
                         getContentPane(),
                         "Durée de la livraison ?",
                         "Ajout d'une livraison",
-                        JOptionPane.QUESTION_MESSAGE
+                        JOptionPane.QUESTION_MESSAGE,
+                        null,
+                        null,
+                        "10"
                 );
                 // If null, the dialog was cancelled so we can stop
                 if (durationS == null) return;

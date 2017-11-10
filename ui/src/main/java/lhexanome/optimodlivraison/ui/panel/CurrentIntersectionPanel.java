@@ -139,7 +139,7 @@ public class CurrentIntersectionPanel extends AbstractPanel {
         gbc.insets = new Insets(0, 40, 0, 0);
         contentPane.add(displayedInformations, gbc);
         final JLabel label1 = new JLabel();
-        label1.setIcon(new ImageIcon(getClass().getResource("/source/plan/pointer/planMarkerOrange_little.png")));
+        label1.setIcon(new ImageIcon(getClass().getResource("/plan/marker/planMarkerOrange_little.png")));
         label1.setText("Marker représentant une livraison");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -148,7 +148,7 @@ public class CurrentIntersectionPanel extends AbstractPanel {
         gbc.insets = new Insets(0, 0, 4, 0);
         contentPane.add(label1, gbc);
         final JLabel label2 = new JLabel();
-        label2.setIcon(new ImageIcon(getClass().getResource("/source/plan/pointer/planMarkerRed_little.png")));
+        label2.setIcon(new ImageIcon(getClass().getResource("/plan/marker/planMarkerRed_little.png")));
         label2.setText("Marker représentant un entrepôt");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;

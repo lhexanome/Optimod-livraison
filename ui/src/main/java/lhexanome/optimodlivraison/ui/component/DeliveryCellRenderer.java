@@ -38,7 +38,7 @@ public class DeliveryCellRenderer implements ListCellRenderer<Delivery> {
     /**
      * used for scaling a displayed integer.
      */
-    private static final long SCALE_DELIVERY = 100;
+    private static final long SCALE_DELIVERY = 60;
 
     /**
      * used for scaling a displayed integer.
