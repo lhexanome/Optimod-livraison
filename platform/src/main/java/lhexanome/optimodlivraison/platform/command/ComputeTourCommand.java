@@ -95,6 +95,7 @@ public class ComputeTourCommand extends SwingWorker<Void, Tour> implements Obser
             LOGGER.warning("Tour computed");
         } catch (ComputeSlotsException e) {
             LOGGER.warning("Can't compute with incompatible slots");
+            throw e;
         } catch (Exception e) {
             LOGGER.warning(MessageFormat.format("Unknown error", e.getCause()));
             throw e;

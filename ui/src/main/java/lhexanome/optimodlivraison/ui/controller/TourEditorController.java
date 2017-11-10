@@ -4,7 +4,7 @@ import lhexanome.optimodlivraison.platform.command.sync.AddDeliveryCommand;
 import lhexanome.optimodlivraison.platform.command.sync.ChangeTimeSlotCommand;
 import lhexanome.optimodlivraison.platform.command.sync.MoveDeliveryCommand;
 import lhexanome.optimodlivraison.platform.command.sync.RemoveDeliveryCommand;
-import lhexanome.optimodlivraison.platform.editition.EditionInvoker;
+import lhexanome.optimodlivraison.platform.edition.EditionInvoker;
 import lhexanome.optimodlivraison.platform.models.Delivery;
 import lhexanome.optimodlivraison.platform.models.Intersection;
 import lhexanome.optimodlivraison.platform.models.RoadMap;
