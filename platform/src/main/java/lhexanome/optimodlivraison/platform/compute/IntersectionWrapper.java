@@ -43,7 +43,7 @@ public class IntersectionWrapper {
     /**
      * constructor.
      *
-     * @param i     intersection wrapped by the object.
+     * @param i           intersection wrapped by the object.
      * @param idIteration iteration id for Dijkstra
      */
     public IntersectionWrapper(Intersection i, long idIteration) {
