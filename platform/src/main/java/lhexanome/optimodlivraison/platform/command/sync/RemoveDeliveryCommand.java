@@ -1,5 +1,6 @@
 package lhexanome.optimodlivraison.platform.command.sync;
 
+
 import lhexanome.optimodlivraison.platform.compute.SimplifiedMap;
 import lhexanome.optimodlivraison.platform.models.*;
 
@@ -113,14 +114,48 @@ public class RemoveDeliveryCommand extends UndoableCommand {
      */
     @Override
     protected void doUndo() {
-        List<Path> tourPaths = tour.getPaths();
+        List<Path> paths = tour.getPaths();
 
-        Halt previousHalt = tourPaths.get(index).getStart();
-        Halt afterHalt = tourPaths.get(index).getEnd();
+        Path newPathToDelivery;
+        Path newPathFromDelivery;
 
-        tourPaths.remove(index);
-        tourPaths.add(index, simplifiedMap.shortestPathList(previousHalt, selectedValue));
-        tourPaths.add(index + 1, simplifiedMap.shortestPathList(selectedValue, afterHalt));
+        if (index == 0) {
+            newPathFromDelivery = simplifiedMap.shortestPathList(
+                    selectedValue,
+                    paths.get(index + 1).getStart()
+            );
+            newPathToDelivery = simplifiedMap.shortestPathList(
+                    tour.getWarehouse(),
+                    selectedValue
+            );
+        } else if (index == paths.size() - 1) {
+            newPathFromDelivery = simplifiedMap.shortestPathList(
+                    selectedValue,
+                    tour.getWarehouse()
+            );
+            newPathToDelivery = simplifiedMap.shortestPathList(
+                    paths.get(index).getStart(),
+                    selectedValue
+            );
+        } else {
+            newPathFromDelivery = simplifiedMap.shortestPathList(
+                    selectedValue,
+                    paths.get(index).getEnd()
+            );
+            newPathToDelivery = simplifiedMap.shortestPathList(
+                    paths.get(index).getStart(),
+                    selectedValue
+            );
+        }
+
+        // Remove new index shortcut
+
+        paths.remove(index);
+
+        // Add detour
+
+        paths.add(index, newPathFromDelivery);
+        paths.add(index, newPathToDelivery);
 
         tour.refreshEstimateDates();
         tour.forceNotifyObservers();
