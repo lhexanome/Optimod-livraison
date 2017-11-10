@@ -130,7 +130,9 @@ public class MainController implements ControllerInterface {
      */
     public void setDeliveryOrder(DeliveryOrder deliveryOrder) {
         roadMapController.setDeliveryOrder(deliveryOrder);
+        deliveryOrderController.show();
         tourController.clearTour();
+        tourEditorController.setTour(null);
     }
 
     /**

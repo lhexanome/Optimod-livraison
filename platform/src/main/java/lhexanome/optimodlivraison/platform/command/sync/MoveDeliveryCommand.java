@@ -32,7 +32,7 @@ public class MoveDeliveryCommand extends UndoableCommand {
     /**
      * New index.
      */
-    private final int newIndex;
+    private int newIndex;
 
     /**
      * Old index.
@@ -170,6 +170,8 @@ public class MoveDeliveryCommand extends UndoableCommand {
 
         // Send updates
 
+        this.newIndex = tour.getOrderedDeliveryVector().indexOf(selectedValue);
+
         tour.refreshEstimateDates();
         tour.forceNotifyObservers();
 
@@ -180,23 +182,16 @@ public class MoveDeliveryCommand extends UndoableCommand {
      */
     @Override
     protected void doUndo() {
-        if (counter < newIndex) {
-            tour.getPaths().remove(newIndex);
-            tour.getPaths().remove(newIndex);
-            tour.getPaths().add(newIndex, removedPath);
-            tour.getPaths().remove(counter);
-            tour.getPaths().add(counter - 1, previewRemovedPath);
-            tour.getPaths().add(counter, afterRemovedPath);
+        int tmp = this.newIndex;
+        this.newIndex = this.oldIndex;
+        this.oldIndex = tmp;
 
-        } else {
-            tour.getPaths().remove(newIndex);
-            tour.getPaths().remove(newIndex);
-            tour.getPaths().add(newIndex, removedPath);
-            tour.getPaths().remove(counter);
-            tour.getPaths().add(counter, previewRemovedPath);
-            tour.getPaths().add(counter + 1, afterRemovedPath);
-        }
+        doExecute();
 
+        this.oldIndex = this.newIndex;
+        this.newIndex = tmp;
+
+        tour.refreshEstimateDates();
         tour.forceNotifyObservers();
     }
 
