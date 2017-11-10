@@ -122,7 +122,7 @@ public class SimplifiedMap {
     public ArrayList<Path> shortestPathList(
             Halt start, Set<? extends Halt> ends) {
         ArrayList<Path> sortie = new ArrayList<>();
-        LOGGER.info(MessageFormat.format("start compute shortest path for:", start.toString()));
+        LOGGER.info(MessageFormat.format("start compute shortest path for: %s", start.toString()));
 
 
         /*
