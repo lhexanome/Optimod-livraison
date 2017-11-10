@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<demandeDeLivraisons>
+<entrepot adresse="433243258" heureDepart="8:0:0"/>
+<livraison adresse="3280925503" duree="300"/>
+<livraison adresse="4136115322" duree="900"/>
+<livraison adresse="245972025" duree="300"/>
+<livraison adresse="197310497" duree="600"/>
+<livraison adresse="26584157" duree="300"/>
+<livraison adresse="1941822283" duree="600"/>
+<livraison adresse="243993889" duree="900"/>
+<livraison adresse="504557598" duree="300"/>
+<livraison adresse="3840413118" duree="300"/>
+<livraison adresse="2203886701" duree="600"/>
+<livraison adresse="8902008" duree="600"/>
+<livraison adresse="3130162085" duree="900"/>
+<livraison adresse="244509509" duree="300"/>
+<livraison adresse="1315984530" duree="900"/>
+<livraison adresse="34676680" duree="300"/>
+<livraison adresse="245032683" duree="300"/>
+<livraison adresse="315381991" duree="900"/>
+<livraison adresse="21674814" duree="300"/>
+<livraison adresse="517370427" duree="300"/>
+</demandeDeLivraisons>

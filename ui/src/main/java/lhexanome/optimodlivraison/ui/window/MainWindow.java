@@ -41,6 +41,7 @@ public class MainWindow extends Window {
 
         jFrame.setLayout(new BorderLayout());
         jFrame.add(mainPanel.getContentPane(), BorderLayout.CENTER);
+        jFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
         jFrame.pack();
         jFrame.setLocationRelativeTo(null);
     }

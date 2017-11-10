@@ -7,8 +7,8 @@ import lhexanome.optimodlivraison.platform.models.RoadMap;
 import lhexanome.optimodlivraison.platform.models.Tour;
 import lhexanome.optimodlivraison.ui.window.MainWindow;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JOptionPane;
+import java.awt.Container;
 import java.io.File;
 
 /**
@@ -249,5 +249,19 @@ public class MainController implements ControllerInterface {
      */
     public void reloadDeliveryOrder() {
         deliveryOrderController.reloadDeliveryOrder();
+    }
+
+    /**
+     * Undo the last action.
+     */
+    public void undo() {
+        tourEditorController.undo();
+    }
+
+    /**
+     * Redo the last undo command.
+     */
+    public void redo() {
+        tourEditorController.redo();
     }
 }

@@ -49,6 +49,11 @@ public class SimplifiedMap {
     private Map<Halt, ArrayList<Path>> graph;
 
     /**
+     * id compute iteration.
+     */
+    private static long idIteration = -1;
+
+    /**
      * Constructor used to do the computing without generating a graph.
      *
      * @param roadMap Roadmap to compute from.
@@ -125,7 +130,7 @@ public class SimplifiedMap {
         ArrayList<Path> sortie = new ArrayList<>();
         LOGGER.info(MessageFormat.format("start compute shortest path for:", start.toString()));
 
-
+        idIteration++;
         /*
          * list of elements visited by dijkstra (grey ones)
          */
@@ -163,7 +168,7 @@ public class SimplifiedMap {
         Set<Halt> ends = new HashSet<>();
         ends.add(end);
         start.getIntersection().resetWrapper();
-        end.getIntersection().resetWrapper();
+        //end.getIntersection().resetWrapper();
 
         ArrayList<Path> sorties = shortestPathList(start, ends);
         //there is normally only one path
@@ -291,7 +296,6 @@ public class SimplifiedMap {
                     if (successor.getWrapper() != null && successor.getWrapper().getStart() == start) {
                         // case where intersection has already been visited during this run
                         IntersectionWrapper successorWrapper = successor.getWrapper();
-
 
                         if (!successorWrapper.isBlack()) {
                             if (successorWrapper.getDijkstraTime()
