@@ -173,8 +173,8 @@ public class SimplifiedMap {
                 if (endWrapper == null) {
                     LOGGER.warning(MessageFormat.format("no path found for: %s",
                             start.toString() + " and " + end.toString()));
-                    throw new RuntimeException("no path found for:" +
-                            start.toString() + " and " + end.toString());
+                    throw new RuntimeException("no path found for:"
+                            + start.toString() + " and " + end.toString());
                 }
                 // we climb back predecessors to get all the paths.
                 while (endWrapper != null && endWrapper.getPredecessor() != null) {
