@@ -40,32 +40,32 @@ public class MoveDeliveryCommand extends UndoableCommand {
     private int oldIndex;
 
     /**
-     * RoadMap
+     * RoadMap.
      */
     private RoadMap roadMap;
 
     /**
-     * SimplifiedMap
+     * SimplifiedMap.
      */
     private SimplifiedMap simplifiedMap;
 
     /**
-     * Removed path
+     * Removed path.
      */
     private Path removedPath;
 
     /**
-     * first removed path
+     * first removed path.
      */
     private Path previewRemovedPath;
 
     /**
-     * second removed path
+     * second removed path.
      */
     private Path afterRemovedPath;
 
     /**
-     * counter
+     * counter.
      */
     private int counter = 0;
 

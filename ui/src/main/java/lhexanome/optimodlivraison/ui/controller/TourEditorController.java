@@ -47,6 +47,9 @@ public class TourEditorController implements ControllerInterface {
 
     private RoadMap roadMap;
 
+    /**
+     * Edition manager.
+     */
     private EditionInvoker editionInvoker;
 
     /**
@@ -186,7 +189,7 @@ public class TourEditorController implements ControllerInterface {
 
         Delivery delivery = new Delivery(intersection, duration, timeSlot);
 
-        AddDeliveryCommand command = new AddDeliveryCommand(tour, roadMap, delivery, tour.getPaths().size()-1);
+        AddDeliveryCommand command = new AddDeliveryCommand(tour, roadMap, delivery, tour.getPaths().size() - 1);
         editionInvoker.storeAndExecute(command);
         edited = true;
     }

@@ -33,19 +33,19 @@ public class RemoveDeliveryCommand extends UndoableCommand {
      * Delivery to remove.
      */
     private final Delivery selectedValue;
-    
+
     /**
-     * first removed path
+     * first removed path.
      */
     private Path previewRemovedPath;
-    
+
     /**
-     * second removed path
+     * second removed path.
      */
     private Path afterRemovedPath;
-    
+
     /**
-     * simplified map
+     * simplified map.
      */
     private SimplifiedMap simplifiedMap;
 
