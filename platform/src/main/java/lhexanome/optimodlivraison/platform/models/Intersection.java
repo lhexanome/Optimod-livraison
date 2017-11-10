@@ -170,4 +170,11 @@ public class Intersection {
     public int hashCode() {
         return id.hashCode();
     }
+
+    /**
+     * reset wrapper for dijkstra.
+     */
+    public void resetWrapper() {
+        wrapper = null;
+    }
 }

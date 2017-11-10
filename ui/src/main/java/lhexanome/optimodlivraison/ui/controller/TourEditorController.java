@@ -44,6 +44,12 @@ public class TourEditorController implements ControllerInterface {
      * Edition invoker.
      * Take care of the history of modifications
      */
+
+    private RoadMap roadMap;
+
+    /**
+     * Edition manager.
+     */
     private EditionInvoker editionInvoker;
 
     /**
@@ -183,7 +189,7 @@ public class TourEditorController implements ControllerInterface {
 
         Delivery delivery = new Delivery(intersection, duration, timeSlot);
 
-        AddDeliveryCommand command = new AddDeliveryCommand(tour, delivery, 0);
+        AddDeliveryCommand command = new AddDeliveryCommand(tour, roadMap, delivery, tour.getPaths().size() - 1);
         editionInvoker.storeAndExecute(command);
         edited = true;
     }
@@ -194,6 +200,8 @@ public class TourEditorController implements ControllerInterface {
      * @param roadMap Road map
      */
     public void setRoadMap(RoadMap roadMap) {
+
+        this.roadMap = roadMap;
         tourEditorPanel.setRoadMap(roadMap);
     }
 
@@ -209,7 +217,7 @@ public class TourEditorController implements ControllerInterface {
             return;
         }
 
-        RemoveDeliveryCommand command = new RemoveDeliveryCommand(tour, selectedValue);
+        RemoveDeliveryCommand command = new RemoveDeliveryCommand(tour, roadMap, selectedValue);
         editionInvoker.storeAndExecute(command);
         edited = true;
     }
@@ -251,7 +259,7 @@ public class TourEditorController implements ControllerInterface {
     public void moveDelivery(Delivery delivery, int newIndex) {
         if (checkIfEditionIsUnavailable()) return;
 
-        MoveDeliveryCommand command = new MoveDeliveryCommand(tour, delivery, newIndex);
+        MoveDeliveryCommand command = new MoveDeliveryCommand(tour, roadMap, delivery, newIndex);
         editionInvoker.storeAndExecute(command);
         edited = true;
     }
