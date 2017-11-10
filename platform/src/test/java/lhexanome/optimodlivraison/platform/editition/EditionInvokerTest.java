@@ -1,6 +1,7 @@
 package lhexanome.optimodlivraison.platform.editition;
 
 import lhexanome.optimodlivraison.platform.command.sync.UndoableCommand;
+import lhexanome.optimodlivraison.platform.edition.EditionInvoker;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
