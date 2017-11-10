@@ -6,9 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 class EditionInvokerTest {
 
@@ -132,5 +130,25 @@ class EditionInvokerTest {
         // Then
 
         verify(command, times(1)).doRedo();
+    }
+
+    @Test
+    void shouldClearEverything() {
+        // Given
+
+        MockableCommand command1 = spy(new MockableCommand());
+        MockableCommand command2 = spy(new MockableCommand());
+        invoker.storeAndExecute(command1);
+        invoker.undoLastCommand();
+        invoker.storeAndExecute(command2);
+
+        // When
+
+        invoker.reset();
+
+        // Then
+
+        assertThat(invoker.getCommands()).isEmpty();
+        assertThat(invoker.getRedoCommands()).isEmpty();
     }
 }
