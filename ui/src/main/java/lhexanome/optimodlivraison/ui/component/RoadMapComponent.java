@@ -54,6 +54,15 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
      * Diameter of the notification dot.
      */
     private static final double NOTIFICATION_DOT_DIAMETER = 12;
+    /**
+     * max value of a color.
+     */
+    private static final int MAX_COLOR = 255;
+
+    /**
+     * gradient color step.
+     */
+    private static final int COLOR_STEP = 10;
 
     /**
      * color of a marker.
@@ -405,18 +414,17 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
         g2.setStroke(new BasicStroke(2));
 
         int intensity = 0;
-
         for (Path path : tourToDraw.getPaths()) {
-
-            intensity += 10;
-            if (intensity>= 255) {
+            intensity += COLOR_STEP;
+            if (intensity >= MAX_COLOR) {
                 intensity = 0;
             }
 
-            g2.setColor(new Color(intensity,intensity,255));
+            g2.setColor(new Color(intensity, intensity, MAX_COLOR));
             path.getVectors().forEach(vector -> paintComponent(g2, vector));
 
         }
+
         if (deliveryOrder != null) {
             paintComponent(g2, deliveryOrder.getWarehouse());
         }
