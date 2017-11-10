@@ -105,5 +105,16 @@ class IntersectionWrapperTest {
         //Then
         assertThat(intersectionWrapper.getIncomingVector()).isEqualTo(v);
     }
+    @Test
+    void idIteration() {
+        //With
+        Intersection i = new Intersection(0l);
+        IntersectionWrapper intersectionWrapper = new IntersectionWrapper(i, 0);
+
+        //When
+        intersectionWrapper.setIdIteration(1);
+        //Then
+        assertThat(intersectionWrapper.getIdIteration()).isEqualTo(1);
+    }
 
 }
