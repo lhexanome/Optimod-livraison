@@ -43,12 +43,6 @@ public class AdjacencyMatrix {
         this.weightMatrix = weightMatrix;
     }
 
-    /**
-     * @return List associating each vertex to its index.
-     */
-    public ArrayList<Halt> getVertexList() {
-        return vertexList;
-    }
 
     /**
      * @return Matrix gathering the best path between each vertex.

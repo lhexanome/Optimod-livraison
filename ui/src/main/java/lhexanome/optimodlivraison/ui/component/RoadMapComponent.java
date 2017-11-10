@@ -39,7 +39,7 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
     /**
      * delivery index color on the map.
      */
-    private static final Color DELIVERY_INDEX_COLOR = Color.green;
+    private static final Color DELIVERY_INDEX_COLOR = Color.DARK_GRAY;
 
     /**
      * delivery index x display offset.
@@ -415,14 +415,35 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
         g2.setStroke(new BasicStroke(2));
 
         int intensity = 0;
-        colorStep = (int) (MAX_COLOR / (double) tourToDraw.getOrderedDeliveryVector().size());
+        colorStep = (int) (MAX_COLOR * 2 / (double) tourToDraw.getOrderedDeliveryVector().size());
+        int swap = 0;
         for (Path path : tourToDraw.getPaths()) {
-            intensity += colorStep;
-            if (intensity >= MAX_COLOR - 70) {
-                intensity = 0;
-            }
 
-            g2.setColor(new Color(intensity, intensity, MAX_COLOR));
+
+            if (swap == 0) {
+                g2.setColor(new Color(intensity, intensity * 2 / 3, MAX_COLOR));
+                /*intensity += colorStep;
+                if (intensity >= MAX_COLOR * 0.75) {
+                    intensity = 0;
+                }*/
+                intensity = (int) (MAX_COLOR * 0.75);
+                swap = 1;
+            } else if (swap == 1) {
+                g2.setColor(new Color(intensity / 2, intensity, MAX_COLOR));
+
+                swap = 2;
+
+            } else if (swap == 2) {
+                g2.setColor(new Color(intensity * 2 / 3, intensity, MAX_COLOR));
+                swap = 3;
+            } else if (swap == 3) {
+                g2.setColor(new Color(MAX_COLOR, intensity, MAX_COLOR));
+                swap = 4;
+            } else {
+                g2.setColor(new Color(intensity, intensity / 2, MAX_COLOR));
+
+                swap = 0;
+            }
             path.getVectors().forEach(vector -> paintComponent(g2, vector));
 
         }
