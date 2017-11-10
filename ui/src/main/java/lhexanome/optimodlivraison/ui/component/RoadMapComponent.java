@@ -3,6 +3,7 @@ package lhexanome.optimodlivraison.ui.component;
 import lhexanome.optimodlivraison.platform.models.Delivery;
 import lhexanome.optimodlivraison.platform.models.DeliveryOrder;
 import lhexanome.optimodlivraison.platform.models.Intersection;
+import lhexanome.optimodlivraison.platform.models.Path;
 import lhexanome.optimodlivraison.platform.models.RoadMap;
 import lhexanome.optimodlivraison.platform.models.TimeSlot;
 import lhexanome.optimodlivraison.platform.models.Tour;
@@ -53,6 +54,15 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
      * Diameter of the notification dot.
      */
     private static final double NOTIFICATION_DOT_DIAMETER = 12;
+    /**
+     * max value of a color.
+     */
+    private static final int MAX_COLOR = 255;
+
+    /**
+     * gradient color step.
+     */
+    private int colorStep;
 
     /**
      * color of a marker.
@@ -400,14 +410,23 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
      * @param g2         Graphics
      * @param tourToDraw Tour
      */
+    @SuppressWarnings("checkstyle:magicnumber")
     private void paintComponent(Graphics2D g2, Tour tourToDraw) {
         g2.setStroke(new BasicStroke(2));
-        tourToDraw.getPaths().forEach(
-                path -> {
-                    g2.setColor(path.getColor());
-                    path.getVectors().forEach(vector -> paintComponent(g2, vector));
-                }
-        );
+
+        int intensity = 0;
+        colorStep = (int) (MAX_COLOR / (double) tourToDraw.getOrderedDeliveryVector().size());
+        for (Path path : tourToDraw.getPaths()) {
+            intensity += colorStep;
+            if (intensity >= MAX_COLOR - 70) {
+                intensity = 0;
+            }
+
+            g2.setColor(new Color(intensity, intensity, MAX_COLOR));
+            path.getVectors().forEach(vector -> paintComponent(g2, vector));
+
+        }
+
         if (deliveryOrder != null) {
             paintComponent(g2, deliveryOrder.getWarehouse());
         }

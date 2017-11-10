@@ -1,6 +1,5 @@
 package lhexanome.optimodlivraison.platform.compute;
 
-import lhexanome.optimodlivraison.platform.models.Halt;
 import lhexanome.optimodlivraison.platform.models.Intersection;
 import lhexanome.optimodlivraison.platform.models.Vector;
 
@@ -17,7 +16,7 @@ public class IntersectionWrapper {
     /**
      * time stored, value used as path weight in Dijkstra.
      */
-    private float tempsDijkstra = Float.MAX_VALUE;
+    private float dijkstraTime = Float.MAX_VALUE;
 
     /**
      * Dijkstra state: black == every neighbours are done.
@@ -29,41 +28,41 @@ public class IntersectionWrapper {
      */
     private IntersectionWrapper predecessor;
     /**
-     * vector used to go from predecessor to this intersection.
+     * Vector used to go from predecessor to this intersection.
      */
     private Vector incomingVector;
 
 
     /**
-     * reference to the start point of the Dijkstra algorithm.
-     * it's used to know on which row of the path findings we are,
+     * Reference to the iteration id of the Dijkstra algorithm.
+     * It's used to know on which row of the path findings we are,
      * so there is no need to reset all intersections after each.
      */
-    private Halt start;
+    private long idIteration;
 
     /**
-     * constructor.
+     * Constructor.
      *
-     * @param i     intersection wrapped by the object.
-     * @param start starting Halt for Dijkstra
+     * @param i           intersection wrapped by the object.
+     * @param idIteration iteration id for Dijkstra
      */
-    public IntersectionWrapper(Intersection i, Halt start) {
+    public IntersectionWrapper(Intersection i, long idIteration) {
         intersection = i;
-        this.start = start;
+        this.idIteration = idIteration;
         i.setWrapper(this);
     }
 
     /**
-     * function used to set this object as the starting point
+     * Function used to set this object as the starting point
      * for the path finding.
      */
     public void setAsStart() {
-        tempsDijkstra = 0;
+        dijkstraTime = 0;
         black = true;
     }
 
     /**
-     * getter for intersection.
+     * Getter for intersection.
      *
      * @return the intersection.
      */
@@ -72,9 +71,9 @@ public class IntersectionWrapper {
     }
 
     /**
-     * setter for intersection.
+     * Setter for intersection.
      *
-     * @param intersection the intersection to set
+     * @param intersection The intersection to set.
      */
     public void setIntersection(Intersection intersection) {
         this.intersection.setWrapper(null);
@@ -83,84 +82,92 @@ public class IntersectionWrapper {
     }
 
     /**
-     * getter for tempsDijkstra.
+     * Getter for dijkstraTime.
      *
-     * @return tempsDijkstra
+     * @return dijkstraTime.
      */
-    public float getTempsDijkstra() {
-        return tempsDijkstra;
+    public float getDijkstraTime() {
+        return dijkstraTime;
     }
 
     /**
-     * setter for tempsDijkstra.
+     * Setter for dijkstraTime.
      *
-     * @param tempsDijkstra tempsDijkstra given
+     * @param dijkstraTime Given dijkstraTime.
      */
-    public void setTempsDijkstra(float tempsDijkstra) {
-        this.tempsDijkstra = tempsDijkstra;
+    public void setDijkstraTime(float dijkstraTime) {
+        this.dijkstraTime = dijkstraTime;
     }
 
     /**
      * getter for Dijkstra state.
      *
-     * @return if is black
+     * @return If is black.
      */
     public boolean isBlack() {
         return black;
     }
 
     /**
-     * setter for Dijkstra state.
+     * Setter for Dijkstra state.
      *
-     * @param black state
+     * @param black State.
      */
     public void setBlack(boolean black) {
         this.black = black;
     }
 
     /**
-     * getter for predecessor.
+     * Getter for predecessor.
      *
-     * @return predecessor
+     * @return Predecessor.
      */
     public IntersectionWrapper getPredecessor() {
         return predecessor;
     }
 
     /**
-     * setter for predecessor.
+     * Setter for predecessor.
      *
-     * @param predecessor predecessor given
+     * @param predecessor Given predecessor.
      */
     public void setPredecessor(IntersectionWrapper predecessor) {
         this.predecessor = predecessor;
     }
 
     /**
-     * getter for the vector.
+     * Getter for the vector.
      *
-     * @return the vector
+     * @return the vector.
      */
     public Vector getIncomingVector() {
         return incomingVector;
     }
 
-
     /**
-     * setter for the vector coming here.
+     * Setter for the vector coming here.
      *
-     * @param incomingVector vector given
+     * @param incomingVector Vector given.
      */
     public void setIncomingVector(Vector incomingVector) {
         this.incomingVector = incomingVector;
     }
 
     /**
-     * getter for start.
+     * Getter for idIteration.
      *
-     * @return start.
+     * @return idIteration.
      */
-    public Halt getStart() {
-        return start;
+    public long getIdIteration() {
+        return idIteration;
+    }
+
+    /**
+     * setter for idIteration.
+     *
+     * @param idIteration idIteration to set.
+     */
+    public void setIdIteration(long idIteration) {
+        this.idIteration = idIteration;
     }
 }

@@ -31,8 +31,8 @@
       </component>
       <component id="523c5" class="javax.swing.JButton" binding="reloadRoadMapButton">
         <constraints>
-          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-          <gridbag weightx="1.0" weighty="0.0"/>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="1.0" weighty="0.0" ipadx="10" ipady="5"/>
         </constraints>
         <properties>
           <alignmentY value="0.0"/>

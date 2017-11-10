@@ -36,7 +36,7 @@
           <gridbag top="5" left="5" bottom="5" right="5" weightx="0.0" weighty="0.0"/>
         </constraints>
         <properties>
-          <text value="Redo"/>
+          <text value="Rétablir"/>
         </properties>
       </component>
       <component id="3ce62" class="javax.swing.JButton" binding="undoButton">
@@ -45,7 +45,7 @@
           <gridbag top="5" left="5" bottom="5" right="5" weightx="0.0" weighty="0.0"/>
         </constraints>
         <properties>
-          <text value="Undo"/>
+          <text value="Annuler"/>
         </properties>
       </component>
       <component id="15e28" class="javax.swing.JButton" binding="changeTimeSlotButton">

@@ -4,7 +4,7 @@ import lhexanome.optimodlivraison.platform.command.sync.AddDeliveryCommand;
 import lhexanome.optimodlivraison.platform.command.sync.ChangeTimeSlotCommand;
 import lhexanome.optimodlivraison.platform.command.sync.MoveDeliveryCommand;
 import lhexanome.optimodlivraison.platform.command.sync.RemoveDeliveryCommand;
-import lhexanome.optimodlivraison.platform.editition.EditionInvoker;
+import lhexanome.optimodlivraison.platform.edition.EditionInvoker;
 import lhexanome.optimodlivraison.platform.models.Delivery;
 import lhexanome.optimodlivraison.platform.models.Intersection;
 import lhexanome.optimodlivraison.platform.models.RoadMap;
@@ -102,6 +102,7 @@ public class TourEditorController implements ControllerInterface {
     public void setTour(Tour tour) {
         this.tour = tour;
         tourEditorPanel.setTour(tour);
+        editionInvoker.reset();
 
         if (tour == null) {
             hide();
@@ -130,14 +131,18 @@ public class TourEditorController implements ControllerInterface {
      * Undo the last action.
      */
     public void undo() {
-        editionInvoker.undoLastCommand();
+        if (!editionInvoker.undoLastCommand()) {
+            mainController.notifyError("Il n'y a rien à annuler");
+        }
     }
 
     /**
      * Redo the last undo command.
      */
     public void redo() {
-        editionInvoker.redoLastUndo();
+        if (!editionInvoker.redoLastUndo()) {
+            mainController.notifyError("Il n'y a rien à rétablir.");
+        }
     }
 
     /**
@@ -170,11 +175,14 @@ public class TourEditorController implements ControllerInterface {
         int duration = -1;
         while (duration == -1) {
             try {
-                String durationS = JOptionPane.showInputDialog(
+                String durationS = (String) JOptionPane.showInputDialog(
                         getContentPane(),
                         "Durée de la livraison ?",
                         "Ajout d'une livraison",
-                        JOptionPane.QUESTION_MESSAGE
+                        JOptionPane.QUESTION_MESSAGE,
+                        null,
+                        null,
+                        "10"
                 );
                 // If null, the dialog was cancelled so we can stop
                 if (durationS == null) return;
@@ -214,6 +222,11 @@ public class TourEditorController implements ControllerInterface {
         if (checkIfEditionIsUnavailable()) return;
         if (selectedValue == null) {
             mainController.notifyError("Vous devez d'abord sélectionner une livraison !");
+            return;
+        }
+
+        if (tour.getPaths().size() <= 2) {
+            mainController.notifyError("Vous ne pouvez pas enlever la dernière livraison.");
             return;
         }
 

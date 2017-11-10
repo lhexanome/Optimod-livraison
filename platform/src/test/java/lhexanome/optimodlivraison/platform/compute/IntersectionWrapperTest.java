@@ -13,7 +13,7 @@ class IntersectionWrapperTest {
         //With
         Intersection i = new Intersection(0l);
         Halt s = new Halt(i);
-        IntersectionWrapper intersectionWrapper = new IntersectionWrapper(i,s);
+        IntersectionWrapper intersectionWrapper = new IntersectionWrapper(i, 0);
 
         //When
         //Then
@@ -26,11 +26,11 @@ class IntersectionWrapperTest {
         //With
         Intersection i = new Intersection(0l);
         Halt s = new Halt(i);
-        IntersectionWrapper intersectionWrapper = new IntersectionWrapper(i,s);
+        IntersectionWrapper intersectionWrapper = new IntersectionWrapper(i, 0);
         //When
         intersectionWrapper.setAsStart();
         //Then
-        assertThat(intersectionWrapper.getTempsDijkstra()).isEqualTo(0);
+        assertThat(intersectionWrapper.getDijkstraTime()).isEqualTo(0);
         assertThat(intersectionWrapper.isBlack()).isEqualTo(true);
     }
 
@@ -39,7 +39,7 @@ class IntersectionWrapperTest {
         //With
         Intersection i = new Intersection(0l);
         Halt s = new Halt(i);
-        IntersectionWrapper intersectionWrapper = new IntersectionWrapper(i,s);
+        IntersectionWrapper intersectionWrapper = new IntersectionWrapper(i, 0);
         Intersection i2 = new Intersection(1l);
         //When
         intersectionWrapper.setIntersection(i2);
@@ -55,12 +55,12 @@ class IntersectionWrapperTest {
         //With
         Intersection i = new Intersection(0l);
         Halt s = new Halt(i);
-        IntersectionWrapper intersectionWrapper = new IntersectionWrapper(i,s);
+        IntersectionWrapper intersectionWrapper = new IntersectionWrapper(i, 0);
         float temps = 1;
         //When
-        intersectionWrapper.setTempsDijkstra(temps);
+        intersectionWrapper.setDijkstraTime(temps);
         //Then
-        assertThat(intersectionWrapper.getTempsDijkstra()).isEqualTo(temps);
+        assertThat(intersectionWrapper.getDijkstraTime()).isEqualTo(temps);
     }
 
     @Test
@@ -68,7 +68,7 @@ class IntersectionWrapperTest {
         //With
         Intersection i = new Intersection(0l);
         Halt s = new Halt(i);
-        IntersectionWrapper intersectionWrapper = new IntersectionWrapper(i,s);
+        IntersectionWrapper intersectionWrapper = new IntersectionWrapper(i, 0);
         boolean b = true;
         //When
         intersectionWrapper.setBlack(b);
@@ -81,9 +81,9 @@ class IntersectionWrapperTest {
         //With
         Intersection i = new Intersection(0l);
         Halt s = new Halt(i);
-        IntersectionWrapper intersectionWrapper = new IntersectionWrapper(i,s);
+        IntersectionWrapper intersectionWrapper = new IntersectionWrapper(i, 0);
         Intersection i2 = new Intersection(1l);
-        IntersectionWrapper pred = new IntersectionWrapper(i2,s);
+        IntersectionWrapper pred = new IntersectionWrapper(i2, 0);
         //When
         intersectionWrapper.setPredecessor(pred);
         //Then
@@ -96,7 +96,7 @@ class IntersectionWrapperTest {
         //With
         Intersection i = new Intersection(0l);
         Halt s = new Halt(i);
-        IntersectionWrapper intersectionWrapper = new IntersectionWrapper(i,s);
+        IntersectionWrapper intersectionWrapper = new IntersectionWrapper(i, 0);
         Intersection i2 = new Intersection(1l);
 
         Vector v = new Vector(i2, i, "test");

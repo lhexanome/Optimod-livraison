@@ -1,6 +1,6 @@
 package lhexanome.optimodlivraison.platform.command;
 
-import lhexanome.optimodlivraison.platform.compute.InterfaceCalcul;
+import lhexanome.optimodlivraison.platform.compute.ComputeInterface;
 import lhexanome.optimodlivraison.platform.compute.SimplifiedMap;
 import lhexanome.optimodlivraison.platform.exceptions.ComputeSlotsException;
 import lhexanome.optimodlivraison.platform.listeners.ComputeTourListener;
@@ -31,7 +31,7 @@ public class ComputeTourCommand extends SwingWorker<Void, Tour> implements Obser
     /**
      * Compute interface.
      */
-    private InterfaceCalcul interfaceCalcul;
+    private ComputeInterface computeInterface;
 
     /**
      * Road map.
@@ -70,7 +70,7 @@ public class ComputeTourCommand extends SwingWorker<Void, Tour> implements Obser
         this.deliveryOrder = deliveryOrder;
         this.tourObserver = tourObserver;
 
-        this.interfaceCalcul = new InterfaceCalcul();
+        this.computeInterface = new ComputeInterface();
     }
 
     /**
@@ -80,21 +80,25 @@ public class ComputeTourCommand extends SwingWorker<Void, Tour> implements Obser
     @Override
     protected Void doInBackground() throws ComputeSlotsException {
         try {
-            this.interfaceCalcul.addTourObserver(this);
+            this.computeInterface.addTourObserver(this);
 
             LOGGER.info("Compute tour");
             long start = System.currentTimeMillis();
 
-            SimplifiedMap simplifiedMap = interfaceCalcul.computeSimplifiedRoadMap(roadMap, deliveryOrder);
+            SimplifiedMap simplifiedMap = computeInterface.computeSimplifiedRoadMap(roadMap, deliveryOrder);
             LOGGER.info(String.format("time: %ds", (System.currentTimeMillis() - start) / 1000));
 
             LOGGER.info("Simplified roadMap computed");
 
-            interfaceCalcul.computeTour(simplifiedMap, deliveryOrder);
+            computeInterface.computeTour(simplifiedMap, deliveryOrder);
 
             LOGGER.warning("Tour computed");
         } catch (ComputeSlotsException e) {
             LOGGER.warning("Can't compute with incompatible slots");
+            throw e;
+        } catch (CancellationException e) {
+            // Just rethrow it for #done()
+            throw e;
         } catch (Exception e) {
             LOGGER.warning(MessageFormat.format("Unknown error", e.getCause()));
             throw e;
