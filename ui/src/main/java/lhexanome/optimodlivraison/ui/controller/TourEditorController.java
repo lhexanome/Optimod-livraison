@@ -50,6 +50,11 @@ public class TourEditorController implements ControllerInterface {
     private EditionInvoker editionInvoker;
 
     /**
+     * Flag to know when a tour is edited.
+     */
+    private boolean edited;
+
+    /**
      * Constructor.
      *
      * @param mainController Main controller
@@ -97,6 +102,7 @@ public class TourEditorController implements ControllerInterface {
 
         if (tour == null) {
             hide();
+            edited = false;
         } else {
             show();
         }
@@ -161,12 +167,16 @@ public class TourEditorController implements ControllerInterface {
         int duration = -1;
         while (duration == -1) {
             try {
-                duration = Integer.parseInt(JOptionPane.showInputDialog(
+                String durationS = JOptionPane.showInputDialog(
                         getContentPane(),
                         "Durée de la livraison ?",
                         "Ajout d'une livraison",
                         JOptionPane.QUESTION_MESSAGE
-                ));
+                );
+                // If null, the dialog was cancelled so we can stop
+                if (durationS == null) return;
+
+                duration = Integer.parseInt(durationS);
                 if (duration < 0) throw new Exception();
             } catch (Exception e) {
                 LOGGER.warning("The provided input is not an int");
@@ -178,6 +188,7 @@ public class TourEditorController implements ControllerInterface {
 
         AddDeliveryCommand command = new AddDeliveryCommand(tour, roadMap, delivery, tour.getPaths().size()-1);
         editionInvoker.storeAndExecute(command);
+        edited = true;
     }
 
     /**
@@ -205,6 +216,7 @@ public class TourEditorController implements ControllerInterface {
 
         RemoveDeliveryCommand command = new RemoveDeliveryCommand(tour, roadMap, selectedValue);
         editionInvoker.storeAndExecute(command);
+        edited = true;
     }
 
     /**
@@ -232,6 +244,7 @@ public class TourEditorController implements ControllerInterface {
 
         ChangeTimeSlotCommand command = new ChangeTimeSlotCommand(tour, selectedValue, timeSlot);
         editionInvoker.storeAndExecute(command);
+        edited = true;
     }
 
     /**
@@ -245,6 +258,7 @@ public class TourEditorController implements ControllerInterface {
 
         MoveDeliveryCommand command = new MoveDeliveryCommand(tour, roadMap, delivery, newIndex);
         editionInvoker.storeAndExecute(command);
+        edited = true;
     }
 
     /**
@@ -276,5 +290,21 @@ public class TourEditorController implements ControllerInterface {
 
         mainController.notifyError("Vous ne pouvez pas éditer une tournée pendant son calcul.");
         return true;
+    }
+
+    /**
+     * Return whether the tour is edited or not.
+     *
+     * @return Boolean
+     */
+    public boolean isEdited() {
+        return edited;
+    }
+
+    /**
+     * Ask for a ne delivery order.
+     */
+    public void reloadDeliveryOrder() {
+        mainController.reloadDeliveryOrder();
     }
 }

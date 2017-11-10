@@ -88,6 +88,11 @@ public class TourController implements ControllerInterface, ComputeTourListener,
             mainController.notifyError("Un calcul est déjà en cours !");
             return;
         }
+
+        if (mainController.isTourEdited()) {
+            mainController.notifyError("Vous ne pouvez pas recalculer une tournée modifiée !");
+            return;
+        }
         computeTourCommand = new ComputeTourCommand(roadMap, deliveryOrder, this);
         computeTourCommand.setListener(this);
         computeTourCommand.execute();
@@ -190,6 +195,6 @@ public class TourController implements ControllerInterface, ComputeTourListener,
      * @return true or false
      */
     public boolean isComputationRunning() {
-        return computeTourCommand != null && !computeTourCommand.isCancelled();
+        return computeTourCommand != null && !computeTourCommand.isDone();
     }
 }

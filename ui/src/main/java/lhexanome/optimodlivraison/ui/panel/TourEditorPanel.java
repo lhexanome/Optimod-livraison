@@ -64,6 +64,11 @@ public class TourEditorPanel extends AbstractPanel implements DeliveryListTransf
     private JLabel tourEndLabel;
 
     /**
+     * Button to reload a delivery order.
+     */
+    private JButton loadDeliveryOrderButton;
+
+    /**
      * Delivery cell renderer.
      */
     private DeliveryCellRenderer cellRenderer;
@@ -112,6 +117,9 @@ public class TourEditorPanel extends AbstractPanel implements DeliveryListTransf
 
         redoButton.addActionListener(e ->
                 ((TourEditorController) controller).redo());
+
+        loadDeliveryOrderButton.addActionListener(e ->
+                ((TourEditorController) controller).reloadDeliveryOrder());
     }
 
     /**
@@ -337,6 +345,16 @@ public class TourEditorPanel extends AbstractPanel implements DeliveryListTransf
         gbc.gridy = 2;
         gbc.anchor = GridBagConstraints.WEST;
         contentPane.add(tourEndLabel, gbc);
+        loadDeliveryOrderButton = new JButton();
+        loadDeliveryOrderButton.setHideActionText(false);
+        loadDeliveryOrderButton.setHorizontalTextPosition(0);
+        loadDeliveryOrderButton.setText("Recharger demande de livraison");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 1;
+        gbc.gridy = 6;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(5, 5, 5, 10);
+        contentPane.add(loadDeliveryOrderButton, gbc);
     }
 
     /**
