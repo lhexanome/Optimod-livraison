@@ -147,7 +147,6 @@ public abstract class TemplateTSPwSlots implements TSPwSlots {
             tempsLimiteAtteint = true;
             LOGGER.info("Timeout");
             computeResults(tour, matrix);
-
             return;
         }
 
@@ -164,7 +163,6 @@ public abstract class TemplateTSPwSlots implements TSPwSlots {
 
                 coutMeilleureSolution = coutVus;
                 computeResults(tour, matrix);
-
             }
         } else if (coutVus + bound(sommetCrt, nonVus, cout, duree) < coutMeilleureSolution) {
             Iterator<Integer> it = iterator(sommetCrt, nonVus, cout, duree);

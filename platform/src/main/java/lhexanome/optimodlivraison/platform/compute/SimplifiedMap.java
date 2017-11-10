@@ -152,7 +152,7 @@ public class SimplifiedMap {
     }
 
     /**
-     * fonction statique qui renvoie le
+     * Fonction statique qui renvoie le
      * plus court chemin de start a end.
      *
      * @param start intersection de depart
@@ -161,6 +161,10 @@ public class SimplifiedMap {
      */
     public Path shortestPathList(Halt start, Halt end) {
         Set<Halt> ends = new HashSet<>();
+        ends.add(end);
+        start.getIntersection().resetWrapper();
+        end.getIntersection().resetWrapper();
+
         ArrayList<Path> sorties = shortestPathList(start, ends);
         //il y a un seul trajet normalement
         return sorties.get(0);
@@ -184,7 +188,7 @@ public class SimplifiedMap {
                 //on recupere le wrapper correspondant a la livraison d'arrivee
                 IntersectionWrapper endWrapper = findIntersectionWrapper(endWrappers, end.getIntersection());
                 if (endWrapper == null) {
-                    LOGGER.warning(MessageFormat.format("no path found for:",
+                    LOGGER.warning(MessageFormat.format("no path found for: %s",
                             start.toString() + " and " + end.toString()));
                 }
                 //on remonte les prececesseurs pour obtenir tout les chemins
