@@ -33,11 +33,6 @@ public class Path {
     private Halt end;
 
     /**
-     * Path color.
-     */
-    private Color color;
-
-    /**
      * Random color generator.
      */
     private Random randomColorGenerator;
@@ -54,20 +49,6 @@ public class Path {
         this.start = start;
         this.end = end;
         this.randomColorGenerator = new Random();
-        this.color = randomColor();
-    }
-
-    /**
-     * Creates and returns a random color.
-     *
-     * @return a random-generated color.
-     */
-    @SuppressWarnings("checkstyle:magicnumber")
-    private Color randomColor() {
-        float r = randomColorGenerator.nextFloat() /*+ 0.5f*/;
-        float g = randomColorGenerator.nextFloat() / 2f /*+ 0.5f*/;
-        float b = randomColorGenerator.nextFloat() / 2f /*+ 0.5f*/;
-        return new Color(r, g, b);
     }
 
     /**
@@ -202,13 +183,5 @@ public class Path {
             throw new RuntimeException("The vector is not at the end of the path");
         }
 
-    }
-    /**
-     * Getter for color.
-     *
-     * @return the path's color.
-     */
-    public Color getColor() {
-        return color;
     }
 }
