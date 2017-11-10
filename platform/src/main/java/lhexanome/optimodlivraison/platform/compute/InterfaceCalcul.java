@@ -35,11 +35,6 @@ public class InterfaceCalcul {
 
 
     /**
-     * conversion en secondes.
-     */
-    private static final int CONV_SEC_MIN = 60;
-
-    /**
      * Observed tour.
      */
     private Tour tour;
@@ -73,6 +68,7 @@ public class InterfaceCalcul {
      * @param demande       La demande de livraison.
      * @throws ComputeSlotsException when the slots are incompatible
      * @return La tournée calculée.
+     * @throws ComputeSlotsException when the slots are incompatible
      */
     public Tour computeTour(SimplifiedMap simplifiedMap,
                             DeliveryOrder demande) throws ComputeSlotsException {
@@ -94,7 +90,7 @@ public class InterfaceCalcul {
         listeSommets.add(demande.getWarehouse());
         listeSommets.addAll(demande.getDeliveries());
 
-        MatriceAdjacence matrix = grapheToMatrix(graphe, nbSommets, listeSommets, demande);
+        MatriceAdjacence matrix = grapheToMatrix(graphe, nbSommets, listeSommets);
 
         int[] listeDurees = demandeToDurees(demande, nbSommets, listeSommets);
 
@@ -129,14 +125,13 @@ public class InterfaceCalcul {
      * @param graphe       Graphe devant être traité.
      * @param nbSommets    Nombre de sommets du graphe.
      * @param listeSommets Liste attribuant chaque sommet à un index.
-     * @param demande      La demande de livraison.
      * @return La MatriceAdjacence contenant :
      * La matrice des couts de trajets d'un sommet x à un sommet y,
      * La matrice des trajets d'un sommet x à un sommet y.
      */
 
     private MatriceAdjacence grapheToMatrix(Map<Halt, ArrayList<Path>> graphe, int nbSommets,
-                                            ArrayList<Halt> listeSommets, DeliveryOrder demande) {
+                                            ArrayList<Halt> listeSommets) {
 
         int[][] matriceCouts = new int[nbSommets][nbSommets];
         Path[][] matriceTrajets = new Path[nbSommets][nbSommets];

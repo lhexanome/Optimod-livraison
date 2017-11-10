@@ -78,7 +78,7 @@ public class ComputeTourCommand extends SwingWorker<Void, Tour> implements Obser
      * Progressive solution. Use publish at least one time.
      */
     @Override
-    protected Void doInBackground() {
+    protected Void doInBackground() throws ComputeSlotsException {
         try {
             this.interfaceCalcul.addTourObserver(this);
 

@@ -411,7 +411,7 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
         if (deliveryOrder != null) {
             paintComponent(g2, deliveryOrder.getWarehouse());
         }
-        int index = 0;
+        int index = 1;
         for (Delivery delivery : tour.getOrderedDeliveryVector()) {
             paintComponent(g2, delivery, MarkerColor.ORANGE);
             int x = getXFromIntersection(delivery.getIntersection());
@@ -421,7 +421,7 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
             Font font = g2.getFont().deriveFont(20.0f);
             g2.setFont(font);
             g2.drawString(Integer.toString(index), x + DELIVERY_INDEX_OFFSET_X, y + DELIVERY_INDEX_OFFSET_Y);
-            index += 1;
+            index++;
         }
     }
 

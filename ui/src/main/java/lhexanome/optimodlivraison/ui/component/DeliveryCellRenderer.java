@@ -237,12 +237,10 @@ public class DeliveryCellRenderer implements ListCellRenderer<Delivery> {
         GroupLayout.ParallelGroup addressGroupParallel = layout.createParallelGroup();
 
         Set<String> streetNames = new HashSet<>();
-
         for (Vector vector : roadMap.getVectorsFromIntersection(value.getIntersection())) {
             streetNames.add(vector.getStreetName());
         }
         for (String streetName : streetNames) {
-
             if (streetName.isEmpty()) streetName = "Rue sans nom";
 
             JLabel line = new JLabel("- " + streetName);
