@@ -4,6 +4,7 @@ import lhexanome.optimodlivraison.platform.models.Delivery;
 import lhexanome.optimodlivraison.platform.models.Halt;
 import lhexanome.optimodlivraison.platform.models.Intersection;
 import lhexanome.optimodlivraison.platform.models.Path;
+import lhexanome.optimodlivraison.platform.models.Tour;
 import lhexanome.optimodlivraison.platform.models.Warehouse;
 import lhexanome.optimodlivraison.platform.utils.DateUtil;
 import org.junit.jupiter.api.Test;
@@ -13,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 class RemoveDeliveryCommandTest {
     @Test
@@ -40,10 +43,59 @@ class RemoveDeliveryCommandTest {
         Path path2 = new Path(halt2, halt3);
         Path path3 = new Path(halt3,halt4);
         List<Path> paths = new ArrayList<>();
+        List<Path> paths2 = new ArrayList<>();
+        List<Path> paths3 = new ArrayList<>();
         paths.add(path);
         paths.add(path1);
         paths.add(path2);
         paths.add(path3);
+        paths2 = new ArrayList<>(paths);
+        paths3 = new ArrayList<>(paths);
+
+        Tour tour = new Tour(warehouse, DateUtil.parseDate("yyyy/MM/dd HH:mm", "2017/12/22 08:22"),3600,paths );
+
+        assertThat(tour.getWarehouse()).isEqualTo(warehouse);
+
+        // if index is equal to 0
+        int index = 0;
+        assertThat(tour.getPaths().get(index+2).getStart()).isEqualTo(halt2);
+        Path path4 = new Path(warehouse, paths2.get(index+2).getStart());
+
+        removedPath = paths2.remove(index);
+        assertThat(removedPath).isEqualTo(path);
+
+        removedPath = paths2.remove(index);
+        assertThat(removedPath).isEqualTo(path1);
+
+        paths2.add(index, path4);
+        assertThat(paths2.get(index)).isEqualTo(path4);
+
+        // if index is equal to tour.getPaths().size()-2
+        index = tour.getPaths().size()- 2;
+        assertThat(tour.getPaths().get(index).getStart()).isEqualTo(halt2);
+        Path path5 = new Path(paths3.get(index).getStart(), warehouse);
+
+        removedPath = paths3.remove(index);
+        assertThat(removedPath).isEqualTo(path);
+
+        removedPath = paths3.remove(index);
+        assertThat(removedPath).isEqualTo(path1);
+
+        paths3.add(index, path4);
+        assertThat(paths3.get(index)).isEqualTo(path4);
+
+        // if index not follow the conditions before
+        index = 1;
+        Path path6 = new Path(paths.get(index).getStart(),paths.get(index + 2).getStart());
+
+        removedPath = paths.remove(index);
+        assertThat(removedPath).isEqualTo(path2);
+
+        removedPath = paths.remove(index);
+        assertThat(removedPath).isEqualTo(path3);
+
+        paths.add(index, path6);
+        assertThat(paths.get(index)).isEqualTo(path6);
     }
 
 }
