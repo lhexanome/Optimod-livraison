@@ -62,7 +62,7 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
     /**
      * gradient color step.
      */
-    private static final int COLOR_STEP = 10;
+    private int colorStep;
 
     /**
      * color of a marker.
@@ -414,8 +414,9 @@ public class RoadMapComponent extends JComponent implements MouseListener, Mouse
         g2.setStroke(new BasicStroke(2));
 
         int intensity = 0;
+        colorStep = (int) (MAX_COLOR / (double) tourToDraw.getOrderedDeliveryVector().size());
         for (Path path : tourToDraw.getPaths()) {
-            intensity += COLOR_STEP;
+            intensity += colorStep;
             if (intensity >= MAX_COLOR) {
                 intensity = 0;
             }
