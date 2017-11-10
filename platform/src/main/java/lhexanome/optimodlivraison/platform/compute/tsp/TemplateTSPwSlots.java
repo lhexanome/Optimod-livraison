@@ -20,6 +20,8 @@ public abstract class TemplateTSPwSlots implements TSPwSlots {
     private static final Logger LOGGER = Logger.getLogger(SimplifiedMap.class.getName());
     private Integer[] meilleureSolution;
     private Date[] datesEstimees;
+    private Date[] departs;
+
     private int coutMeilleureSolution = 0;
     private Boolean tempsLimiteAtteint;
 
@@ -32,6 +34,7 @@ public abstract class TemplateTSPwSlots implements TSPwSlots {
         coutMeilleureSolution = Integer.MAX_VALUE;
         meilleureSolution = new Integer[nbSommets];
         this.datesEstimees = new Date[nbSommets];
+        departs = new Date[nbSommets];
     }
 
 
@@ -152,6 +155,7 @@ public abstract class TemplateTSPwSlots implements TSPwSlots {
             coutVus += cout[sommetCrt][0];
             Date prochainDepart = new Date();
             prochainDepart.setTime(depart.getTime() + cout[sommetCrt][0] * 1000 + duree[sommetCrt] * 1000);
+            coutVus = (int)TimeSlot.getTimescaleBetween(tour.getStart(), prochainDepart)/1000;
             tempDates[0] = prochainDepart;
             if (coutVus < coutMeilleureSolution) { // on a trouve une solution meilleure que meilleureSolution
                 vus.toArray(meilleureSolution);
@@ -182,7 +186,8 @@ public abstract class TemplateTSPwSlots implements TSPwSlots {
                     if (canGo) {
                         //cette fois on prend le temps minimal et on le minore à 0
                         //ca permet d'obtenir le temps d'attente avant l'ouverture de la plage s'il y en a
-                        tempsAttente = Math.max(0, TimeSlot.getTimescaleBetween(depart.getTime() + cout[sommetCrt][prochainSommet] * 1000 + duree[sommetCrt] * 1000,
+                        tempsAttente = Math.max(0, TimeSlot.getTimescaleBetween(depart.getTime()
+                                        + cout[sommetCrt][prochainSommet] * 1000 + duree[sommetCrt] * 1000,
                                 plages[prochainSommet].getStart()));
 
                     }
@@ -199,7 +204,7 @@ public abstract class TemplateTSPwSlots implements TSPwSlots {
                         //
                         //prochainSlot !=null car tempsAttente>0
                         prochainDepart.setTime(prochainSlot.getStart().getTime());
-                        newCout = (int) (tempsAttente / 1000);
+                        newCout = (int) ((tempsAttente / 1000) + cout[sommetCrt][prochainSommet] + duree[sommetCrt]);
                     } else {
                         prochainDepart.setTime(depart.getTime() + cout[sommetCrt][prochainSommet] * 1000 + duree[sommetCrt] * 1000);
                         newCout = cout[sommetCrt][prochainSommet] + duree[sommetCrt];
@@ -207,6 +212,8 @@ public abstract class TemplateTSPwSlots implements TSPwSlots {
                     //la date estimee differe du prochainDepart uniquement lorsqu'on doit attendre pour une plage horaire
                     dateEstimee.setTime(depart.getTime() + cout[sommetCrt][prochainSommet] * 1000 + duree[sommetCrt] * 1000);
                     tempDates[prochainSommet] = dateEstimee;
+                    long testCout = TimeSlot.getTimescaleBetween(depart, prochainDepart);
+                    departs[prochainSommet] = prochainDepart;
                     branchAndBound(tour, matrix, prochainSommet, nonVus, vus, coutVus + newCout,
                             cout, plages, prochainDepart, tempDates, duree, tpsDebut, tpsLimite);
                     vus.remove(prochainSommet);

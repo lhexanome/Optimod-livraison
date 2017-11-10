@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<demandeDeLivraisons>
-<entrepot adresse="25321357" heureDepart="8:0:0"/>
-<livraison adresse="29003879" duree="900"/>
-<livraison adresse="25303807" duree="300"/>
-<livraison adresse="26155540" duree="900"/>
-<livraison adresse="1860559399" duree="900"/>
-</demandeDeLivraisons>
