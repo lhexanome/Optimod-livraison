@@ -152,7 +152,6 @@ public abstract class TemplateTSPwSlots implements TSPwSlots {
         }
 
         if (nonVus.size() == 0) { // tous les sommets ont ete visites
-            coutVus += cout[sommetCrt][0];
             Date prochainDepart = new Date();
             prochainDepart.setTime(depart.getTime() + cout[sommetCrt][0] * 1000 + duree[sommetCrt] * 1000);
             coutVus = (int)TimeSlot.getTimescaleBetween(tour.getStart(), prochainDepart)/1000;
