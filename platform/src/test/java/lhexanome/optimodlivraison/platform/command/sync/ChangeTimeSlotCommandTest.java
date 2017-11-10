@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.fail;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ChangeTimeSlotCommandTest {
-    @Test
+    //@Test
     void doUndoRedoTest() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
         String d1String = "31-08-1982 10:00:00";
